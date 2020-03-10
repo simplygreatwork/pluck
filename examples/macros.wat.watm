@@ -25,7 +25,7 @@
 	func setup
 		
 		memory_bootstrap
-
+		
 	func test_call_macro
 		
 		print "------------------------------"

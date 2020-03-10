@@ -90,9 +90,11 @@ function map_elements(node) {
 
 function elements(value, node, state, func) {
 	
-	let indices = []
+	let indices
 	if (state.elements && state.elements[value]) {
-		indices = state.elements[value]	
+		indices = state.elements[value]
+	} else {
+		indices = []
 	}
 	let length = node.value.length
 	indices.forEach(function(each, index) {

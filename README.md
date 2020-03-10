@@ -143,6 +143,7 @@ npm start tiny
 
 ### Roadmap
 
+- implement a TDOP/Pratt parser for better operator precedence handling
 - allow relative paths for modules
 - create macro for function pointers (tables)
 - create binary search tree instead of hashtable
