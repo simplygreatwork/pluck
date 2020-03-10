@@ -1,0 +1,37 @@
+(module
+	
+	(import "../library/utility.watm")
+	(import "../library/memory.watm")
+	(import "../library/string.watm")
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	
+	(function $main
+		
+		(call $setup)
+  		(call $test_callable)
+	)
+	
+	(func $setup
+		
+		(call $memory_bootstrap)
+	)
+	
+	(func $test_callable
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Test callable"))
+		(call $print_string (string "------------------------------"))
+		($test_callable_b)
+		($print_integer (i32.const 888))
+	)
+	
+	(func $test_callable_b
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Test callable b"))
+		(call $print_string (string "------------------------------"))
+	)
+   
+	(export "main" (func $main))
+)

@@ -1,0 +1,62 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./number.watm")
+	(import "./string.watm")
+	(import "./function.watm")
+	(import "./list.watm")
+	(import "./map.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(elem (i32.const 5) $stream_iterate_each_function)
+	(type $i32_to_i32 (func (param i32) (result i32)))
+	
+	(func $stream_bytes (result i32)
+		(i32.const 4)
+	)
+
+	(func $stream_new (result i32)
+		
+		(local $stream i32)
+		(set_local $stream (call $memory_allocate (typeof "stream") (call $stream_bytes)))
+		(get_local $stream)
+	)
+	
+	(func $stream_list (param $stream i32) (result i32)
+		(call $memory_load (get_local $stream) (i32.const 0))
+	)
+	
+	(func $stream_list_set (param $stream i32) (param $list i32)
+		(call $memory_store (get_local $stream) (i32.const 0) (get_local $list))
+	)
+	
+	(func $stream_push (param $stream i32) (param $value i32)
+		(call $stream_iterate (get_local $stream) (get_local $value))
+	)
+	
+	(func $stream_iterate (param $stream i32) (param $value i32)
+		
+		(local $list i32)
+		(local $context i32)
+		(local $stream_iterate_each_function i32)
+		(set_local $context (call $map_new))
+		(call $map_set (get_local $context) (string "value") (get_local $value))
+		(set_local $list (call $stream_list (get_local $stream)))
+		(set_local $stream_iterate_each_function (i32.const 5))
+		(call $list_iterate (get_local $list) (get_local $stream_iterate_each_function) (get_local $context))
+	)
+	
+	(func $stream_iterate_each_function (param $item i32) (param $index i32) (param $context i32)
+		
+		(local $function i32)
+		(local $function_id i32)
+		(local $value i32)
+		(local $result i32)
+		(set_local $function (call $item_value (get_local $item)))
+		(set_local $function_id (call $number_value (call $function_id (get_local $function))))
+		(set_local $value (call $map_get (get_local $context) (string "value")))
+		(set_local $result (call_indirect (type $i32_to_i32) (get_local $value) (get_local $function_id)))
+		(call $map_set (get_local $context) (string "value") (get_local $result))
+	)
+)

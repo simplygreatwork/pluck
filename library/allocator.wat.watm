@@ -1,0 +1,222 @@
+(module
+	
+	(import "./frame.watm")
+	(import "./hole.watm")
+	(import "host" "print_string" (func $host_print_string (param i32)))
+	(import "host" "print_integer" (func $host_print_integer (param i32)))
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	
+	(func $allocator_bytes (result i32)
+		(i32.const 4)
+	)
+	
+	(func $allocator_initialize
+		
+		(call $allocator_frame_total_set (i32.const 0))
+		(call $allocator_frame_allocate_indice_set (i32.const -1))
+		(call $allocator_frame_allocate_pointer_set (i32.const -1))
+		(call $allocator_frame_compact_indice_set (i32.const -1))
+		(call $allocator_frame_compact_pointer_set (i32.const -1))
+		(call $allocator_frame_merge_indice_set (i32.const -1))
+		(call $allocator_frame_merge_pointer_set (i32.const -1))
+		(call $allocator_grow)
+	)
+	
+	(func $allocator_frame_total (result i32)
+		(i32.load16_u (i32.const 20))
+	)
+
+	(func $allocator_frame_total_set (param $frame_total i32) 
+		(i32.store16 (i32.const 20) (get_local $frame_total))
+	)
+	
+	(func $allocator_frame_allocate_indice (result i32)
+		(i32.load16_u (i32.const 22))
+	)
+	
+	(func $allocator_frame_allocate_indice_set (param $indice i32) 
+		(i32.store16 (i32.const 22) (get_local $indice))
+	)
+
+	(func $allocator_frame_allocate_pointer (result i32)
+		(i32.load16_u (i32.const 24))
+	)
+	
+	(func $allocator_frame_allocate_pointer_set (param $pointer i32) 
+		(i32.store16 (i32.const 24) (get_local $pointer))
+	)
+
+	(func $allocator_frame_compact_indice (result i32)
+		(i32.load16_u (i32.const 26))
+	)
+	
+	(func $allocator_frame_compact_indice_set (param $indice i32) 
+		(i32.store16 (i32.const 26) (get_local $indice))
+	)
+
+	(func $allocator_frame_compact_pointer (result i32)
+		(i32.load16_u (i32.const 28))
+	)
+	
+	(func $allocator_frame_compact_pointer_set (param $pointer i32) 
+		(i32.store16 (i32.const 28) (get_local $pointer))
+	)
+
+	(func $allocator_frame_merge_indice (result i32)
+		(i32.load16_u (i32.const 30))
+	)
+	
+	(func $allocator_frame_merge_indice_set (param $indice i32) 
+		(i32.store16 (i32.const 30) (get_local $indice))
+	)
+
+	(func $allocator_frame_merge_pointer (result i32)
+		(i32.load16_u (i32.const 32))
+	)
+	
+	(func $allocator_frame_merge_pointer_set (param $pointer i32) 
+		(i32.store16 (i32.const 32) (get_local $pointer))
+	)
+
+	(func $allocator_grow
+		
+		(local $indice i32)
+		(local $frame i32)
+		(call $allocator_frame_total_increment)
+		(call $allocator_frame_allocate_indice_set (i32.sub (call $allocator_frame_total) (i32.const 1)))
+		(set_local $indice (call $allocator_frame_allocate_indice))
+		(set_local $frame (call $allocator_frame_by_indice (get_local $indice)))
+		(call $frame_initialize (get_local $frame))
+	)
+	
+	(func $allocator_allocate (param $type i32) (param $size i32) (result i32)
+		
+		(local $result i32)
+		(local $total i32)
+		(local $i i32)
+		(local $frame_indice i32)
+		(local $frame i32)
+		(local $pointer i32)
+		(set_local $i (i32.const 0))
+		(set_local $total (call $allocator_frame_total))
+		(block (loop
+			(set_local $frame_indice (call $allocator_frame_allocate_indice))
+			(set_local $frame (call $allocator_frame_by_indice (get_local $frame_indice)))
+			(set_local $pointer (call $frame_allocate (get_local $frame) (get_local $type) (get_local $size)))
+			(if (i32.ne (get_local $pointer) (i32.const 0)) (then
+				(br 2)
+			) (else
+				(call $allocator_frame_next)
+			))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(if (i32.eq (get_local $i) (get_local $total)) (then
+				(call $allocator_grow)
+				(set_local $total (call $allocator_frame_total))
+			))
+			(br 0)
+		))
+		(call $frame_local_to_global (get_local $frame) (get_local $pointer))
+	)
+	
+	(func $allocator_frame_next
+		
+		(call $allocator_frame_allocate_increment)
+		(if (i32.eq (call $allocator_frame_allocate_indice) (call $allocator_frame_total)) (then
+			(call $allocator_frame_allocate_indice_set (i32.const 0))
+		))
+	)
+	
+	(func $allocator_frame_total_increment
+		(call $allocator_frame_total_set (i32.add (call $allocator_frame_total) (i32.const 1)))
+	)
+	
+	(func $allocator_frame_total_decrement
+		(call $allocator_frame_total_set (i32.sub (call $allocator_frame_total) (i32.const 1)))
+	)
+	
+	(func $allocator_frame_allocate_increment
+		(call $allocator_frame_allocate_indice_set (i32.add (call $allocator_frame_allocate_indice) (i32.const 1)))
+	)
+	
+	(func $allocator_frame_allocate_decrement
+		(call $allocator_frame_allocate_indice_set (i32.sub (call $allocator_frame_allocate_indice) (i32.const 1)))
+	)
+	
+	(func $allocator_frames_offset (result i32)
+		(i32.mul (i32.const 0) (call $frame_width))
+	)
+	
+	(func $allocator_frame_by_indice (param $indice i32) (result i32)
+		
+		(i32.add
+			(call $allocator_frames_offset)
+			(i32.mul (get_local $indice) (call $frame_width))
+		)
+	)
+	
+	(func $allocator_frame_by_pointer (param $pointer i32) (result i32)
+		
+		(i32.add
+			(call $allocator_frames_offset)
+			(i32.mul (i32.div_u (get_local $pointer) (call $frame_width)) (call $frame_width))
+		)
+	)
+	
+	(func $allocator_deallocate (param $pointer i32)
+		
+		(local $frame i32)
+		(set_local $frame (call $allocator_frame_by_pointer (get_local $pointer)))
+		(call $frame_deallocate (get_local $frame) (get_local $pointer))
+	)
+	
+	(func $allocator_compact
+		(call $allocator_compact_frame (call $allocator_frame_compact_indice))
+	)
+
+	(func $allocator_compact_frame (param $indice i32)
+
+		(local $frame i32)
+		(set_local $frame (call $allocator_frame_by_indice (get_local $indice)))
+		(if (i32.eq (i32.const 0) (i32.const 0)) (then (call $frame_compact (get_local $frame))))
+	)
+
+	(func $allocator_validate
+		(call $allocator_validate_frame (call $allocator_frame_compact_indice))
+	)
+	
+	(func $allocator_validate_frame (param $indice i32)
+		
+		(local $frame i32)
+		(set_local $frame (call $allocator_frame_by_indice (get_local $indice)))
+		(call $frame_validate (get_local $frame))
+	)
+
+	(func $allocator_info
+		
+		(local $total i32)
+		(local $i i32)
+		(local $frame i32)
+		(local $cursor i32)
+		(set_local $total (call $allocator_frame_total))
+		(call $print_integer (get_local $total))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(set_local $frame (call $allocator_frame_by_indice (get_local $i)))
+			(set_local $cursor (call $frame_cursor_allocate (get_local $frame)))
+			(call $print_integer (get_local $cursor))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(if (i32.eq (get_local $i) (get_local $total)) (then
+				(br 2)
+			))
+			(br 0)
+		))
+	)
+	
+	(func $allocator_compact_frame_step
+		(call $frame_compact_step
+			(call $allocator_frame_by_indice (call $allocator_frame_compact_indice))
+			(call $allocator_frame_compact_pointer)
+		)
+	)
+)

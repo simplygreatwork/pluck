@@ -1,0 +1,122 @@
+(module
+	
+	(import "./core.watm")
+	(import "./utility.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $memory_bootstrap
+		(call $memory_bootstrap_)
+	)
+	
+	(func $memory_pointer_first (result i32)
+		(call $memory_pointer_first_)
+	)
+	
+	(func $memory_pointer_next (result i32)
+		(call $memory_pointer_next_)
+	)
+	
+	(func $memory_handle_next (result i32)
+		(call $memory_handle_next_)
+	)
+	
+	(func $memory_allocate (param $type i32) (param $size i32) (result i32)
+		(call $memory_allocate_ (get_local $type) (get_local $size))
+	)
+	
+	(func $memory_allocate_block (param $type i32) (param $size i32) (result i32)
+		(call $memory_allocate_block_ (get_local $type) (get_local $size))
+	)
+	
+	(func $memory_allocate_block_on (param $function i32)
+		(call $memory_allocate_block_on_ (get_local $function))
+	)
+	
+	(func $memory_allocate_handle (param $pointer i32) (result i32)
+		(call $memory_allocate_handle_ (get_local $pointer))
+	)
+	
+	(func $memory_allocate_handle_on (param $function i32)
+		(call $memory_allocate_handle_on_ (get_local $function))
+	)
+
+	(func $memory_store (param $address i32) (param $offset i32) (param $value i32)
+		(call $memory_store_ (get_local $address) (get_local $offset) (get_local $value))
+	)
+
+	(func $memory_store8 (param $address i32) (param $offset i32) (param $value i32)
+		(call $memory_store8_ (get_local $address) (get_local $offset) (get_local $value))
+	)
+
+	(func $memory_load (param $address i32) (param $offset i32) (result i32)
+		(call $memory_load_ (get_local $address) (get_local $offset))
+	)
+	
+	(func $memory_load8_u (param $address i32) (param $offset i32) (result i32)
+		(call $memory_load8_u_ (get_local $address) (get_local $offset))
+	)
+	
+	(func $memory_type (param $handle i32) (result i32)
+		(call $memory_type_ (get_local $handle))
+	)
+
+	(func $memory_type_set (param $handle i32) (param $type i32)
+		(call $memory_type_set_ (get_local $handle) (get_local $type))
+	)
+
+	(func $memory_type_by_pointer (param $pointer i32) (result i32)
+		(call $memory_type_by_pointer_ (get_local $pointer))
+	)
+
+	(func $memory_type_set_by_pointer (param $pointer i32) (param $type i32)
+		(call $memory_type_set_by_pointer_ (get_local $pointer) (get_local $type))
+	)
+
+	(func $memory_active (param $handle i32) (result i32)
+		(call $memory_active_ (get_local $handle))
+	)
+
+	(func $memory_active_set (param $handle i32) (param $active i32)
+		(call $memory_active_set_ (get_local $handle) (get_local $active))
+	)
+
+	(func $memory_active_by_pointer (param $pointer i32) (result i32)
+		(call $memory_active_by_pointer_ (get_local $pointer))
+	)
+	
+	(func $memory_active_set_by_pointer (param $pointer i32) (param $active i32)
+		(call $memory_active_set_by_pointer_ (get_local $pointer) (get_local $active))
+	)
+
+	(func $memory_id (param $handle i32) (result i32)
+		(call $memory_id_ (get_local $handle))
+	)
+
+	(func $memory_id_set (param $handle i32) (param $id i32)
+		(call $memory_id_set_ (get_local $handle) (get_local $id))
+	)
+	
+	(func $memory_id_by_pointer (param $pointer i32) (result i32)
+		(call $memory_id_by_pointer_ (get_local $pointer))
+	)
+	
+	(func $memory_id_set_by_pointer (param $pointer i32) (param $id i32)
+		(call $memory_id_set_by_pointer_ (get_local $pointer) (get_local $id))
+	)
+	
+	(func $memory_dereference_handle (param $handle i32) (result i32)
+		(call $memory_dereference_handle_ (get_local $handle))
+	)
+	
+	(func $memory_deallocate (param $handle i32)
+		(call $memory_deallocate_ (get_local $handle))
+	)
+	
+	(func $memory_deallocate_by_pointer (param $pointer i32)
+		(call $memory_deallocate_by_pointer_ (get_local $pointer))
+	)
+	
+	(func $memory_copy (param $a i32) (param $b i32) (param $length i32)
+		(call $memory_copy_ (get_local $a) (get_local $b) (get_local $length))
+	)
+)

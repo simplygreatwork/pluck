@@ -1,0 +1,1718 @@
+(module
+	
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	type $void_to_void (func)
+	
+	func main
+		
+		stress
+		
+	func stress
+		
+		set a to 1
+		set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+		if a greater 0 and a less 1000
+			set b to 1
+
+)

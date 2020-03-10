@@ -1,0 +1,56 @@
+(module
+	
+	(import "host" "print_string" (func $host_print_string (param i32)))
+	(import "host" "print_integer" (func $host_print_integer (param i32)))
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	
+	(func $hole_bytes (result i32)
+		(i32.const 8)
+	)
+	
+	(func $hole_bytes_actual (param $hole i32) (result i32)
+		(call $hole_length (get_local $hole))
+	)
+	
+	(func $hole_initialize (param $pointer i32) (param $length i32) (result i32)
+		
+		(local $hole i32)
+		(set_local $hole (get_local $pointer))
+		(call $hole_type_set (get_local $hole) (typeof "hole"))
+		(call $hole_length_set (get_local $hole) (get_local $length))
+		(get_local $hole)
+	)
+	
+	(func $hole_type (param $hole i32) (result i32)
+		(i32.load16_u (i32.add (get_local $hole) (i32.const 0)))
+	)
+	
+	(func $hole_type_set (param $hole i32) (param $type i32)
+		(i32.store16 (i32.add (get_local $hole) (i32.const 0)) (get_local $type))
+	)
+	
+	(func $hole_length (param $hole i32) (result i32)
+		(i32.load16_u (i32.add (get_local $hole) (i32.const 2)))
+	)
+	
+	(func $hole_length_set (param $hole i32) (param $length i32)
+		(i32.store16 (i32.add (get_local $hole) (i32.const 2)) (get_local $length))
+	)
+	
+	(func $hole_next (param $hole i32) (result i32)
+		(i32.load16_u (i32.add (get_local $hole) (i32.const 4)))
+	)
+
+	(func $hole_next_set (param $hole i32) (param $next i32)
+		(i32.store16 (i32.add (get_local $hole) (i32.const 4)) (get_local $next))
+	)
+	
+	(func $hole_skip (param $hole i32) (result i32)
+		(i32.load16_u (i32.add (get_local $hole) (i32.const 6)))
+	)
+
+	(func $hole_skip_set (param $hole i32) (param $next i32)
+		(i32.store16 (i32.add (get_local $hole) (i32.const 6)) (get_local $next))		
+	)
+)

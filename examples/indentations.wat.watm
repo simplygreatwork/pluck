@@ -1,0 +1,175 @@
+(module
+	
+	import "../lib/utility.watm"
+	import "../lib/array.watm"
+	import "../lib/legend.watm"
+	import "../lib/memory.watm"
+	import "../lib/string.watm"
+	import "../lib/boolean.watm"
+	import "../lib/number.watm"
+	import "../lib/function.watm"
+	import "../lib/list.watm"
+	import "../lib/assertion.watm"
+	import "../lib/tree.watm"
+	import "../lib/map.watm"
+	import "../lib/stream.watm"
+	import "../lib/table.watm"
+	import "../lib/types.watm"
+	import "../lib/allocator.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	global $global (import "host" "global") (mut i32)
+	global $legend (import "host" "legend") (mut i32)
+	elem (i32.const 200) $deallocate_iterate_each
+	elem (i32.const 201) $display_iterate_each
+	
+	function $main
+		
+		call $setup
+		call $start
+	
+	func $setup
+		
+		call $memory_bootstrap
+		call $types_strings_init
+		set_global $global (i32.const 0)
+	
+	func $start
+		
+		local $list i32
+		local $i i32
+		set_local $list (call $list_new)
+		set_local $i (i32.const 0)
+		(block (loop
+			call $exercise (get_local $list)
+			set_local $i (i32.add (get_local $i) (i32.const 1))
+			br_if 1 (i32.eq (get_local $i) (i32.const 20))
+			br 0
+		))
+		call $boundary
+	
+	func $exercise (param $list i32)
+		
+		call $allocate (get_local $list)
+		call $deallocate (get_local $list)
+		call $compact (get_local $list)
+		call $display (get_local $list)	
+
+	func $allocate (param $list i32)
+
+		local $pointer i32
+		local $string i32
+		local $i i32
+		;;call $print_string (string "allocate")
+		set_local $i (i32.const 0)
+		(block (loop
+			if (i32.eq (i32.const 1) (i32.const 0))
+				then
+					set_local $pointer (call $number_new (get_local $i))
+				else
+					set_local $pointer (string "hellohellohellohellohello")
+			call $list_append (get_local $list) (get_local $pointer)
+			set_local $i (i32.add (get_local $i) (i32.const 1))
+			br_if 1 (i32.eq (get_local $i) (i32.const 100))
+			br 0
+		))
+		if (i32.eq (i32.const 1) (i32.const 0))
+			then
+				call $print_string (string "frame_total")
+				call $print_integer (call $allocator_frame_total)
+	
+	(func $deallocate (param $list i32)
+		
+		(local $context i32)
+		(local $deallocate_iterate_each i32)
+		;;(call $print_string (string "deallocate"))
+		(set_local $context (i32.const 0))
+		(set_local $deallocate_iterate_each (i32.const 200))
+		(call $list_iterate (get_local $list) (get_local $deallocate_iterate_each) (get_local $context))
+	)
+	
+	(func $deallocate_iterate_each (param $item i32) (param $index i32) (param $context i32)
+		
+		(local $handle i32)
+		(set_local $handle (call $item_value (get_local $item)))
+		(if (i32.eq (i32.rem_u (get_local $index) (i32.const 2)) (i32.const 0)) (then
+			(if (i32.eq (i32.const 1) (i32.const 0)) (then
+				(call $print_integer (get_local $handle))
+			))
+			(call $memory_deallocate (get_local $handle))
+			(call $item_remove (get_local $item))
+		))
+	)
+	
+	(func $compact (param $list i32)
+		
+		;;(call $print_string (string "compact"))
+		(if (i32.eq (i32.const 0) (i32.const 0)) (then
+			(call $allocator_compact_frame (i32.const 0))
+		))
+	)
+
+	(func $validate (param $list i32)
+		
+		;;(call $print_string (string "validate"))
+		(if (i32.eq (i32.const 1) (i32.const 0)) (then
+			(call $allocator_validate_frame (i32.const 0))
+		))
+	)
+	
+	(func $display (param $list i32)
+		
+		(local $context i32)
+		(local $display_iterate_each i32)
+		;;(call $print_string (string "display"))
+		(call $print_integer (call $number_value (call $list_length (get_local $list))))
+		(set_local $context (i32.const 0))
+		(set_local $display_iterate_each (i32.const 201))
+	)
+	
+	(func $display_iterate_each (param $item i32) (param $index i32) (param $context i32)
+		
+		(local $value i32)
+		(set_local $value (call $item_value (get_local $item)))
+		(if (i32.eq (i32.const 0) (i32.const 0)) (then
+			(if (i32.eq (i32.const 1) (i32.const 0)) (then
+				(call $print_integer (call $number_value (get_local $value)))
+			) (else
+				(call $print_integer (get_local $index))
+				(call $print_string (get_local $value))
+			))
+		))
+	)
+	
+	(func $boundary
+		
+		(call $print_string (string "allocator boundaries"))
+		(call $allocator_info)
+	)
+	
+	(func $legend_print_strings
+		
+		(local $handle i32)
+		(local $max i32)
+		(local $pointer i32)
+		(local $type i32)
+		(set_local $handle (i32.const 1))
+		(set_local $max (call $memory_handle_next))
+		(block (loop
+			(set_local $pointer (call $legend_value_get (get_global $legend) (get_local $handle)))
+			(if (i32.ne (get_local $pointer) (i32.const 0)) (then
+				(set_local $type (call $memory_type (get_local $handle)))
+				(if (i32.eq (get_local $type) (i32.const 5)) (then
+					(call $print_integer (i32.const 4444))
+					(call $print_integer (get_local $handle))
+					(call $print_integer (call $memory_load (get_local $handle) (i32.const 0)))					
+				))
+			))
+			(set_local $handle (i32.add (get_local $handle) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $handle) (get_local $max)))
+			(br 0)
+		))
+	)
+	
+	(export "main" (func $main))
+)

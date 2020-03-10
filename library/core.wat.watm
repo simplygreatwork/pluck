@@ -1,0 +1,580 @@
+(module
+	
+	(import "./allocator.watm")
+	(import "./frame.watm")
+	(import "./hole.watm")
+	(import "host" "print_string" (func $host_print_string (param i32)))
+	(import "host" "print_integer" (func $host_print_integer (param i32)))
+	(import "host" "table" (table 1 anyfunc))
+	(elem (i32.const 400) $memory_type_by_pointer_)
+	(elem (i32.const 401) $memory_id_by_pointer_)
+	(elem (i32.const 402) $memory_load_)
+	(elem (i32.const 403) $memory_copy_)
+	(elem (i32.const 404) $legend_value_set_)
+	(elem (i32.const 405) $legend_value_get_)
+	(elem (i32.const 406) $legend_array_repoint_)
+	(elem (i32.const 407) $array_parent_)
+	(type $i32_to_void (func (param i32)))
+	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))	
+	(type $i32_to_i32 (func (param i32) (result i32)))
+	(memory (import "host" "memory") 1)
+	(global $legend (import "host" "legend") (mut i32))
+	(global $on_memory_allocate_block (import "host" "on_memory_allocate_block") (mut i32))
+	(global $on_memory_allocate_handle (import "host" "on_memory_allocate_handle") (mut i32))
+	
+	(func $memory_bootstrap_
+		
+		(call $memory_pointer_next_set_ (call $memory_pointer_first_))
+		(call $memory_handle_next_set_ (call $memory_handle_first_))
+		(call $allocator_initialize)
+		(set_global $legend (call $legend_new_))
+	)
+	
+	(func $memory_handle_first_ (result i32)
+		(i32.const 1)
+	)
+
+	(func $memory_handle_next_ (result i32)
+		(i32.load (i32.const 12))
+	)
+	
+	(func $memory_handle_next_set_ (param $next i32)
+		(i32.store (i32.const 12) (get_local $next))
+	)
+	
+	(func $memory_pointer_first_ (result i32)
+		(i32.const 24)
+	)
+	
+	(func $memory_pointer_next_ (result i32)
+		(i32.load (i32.const 16))
+	)
+	
+	(func $memory_pointer_next_set_ (param $next i32)
+		(i32.store (i32.const 16) (get_local $next))
+	)
+	
+	(func $memory_allocate_ (param $type i32) (param $size i32) (result i32)
+		
+		(local $pointer i32)
+		(local $handle i32)
+		(set_local $pointer (call $memory_allocate_block_ (get_local $type) (get_local $size)))
+		(set_local $handle (call $memory_allocate_handle_ (get_local $pointer)))
+		(get_local $handle)
+	)
+	
+	(func $memory_allocate_block_ (param $type i32) (param $size i32) (result i32)
+		
+		(local $pointer i32)
+		(set_local $size (i32.add (get_local $size) (i32.const 8)))
+		(set_local $pointer (call $allocator_allocate (get_local $type) (get_local $size)))
+		(call $memory_type_set_by_pointer_ (get_local $pointer) (get_local $type))
+		(call $memory_active_set_by_pointer_ (get_local $pointer) (i32.const 1))
+		(call $memory_allocate_block_emit_ (get_local $pointer) (get_local $type) (get_local $size))
+		(get_local $pointer)
+	)
+	
+	(func $memory_allocate_block_on_ (param $function i32)
+		(set_global $on_memory_allocate_block (get_local $function))
+	)
+	
+	(func $memory_allocate_block_emit_ (param $pointer i32) (param $type i32) (param $size i32)
+		
+		(local $function i32)
+		(set_local $function (get_global $on_memory_allocate_block))
+		(if (i32.ne (get_local $function) (i32.const 0)) (then
+			(call_indirect (type $i32_i32_i32_to_void)
+				(get_local $pointer) (get_local $type) (get_local $size)
+				(get_local $function)
+			)
+		))
+	)
+	
+	(func $memory_allocate_handle_ (param $pointer i32) (result i32)
+		
+		(local $handle i32)
+		(set_local $handle (call $memory_handle_next_))
+		(call $memory_handle_next_set_ (i32.add (get_local $handle) (i32.const 1)))
+		(call $memory_id_set_by_pointer_ (get_local $pointer) (get_local $handle))
+		(call $legend_value_set_ (get_global $legend) (get_local $handle) (get_local $pointer))
+		(call $memory_allocate_handle_emit_ (get_local $handle))
+		(get_local $handle)
+	)
+	
+	(func $memory_allocate_handle_on_ (param $function i32)
+		(set_global $on_memory_allocate_handle (get_local $function))
+	)
+	
+	(func $memory_allocate_handle_emit_ (param $handle i32)
+		
+		(local $function i32)
+		(set_local $function (get_global $on_memory_allocate_handle))
+		(if (i32.ne (get_local $function) (i32.const 0)) (then
+			(call_indirect (type $i32_to_void)
+				(get_local $handle)
+				(get_local $function)
+			)
+		))
+	)
+	
+	(func $memory_store_ (param $address i32) (param $offset i32) (param $value i32)
+		
+		(set_local $address (call $memory_dereference_handle_ (get_local $address)))
+		(i32.store (i32.add (get_local $address) (i32.add (get_local $offset) (i32.const 8))) (get_local $value))
+	)
+
+	(func $memory_store8_ (param $address i32) (param $offset i32) (param $value i32)
+		
+		(set_local $address (call $memory_dereference_handle_ (get_local $address)))
+		(i32.store8 (i32.add (get_local $address) (i32.add (get_local $offset) (i32.const 8))) (get_local $value))
+	)
+
+	(func $memory_load_ (param $address i32) (param $offset i32) (result i32)
+		
+		(set_local $address (call $memory_dereference_handle_ (get_local $address)))
+		(i32.load (i32.add (get_local $address) (i32.add (get_local $offset) (i32.const 8))))
+	)
+	
+	(func $memory_load8_u_ (param $address i32) (param $offset i32) (result i32)
+		
+		(set_local $address (call $memory_dereference_handle_ (get_local $address)))
+		(i32.load8_u (i32.add (get_local $address) (i32.add (get_local $offset) (i32.const 8))))
+	)
+	
+	(func $memory_type_ (param $handle i32) (result i32)
+		(call $memory_type_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)))
+	)
+	
+	(func $memory_type_set_ (param $handle i32) (param $type i32)
+		(call $memory_type_set_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)) (get_local $type))
+	)
+
+	(func $memory_type_by_pointer_ (param $pointer i32) (result i32)
+		(i32.load16_u (i32.add (get_local $pointer) (i32.const 0)))
+	)
+	
+	(func $memory_type_set_by_pointer_ (param $pointer i32) (param $type i32)
+		(i32.store16 (i32.add (get_local $pointer) (i32.const 0)) (get_local $type))
+	)
+
+	(func $memory_active_ (param $handle i32) (result i32)
+		(call $memory_active_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)))
+	)
+	
+	(func $memory_active_set_ (param $handle i32) (param $active i32)
+		(call $memory_active_set_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)) (get_local $active))
+	)
+	
+	(func $memory_active_by_pointer_ (param $pointer i32) (result i32)
+		(i32.load16_u (i32.add (get_local $pointer) (i32.const 2)))
+	)
+
+	(func $memory_active_set_by_pointer_ (param $pointer i32) (param $active i32)
+		(i32.store16 (i32.add (get_local $pointer) (i32.const 2)) (get_local $active))
+	)
+
+	(func $memory_id_ (param $handle i32) (result i32)
+		(call $memory_id_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)))
+	)
+	
+	(func $memory_id_set_ (param $handle i32) (param $id i32)
+		(call $memory_id_set_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)) (get_local $id))
+	)
+
+	(func $memory_id_by_pointer_ (param $pointer i32) (result i32)
+		(i32.load (i32.add (get_local $pointer) (i32.const 4)))
+	)
+	
+	(func $memory_id_set_by_pointer_ (param $pointer i32) (param $id i32)
+		(i32.store (i32.add (get_local $pointer) (i32.const 4)) (get_local $id))
+	)
+	
+	(func $memory_dereference_handle_ (param $handle i32) (result i32)
+		(call $legend_value_get_ (get_global $legend) (get_local $handle))
+	)
+	
+	(func $memory_deallocate_ (param $handle i32)
+		
+		(local $pointer i32)
+		(set_local $pointer (call $memory_dereference_handle_ (get_local $handle)))
+		(call $memory_deallocate_by_pointer_ (get_local $pointer))
+		(call $legend_value_set_ (get_global $legend) (get_local $handle) (i32.const 0))
+	)
+	
+	(func $memory_deallocate_by_pointer_ (param $pointer i32)
+		(call $allocator_deallocate (get_local $pointer))
+	)
+	
+	(func $memory_copy_ (param $a i32) (param $b i32) (param $length i32)
+		(call $memory_copy32_ (get_local $a) (get_local $b) (get_local $length))
+	)
+
+	(func $memory_copy8_ (param $a i32) (param $b i32) (param $length i32)
+		
+		(local $i i32)
+		(set_local $i (i32.const 0))
+		(block (loop
+			(i32.store8
+				(i32.add (get_local $b) (get_local $i))
+				(i32.load8_u (i32.add (get_local $a) (get_local $i)))
+			)
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(if (i32.gt_u (get_local $i) (get_local $length)) (then
+				(br 2)
+			))
+			(br 0)
+		))
+	)
+	
+	(func $memory_copy32_ (param $a i32) (param $b i32) (param $length i32)
+		
+		(local $i i32)
+		(set_local $i (i32.const 0))
+		(block (loop
+			(i32.store
+				(i32.add (get_local $b) (get_local $i))
+				(i32.load (i32.add (get_local $a) (get_local $i)))
+			)
+			(set_local $i (i32.add (get_local $i) (i32.const 4)))
+			(if (i32.ge_u (get_local $i) (get_local $length)) (then
+				(br 2)
+			))
+			(br 0)
+		))
+	)
+
+	(func $legend_array_bytes_ (result i32)
+		(i32.const 12)
+	)
+
+	(func $array_new_ (param $length i32) (result i32)
+		(call $array_new_width_ (get_local $length) (i32.const 4))
+	)
+	
+	(func $array_new_width_ (param $length i32) (param $width i32) (result i32)
+		
+		(local $array i32)
+		(set_local $array (call $memory_allocate_block_
+			(typeof "legend_array")
+			(i32.add (call $legend_array_bytes_) (i32.mul (get_local $width) (get_local $length)))
+		))
+		(call $array_parent_set_ (get_local $array) (i32.const 0))
+		(call $array_length_set_ (get_local $array) (get_local $length))
+		(call $array_width_set_ (get_local $array) (get_local $width))
+		(get_local $array)
+	)
+	
+	(func $array_parent_ (param $array i32) (result i32)
+		(i32.load (i32.add (get_local $array) (i32.const 8)))
+	)
+	
+	(func $array_parent_set_ (param $array i32) (param $parent i32)
+		(i32.store (i32.add (get_local $array) (i32.const 8)) (get_local $parent))
+	)
+
+	(func $array_length_ (param $array i32) (result i32)
+		(i32.load (i32.add (get_local $array) (i32.const 12)))
+	)
+	
+	(func $array_length_set_ (param $array i32) (param $length i32)
+		(i32.store (i32.add (get_local $array) (i32.const 12)) (get_local $length))
+	)
+	
+	(func $array_width_ (param $array i32) (result i32)
+		(i32.load (i32.add (get_local $array) (i32.const 16)))
+	)
+	
+	(func $array_width_set_ (param $array i32) (param $width i32)
+		(i32.store (i32.add (get_local $array) (i32.const 16)) (get_local $width))
+	)
+	
+	(func $array_value_get_ (param $array i32) (param $index i32) (result i32)
+		
+		(i32.load
+			(i32.add (get_local $array)
+				(i32.add (i32.const 20)
+					(i32.mul (call $array_width_ (get_local $array)) (get_local $index))
+				)
+			)
+		)
+	)
+	
+	(func $array_value_set_ (param $array i32) (param $index i32) (param $value i32)
+		
+		(i32.store
+			(i32.add (get_local $array)
+				(i32.add (i32.const 20)
+					(i32.mul (call $array_width_ (get_local $array)) (get_local $index))
+				)
+			)
+			(get_local $value)
+		)
+	)
+	
+	(func $legend_bytes_ (result i32)
+		(i32.const 16)
+	)
+	
+	(func $legend_new_ (result i32)
+		
+		(local $legend i32)
+		(set_local $legend (call $memory_allocate_block_ (typeof "legend") (call $legend_bytes_)))
+		(call $legend_base_set_ (get_local $legend) (i32.const 16))
+		(call $legend_exponent_set_ (get_local $legend) (i32.const 8))
+		(call $legend_counter_set_ (get_local $legend) (i32.const 0))
+		(call $legend_array_set_ (get_local $legend) (call $legend_array_new_ (get_local $legend)))
+		(get_local $legend)
+	)
+	
+	(func $legend_base_ (param $legend i32) (result i32)
+		(i32.load (i32.add (get_local $legend) (i32.const 8)))
+	)
+	
+	(func $legend_base_set_ (param $legend i32) (param $base i32)
+		(i32.store (i32.add (get_local $legend) (i32.const 8)) (get_local $base))
+	)
+	
+	(func $legend_exponent_ (param $legend i32) (result i32)
+		(i32.load (i32.add (get_local $legend) (i32.const 12)))
+	)
+	
+	(func $legend_exponent_set_ (param $legend i32) (param $exponent i32)
+		(i32.store (i32.add (get_local $legend) (i32.const 12)) (get_local $exponent))
+	)
+	
+	(func $legend_counter_ (param $legend i32) (result i32)
+		(i32.load (i32.add (get_local $legend) (i32.const 16)))
+	)
+	
+	(func $legend_counter_set_ (param $legend i32) (param $counter i32)
+		(i32.store (i32.add (get_local $legend) (i32.const 16)) (get_local $counter))
+	)
+	
+	(func $legend_array_get_ (param $legend i32) (result i32)
+		(i32.load (i32.add (get_local $legend) (i32.const 20)))
+	)
+	
+	(func $legend_array_set_ (param $legend i32) (param $array i32)
+		(i32.store (i32.add (get_local $legend) (i32.const 20)) (get_local $array))
+	)
+	
+	(func $legend_array_new_ (param $legend i32) (result i32)
+		
+		(local $base i32)
+		(local $array i32)
+		(local $i i32)
+		(set_local $base (call $legend_base_ (get_local $legend)))
+		(set_local $array (call $array_new_ (get_local $base)))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(call $array_value_set_ (get_local $array) (get_local $i) (i32.const 0))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $base)))
+			(br 0)
+		))
+		(get_local $array)
+	)
+	
+	(func $legend_array_load_ (param $legend i32) (param $array i32) (param $index i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $array_value_get_ (get_local $array) (get_local $index)))
+		(if (i32.eq (get_local $result) (i32.const 0)) (then
+			(set_local $result (call $legend_array_new_ (get_local $legend)))
+			(call $array_parent_set_ (get_local $result) (get_local $array))
+			(call $array_value_set_ (get_local $array) (get_local $index) (get_local $result))
+		))
+		(get_local $result)
+	)
+	
+	(func $legend_value_set_ (param $legend i32) (param $key i32) (param $value i32)
+		
+		(local $base i32)
+		(local $exponent i32)
+		(local $power i32)
+		(local $array i32)
+		(local $indice i32)
+		(set_local $base (call $legend_base_ (get_local $legend)))
+		(set_local $exponent (i32.sub (call $legend_exponent_ (get_local $legend)) (i32.const 1)))
+		(set_local $array (call $legend_array_get_ (get_local $legend)))
+		(block (loop
+			(set_local $power (call $math_power_ (get_local $base) (get_local $exponent)))
+			(set_local $indice (i32.div_u (get_local $key) (get_local $power)))
+			(set_local $array (call $legend_array_load_ (get_local $legend) (get_local $array) (get_local $indice)))
+			(set_local $key (i32.rem_u (get_local $key) (get_local $power)))
+			(set_local $exponent (i32.sub (get_local $exponent) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $exponent) (i32.const 0)))
+			(br 0)
+		))
+		(call $array_value_set_ (get_local $array) (get_local $key) (get_local $value))
+	)
+	
+	(func $legend_value_get_ (param $legend i32) (param $key i32) (result i32)
+		
+		(local $base i32)
+		(local $exponent i32)
+		(local $power i32)
+		(local $array i32)
+		(local $indice i32)
+		(set_local $base (call $legend_base_ (get_local $legend)))
+		(set_local $exponent (i32.sub (call $legend_exponent_ (get_local $legend)) (i32.const 1)))
+		(set_local $array (call $legend_array_get_ (get_local $legend)))
+		(block (loop
+			(set_local $power (call $math_power_ (get_local $base) (get_local $exponent)))
+			(set_local $indice (i32.div_u (get_local $key) (get_local $power)))
+			(set_local $array (call $legend_array_load_ (get_local $legend) (get_local $array) (get_local $indice)))
+			(set_local $key (i32.rem_u (get_local $key) (get_local $power)))
+			(set_local $exponent (i32.sub (get_local $exponent) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $exponent) (i32.const 0)))
+			(br 0)
+		))
+		(call $array_value_get_ (get_local $array) (get_local $key))
+	)
+	
+	(func $legend_array_repoint_ (param $legend i32) (param $array i32) (param $from i32) (param $to i32)
+		
+		(call $legend_array_repoint_parent_ (get_local $legend) (get_local $array) (get_local $from) (get_local $to))
+		(call $legend_array_repoint_children_ (get_local $legend) (get_local $array) (get_local $from) (get_local $to))
+	)
+	
+	(func $legend_array_repoint_parent_ (param $legend i32) (param $array i32) (param $from i32) (param $to i32)
+		
+		(local $parent i32)
+		(local $i i32)
+		(local $pointer i32)
+		(set_local $parent (call $array_parent_ (get_local $array)))
+		(set_local $i (i32.const 0))
+		(if (i32.ne (get_local $parent) (i32.const 0)) (then
+			(block (loop
+				(set_local $pointer (call $array_value_get_ (get_local $parent) (get_local $i)))
+				(if (i32.eq (get_local $pointer) (get_local $from)) (then
+					(call $array_value_set_ (get_local $parent) (get_local $i) (get_local $to))
+					(br 2)
+				))
+				(set_local $i (i32.add (get_local $i) (i32.const 1)))
+				(if (i32.eq (get_local $i) (call $legend_base_ (get_local $legend))) (then
+					(br 2)
+				))
+				(br 0)
+			))
+		))
+	)
+	
+	(func $legend_array_repoint_children_ (param $legend i32) (param $array i32) (param $from i32) (param $to i32)
+		
+		(local $i i32)
+		(local $child i32)
+		(local $type i32)
+		(set_local $i (i32.const 0))
+		(if (i32.ne (get_local $array) (i32.const 0)) (then
+			(block (loop
+				(set_local $child (call $array_value_get_ (get_local $array) (get_local $i)))
+				(if (i32.ne (get_local $child) (i32.const 0)) (then
+					(set_local $type (call $memory_type_by_pointer_ (get_local $child)))
+					(if (i32.eq (get_local $type) (typeof "legend_array")) (then
+						(call $array_parent_set_ (get_local $child) (get_local $to))
+					))
+				))
+				(set_local $i (i32.add (get_local $i) (i32.const 1)))
+				(if (i32.eq (get_local $i) (call $legend_base_ (get_local $legend))) (then
+					(br 2)
+				))
+				(br 0)
+			))
+		))
+	)
+	
+	(func $legend_dump_ (param $legend i32)
+		
+		(local $array i32)
+		(local $depth i32)
+		(local $counter i32)
+		(set_local $array (call $legend_array_get_ (get_local $legend)))
+		(set_local $depth (i32.const 0))
+		(set_local $counter (i32.const 0))
+		(set_local $counter (call $legend_dump_array_ (get_local $legend) (get_local $array) (get_local $depth) (get_local $counter)))
+	)
+	
+	(func $legend_dump_array_ (param $legend i32) (param $array i32) (param $depth i32) (param $counter i32) (result i32)
+		
+		(local $i i32)
+		(local $value i32)
+		(local $type i32)
+		(set_local $depth (i32.add (get_local $depth) (i32.const 1)))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(set_local $value (call $array_value_get_ (get_local $array) (get_local $i)))
+			(if (i32.eq (get_local $depth) (call $legend_exponent_ (get_local $legend))) (then
+				(set_local $counter (i32.add (get_local $counter) (i32.const 1)))
+				(call $print_integer_ (get_local $counter))
+				(call $print_integer_ (get_local $value))
+			) (else
+				(set_local $type (call $memory_type_by_pointer_ (get_local $value)))
+				(if (i32.eq (get_local $type) (typeof "legend_array")) (then
+					(set_local $counter (call $legend_dump_array_ (get_local $legend) (get_local $value) (get_local $depth) (get_local $counter)))					
+				))
+			))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(if (i32.eq (get_local $i) (call $legend_base_ (get_local $legend))) (then
+				(br 2)
+			))
+			(br 0)
+		))
+		(get_local $counter)
+	)
+
+	(func $legend_print (param $list i32)
+		
+		(local $i i32)
+		(local $max i32)
+		(set_local $i (i32.const 1))
+		(set_local $max (call $memory_handle_next_))
+		(block (loop
+			(call $print_integer (get_local $i))
+			(call $print_integer (call $legend_value_get_ (get_global $legend) (get_local $i)))
+			(call $legend_value_set (get_global $legend) (get_local $i) (i32.const 0))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $max)))
+			(br 0)
+		))
+	)
+	
+	(func $print_ (param $string i32)
+		(call $print_string_ (get_local $string))
+	)
+
+	(func $print_string_ (param $string i32)
+		(call $host_print_string (i32.add (call $memory_dereference_handle_ (get_local $string)) (i32.const 4)))
+	)
+
+	(func $print_integer_ (param $pointer i32)
+		(call $host_print_integer (get_local $pointer))
+	)
+	
+	(func $math_power_ (param $base i32) (param $exponent i32) (result i32)
+		
+		(local $result i32)
+		(local $i i32)
+		(set_local $result (i32.const 1))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(set_local $result (i32.mul (get_local $result) (get_local $base)))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $exponent)))
+			(br 0)
+		))
+		(get_local $result)
+	)
+	
+	(func $swap_test_ (param $reference_a i32) (param $reference_b i32)	;; need to use compilation phase
+		
+		(local $a i32)
+		(local $b i32)
+		(local $temp i32)
+		(set_local $a (i32.const 1))
+		(set_local $a (i32.const 2))
+		(set_local $temp (get_local $a))
+		(set_local $a (get_local $b))
+		(set_local $b (get_local $temp))
+	)
+)

@@ -1,0 +1,166 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $list_new (param $length i32) (result i32)
+		
+		(local $address i32)
+		(set_local $address
+			(call $pointer_get)
+		)
+		(i32.store
+			(get_local $address)
+			(i32.const 10)
+		)
+		(i32.store
+			(i32.add
+				(get_local $address)
+				(i32.const 1)
+			)
+			(get_local $length)
+		)
+		(i32.store
+			(i32.add
+				(get_local $address)
+				(i32.const 2)
+			)
+			(i32.const 0)
+		)
+		
+		(call $pointer_reserve
+			(i32.add
+				(i32.const 2)
+				(get_local $length)
+			)
+		)
+		(get_local $address)
+	)
+
+	(func $list_item_value (param $list_item i32) (result i32)
+		
+		(i32.load8_u
+			(get_local $list_item)
+		)
+	)
+
+	(func $list_item_next (param $list_item i32) (result i32)
+
+		(i32.load8_u
+			(i32.add
+				(get_local $list_item)
+				(i32.const 1)
+			)
+		)
+	)
+
+	(func $list_item_previous (param $list_item i32) (result i32)
+		
+		(i32.load8_u
+			(i32.add
+				(get_local $list_item)
+				(i32.const 2)
+			)
+		)
+	)
+	
+	(func $list_length (param $list i32) (result i32)
+		
+		(local $result i32)
+		(local $item i32)
+		(set_local $result (i32.const 0))
+		(set_local $item 
+			(call $list_item_next
+				(get_local $list)
+			)
+		)
+		(block
+			(loop
+				(if
+					(i32.eq
+						(get_local $item)
+						(i32.const 0)
+					)
+					(then
+						(br 0)
+					)
+					(else
+						(set_local $result
+							(i32.add
+								(get_local $result)
+								(i32.const 1)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+
+	(func $list_item_append (param $list i32) (param $list_item i32)
+		
+	)
+
+	(func $list_item_remove (param $list i32) (param $list_item i32)
+		
+	)
+
+	(func $list_get_item (param $index i32) (param $index i32) (result i32)
+		(i32.const 0)		
+	)
+
+	(func $list_set_item (param $index i32) (param $index i32) (result i32)
+		(i32.const 0)
+	)
+
+	(func $list_first (result i32)
+		(i32.const 0)
+	)
+
+	(func $list_last (result i32)
+		(i32.const 0)		
+	)
+
+	(func $list_next (param $item i32)
+
+		(i32.load8_u
+			(i32.add
+				(get_local $item)
+				(i32.const 1)
+			)
+		)
+	)
+	
+	(func $list_push
+		
+	)
+
+	(func $list_pop
+		
+	)
+
+	(func $list_loop
+		
+	)
+
+	(func $list_split
+		
+	)
+
+	(func $list_join
+		
+	)
+
+	(func $list_concat
+		
+	)
+
+	(func $list_reverse
+		
+	)
+
+	(func $list_sort
+		
+	)
+)

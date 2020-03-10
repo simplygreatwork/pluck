@@ -1,0 +1,295 @@
+(module
+	
+	(import "./hole.watm")
+	(import "host" "print_string" (func $host_print_string (param i32)))
+	(import "host" "print_integer" (func $host_print_integer (param i32)))
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	(type $i32_to_i32 (func (param i32) (result i32)))
+	(type $i32_i32_to_i32 (func (param i32) (param i32) (result i32)))
+	(type $i32_to_void (func (param i32)))
+	(type $i32_i32_to_void (func (param i32) (param i32)))
+	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
+	(type $i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32)))
+	(global $legend (import "host" "legend") (mut i32))
+	
+	(func $frame_local_to_global (param $frame i32) (param $pointer i32) (result i32)
+		(i32.add (get_local $frame) (get_local $pointer))
+	)
+	
+	(func $frame_global_to_local (param $frame i32) (param $pointer i32) (result i32)
+		(i32.sub (get_local $pointer) (get_local $frame))
+	)
+
+	(func $frame_width (result i32)
+		(i32.const 65536)
+	)
+
+	(func $frame_width_usable (result i32)
+		(i32.sub (call $frame_width) (call $frame_bytes_header))
+	)
+
+	(func $frame_bytes_header (result i32)
+		(i32.const 16)
+	)
+	
+	(func $frame_bytes_usable (result i32)
+		(i32.sub (call $frame_width) (call $frame_bytes_header))
+	)
+	
+	(func $frame_initialize (param $frame i32)
+		
+		(call $frame_bytes_used_set (get_local $frame) (i32.const 0))
+		(call $frame_cursor_allocate_set (get_local $frame) (call $frame_bytes_header))
+		(call $frame_cursor_compact_from_set (get_local $frame) (call $frame_bytes_header))
+		(call $frame_cursor_compact_to_set (get_local $frame) (call $frame_bytes_header))
+		(call $frame_hole_first_set (get_local $frame) (i32.const 0))
+		(call $frame_hole_current_set (get_local $frame) (i32.const 0))
+	)
+	
+	(func $frame_bytes_used (param $frame i32) (result i32)
+		(i32.load16_u (i32.add (get_local $frame) (i32.const 0)))
+	)
+	
+	(func $frame_bytes_used_set (param $frame i32) (param $bytes i32)
+		(i32.store16 (i32.add (get_local $frame) (i32.const 0)) (get_local $bytes))
+	)
+	
+	(func $frame_cursor_allocate (param $frame i32) (result i32)
+		(i32.load16_u (i32.add (get_local $frame) (i32.const 2)))
+	)
+	
+	(func $frame_cursor_allocate_set (param $frame i32) (param $cursor i32)
+		(i32.store16 (i32.add (get_local $frame) (i32.const 2)) (get_local $cursor))
+	)
+	
+	(func $frame_cursor_compact_from (param $frame i32) (result i32)
+		(i32.load16_u (i32.add (get_local $frame) (i32.const 4)))
+	)
+	
+	(func $frame_cursor_compact_from_set (param $frame i32) (param $cursor i32)
+		(i32.store16 (i32.add (get_local $frame) (i32.const 4)) (get_local $cursor))
+	)
+
+	(func $frame_cursor_compact_to (param $frame i32) (result i32)
+		(i32.load16_u (i32.add (get_local $frame) (i32.const 6)))
+	)
+	
+	(func $frame_cursor_compact_to_set (param $frame i32) (param $cursor i32)
+		(i32.store16 (i32.add (get_local $frame) (i32.const 6)) (get_local $cursor))
+	)
+
+	(func $frame_hole_first (param $frame i32) (result i32)
+		(i32.load16_u (i32.add (get_local $frame) (i32.const 8)))
+	)
+	
+	(func $frame_hole_first_set (param $frame i32) (param $hole i32)
+		(i32.store16 (i32.add (get_local $frame) (i32.const 8)) (get_local $hole))
+	)
+	
+	(func $frame_hole_current (param $frame i32) (result i32)
+		(i32.load16_u (i32.add (get_local $frame) (i32.const 10)))
+	)
+	
+	(func $frame_hole_current_set (param $frame i32) (param $hole i32)
+		(i32.store16 (i32.add (get_local $frame) (i32.const 10)) (get_local $hole))
+	)
+
+	(func $frame_cursor_allocate_increment_by (param $frame i32) (param $bytes i32)
+		(call $frame_cursor_allocate_set (get_local $frame) (i32.add (call $frame_cursor_allocate (get_local $frame)) (get_local $bytes)))
+	)
+
+	(func $frame_cursor_allocate_decrement_by (param $frame i32) (param $bytes i32)
+		(call $frame_cursor_allocate_set (get_local $frame) (i32.sub (call $frame_cursor_allocate (get_local $frame)) (get_local $bytes)))
+	)
+	
+	(func $frame_bytes_used_increment_by (param $frame i32) (param $bytes i32)
+		(call $frame_bytes_used_set (get_local $frame) (i32.add (call $frame_bytes_used (get_local $frame)) (get_local $bytes)))
+	)
+	
+	(func $frame_bytes_used_decrement_by (param $frame i32) (param $bytes i32)
+		(call $frame_bytes_used_set (get_local $frame) (i32.sub (call $frame_bytes_used (get_local $frame)) (get_local $bytes)))
+	)
+	
+	(func $frame_allocate (param $frame i32) (param $type i32) (param $size i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $frame_allocate_using_cursor (get_local $frame) (get_local $type) (get_local $size)))
+		(call $frame_bytes_used_increment_by (get_local $frame) (get_local $size))
+		(get_local $result)
+	)
+	
+	(func $frame_allocate_using_cursor (param $frame i32) (param $type i32) (param $size i32) (result i32)
+		
+		(local $pointer i32)
+		(local $cursor i32)
+		(local $cursor_next i32)
+		(set_local $pointer (i32.const 0))
+		(set_local $cursor (call $frame_cursor_allocate (get_local $frame)))
+		(set_local $cursor_next (i32.add (get_local $cursor) (get_local $size)))
+		(if (i32.lt_u (get_local $cursor_next) (call $frame_width)) (then
+			(set_local $pointer (get_local $cursor))
+			(call $frame_cursor_allocate_set (get_local $frame) (get_local $cursor_next))
+		))
+		(get_local $pointer)
+	)
+	
+	(func $frame_bytes_free (param $frame i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $frame_deallocate (param $frame i32) (param $pointer i32)
+		
+		(local $pointer_local i32)
+		(local $size i32)
+		(set_local $size (call $types_sizeof_record (get_local $pointer)))
+		(set_local $pointer_local (call $frame_global_to_local (get_local $frame) (get_local $pointer)))
+		(call $frame_bytes_used_decrement_by (get_local $frame) (get_local $size))
+		(call $frame_allocate_hole (get_local $frame) (get_local $pointer) (get_local $size))
+	)
+	
+	(func $frame_allocate_hole (param $frame i32) (param $pointer i32) (param $length i32)
+		
+		(local $hole i32)
+		(local $hole_local i32)
+		(local $hole_local_next i32)
+		(set_local $hole (call $hole_initialize (get_local $pointer) (get_local $length)))
+		(set_local $hole_local (call $frame_global_to_local (get_local $frame) (get_local $hole)))
+		(set_local $hole_local_next (call $frame_hole_first (get_local $frame)))
+		(call $frame_hole_first_set (get_local $frame) (get_local $hole_local))
+		(call $hole_next_set (get_local $hole) (get_local $hole_local_next))
+	)
+	
+	(func $frame_compact_eligible (param $frame i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $frame_compact (param $frame i32)
+		
+		(local $debug i32)
+		(local $boundary i32)
+		(local $boundary_new i32)
+		(local $pointer i32)
+		(local $type i32)
+		(local $size i32)
+		(local $handle i32)
+		(local $parent i32)
+		(local $destination i32)
+		(local $delta i32)
+		(set_local $debug (i32.const 1))
+		(set_local $boundary (call $frame_local_to_global (get_local $frame) (call $frame_cursor_allocate (get_local $frame))))
+		(set_local $pointer (call $frame_local_to_global (get_local $frame) (call $frame_bytes_header)))
+		(set_local $destination (call $frame_local_to_global (get_local $frame) (call $frame_bytes_header)))
+		(set_local $delta (i32.const 0))
+		(block (loop
+			(if (i32.ge_u (get_local $pointer) (get_local $boundary)) (then (br 2)))
+			(set_local $type (call $memory_type_by_pointer (get_local $pointer)))
+			(set_local $size (call $types_sizeof_record (get_local $pointer)))
+			(if (i32.eq (get_local $type) (typeof "hole")) (then
+				(call $frame_hole_first_set (get_local $frame) (call $hole_next (get_local $pointer)))
+				(set_local $delta (i32.add (get_local $delta) (get_local $size)))
+			) (else (if (i32.eq (get_local $type) (typeof "legend")) (then
+				
+			) (else (if (i32.eq (get_local $type) (typeof "legend_array")) (then
+				(set_local $destination (i32.sub (get_local $pointer) (get_local $delta)))
+				(call $memory_copy (get_local $pointer) (get_local $destination) (get_local $size))
+				(call $legend_array_repoint (get_global $legend) (get_local $destination) (get_local $pointer) (get_local $destination))
+			) (else
+				(set_local $destination (i32.sub (get_local $pointer) (get_local $delta)))
+				(set_local $handle (call $memory_id_by_pointer (get_local $pointer)))
+				(call $memory_copy (get_local $pointer) (get_local $destination) (get_local $size))
+				(call $legend_value_set (get_global $legend) (get_local $handle) (get_local $destination))
+			))))))
+			(set_local $pointer (i32.add (get_local $pointer) (get_local $size)))
+			(br 0)
+		))
+		(set_local $boundary_new (i32.sub (get_local $boundary) (get_local $delta)))
+		(if (i32.eq (i32.const 1) (i32.const 0)) (then
+			(call $print_integer (i32.const 9999))
+			(call $print_integer (get_local $boundary))
+			(call $print_integer (get_local $delta))
+			(call $print_integer (get_local $boundary_new))
+		))
+		(call $frame_cursor_allocate_set (get_local $frame) (call $frame_global_to_local (get_local $frame) (get_local $boundary_new)))
+	)
+	
+	(func $frame_validate (param $frame i32)
+		
+		(local $boundary i32)
+		(local $pointer i32)
+		(local $type i32)
+		(local $size i32)
+		(local $handle i32)
+		(set_local $boundary (call $frame_local_to_global (get_local $frame) (call $frame_cursor_allocate (get_local $frame))))
+		(set_local $pointer (call $frame_local_to_global (get_local $frame) (call $frame_bytes_header)))
+		(if (i32.eq (i32.const 0) (i32.const 0)) (then
+			(call $print_integer (i32.const 1111))
+			(call $print_integer (get_local $boundary))
+		))
+		(block (loop
+			(call $print_integer (i32.const 2222))
+			(call $print_integer (get_local $pointer))
+			(if (i32.ge_u (get_local $pointer) (get_local $boundary)) (then (br 2)))
+			(set_local $type (call $memory_type_by_pointer (get_local $pointer)))
+			(call $print_integer (get_local $type))
+			(set_local $size (call $types_sizeof_record (get_local $pointer)))
+			(call $print_integer (get_local $size))
+			(set_local $handle (call $memory_id_by_pointer (get_local $pointer)))
+			(call $print_integer (get_local $handle))
+			(set_local $pointer (i32.add (get_local $pointer) (get_local $size)))
+			(br 0)
+		))
+	)
+	
+	(func $frame_compact_step (param $frame i32) (param $pointer i32)
+		
+	)
+	
+	(func $memory_type_by_pointer (param $pointer i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (i32.const 400))
+	)
+
+	(func $memory_id_by_pointer (param $pointer i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (i32.const 401))
+	)
+	
+	(func $memory_load (param $address i32) (param $offset i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $address) (get_local $offset) (i32.const 402))
+	)
+
+	(func $memory_copy (param $a i32) (param $b i32) (param $length i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $a) (get_local $b) (get_local $length) (i32.const 403))
+	)
+
+	(func $legend_value_set (param $legend i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $legend) (get_local $key) (get_local $value) (i32.const 404))
+	)
+
+	(func $legend_value_get (param $legend i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $legend) (get_local $key) (i32.const 405))
+	)
+
+	(func $legend_array_repoint (param $legend i32) (param $array i32) (param $from i32) (param $to i32)
+		(call_indirect (type $i32_i32_i32_i32_to_void) (get_local $legend) (get_local $array) (get_local $from) (get_local $to) (i32.const 406))
+	)
+
+	(func $legend_array_parent (param $array i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $array) (i32.const 407))
+	)
+	
+	(func $types_strings_get (param $type i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $type) (i32.const 300))
+	)
+
+	(func $types_sizeof_type (param $type i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $type) (i32.const 301))
+	)
+
+	(func $types_sizeof_record (param $pointer i32) (result i32)	
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (i32.const 302))
+	)
+
+	(func $print_integer (param $pointer i32)
+		(call $host_print_integer (get_local $pointer))
+	)
+)

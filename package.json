@@ -1,0 +1,26 @@
+{
+	"name": "pluck",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"bin": {
+		"pluck": "./src/javascript/cli.js"
+	},
+	"scripts": {
+		"start": "node ./compiler/main.js",
+		"trial": "node ./compiler/trial.js",
+		"prompts": "node ./compiler/prompt.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "Philip Weaver",
+	"license": "MIT",
+	"dependencies": {
+		"fs-jetpack": "^2.2.2",
+		"minimist": "^1.2.0",
+		"prompts": "^2.3.0",
+		"remark": "^10.0.1",
+		"remark-parse": "^6.0.3",
+		"unist-util-visit": "^1.4.0",
+		"wabt": "^1.0.11"
+	}
+}

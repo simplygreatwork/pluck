@@ -1,0 +1,29 @@
+(module
+
+	(import "./core.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $print (param $string i32)
+		(call $print_ (get_local $string))
+	)
+
+	(func $print_string (param $string i32)
+		(call $print_string_ (get_local $string))
+	)
+	
+	(func $print_integer (param $pointer i32)
+		(call $print_integer_ (get_local $pointer))
+	)
+	
+	(func $dereference_handle (param $handle i32) (result i32)
+		(call $memory_dereference_handle_ (get_local $handle))
+	)
+	
+	(func $math_power (param $base i32) (param $exponent i32) (result i32)
+		(call $math_power_ (get_local $base) (get_local $exponent))
+	)
+	
+	(func $swap_test (param $reference_a i32) (param $reference_b i32)	;; need to use compilation phase
+		(call $swap_test_ (get_local $reference_a) (get_local $reference_b))
+	)
+)

@@ -1,0 +1,186 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $string_bytes (result i32)
+		(i32.const 4)
+	)
+	
+	(func $string_content_bytes (param $length i32) (result i32)
+		
+		(i32.add
+			(get_local $length)
+			(i32.sub (i32.const 4) (i32.rem_u (get_local $length) (i32.const 4)))
+		)
+	)
+	
+	(func $string_new (param $length i32) (result i32)
+		
+		(local $string i32)
+		(local $bytes i32)
+		(set_local $bytes (call $string_content_bytes (get_local $length)))
+		(set_local $string (call $memory_allocate (typeof "string") (i32.add
+			(call $string_bytes)
+			(get_local $bytes)
+		)))
+		(call $string_length_set (get_local $string) (get_local $length))
+		(get_local $string)
+	)
+	
+	(func $string_length (param $string i32) (result i32)
+		(call $memory_load (get_local $string) (i32.const 0))
+	)
+	
+	(func $string_length_set (param $string i32) (param $length i32)
+		(call $memory_store (get_local $string) (i32.const 0) (get_local $length))
+	)
+	
+	(func $string_chars (param $string i32) (result i32)
+		(i32.add (call $memory_dereference_handle (get_local $string)) (i32.const 12))
+	)
+	
+	(func $string_set_char (param $string i32) (param $index i32) (param $value i32)
+		
+		(call $memory_store8
+			(get_local $string)
+			(i32.add (i32.const 4) (get_local $index))
+			(get_local $value)
+		)
+	)
+	
+	(func $string_get_char (param $string i32) (param $index i32) (result i32)
+		
+		(call $memory_load8_u
+			(get_local $string)
+			(i32.add (i32.const 4) (get_local $index))
+		)
+	)
+	
+	(func $string_clone (param $string i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $string_new (call $string_length (get_local $string))))
+		(call $memory_copy
+			(call $string_chars (get_local $string))
+			(call $string_chars (get_local $result))
+			(call $string_length (get_local $string))
+		)
+		(get_local $result)
+	)
+	
+	(func $string_append (param $a i32) (param $b i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $string_new (i32.add
+			(call $string_length (get_local $a))
+			(call $string_length (get_local $b))
+		)))
+		(call $memory_copy
+			(call $string_chars (get_local $a))
+			(call $string_chars (get_local $result))
+			(call $string_length (get_local $a))
+		)
+		(call $memory_copy
+			(call $string_chars (get_local $b))
+			(i32.add
+				(call $memory_dereference_handle (get_local $result))
+				(i32.add 
+					(i32.const 12)
+					(call $string_length (get_local $a))
+				)
+			)
+			(call $string_length (get_local $b))
+		)
+		(get_local $result)
+	)
+	
+	(func $string_equals (param $string i32) (param $string_b i32) (result i32)
+		
+		(local $result i32)
+		(local $i i32)
+		(set_local $result (i32.const 0))
+		(set_local $i (i32.const 0))
+		(if
+			(i32.eq (call $string_length (get_local $string)) (call $string_length (get_local $string_b)))
+			(then
+				(set_local $result (i32.const 1))
+				(block (loop
+					(if
+						(i32.eq (call $string_get_char (get_local $string) (get_local $i)) (call $string_get_char (get_local $string_b) (get_local $i)))
+						(then)
+						(else (set_local $result (i32.const 0)))
+					)
+					(set_local $i (i32.add (get_local $i) (i32.const 1)))
+					(br_if 1 (i32.eq (get_local $i) (call $string_length (get_local $string))))
+					(br 0)
+				))
+			)
+			(else (set_local $result (i32.const 0)))
+		)
+		(get_local $result)
+	)
+	
+	(func $string_compare (param $string_a i32) (param $string_b i32) (result i32)
+		
+		(local $result i32)
+		(local $i i32)
+		(local $string_a_length i32)
+		(local $string_b_length i32)
+		(local $difference i32)
+		(local $done i32)
+		(set_local $result (i32.const 0))
+		(set_local $i (i32.const 0))
+		(set_local $string_a_length (call $string_length (get_local $string_a)))
+		(set_local $string_b_length (call $string_length (get_local $string_b)))
+		(set_local $difference (i32.const 0))
+		(set_local $done (i32.const 0))
+		(block (loop
+			(br_if 1
+				(i32.or
+					(i32.ge_s (get_local $i) (get_local $string_a_length))
+					(i32.ge_s (get_local $i) (get_local $string_b_length))
+				)
+			)
+			(set_local $difference
+				(i32.sub
+					(call $string_get_char (get_local $string_a) (get_local $i))
+					(call $string_get_char (get_local $string_b) (get_local $i))
+				)
+			)
+			(if
+				(i32.ne (get_local $difference) (i32.const 0))
+				(then
+					(set_local $result (get_local $difference))
+					(set_local $done (i32.const 1))
+					(br 2)
+				)
+			)
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br 0)
+		))
+		(if
+			(i32.eq (get_local $done) (i32.const 0))
+			(then 
+				(if
+					(i32.lt_s (get_local $string_a_length) (get_local $string_b_length))
+					(then (set_local $result (i32.const 1)))
+				)
+				(if
+					(i32.lt_s (get_local $string_b_length) (get_local $string_a_length))
+					(then (set_local $result (i32.const -1)))
+				)
+			)
+		)
+		(get_local $result)
+	)
+	
+	(func $string_index_of (param $string i32) (param $string_b i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $string_split (param $string i32) (param $string_b i32) (result i32)
+		(i32.const 0)
+	)
+)

@@ -1,0 +1,27 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./number.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $function_bytes (result i32)
+		(i32.const 4)
+	)
+	
+	(func $function_new (param $id i32) (result i32)
+		
+		(local $function i32)
+		(set_local $function (call $memory_allocate (typeof "function") (call $function_bytes)))
+		(call $function_id_set (get_local $function) (call $number_new (get_local $id)))
+		(get_local $function)
+	)
+	
+	(func $function_id (param $function i32) (result i32)
+		(call $memory_load (get_local $function) (i32.const 0))
+	)
+	
+	(func $function_id_set (param $function i32) (param $id i32)
+		(call $memory_store (get_local $function) (i32.const 0) (get_local $id))
+	)
+)

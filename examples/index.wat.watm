@@ -1,0 +1,425 @@
+(module
+	
+	(import "../library/utility.watm")
+	(import "../library/array.watm")
+	(import "../library/legend.watm")
+	(import "../library/memory.watm")
+	(import "../library/string.watm")
+	(import "../library/boolean.watm")
+	(import "../library/number.watm")
+	(import "../library/function.watm")
+	(import "../library/list.watm")
+	(import "../library/assertion.watm")
+	(import "../library/tree.watm")
+	(import "../library/map.watm")
+	(import "../library/stream.watm")
+	(import "../library/table.watm")
+	(import "../library/types.watm")
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	(global $global (import "host" "global") (mut i32))
+	(global $legend (import "host" "legend") (mut i32))
+	(elem (i32.const 0) $test_list_iterate_each)
+	(elem (i32.const 3) $test_map_iterate_each)
+	(elem (i32.const 4) $test_tree_iterate_each)
+	(elem (i32.const 6) $test_stream_step_one)
+	(elem (i32.const 7) $test_stream_step_two)
+	(elem (i32.const 8) $test_stream_step_three)
+	
+	(function $main
+		
+		(call $setup)
+		(call $test_typeof)
+		(call $test_typeof_sizes)
+		(call $test_hello_world)
+		(call $test_string_macro)
+		(call $test_string_alphanum)
+		(call $test_string_clone)
+		(call $test_string_append)
+		(call $test_string_compare)
+		(call $test_number_add)
+		(call $test_boolean_and)
+		(call $test_list)
+		(call $test_map)
+		(call $test_tree)
+		(call $test_tree_map)
+		(call $test_arguments_dynamic)
+		(call $test_stream)
+		(call $test_table)
+		(call $test_handles)
+		(call $test_array)
+		(call $test_legend)
+	)
+	
+	(func $setup
+		
+		(call $memory_bootstrap)
+		(set_global $global (call $map_new))
+	)
+	
+	(func $test_typeof
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Test typeof"))
+		(call $print_string (string "------------------------------"))
+		(call $print_integer (typeof "boolean"))
+		(call $print_integer (typeof "boolean"))
+		(call $print_integer (typeof "number"))
+		(call $print_integer (typeof "number"))
+		(call $print_integer (typeof "string"))
+		(call $print_integer (typeof "string"))
+		(call $print_integer (typeof "function"))
+		(call $print_integer (typeof "function"))
+		(call $print_integer (typeof "list"))
+		(call $print_integer (typeof "list"))
+		(call $print_integer (typeof "list_item"))
+		(call $print_integer (typeof "list_item"))
+		(call $print_integer (typeof "map"))
+		(call $print_integer (typeof "map"))
+		(call $print_integer (typeof "tree"))
+		(call $print_integer (typeof "tree"))
+		(call $print_integer (typeof "tree_node"))
+		(call $print_integer (typeof "tree_node"))
+		(call $print_integer (typeof "stream"))
+		(call $print_integer (typeof "stream"))
+	)
+	
+	(func $test_typeof_sizes
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Test typeof sizes"))
+		(call $print_string (string "------------------------------"))
+		(call $print_integer (call $types_sizeof_type (typeof "boolean")))
+		(call $print_integer (call $types_sizeof_type (typeof "number")))
+		(call $print_integer (call $types_sizeof_type (typeof "string")))
+		(call $print_integer (call $types_sizeof_type (typeof "function")))
+		(call $print_integer (call $types_sizeof_type (typeof "list")))
+		(call $print_integer (call $types_sizeof_type (typeof "list_item")))
+		(call $print_integer (call $types_sizeof_type (typeof "map")))
+		(call $print_integer (call $types_sizeof_type (typeof "tree")))
+		(call $print_integer (call $types_sizeof_type (typeof "tree_node")))
+		(call $print_integer (call $types_sizeof_type (typeof "stream")))
+	)
+	
+	(func $test_hello_world
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Hello World!"))
+	)
+	
+	(func $test_string_macro
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Hello from a string macro!"))
+	)
+	
+	(func $test_string_alphanum
+		
+		(local $string i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Alphanumeric string"))
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "09AZaz"))
+	)
+	
+	(func $test_string_clone
+		
+		(local $string i32)
+		(local $string_result i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Cloning a string"))
+		(call $print_string (string "------------------------------"))
+		(set_local $string (string "abc"))
+		(set_local $string_result (call $string_clone (get_local $string)))
+		(call $print_string (get_local $string))
+		(call $print_string (get_local $string_result))
+		(call $assert_string_equals (get_local $string) (get_local $string_result))
+	)
+	
+	(func $test_string_append
+		
+		(local $string_a i32)
+		(local $string_b i32)
+		(local $string_result i32)
+		(local $string_expected i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Appending a string"))
+		(call $print_string (string "------------------------------"))
+		(set_local $string_a (string "abcd"))
+		(call $print_string (get_local $string_a))
+		(set_local $string_b (string "efghi"))
+		(call $print_string (get_local $string_b))
+		(set_local $string_result (call $string_append (get_local $string_a) (get_local $string_b)))
+		(set_local $string_expected (string "abcdefghi"))
+		(call $print_string (get_local $string_expected))
+		(call $print_string (get_local $string_result))
+		(call $assert_string_equals (get_local $string_expected) (get_local $string_result))
+	)
+	
+	(func $test_string_compare
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Comparing strings"))
+		(call $print_string (string "------------------------------"))
+		(call $assert_number_equals
+			(call $number_new (i32.const 0))
+			(call $number_new (call $string_compare (string "abc") (string "abc")))
+		)
+		(call $assert_number_equals
+			(call $number_new (i32.const -1))
+			(call $number_new (call $string_compare (string "ab") (string "ac")))
+		)
+		(call $assert_number_equals
+			(call $number_new (i32.const 1))
+			(call $number_new (call $string_compare (string "ac") (string "ab")))
+		)
+		(call $assert_number_equals
+			(call $number_new (i32.const 1))
+			(call $number_new (call $string_compare (string "ab") (string "abc")))
+		)
+		(call $assert_number_equals
+			(call $number_new (i32.const -1))
+			(call $number_new (call $string_compare (string "abc") (string "ab")))
+		)
+	)
+	
+	(func $test_number_add
+		
+		(local $number_a i32)
+		(local $number_b i32)
+		(local $number_c i32)
+		(local $number_expected i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Adding numbers"))
+		(call $print_string (string "------------------------------"))
+		(set_local $number_a (call $number_new (i32.const 3)))
+		(set_local $number_b (call $number_new (i32.const 4)))
+		(set_local $number_c (call $number_add (get_local $number_a) (get_local $number_b)))
+		(set_local $number_expected (call $number_new (i32.const 7)))
+		(call $print_string (call $number_to_string (get_local $number_a)))
+		(call $print_string (call $number_to_string (get_local $number_b)))
+		(call $print_string (call $number_to_string (get_local $number_c)))
+		(call $assert_number_type (get_local $number_c))
+		(call $assert_number_equals (get_local $number_c) (get_local $number_expected))
+	)
+	
+	(func $test_number_iterate
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Iterating a number"))
+		(call $print_string (string "------------------------------"))
+		(call $number_iterate (call $number_new (i32.const 5)))
+	)
+	
+	(func $test_number_iterate_each (param $index i32)
+		
+		(call $print_integer (get_local $index))
+	)
+
+	(func $test_boolean_and
+		
+		(local $boolean_a i32)
+		(local $boolean_b i32)
+		(local $boolean_c i32)
+		(local $boolean_expected i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Comparing booleans"))
+		(call $print_string (string "------------------------------"))
+	)
+
+	(func $test_list
+		
+		(local $list i32)
+		(local $item i32)
+		(local $index i32)
+		(local $test_list_iterate_each i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing a list"))
+		(call $print_string (string "------------------------------"))
+		(set_local $list (call $list_new))
+		(set_local $test_list_iterate_each (i32.const 0))
+		(call $list_append (get_local $list) (string "a"))
+		(call $list_append (get_local $list) (string "b"))
+		(call $list_append (get_local $list) (string "c"))
+		(call $list_iterate (get_local $list) (get_local $test_list_iterate_each) (i32.const 0))
+		(call $assert_list_type (get_local $list))
+		(call $assert_list_length (get_local $list) (call $number_new (i32.const 3)))
+		(call $assert_number_equals (call $number_new (call $list_index_of (get_local $list) (string "c"))) (call $number_new (i32.const 2)))
+	)
+	
+	(func $test_list_iterate_each (param $item i32) (param $index i32) (param $context i32)
+		
+		(call $print_string (call $item_value (get_local $item)))
+	)
+	
+	(func $test_map
+		
+		(local $map i32)
+		(local $test_map_iterate_each i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing a map"))
+		(call $print_string (string "------------------------------"))
+		(set_local $test_map_iterate_each (i32.const 3))
+		(set_local $map (call $map_new))
+		(call $map_set (get_local $map) (string "one") (call $number_new (i32.const 1)))
+		(call $map_set (get_local $map) (string "two") (call $number_new (i32.const 2)))
+		(call $map_set (get_local $map) (string "three") (call $number_new (i32.const 3)))
+		(call $map_iterate (get_local $map) (get_local $test_map_iterate_each) (i32.const 0))
+	)
+	
+	(func $test_map_iterate_each (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+		
+		(call $print_string (get_local $key))
+		(call $print_string (call $number_to_string (get_local $value)))
+	)
+
+	(func $test_tree
+		
+		(local $tree i32)
+		(local $test_tree_iterate_each i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing a binary search tree"))
+		(call $print_string (string "------------------------------"))
+		(set_local $test_tree_iterate_each (i32.const 4))
+		(set_local $tree (call $tree_new))
+		(call $tree_set (get_local $tree) (string "b") (call $number_new (i32.const 2)))
+		(call $tree_set (get_local $tree) (string "a") (call $number_new (i32.const 1)))
+		(call $tree_set (get_local $tree) (string "c") (call $number_new (i32.const 3)))
+		(call $tree_set (get_local $tree) (string "e") (call $number_new (i32.const 5)))
+		(call $tree_set (get_local $tree) (string "d") (call $number_new (i32.const 4)))
+		(call $tree_iterate (get_local $tree) (get_local $test_tree_iterate_each))
+	)
+	
+	(func $test_tree_iterate_each (param $key i32) (param $value i32) (param $index i32)
+		
+		(call $print_string (get_local $key))
+		(call $print_string (call $number_to_string (get_local $value)))
+		(call $print_integer (get_local $index))
+	)
+
+	(func $test_tree_map
+		
+		(local $map i32)
+		(local $test_map_iterate_each i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing a tree map"))
+		(call $print_string (string "------------------------------"))
+	)
+
+	(func $test_arguments_dynamic
+		
+		(local $arguments i32)
+		(set_local $arguments (call $tree_new))
+		(call $tree_set (get_local $arguments) (string "key:one") (string "value:one"))
+		(call $tree_set (get_local $arguments) (string "key:two") (string "value:two"))
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing dynamic arguments"))
+		(call $print_string (string "(requires map implementation)"))
+		(call $print_string (string "------------------------------"))
+		(call $test_arguments_dynamic_callee (get_local $arguments))
+	)
+
+	(func $test_arguments_dynamic_callee (param $arguments i32)
+		
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Dynamic arguments callee"))
+		(call $print_string (string "------------------------------"))
+		(call $print_string (call $tree_get (get_local $arguments) (string "key:one")))
+		(call $print_string (call $tree_get (get_local $arguments) (string "key:two")))
+	)
+	
+	(func $test_stream
+		
+		(local $stream i32)
+		(local $list i32)
+		(local $function i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing a stream"))
+		(call $print_string (string "------------------------------"))
+		(set_local $stream (call $stream_new))
+		(set_local $list (call $list_new))
+		(call $list_append (get_local $list) (call $function_new (i32.const 6)))
+		(call $list_append (get_local $list) (call $function_new (i32.const 7)))
+		(call $list_append (get_local $list) (call $function_new (i32.const 8)))
+		(call $stream_list_set (get_local $stream) (get_local $list))
+		(call $stream_push (get_local $stream) (string "a"))
+	)
+
+	(func $test_stream_step_one (param $value i32) (result i32)
+		(call $string_append (get_local $value) (string "b"))
+	)
+
+	(func $test_stream_step_two (param $value i32) (result i32)
+		(call $string_append (get_local $value) (string "c"))
+	)
+	
+	(func $test_stream_step_three (param $value i32) (result i32)
+		(call $assert_string_equals (get_local $value) (string "abc"))
+		(get_local $value)
+	)
+
+	(func $test_handles
+
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Reserved handle count"))
+		(call $print_string (string "------------------------------"))
+		(call $print_integer (i32.load (i32.const 12)))
+	)
+
+	(func $test_array
+		
+		(local $array i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Testing an array"))
+		(call $print_string (string "------------------------------"))
+		(set_local $array (call $array_new (i32.const 3)))
+		(call $array_value_set (get_local $array) (i32.const 0) (i32.const 0))
+		(call $print_integer (call $array_value_get (get_local $array) (i32.const 0)))
+		(call $array_value_set (get_local $array) (i32.const 1) (i32.const 1))
+		(call $print_integer (call $array_value_get (get_local $array) (i32.const 1)))
+		(call $array_value_set (get_local $array) (i32.const 2) (i32.const 2))
+		(call $print_integer (call $array_value_get (get_local $array) (i32.const 2)))
+	)
+	
+	(func $test_legend
+
+		(local $legend i32)
+		(local $i i32)
+		(local $max i32)
+		(call $print_string (string "------------------------------"))
+		(call $print_string (string "Test legend"))
+		(call $print_string (string "------------------------------"))
+		(set_local $legend (call $legend_new))
+		(set_local $i (i32.const 0))
+		(set_local $max (i32.const 81))
+		(block (loop
+			(call $legend_value_set (get_local $legend) (get_local $i) (get_local $i))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $max)))
+			(br 0)
+		))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(call $legend_value_set (get_local $legend) (get_local $i) (get_local $max))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $max)))
+			(br 0)
+		))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(call $legend_value_set (get_local $legend) (get_local $i) (get_local $i))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $max)))
+			(br 0)
+		))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(call $print_integer (call $legend_value_get (get_local $legend) (get_local $i)))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $max)))
+			(br 0)
+		))
+	)
+	
+	(export "main" (func $main))
+)

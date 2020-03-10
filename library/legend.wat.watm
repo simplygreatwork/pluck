@@ -1,0 +1,62 @@
+
+(module
+	
+	(import "./core.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $legend_new (result i32)
+		(call $legend_new_)
+	)
+	
+	(func $legend_base (param $legend i32) (result i32)
+		(call $legend_base_ (get_local $legend))
+	)
+	
+	(func $legend_base_set (param $legend i32) (param $base i32)
+		(call $legend_base_set_ (get_local $legend) (get_local $base))
+	)
+
+	(func $legend_exponent (param $legend i32) (result i32)
+		(call $legend_exponent_ (get_local $legend))
+	)
+	
+	(func $legend_exponent_set (param $legend i32) (param $exponent i32)
+		(call $legend_exponent_set_ (get_local $legend) (get_local $exponent))
+	)
+
+	(func $legend_counter (param $legend i32) (result i32)
+		(call $legend_counter_ (get_local $legend))
+	)
+	
+	(func $legend_counter_set (param $legend i32) (param $counter i32)
+		(call $legend_counter_set_ (get_local $legend) (get_local $counter))
+	)
+
+	(func $legend_array_get (param $legend i32) (result i32)
+		(call $legend_array_get_ (get_local $legend))
+	)
+	
+	(func $legend_array_set (param $legend i32) (param $array i32)
+		(call $legend_array_set_ (get_local $legend) (get_local $array))
+	)
+
+	(func $legend_array_new (param $legend i32) (result i32)
+		(call $legend_array_new_ (get_local $legend))
+	)
+
+	(func $legend_array_load (param $legend i32) (param $array i32) (param $index i32) (result i32)
+		(call $legend_array_load_ (get_local $legend) (get_local $array) (get_local $index))
+	)
+	
+	(func $legend_value_set (param $legend i32) (param $key i32) (param $value i32)
+		(call $legend_value_set_ (get_local $legend) (get_local $key) (get_local $value))
+	)
+	
+	(func $legend_value_get (param $legend i32) (param $key i32) (result i32)
+		(call $legend_value_get_ (get_local $legend) (get_local $key))
+	)
+
+	(func $legend_dump (param $legend i32)
+		(call $legend_dump_ (get_local $legend))
+	)
+)
