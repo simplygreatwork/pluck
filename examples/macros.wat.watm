@@ -122,7 +122,7 @@
 		print_integer value
 		set value to value minus 2
 		print_integer value
-
+		
 	func test_and_or
 		
 		print "------------------------------"

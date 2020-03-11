@@ -21,7 +21,7 @@ class Runner {
 			},
 			macros: {
 				expressions: [
-					require('../macros/tokens.js'),
+					require('../macros/elements.js'),
 					require('../macros/accepts.js'),
 					require('../macros/function.js'),
 					require('../macros/loop.js'),

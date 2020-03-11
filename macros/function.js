@@ -20,7 +20,7 @@ module.exports = function(system, document) {
 			state.locals = shared.find_locals(state)
 			node.value[1].value = shared.dollarify(node.value[1].value)
 		},
-
+		
 		exit: function(node, index, parents, state) {
 			
 			if (! query.is_type(node, 'expression')) return

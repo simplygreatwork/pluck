@@ -12,12 +12,12 @@ module.exports = function(system, document) {
 	return {
 		
 		enter : function(node, index, parents, state) {		
-
+			
 			if (! query.is_type(node, 'expression')) return
 			if (! query.is_type_value(node.value[0], 'symbol', 'else')) return
 			if (! query.is_type_value(node.value[1], 'symbol', 'if')) return
 		},
-
+		
 		exit: function(node, index, parents, state) {
 			return
 		}

@@ -3,9 +3,6 @@ const query = require('../compiler/query')
 const parse = require('../compiler/parse')
 const shared = require('./shared')
 
-let system = null
-let document = null
-
 module.exports = function(system, document) {
 	
 	return {
