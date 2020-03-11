@@ -18,7 +18,7 @@ module.exports = function(system, document) {
 			if (! node.value[1].value) return
 			state.func = node
 			state.locals = shared.find_locals(state)
-			node.value[1].value = shared.dollarify(node.value[1].value)
+			node.value[1].value = shared.dollarize(node.value[1].value)
 		},
 		
 		exit: function(node, index, parents, state) {

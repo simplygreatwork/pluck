@@ -15,7 +15,7 @@ module.exports = function(system, document) {
 				node.value[0].value = 'set_local'
 			}
 			if (! query.is_type_value(node.value[0], 'symbol', 'set_local')) return
-			node.value[1].value = shared.dollarify(node.value[1].value)
+			node.value[1].value = shared.dollarize(node.value[1].value)
 			if (query.is_expression_longer(node, 2)) {
 				if (query.is_type_value(node.value[2], 'symbol', 'to')) {
 					query.remove(node, node.value[2])

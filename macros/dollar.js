@@ -24,10 +24,10 @@ module.exports = function(system, document) {
 function rewrite(node, index, parents, state, document) {
 	
 	if (shared.is_callable(document, '$' + node.value)) {
-		node.value = shared.dollarify(node.value)
+		node.value = shared.dollarize(node.value)
 	} else {
 		if (! shared.is_inside_function(state)) return
 		if (! shared.is_local(state, node.value)) return
-		node.value = shared.dollarify(node.value)
+		node.value = shared.dollarize(node.value)
 	}
 }

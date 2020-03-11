@@ -53,7 +53,7 @@ function get_config(node) {
 		if (each.value == 'from') config.from = node.value[index + 1].value
 		if (each.value == 'to') config.to = node.value[index + 1].value
 		if (each.value == 'every') config.every = node.value[index + 1].value
-		config.with = shared.dollarify(config.with)
+		config.with = shared.dollarize(config.with)
 	})
 	return config
 }

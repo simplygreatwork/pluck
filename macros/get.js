@@ -11,7 +11,7 @@ module.exports = function(system, document) {
 			
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'symbol')) return
-			let value = shared.dollarify(node.value)
+			let value = shared.dollarize(node.value)
 			if (! shared.is_local(state, value)) return
 			if (! index > 0) return
 			let parent = query.last(parents)

@@ -66,7 +66,7 @@ function is_local(state, value) {
 	}
 }
 
-function dollarify(symbol) {
+function dollarize(symbol) {
 	
 	return (symbol.charAt && symbol.charAt(0) == '$') ? symbol : '$' + symbol
 }
@@ -76,5 +76,5 @@ module.exports = {
 	find_locals,
 	is_local,
 	is_callable,
-	dollarify
+	dollarize
 }

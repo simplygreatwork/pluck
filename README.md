@@ -33,7 +33,7 @@ function enter(node, index, parents, state) {
     if (index <= 2) return true
     if (query.is_type(each, 'expression')) return false
     if (query.is_type(each, 'whitespace')) return true
-    let value = shared.dollarify(each.value)
+    let value = shared.dollarize(each.value)
     node.value[index] = parse(` (param ${value} i32)`)[0]
     return true
   })
