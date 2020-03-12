@@ -1,9 +1,10 @@
 
-module.exports = function() {
+module.exports = function(options) {
 	
 	let parslets = null
 	let elements = null
 	let installed = { transform: require('./transforms/default') }
+	Object.assign(installed, options)
 	
 	function bp (token) {
 		return token.type ? find(token).bp : 0
@@ -39,10 +40,6 @@ module.exports = function() {
 	}
 	
 	return {
-		
-		install: function(options) {
-			Object.assign(installed, options)
-		},
 		
 		parse: function(elements_) {
 			

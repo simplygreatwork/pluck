@@ -1,8 +1,6 @@
 
-let parser = require('../parser')()
 let lexer = require('../lexer/words')
-
-parser.install({
+let parser = require('../parser')({
 	transform: require('../transforms/expression'),
 	parslets: {
 		'expression:': require('../parslets/expression'),

@@ -18,8 +18,7 @@ module.exports = function (parse, lexer, transform) {
 	
 	function parser() {
 		
-		let parser = require('../parser')()
-		parser.install({
+		return require('../parser')({
 			transform: require('../transforms/expression'),
 			parslets: {
 				'expression:': require('../parslets/expression'),
@@ -36,6 +35,5 @@ module.exports = function (parse, lexer, transform) {
 				'symbol:)': require('../parslets/close')
 			}
 		})
-		return parser
 	}
 }
