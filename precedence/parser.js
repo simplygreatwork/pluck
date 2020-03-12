@@ -1,7 +1,7 @@
 
-let lexer = null
-let transform = null
 let parslets = null
+let elements = null
+let installed = { transform: require('./transforms/default') }
 
 function bp (token) {
 	
@@ -23,12 +23,12 @@ function led (left, token) {
 function parse (rbp) {
 	
 	rbp = rbp || 0
-	let token = lexer.next()
+	let token = elements.next()
 	let left = nud(token)
 	while (true) {
-		let next = lexer.peek()
+		let next = elements.peek()
 		if (bp(next) > rbp) {
-			token = lexer.next()
+			token = elements.next()
 			left = led(left, token)
 		} else {
 			break
@@ -37,42 +37,19 @@ function parse (rbp) {
 	return left
 }
 
-function tokens(string) {
-	
-	if (true) {
-		return string.split(' ').map(function(each) {
-			let type = each
-			if (! isNaN(parseInt(each))) type = 'number'
-			return {
-				type: type,
-				value: each
-			}
-		})
-	} else {
-		return []
-	}
-}
-
 module.exports = {
 	
-	parse: function(string) {
+	install: function(options) {
+		Object.assign(installed, options)
+	},
+	
+	parse: function(elements_) {
 		
-		lexer = require('./lexer')(tokens(string))
-		transform = require('./transform')
-		parslets = {
-			'expression': require('./parslets/expression')(parse, lexer, transform),
-			'number': require('./parslets/number')(parse, lexer, transform),
-			'equals': require('./parslets/equals')(parse, lexer, transform),
-			'and': require('./parslets/and')(parse, lexer, transform),
-			'or': require('./parslets/or')(parse, lexer, transform),
-			'not': require('./parslets/not')(parse, lexer, transform),
-			'plus': require('./parslets/plus')(parse, lexer, transform),
-			'minus': require('./parslets/minus')(parse, lexer, transform),
-			'greater': require('./parslets/greater')(parse, lexer, transform),
-			'less': require('./parslets/less')(parse, lexer, transform),
-			'(': require('./parslets/open')(parse, lexer, transform),
-			')': require('./parslets/close')(parse, lexer, transform)
-		}
+		elements = elements_
+		parslets = {}
+		Object.keys(installed.parslets).forEach(function(key) {
+			parslets[key] = installed.parslets[key](parse, elements, installed.transform)
+		})
 		return parse()
 	}
 }

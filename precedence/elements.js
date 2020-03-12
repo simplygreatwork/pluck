@@ -1,7 +1,7 @@
 
-const eof = {type: null, match: null}
+const eof = { type: null, match: null }
 
-class Lexer {
+class Elements {
 	
 	constructor(tokens) {
 		
@@ -20,7 +20,7 @@ class Lexer {
 	expect(type) {
 		
 		const token = this.next()
-		if (type != token.type) throw new Error(`Unexpected token: ${t.match || '<<eof>>'}`)
+		if (type != token.type) throw new Error(`Unexpected token: ${token.value || '<<eof>>'}`)
 	}
 	
 	eof() {
@@ -28,7 +28,7 @@ class Lexer {
 	}
 }
 
-module.exports = function (tokens) {
+module.exports = function (array) {
 	
-	return new Lexer(tokens)
+	return new Elements(array)
 }
