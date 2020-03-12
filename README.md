@@ -80,9 +80,11 @@ macros: {
 - Parses WebAssembly .wat files, transforms using macros, and launches the project's main function.
 - s-expressions in WebAssembly text syntax are parsed using a fork of the simple, tiny parser combinator library: uparse
   - https://github.com/jimf/uparse
+- The parser infers s-expressions statements from indentations in the source code.
 - Transformations for string building and automatic module importing and exporting are included.
 - Each module's functions are exported automatically using macros.
 - Each module's functions are imported automatically using macros.
+- Several macros have been partially implemented such as: repeat, if, break, function references, and some logic and arithmetic operators.
 - Contains the beginning of a basic standard library in WebAssembly text syntax.
   - strings, lists, booleans, numbers, assertions
 - The parser supports documentation first.
@@ -105,6 +107,7 @@ macros: {
 - macros/
 - examples/
 - fixtures/
+- precedence/
 
 ### Requirements
 
