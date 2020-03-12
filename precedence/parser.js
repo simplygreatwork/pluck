@@ -2,7 +2,7 @@
 module.exports = function(options) {
 	
 	let parslets = null
-	let elements = null
+	let iterator = null
 	let installed = { transform: require('./transforms/default') }
 	Object.assign(installed, options)
 	
@@ -25,12 +25,12 @@ module.exports = function(options) {
 	function parse (rbp) {
 		
 		rbp = rbp || 0
-		let token = elements.next()
+		let token = iterator.next()
 		let left = nud(token)
 		while (true) {
-			let next = elements.peek()
+			let next = iterator.peek()
 			if (bp(next) > rbp) {
-				token = elements.next()
+				token = iterator.next()
 				left = led(left, token)
 			} else {
 				break
@@ -41,12 +41,12 @@ module.exports = function(options) {
 	
 	return {
 		
-		parse: function(elements_) {
+		parse: function(iterator_) {
 			
-			elements = elements_
+			iterator = iterator_
 			parslets = {}
 			Object.keys(installed.parslets).forEach(function(key) {
-				parslets[key] = installed.parslets[key](parse, elements, installed.transform)
+				parslets[key] = installed.parslets[key](parse, iterator, installed.transform)
 			})
 			return parse()
 		}
