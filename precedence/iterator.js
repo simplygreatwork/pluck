@@ -1,7 +1,7 @@
 
 const eof = { type: null, match: null }
 
-class Elements {
+class Iterator {
 	
 	constructor(tokens) {
 		
@@ -30,5 +30,5 @@ class Elements {
 
 module.exports = function (array) {
 	
-	return new Elements(array)
+	return new Iterator(array)
 }

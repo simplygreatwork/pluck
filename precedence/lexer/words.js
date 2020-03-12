@@ -1,5 +1,5 @@
 
-const elements = require('../elements')
+const iterator = require('../iterator')
 
 module.exports = {
 	
@@ -13,6 +13,6 @@ module.exports = {
 				value: each
 			}
 		})
-		return elements(array)
+		return iterator(array)
 	}
 }

@@ -1,5 +1,5 @@
 
-const elements = require('../elements')
+const iterator = require('../iterator')
 
 module.exports = function (parse, lexer, transform) {
 	
@@ -8,11 +8,11 @@ module.exports = function (parse, lexer, transform) {
 		bp: 0,
 		
 		nud: function(token, bp) {
-			return parser().parse(elements(token.value))
+			return parser().parse(iterator(token.value))
 		},
 		
 		led: function(left, token, bp) {
-			return parser().parse(elements(token.value))
+			return
 		}
 	}
 	
