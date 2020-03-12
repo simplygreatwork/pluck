@@ -1,5 +1,5 @@
 
-let parser = require('../parser')
+let parser = require('../parser')()
 let lexer = require('../lexer/expressions')
 
 parser.install({
