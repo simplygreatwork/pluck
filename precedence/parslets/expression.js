@@ -6,11 +6,11 @@ module.exports = function (parse, lexer, transform) {
 		bp: 0,
 		
 		nud: function(token, bp) {
-			return
+			return token
 		},
 		
 		led: function(left, token, bp) {
-			return
+			return token
 		}
 	}
 }

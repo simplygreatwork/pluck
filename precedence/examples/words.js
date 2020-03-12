@@ -5,18 +5,18 @@ let lexer = require('../lexer/words')
 parser.install({
 	transform: require('../transforms/expression'),
 	parslets: {
-		'expression': require('../parslets/expression'),
-		'number': require('../parslets/number'),
-		'equals': require('../parslets/equals'),
-		'and': require('../parslets/and'),
-		'or': require('../parslets/or'),
-		'not': require('../parslets/not'),
-		'plus': require('../parslets/plus'),
-		'minus': require('../parslets/minus'),
-		'greater': require('../parslets/greater'),
-		'less': require('../parslets/less'),
-		'(': require('../parslets/open'),
-		')': require('../parslets/close')
+		'expression:': require('../parslets/expression'),
+		'number:': require('../parslets/number'),
+		'symbol:equals': require('../parslets/equals'),
+		'symbol:and': require('../parslets/and'),
+		'symbol:or': require('../parslets/or'),
+		'symbol:not': require('../parslets/not'),
+		'symbol:plus': require('../parslets/plus'),
+		'symbol:minus': require('../parslets/minus'),
+		'symbol:greater': require('../parslets/greater'),
+		'symbol:less': require('../parslets/less'),
+		'symbol:(': require('../parslets/open'),
+		'symbol:)': require('../parslets/close')
 	}
 })
 

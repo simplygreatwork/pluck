@@ -4,20 +4,19 @@ let elements = null
 let installed = { transform: require('./transforms/default') }
 
 function bp (token) {
-	
-	if (! token.type) {
-		return 0
-	} else {
-		return parslets[token.type].bp
-	}
+	return token.type ? find(token).bp : 0
 }
 
 function nud (token) {
-	return parslets[token.type].nud(token, bp(token))
+	return find(token).nud(token, bp(token))
 }
 
 function led (left, token) {
-	return parslets[token.type].led(left, token, bp(token))
+	return find(token).led(left, token, bp(token))
+}
+
+function find(token) {
+	return parslets[token.type + ':' + token.value] || parslets[token.type + ':']
 }
 
 function parse (rbp) {

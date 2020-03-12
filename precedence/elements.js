@@ -17,10 +17,10 @@ class Elements {
 		return this.tokens[this.position++] || eof
 	}
 	
-	expect(type) {
+	expect(value) {
 		
 		const token = this.next()
-		if (type != token.type) throw new Error(`Unexpected token: ${token.value || '<<eof>>'}`)
+		if (value != token.value) throw new Error(`Unexpected token: ${token.value || '<<eof>>'}`)
 	}
 	
 	eof() {
