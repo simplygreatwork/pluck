@@ -16,7 +16,7 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type_value(node.value[0], 'symbol', 'if')) return
 		},
-
+		
 		exit: function(node, index, parents, state) {
 			
 			if (! query.is_type(node, 'expression')) return

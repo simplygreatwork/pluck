@@ -1,10 +1,10 @@
 
-module.exports = function(options) {
+module.exports = function(config) {
 	
 	let parslets = null
 	let iterator = null
 	let installed = { transform: require('./transforms/default') }
-	Object.assign(installed, options)
+	Object.assign(installed, config)
 	
 	function bp (token) {
 		return token.type ? find(token).bp : 0
@@ -46,7 +46,7 @@ module.exports = function(options) {
 			iterator = iterator_
 			parslets = {}
 			Object.keys(installed.parslets).forEach(function(key) {
-				parslets[key] = installed.parslets[key](parse, iterator, installed.transform)
+				parslets[key] = installed.parslets[key](parse, iterator, installed.transform, config)
 			})
 			return parse()
 		}

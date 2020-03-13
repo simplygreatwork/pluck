@@ -14,7 +14,7 @@ let parser = require('../parser')({
 		'symbol:greater': require('../parslets/greater'),
 		'symbol:less': require('../parslets/less'),
 		'symbol:(': require('../parslets/open'),
-		'symbol:)': require('../parslets/close')
+		'symbol:)': require('../parslets/close'),
 	}
 })
 

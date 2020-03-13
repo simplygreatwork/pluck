@@ -10,7 +10,7 @@ module.exports = function (parse, lexer, transform) {
 		},
 		
 		led: function(left, token, bp) {
-			return transform('or', left, parse(bp))
+			return transform('i32.or', left, parse(bp))
 		}
 	}
 }

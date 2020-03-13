@@ -6,7 +6,16 @@ module.exports = function (parse, lexer, transform) {
 		bp: 0,
 		
 		nud: function(token) {
-			return parseFloat(token.value)
+			return {
+				type : 'expression',
+				value: [{
+					type: 'symbol',
+					value: 'i32.const'
+				}, {
+					type: 'number',
+					value: parseFloat(token.value)
+				}]
+			}
 		}
 	}
 }

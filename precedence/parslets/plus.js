@@ -10,7 +10,7 @@ module.exports = function (parse, lexer, transform) {
 		},
 		
 		led: function(left, token, bp) {
-			return transform('plus', left, parse(bp))
+			return transform('i32.add', left, parse(bp))
 		}
 	}
 }
