@@ -6,20 +6,13 @@
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
-	(func $main
+	func main
+		setup
+		callable
 		
-		($setup)
-		($callable)
-	)
-	
-	(func $setup
+	func setup
+		memory_bootstrap
 		
-		($memory_bootstrap)
-	)
-	
-	(func $callable
+	func callable
 		set result to 1
-	)
-	
-	(export "main" (func $main))
 )

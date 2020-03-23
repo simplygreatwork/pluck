@@ -20,18 +20,32 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type_value(node, 'symbol', 'if')) return
 			if (! (index === 0)) return
-			if (is_ready(parent)) return
-			query.climb(parents, function(node, index, parents) {
-				let parent = query.last(parents)
-				let condition = get_condition(node, index, parents)
-				let then = get_then(node, index, parents)
-				let tree = {type: 'expression', value: [{ type: 'symbol', value: 'if'}]}
-				tree.value.push(condition)
-				tree.value.push(then)
-				query.replace(parent, node, tree)
+			if (is_resolved(parent)) return
+			parent.on('exit', function() {
+				query.climb(parents, function(node, index, parents) {
+					let parent = query.last(parents)
+					let condition = get_condition(node, index, parents)
+					let then = get_then(node, index, parents)
+					let if_ = { type: 'expression', value: [{ type: 'symbol', value: 'if'}] }
+					if_.value.push(condition)
+					if_.value.push(then)
+					query.replace(parent, node, if_)
+				})
 			})
 		}
 	}
+}
+
+function is_resolved(node) {
+	
+	if (query.is_type(node.value[1], 'expression')) {
+		if (query.is_type(node.value[2], 'expression')) {
+			if (query.is_type_value(node.value[2].value[0], 'symbol', 'then')) {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 function get_condition(node, index, parents) {
@@ -68,16 +82,4 @@ function get_then(node, index, parents) {
 	}
 	expressions.unshift({type: 'symbol', value: 'then'})
 	return {type: 'expression', value: expressions}
-}
-
-function is_ready(node) {
-	
-	if (query.is_type(node.value[1], 'expression')) {
-		if (query.is_type(node.value[2], 'expression')) {
-			if (query.is_type_value(node.value[2].value[0], 'symbol', 'then')) {
-				return true
-			}
-		}
-	}
-	return false
 }

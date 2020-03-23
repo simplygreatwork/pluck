@@ -7,12 +7,12 @@
 	memory (import "host" "memory") 1
 	type $void_to_void (func)
 	
-	func $main
+	func main
 		
-		call $memory_bootstrap
-		call $unicorn 1 2 3
+		memory_bootstrap
+		unicorn 1 2 3
 	
-	func $unicorn accepts one two three
+	func unicorn accepts one two three
 		
 		print_integer one
 		print_integer two

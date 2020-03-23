@@ -32,6 +32,4 @@
 		(call $print_string (string "Test callable b"))
 		(call $print_string (string "------------------------------"))
 	)
-   
-	(export "main" (func $main))
 )
