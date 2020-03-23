@@ -22,13 +22,42 @@ module.exports = function(config) {
 		return parslets[token.type + ':' + token.value] || parslets[token.type + ':']
 	}
 	
-	function parse (rbp) {
+	function parse() {
+		
+		if (iterator.peek().type != null) {
+			let token = iterator.next()
+			let peek = iterator.peek()
+			if (peek.type != null && peek.value)
+			console.log('token: ' + JSON.stringify(token))
+			parse()
+		}
+	}
+	
+	function parse_2() {
+		
+		let token = iterator.peek(1)
+		if (parslets[token.type + ':' + token.value] !== undefined) {
+			return [parse()]
+		} else {
+			let token = iterator.next()
+			let result = []
+			if (token.type != null) {
+				console.log('token: ' + JSON.stringify(token))
+				result = parse()
+				result.unshift(token)
+			}
+			if (token.type != null) return 
+		}
+	}
+	
+	function expression(rbp) {
 		
 		rbp = rbp || 0
 		let token = iterator.next()
 		let left = nud(token)
 		while (true) {
 			let next = iterator.peek()
+			console.log('next: ' + JSON.stringify(next))
 			if (bp(next) > rbp) {
 				token = iterator.next()
 				left = led(left, token)
@@ -52,3 +81,11 @@ module.exports = function(config) {
 		}
 	}
 }
+
+/*
+
+if (1 plus 1 greater 2 minus 1 and true)
+
+*/
+
+

@@ -1,31 +1,33 @@
 
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
-const shared = require('./shared')
+const shared = require('./shared.js')
 
 module.exports = function(system, document) {
 	
 	return {
 		
-		enter : function(node, index, parents, state) {		
+		type: 'symbol',
+		value: 'accepts',
+		
+		enter : function(node, index, parents, state) {
 			
-			if (! query.is_type(node, 'expression')) return
-			if (! query.is_expression_longer(node, 2)) return
-			if (! query.is_type_value(node.value[0], 'symbol', 'func')) return
-			if (! query.is_type_value(node.value[2], 'symbol', 'accepts')) return
-			node.value.every(function(each, index) {
+			let parent = query.last(parents)
+			if (! query.is_type(parent, 'expression')) return
+			if (! query.is_expression_longer(parent, 2)) return
+			if (! query.is_type_value(parent.value[0], 'symbol', 'func')) return
+			if (! query.is_type_value(parent.value[2], 'symbol', 'accepts')) return
+			parent.value.every(function(each, index) {
 				if (index <= 2) return true
 				if (query.is_type(each, 'expression')) return false
 				if (query.is_type(each, 'whitespace')) return true			// whitespace ought to be folded already but encountered an issue anyway
 				let value = shared.dollarize(each.value)
-				node.value[index] = parse(` (param ${value} i32)`)[0]
+				parent.value[index] = parse(` (param ${value} i32)`)[0]
 				return true
 			})
-			node.value.splice(2, 1)
-		},
-
-		exit: function(node, index, parents, state) {
-			return
+			parent.value.splice(2, 1)
+			system.bus.emit('node.removed', parent, 2)
+			state.locals = shared.find_locals(state)
 		}
 	}
 }

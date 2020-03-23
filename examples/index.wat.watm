@@ -26,7 +26,7 @@
 	(elem (i32.const 7) $test_stream_step_two)
 	(elem (i32.const 8) $test_stream_step_three)
 	
-	(function $main
+	(func $main
 		
 		(call $setup)
 		(call $test_typeof)

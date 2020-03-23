@@ -9,26 +9,29 @@ module.exports = function(system, document) {
 	
 	return {
 		
-		enter : function(node, index, parents, state) {		
+		type: 'symbol',
+		value: 'typeof',
+		
+		exit : function(node, index, parents, state) {
 			
-			if (! query.is_type(node, 'expression')) return
-			if (! query.is_type_value(node.value[0], 'symbol', 'typeof')) return
-			if (types[node.value[1].value] === undefined) {
-				types[node.value[1].value] = counter;
-				if (false) print(node)
-				counter++
-			}
-			node.value[0].value = 'i32.const'
-			node.value[1].type = 'number'
-			node.value[1].value = types[node.value[1].value]
-		},
-
-		exit: function(node, index, parents, state) {
-			return
+			let parent = query.last(parents)
+			if (! query.is_type(parent, 'expression')) return
+			if (! query.is_type_value(node, 'symbol', 'typeof')) return
+			if (! (index === 0)) return
+			parent.once('exit', function() {
+				if (types[parent.value[1].value] === undefined) {
+					types[parent.value[1].value] = counter;
+					if (false) print(parent)
+					counter++
+				}
+				parent.value[0].value = 'i32.const'
+				parent.value[1].type = 'number'
+				parent.value[1].value = types[parent.value[1].value]
+			})
 		}
 	}
 }
 
-function print(node) {
-	console.log('type ' + node.value[1].value + ' = ' + counter)
+function print(parent) {
+	console.log('type ' + parent.value[1].value + ' = ' + counter)
 }

@@ -1,0 +1,20 @@
+(module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	type $void_to_void (func)
+	
+	func $main
+		
+		call $memory_bootstrap
+		
+		if (1 equals 1)
+			print "1 equals 1"
+		
+		if (10 plus 10 greater 15 and 5 plus 5 plus 5 greater 10)
+			print "10 plus 10 greater 15 and 5 plus 5 plus 5 greater 10"
+	
+)

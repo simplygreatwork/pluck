@@ -1,37 +1,97 @@
 
-const print = require('./print.js')
+const print = require('./print')
 const logger = require('./logger')()
-const Walker = require('./walker.js')
+const emitter = require('./emitter')
 
-let counter = 0
+let document = null
+let system = null
+let macros = null
 
-module.exports = function(document, system) {
+function transform() {
 	
-	let tree = transform(document, system)
+	macros = {}
+	system.macros.forEach(function(macro, precedence) {
+		macro = macro(system, document, precedence)
+		let key = macro.type + ':' + (macro.value ? macro.value : '')
+		macros[key] = macros[key] || []
+		macros[key].push(macro)
+	})
+	let tree = document.tree
+	walk(tree[0], 0, [], {})
 	code = print(tree)
 	logger('transform').log('tree: ' + JSON.stringify(tree, null, 2))
 	logger('transform').log('tree transformed: ' + code)
 	return code
 }
 
-function transform(document, system) {
+function walk(node, index, parents, state) {
 	
-	let off = system.bus.on('insert', function() {
-		counter++
+	if (node.type == 'expression') {
+		expressions(node, index, parents, state)
+	} else {
+		atoms(node, index, parents, state)
+	}
+}
+
+function expressions(node, index, parents, state) {
+	
+	parents.push(node)
+	node.on = emitter.on
+	node.once = emitter.once
+	node.emit = emitter.emit
+	node.emit('enter')
+	iterate(node.value, function(each, index_) {
+		walk(each, index_, parents, state)
 	})
-	let walker = new Walker()
-	system.macros.expressions.forEach(function(each) {
-		let macro = each(system, document)
-		if (macro.enter) walker.on('enter.expression', macro.enter)
-		if (macro.exit) walker.on('exit.expression', macro.exit)
+	node.emit('exit')
+	parents.pop(node)
+}
+
+function iterate(array, func) {
+	
+	let index = 0
+	system.bus.on('node.inserted', function(node, index_) {
+		if (index_ <= index) index++
 	})
-	system.macros.atoms.forEach(function(each) {
-		let macro = each(system, document)
-		if (macro.enter) walker.on('enter.atom', macro.enter)
-		if (macro.exit) walker.on('exit.atom', macro.exit)
+	system.bus.on('node.removed', function(node, index_) {
+		if (index_ <= index) index--
 	})
-	walker.walk(document.tree[0])
-	off()
-	if (counter > 0) console.log('invalidation count: ' + counter)
-	return document.tree
+	for (index = 0; index < array.length; index++) {
+		let result = func(array[index], index)
+		if (result === false) break
+	}
+}
+
+function atoms(node, index, parents, state) {
+	
+	node.on = emitter.on
+	node.once = emitter.once
+	node.emit = emitter.emit
+	atom(node, index, parents, state, macros[node.type + ':'])
+	atom(node, index, parents, state, macros[node.type + ':' + node.value])
+}
+
+function atom(node, index, parents, state, macros) {
+	
+	if (! macros) return
+	macros.forEach(function(macro) {
+		if (macro.enter) {
+			node.emit('enter')
+			macro.enter(node, index, parents, state)
+		}
+		if (macro.exit) {
+			node.emit('exit')
+			macro.exit(node, index, parents, state)
+		}
+	})
+}
+
+module.exports = function(document_, system_) {
+	
+	document = document_
+	system = system_
+	return {
+		transform,
+		walk
+	}
 }

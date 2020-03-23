@@ -1,0 +1,25 @@
+(module
+	
+	(import "../library/utility.watm")
+	(import "../library/memory.watm")
+	(import "../library/string.watm")
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	
+	(func $main
+		
+		($setup)
+		($callable)
+	)
+	
+	(func $setup
+		
+		($memory_bootstrap)
+	)
+	
+	(func $callable
+		set result to 1
+	)
+	
+	(export "main" (func $main))
+)

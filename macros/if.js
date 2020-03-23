@@ -10,26 +10,26 @@ module.exports = function(system, document) {
 	
 	return {
 		
-		enter : function(node, index, parents, state) {		
-			
-			if (! query.is_type(node, 'expression')) return
-			if (! shared.is_inside_function(state)) return
-			if (! query.is_type_value(node.value[0], 'symbol', 'if')) return
-		},
+		type: 'symbol',
+		value: 'if',
 		
-		exit: function(node, index, parents, state) {
+		enter : function(node, index, parents, state) {
 			
-			if (! query.is_type(node, 'expression')) return
+			let parent = query.last(parents)
+			if (! query.is_type(parent, 'expression')) return
 			if (! shared.is_inside_function(state)) return
-			if (! query.is_type_value(node.value[0], 'symbol', 'if')) return
-			if (is_ready(node)) return
-			
-			let condition = get_condition(node, index, parents)
-			let then = get_then(node, index, parents)
-			let tree = {type: 'expression', value: [{ type: 'symbol', value: 'if'}]}
-			tree.value.push(condition)
-			tree.value.push(then)
-			query.replace(query.last(parents), node, tree)
+			if (! query.is_type_value(node, 'symbol', 'if')) return
+			if (! (index === 0)) return
+			if (is_ready(parent)) return
+			query.climb(parents, function(node, index, parents) {
+				let parent = query.last(parents)
+				let condition = get_condition(node, index, parents)
+				let then = get_then(node, index, parents)
+				let tree = {type: 'expression', value: [{ type: 'symbol', value: 'if'}]}
+				tree.value.push(condition)
+				tree.value.push(then)
+				query.replace(parent, node, tree)
+			})
 		}
 	}
 }

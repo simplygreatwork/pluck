@@ -7,39 +7,38 @@ module.exports = function(system, document) {
 	
 	return {
 		
+		type: 'symbol',
+		value: 'set',
+		
 		enter : function(node, index, parents, state) {	
 			
-			if (! query.is_type(node, 'expression')) return
+			let parent = query.last(parents)
+			if (! query.is_type(parent, 'expression')) return
 			if (! shared.is_inside_function(state)) return
-			if (query.is_type_value(node.value[0], 'symbol', 'set')) {
-				node.value[0].value = 'set_local'
+			if (query.is_type_value(parent.value[0], 'symbol', 'set')) {
+				parent.value[0].value = 'set_local'
 			}
-			if (! query.is_type_value(node.value[0], 'symbol', 'set_local')) return
-			node.value[1].value = shared.dollarize(node.value[1].value)
-			if (query.is_expression_longer(node, 2)) {
-				if (query.is_type_value(node.value[2], 'symbol', 'to')) {
-					query.remove(node, node.value[2])
+			if (! query.is_type_value(parent.value[0], 'symbol', 'set_local')) return
+			parent.value[1].value = shared.dollarize(parent.value[1].value)
+			if (query.is_expression_longer(parent, 2)) {
+				if (query.is_type_value(parent.value[2], 'symbol', 'to')) {
+					let index_ = query.remove(parent, parent.value[2])
+					system.fire('node.removed', parent, index_)
 				}
 			}
-			return declare(node.value[1].value, parents, state, system)
-		},
-
-		exit: function(node, index, parents, state) {
-			return
+			return declare(parent.value[1].value, state, system)
 		}
 	}
 }
 
-function declare(value, parents, state, system) {
+function declare(value, state, system) {
 	
-	let found = shared.is_local(state, value)
-	if (! found) {
-		let tree = parse (`
-		(local ${value} i32)
-		`)[0]
-		query.insert(state.func, tree, state.locals.offset)
-		system.fire('insert', tree)
-		state.locals = shared.find_locals(state)
-	}
-	return (! found) ? false : undefined
+	if (shared.is_local(state, value)) return 
+	let tree = parse (`
+	(local ${value} i32)
+	`)[0]
+	query.insert(state.func, tree, state.locals.offset)
+	system.fire('node.inserted', state.func, state.locals.offset)
+	state.locals = shared.find_locals(state)
+	return false
 }

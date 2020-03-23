@@ -19,44 +19,10 @@ class Runner {
 			imports: {
 				host: new Host()
 			},
-			macros: {
-				expressions: [
-					require('../macros/elements.js'),
-					require('../macros/accepts.js'),
-					require('../macros/function.js'),
-					require('../macros/loop.js'),
-					require('../macros/break.js'),
-					require('../macros/if.js'),
-					require('../macros/equals.js'),
-					require('../macros/not.js'),
-					require('../macros/greater.js'),
-					require('../macros/less.js'),
-					require('../macros/and.js'),
-					require('../macros/or.js'),
-					require('../macros/xor.js'),
-					require('../macros/plus.js'),
-					require('../macros/minus.js'),
-					require('../macros/set.js'),
-					require('../macros/dollar.js'),
-					require('../macros/string-expression.js'),
-					require('../macros/imports.js'),
-					require('../macros/exports.js'),
-					require('../macros/typeof.js'),
-					require('../macros/funcref.js'),
-					require('../macros/callable.js')
-				],
-				atoms: [
-					require('../macros/true.js'),
-					require('../macros/false.js'),
-					require('../macros/integer.js'),
-					require('../macros/string.js'),
-					require('../macros/get.js'),
-				]
-			}
+			macros: require('./config')
 		})
-		let date = new Date()
+		this.date = new Date()
 		this.system.start(root)
-		logger('runner').log('Compiled in ' + ((new Date().getTime() - date.getTime()) / 1000) + ' seconds.')
 		this.system.documents[root].instance.exports.main()
 	}
 	
@@ -64,15 +30,21 @@ class Runner {
 		
 		broadcast.on('parsed', function(data) {
 			logger('parsing').log('parsed: ' + data)
-		})
+		}.bind(this))
 		broadcast.on('loaded', function(data) {
 			logger('loading').log('loaded: ' + data)
-		})
+		}.bind(this))
 		broadcast.on('transformed', function(document) {
 			logger('transforming').log('transformed: ' + document.id)
 			let path_ = path.join(process.cwd(), 'work', document.path) 
 			jetpack.write(path_, document.source)
-		})
+		}.bind(this))
+		broadcast.on('transpiled', function(document) {
+			logger('runner').log('Transpiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
+		}.bind(this))
+		broadcast.on('compiled', function(document) {
+			logger('runner').log('Compiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
+		}.bind(this))
 	}
 }
 

@@ -5,7 +5,6 @@ const Document = require('./document')
 const Table = require('./table')
 const Bus = require('./bus')
 const process = require('./process')
-const transform = require('./transform')
 const logger = require('./logger')()
 const broadcast = require('./broadcast')
 
@@ -86,9 +85,12 @@ class System {
 	transform_documents() {
 		
 		for (let document of this.set.values()) {
-			document.source = transform(document, this)
+			let transform = require('./transform')(document, this)
+			document.walk = transform.walk
+			document.source = transform.transform()
 			broadcast.emit('transformed', document)
 		}
+		broadcast.emit('transpiled')
 	}
 	
 	instantiate_documents() {
@@ -98,9 +100,9 @@ class System {
 			let name = path.basename(document.path)
 			let key = name.split('.')[0]
 			let imports = this.imports
-			let system = this
 			this.imports[key] = process.instantiate(document, imports)
 		}
+		broadcast.emit('compiled')
 	}
 	
 	fire(message, data) {

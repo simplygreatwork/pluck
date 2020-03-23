@@ -7,7 +7,9 @@ module.exports = function(system, document) {
 	
 	return {
 		
-		enter : function(node, index, parents, state) {
+		type: 'symbol',
+		
+		enter : function(node, index, parents, state) {	
 			
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'symbol')) return

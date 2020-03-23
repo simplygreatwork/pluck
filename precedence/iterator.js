@@ -9,8 +9,11 @@ class Iterator {
 		this.position = 0
 	}
 	
-	peek() {
-		return this.tokens[this.position] || eof
+	peek(at) {
+		
+		at = at || 0
+		at = at + this.position
+		return this.tokens[at] || eof
 	}
 	
 	next() {

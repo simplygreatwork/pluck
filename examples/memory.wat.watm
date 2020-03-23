@@ -23,7 +23,7 @@
 	(elem (i32.const 200) $deallocate_iterate_each)
 	(elem (i32.const 201) $display_iterate_each)
 	
-	(function $main
+	(func $main
 		
 		(call $setup)
 		(call $start)

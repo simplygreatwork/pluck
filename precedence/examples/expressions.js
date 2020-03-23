@@ -18,11 +18,12 @@ let parser = require('../parser')({
 	}
 })
 
-print(parser.parse(lexer.lex('1 plus 2')))
-print(parser.parse(lexer.lex('1 plus 2 and 3 plus 4')))
-print(parser.parse(lexer.lex('1 less 2 and 2 less 3')))
-print(parser.parse(lexer.lex('3 greater 2 and 2 greater 1')))
-print(parser.parse(lexer.lex('1 greater 1 and 1 less ( 1 plus 1 )')))
+print(parser.parse(lexer.lex('one two three')))
+// print(parser.parse(lexer.lex('1 plus 2')))
+// print(parser.parse(lexer.lex('1 plus 2 and 3 plus 4')))
+// print(parser.parse(lexer.lex('1 less 2 and 2 less 3')))
+// print(parser.parse(lexer.lex('3 greater 2 and 2 greater 1')))
+// print(parser.parse(lexer.lex('1 greater 1 and 1 less ( 1 plus 1 )')))
 
 function print(result) {
 	console.log('result: ' + JSON.stringify(result, null, 2))

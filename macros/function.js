@@ -1,34 +1,24 @@
 
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
+const walk = require('../compiler/transform').walk
 const shared = require('./shared.js')
 
 module.exports = function(system, document) {
 	
 	return {
 		
-		enter : function(node, index, parents, state) {		
-			
-			if (! query.is_type(node, 'expression')) return
-			// review: conversion to func would need to occur before the linking phase anyway
-			if (query.is_type_value(node.value[0], 'symbol', 'function')) node.value[0].value = 'func'
-			if (! query.is_type_value(node.value[0], 'symbol', 'func')) return
-			if (! query.is_expression_longer(node, 1)) return
-			if (! query.is_type(node.value[1], 'symbol')) return
-			if (! node.value[1].value) return
-			state.func = node
-			state.locals = shared.find_locals(state)
-			node.value[1].value = shared.dollarize(node.value[1].value)
-		},
+		type: 'symbol',
+		value: 'function',
 		
-		exit: function(node, index, parents, state) {
+		enter : function(node, index, parents, state) {
 			
-			if (! query.is_type(node, 'expression')) return
-			if (! query.is_type_value(node.value[0], 'symbol', 'func')) return
-			if (! query.is_expression_longer(node, 1)) return
-			if (! query.is_type(node.value[1], 'symbol')) return
-			if (! node.value[1].value) return
-			state.func = null
+			let parent = query.last(parents)
+			if (! query.is_type(parent, 'expression')) return
+			if (! query.is_type_value(node.value, 'symbol', 'function')) return
+			// review: conversion to func would need to occur before the linking phase anyway
+			if (query.is_type_value(parent.value[0], 'symbol', 'function')) parent.value[0].value = 'func'
+			walk(node, index, parents, state)
 		}
 	}
 }

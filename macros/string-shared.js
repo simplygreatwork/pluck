@@ -2,10 +2,10 @@
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
 
-function string_call(node, index, parents, func_name) {
+function string_call(parent, node, func_name) {
 	
 	let tree = parse(` (call ${func_name})`)
-	query.replace(query.last(parents), node, tree[0])
+	query.replace(parent, node, tree[0])
 }
 
 function function_new(node, string, system) {

@@ -1,0 +1,15 @@
+(module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	type $void_to_void (func)
+	
+	func $main
+		
+		call $memory_bootstrap
+		set value to 1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3
+		call print_integer value
+)

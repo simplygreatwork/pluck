@@ -40,6 +40,7 @@ function replace(parent, node, node_b) {
 	let index_ = index(parent, node)
 	remove(parent, node)
 	insert(parent, node_b, index_)
+	return index_
 }
 
 function index(parent, node) {
@@ -53,7 +54,10 @@ function index(parent, node) {
 }
 
 function remove(parent, node) {
-	remove_at(parent, index(parent, node))
+	
+	let index_ = index(parent, node)
+	remove_at(parent, index_)
+	return index_
 }
 
 function remove_at(parent, index) {
@@ -74,6 +78,15 @@ function insert(parent, node, index) {
 
 function closest() {
 	return
+}
+
+function climb(parents, func) {
+	
+	parents = [...parents]
+	let node = parents.pop()
+	let parent = last(parents)
+	let index_ = index(parent, node)
+	func(node, index_, parents)
 }
 
 function map_elements(node) {
@@ -122,6 +135,7 @@ module.exports = {
 	append,
 	prepend,
 	closest,
+	climb,
 	map_elements,
 	elements,
 }

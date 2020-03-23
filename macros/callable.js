@@ -7,16 +7,23 @@ module.exports = function(system, document) {
 	
 	return {
 		
-		enter : function(node, index, parents, state) {		
-
-			if (! query.is_type(node, 'expression')) return
-			if (! query.is_type(node.value[0], 'symbol')) return
-			if (! shared.is_callable(document, node.value[0].value)) return
-			node.value[0].whitespace = node.value[0].whitespace + ' '
-			node.value.unshift({
-				type: 'symbol',
-				value: 'call'
-			})
+		type: 'symbol',
+		
+		enter : function(node, index, parents, state) {
+			
+			let parent = query.last(parents)
+			if (! query.is_type(node, 'symbol')) return
+			if (! shared.is_inside_function(state)) return
+			if (! query.is_type(parent, 'expression')) return
+			if (! shared.is_callable(document, node.value)) return
+			if (index === 0) {
+				node.whitespace = node.whitespace + ' '
+				parent.value.splice(index, 0, {
+					type: 'symbol',
+					value: 'call'
+				})
+				if (false) system.bus.emit('node.inserted', parent, index)
+			}
 		}
 	}
 }

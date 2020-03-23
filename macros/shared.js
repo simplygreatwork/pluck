@@ -5,29 +5,27 @@ function is_inside_function(state) {
 	return state.func ? true : false
 }
 
-function is_callable(document, symbol) {
+function is_callable(document, symbol) {			// todo: also use iteration breaking
 	
-	let result = false
-	document.functions.forEach(function(node) {
-		let second = node.value[1]
-		if (second.type == 'symbol') {
-			if (second.value == symbol) {
-				result = true
+	if (document.function_cache === undefined) {
+		document.function_cache = {}
+		document.functions.forEach(function(node) {
+			if (query.is_type(node.value[1], 'symbol')) {
+				node.value[1].value = dollarize(node.value[1].value)
+				document.function_cache[node.value[1].value] = true
 			}
-		}
-	})
-	Object.keys(document.function_imports).forEach(function(module_) {
-		Object.keys(document.function_imports[module_]).forEach(function(key) {
-			let node = document.function_imports[module_][key]
-			let fourth = node.value[3]
-			if (fourth.value[0].value == 'func') {
-				if (key == symbol) {
-					result = true
+		})
+		Object.keys(document.function_imports).forEach(function(module_) {
+			Object.keys(document.function_imports[module_]).forEach(function(key) {
+				let node = document.function_imports[module_][key]
+				if (node.value[3].value[0].value == 'func') {
+					key = dollarize(key)
+					document.function_cache[key] = true
 				}
-			}
+			}.bind(this))
 		}.bind(this))
-	}.bind(this))
-	return result
+	}
+	return document.function_cache[symbol]
 }
 
 function find_locals(state) {
