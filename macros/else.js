@@ -21,8 +21,7 @@ module.exports = function(system, document) {
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
 					let previous = parent.value[index - 1]
-					let symbol = previous.value[0].value
-					if (symbol == 'if') {
+					if (previous.value[0].value == 'if') {
 						index = query.remove(parent, node)
 						parent.emit('node.removed', index)
 						previous.value.push(node)
