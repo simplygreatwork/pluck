@@ -9,5 +9,15 @@ module.exports = {
 				break
 			}
 		}
+	},
+	
+	backward: function(array, func) {
+		
+		for (let index = array.length - 1; index >- 0; index--) {
+			let result = func(array[index], index)
+			if (result === false) {
+				break
+			}
+		}
 	}
 }

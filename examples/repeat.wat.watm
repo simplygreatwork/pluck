@@ -10,7 +10,10 @@
 		
 		memory_bootstrap
 		
-		repeat with k from 0 to 20 every 2
-			print_integer k
-	
+		repeat with i from 100 to 300 every 100
+			print_integer i
+			repeat with j from 10 to 30 every 10
+				print_integer j
+				repeat with k from 1 to 3 every 1
+					print_integer k
 )

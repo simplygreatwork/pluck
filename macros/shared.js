@@ -1,5 +1,6 @@
 
 const query = require('../compiler/query')
+const parse = require('../compiler/parse')
 const iterate = require('../compiler/utility').iterate
 
 function is_inside_function(state) {
@@ -70,10 +71,23 @@ function dollarize(symbol) {
 	return (symbol.charAt && symbol.charAt(0) == '$') ? symbol : '$' + symbol
 }
 
+function declare(value, state) {
+	
+	if (is_local(state, value)) return 
+	let tree = parse (`
+	(local ${value} i32)
+	`)[0]
+	query.insert(state.func, tree, state.locals.offset)
+	state.func.emit('node.inserted', state.locals.offset)
+	state.locals = find_locals(state)
+	return false
+}
+
 module.exports = {
 	is_inside_function,
 	find_locals,
 	is_local,
 	is_callable,
-	dollarize
+	dollarize,
+	declare
 }

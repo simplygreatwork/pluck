@@ -26,19 +26,7 @@ module.exports = function(system, document) {
 					parent.emit('node.removed', index_)
 				}
 			}
-			return declare(parent.value[1].value, state, system)
+			return shared.declare(parent.value[1].value, state)
 		}
 	}
-}
-
-function declare(value, state, system) {
-	
-	if (shared.is_local(state, value)) return 
-	let tree = parse (`
-	(local ${value} i32)
-	`)[0]
-	query.insert(state.func, tree, state.locals.offset)
-	state.func.emit('node.inserted', state.locals.offset)
-	state.locals = shared.find_locals(state)
-	return false
 }

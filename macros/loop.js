@@ -2,6 +2,7 @@
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
 const shared = require('./shared')
+const backward = require('../compiler/utility').backward
 
 let configs = []
 
@@ -19,25 +20,30 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(node, 'symbol', 'repeat')) return
 			if (! (index === 0)) return
 			let config = get_config(parent)
-			parent.once('exit', function() {
-				let func = state.func
-				let repeat = parent
-				let block = create_block(config, repeat, system, document, state)
-				index = query.replace(func, repeat, block)
-				counter = parse (`		(set ${config.with} (i32.const ${config.from}))`)[0]
-				query.insert(func, counter, index)
-				func.emit('node.inserted', index)
+			if (config.with) {
 				query.climb(parents, function(node, index, parents) {
-					query.climb(parents, function(node, index, parents) {
-						document.walk(node, index, parents, state)
-					})
+					let counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
+					let parent = query.last(parents)
+					query.insert(parent, counter, index - 1)
+					shared.declare(shared.dollarize(config.with), state, system)
+				})
+			}
+			parent.once('exit', function() {
+				query.climb(parents, function(node, index, parents) {
+					parent = query.last(parents)
+					let repeat = node
+					let block = create_block(repeat, state, config, system, document)
+					index = query.replace(parent, repeat, block)
+					counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
+					query.insert(parent, counter, index)
+					parent.emit('node.inserted', index)
 				})
 			})
 		}
 	}
 }
 
-function create_block(config, repeat, system, document, state) {
+function create_block(repeat, state, config, system, document) {
 	
 	let block = parse (`
 	(block (loop
@@ -53,23 +59,32 @@ function create_block(config, repeat, system, document, state) {
 	.forEach(function(each, index) {
 		index = 2 + index
 		query.insert(loop, each, index)
-		if (loop.emit) loop.emit('node.inserted', index)
 	})
-	document.walk(loop, 0, [block], state)
+	document.walk(block.value[0], 0, [block], state)
 	return block
 }
 
 function get_config(node) {
 	
 	let config = { with: '$i', from: 0, to: 10, every: 1, 'in': null }
-	node.value.forEach(function(each, index) {
-		if (each.value == 'with') config.with = node.value[index + 1].value
-		if (each.value == 'from') config.from = node.value[index + 1].value
-		if (each.value == 'to') config.to = node.value[index + 1].value
-		if (each.value == 'every') config.every = node.value[index + 1].value
+	backward(node.value, function(each, index) {
+		symbol_(each, index, node, config, 'with')
+		symbol_(each, index, node, config, 'from')
+		symbol_(each, index, node, config, 'to')
+		symbol_(each, index, node, config, 'every')
 		config.with = shared.dollarize(config.with)
 	})
 	return config
+}
+
+function symbol_(each, index, parent, config, symbol) {
+	
+	if (each.value == symbol) {
+		config[symbol] = parent.value[index + 1].value
+		parent.value.splice(index, 2)
+		parent.emit('node.removed', index)
+		parent.emit('node.removed', index)
+	}
 }
 
 function print_config() {
