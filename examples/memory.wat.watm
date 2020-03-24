@@ -58,9 +58,9 @@
 		(call $compact (get_local $list))
 		(call $display (get_local $list))
 	)
-
+	
 	(func $allocate (param $list i32)
-
+		
 		(local $pointer i32)
 		(local $string i32)
 		(local $i i32)
