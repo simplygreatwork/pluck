@@ -9,9 +9,9 @@
 	func main
 		
 		memory_bootstrap
-		unicorn 1 2 3
+		callable 1 2 3
 		
-	func unicorn accepts one two three
+	func callable accepts one two three
 		
 		print_integer one
 		print_integer two
