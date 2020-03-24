@@ -1,0 +1,23 @@
+(module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		
+		if (11 greater 10)
+			print "11 is greater than 10"
+		else
+			print "11 is not greater than 10"
+		
+		if (9 greater 10)
+			print "9 is greater than 10"
+		else
+			print "9 is not greater than 10"
+			
+)

@@ -5,5 +5,4 @@
 	
 	func main
 		set value 1 equals 1 and 2 equals 2
-		
 )
