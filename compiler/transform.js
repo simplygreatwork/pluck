@@ -36,15 +36,30 @@ function walk(node, index, parents, state) {
 function expressions(node, index, parents, state) {
 	
 	parents.push(node)
-	node.on = emitter.on
-	node.once = emitter.once
-	node.emit = emitter.emit
+	install(node)
 	node.emit('enter')
 	iterate(node, function(each, index_) {
 		walk(each, index_, parents, state)
 	})
 	node.emit('exit')
+	node.on('exit', function() {
+		if (false) uninstall(node)
+	})
 	parents.pop(node)
+}
+
+function install(node) {
+	
+	node.on = emitter.on
+	node.once = emitter.once
+	node.emit = emitter.emit
+}
+
+function uninstall(node) {
+	
+	delete node.on
+	delete node.once
+	delete node.emit
 }
 
 function iterate(node, func) {
