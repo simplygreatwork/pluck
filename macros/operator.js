@@ -1,5 +1,6 @@
 
 const query = require('../compiler/query')
+const parse = require('../compiler/parse')
 
 function infix(instruction, precedence, node, index, parents, state) {
 	
@@ -31,7 +32,13 @@ function prefix(instruction, precedence, node, index, parents, state) {
 		instruction: instruction,
 		precedence: precedence,
 		perform: function(index) {
-			return
+			let expression = parse (`
+				(${instruction} (i32.const 1))
+			`)[0]
+			expression.value.splice(1, 0, parent.value[index + 1])
+			parent.value[index] = expression
+			parent.value.splice(index + 1, 1)
+			parent.emit('node.removed', index + 1)
 		}
 	})
 }

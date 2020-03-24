@@ -9,6 +9,10 @@
 	func main
 		
 		memory_bootstrap
-		print "negation test is in process"
-
+		
+		set value to not true
+		print_integer value
+		
+		set value to not false
+		print_integer value
 )
