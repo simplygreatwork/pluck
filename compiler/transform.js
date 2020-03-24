@@ -48,20 +48,6 @@ function expressions(node, index, parents, state) {
 	parents.pop(node)
 }
 
-function install(node) {
-	
-	node.on = emitter.on
-	node.once = emitter.once
-	node.emit = emitter.emit
-}
-
-function uninstall(node) {
-	
-	delete node.on
-	delete node.once
-	delete node.emit
-}
-
 function iterate(node, func) {
 	
 	node.index = 0
@@ -89,9 +75,7 @@ function iterate(node, func) {
 
 function atoms(node, index, parents, state) {
 	
-	node.on = emitter.on
-	node.once = emitter.once
-	node.emit = emitter.emit
+	install(node)
 	atom(node, index, parents, state, macros[node.type + ':'])
 	atom(node, index, parents, state, macros[node.type + ':' + node.value])
 }
@@ -109,6 +93,20 @@ function atom(node, index, parents, state, macros) {
 			macro.exit(node, index, parents, state)
 		}
 	})
+}
+
+function install(node) {
+	
+	node.on = emitter.on
+	node.once = emitter.once
+	node.emit = emitter.emit
+}
+
+function uninstall(node) {
+	
+	delete node.on
+	delete node.once
+	delete node.emit
 }
 
 module.exports = function(document_, system_) {

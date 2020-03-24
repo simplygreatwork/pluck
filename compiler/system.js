@@ -43,7 +43,7 @@ class System {
 	}
 	
 	resolve_documents() {
-
+		
 		logger('system').log('resolve_documents')
 		Object.keys(this.documents).forEach(function(key) {
 			let document = this.documents[key]

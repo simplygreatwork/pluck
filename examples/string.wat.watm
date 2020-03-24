@@ -7,10 +7,9 @@
 	memory (import "host" "memory") 1
 	type $void_to_void (func)
 	
-	(func $main
+	func main
 		
 		memory_bootstrap
 		print (string "string expression")
 		print "string literal"
-	)
 )

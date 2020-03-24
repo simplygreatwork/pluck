@@ -22,8 +22,9 @@ function emit(key) {
 	
 	this.channels = this.channels || {}
 	if (this.channels[key]) {
-		for (let i = 0, length; i < this.channels[key].length; i++) {
-			result = this.channels[key][i].apply(this, Array.from(arguments).splice(1))
+		for (let i = 0; i < this.channels[key].length; i++) {
+			let index = this.channels[key].length - i - 1
+			result = this.channels[key][index].apply(this, Array.from(arguments).splice(1))
 			if (result == false) return false
 		}
 	}

@@ -41,7 +41,7 @@
 		print "Test integer macro expansion"
 		print "------------------------------"
 		print_integer 100
-	
+		
 	func test_func_ref_macro
 		
 		print "------------------------------"
