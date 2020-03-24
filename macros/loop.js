@@ -20,14 +20,12 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(node, 'symbol', 'repeat')) return
 			if (! (index === 0)) return
 			let config = get_config(parent)
-			if (config.with) {
-				query.climb(parents, function(node, index, parents) {
-					let counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
-					let parent = query.last(parents)
-					query.insert(parent, counter, index - 1)
-					shared.declare(shared.dollarize(config.with), state, system)
-				})
-			}
+			query.climb(parents, function(node, index, parents) {
+				let counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
+				let parent = query.last(parents)
+				query.insert(parent, counter, index - 1)
+				shared.declare(shared.dollarize(config.with), state, system)
+			})
 			parent.once('exit', function() {
 				query.climb(parents, function(node, index, parents) {
 					parent = query.last(parents)
