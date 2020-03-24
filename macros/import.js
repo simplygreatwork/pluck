@@ -16,9 +16,12 @@ module.exports = function(system, document) {
 			if (! query.is_expression_length(parent, 2)) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'import')) return
 			parent.once('exit', function() {
-				if (parent.value[1].type == 'string') {
-					let index_ = query.remove(parents[0], parent)
-					parents[0].emit('node.removed', index_)
+				if (query.is_type(parent.value[1], 'string')) {
+					query.climb(parents, function(node, index, parents) {
+						let parent = query.last(parents)
+						index = query.remove(parent, node)
+						parent.emit('node.removed', index)
+					})
 				}
 			})
 		}

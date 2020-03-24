@@ -16,8 +16,11 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(parent.value[0], 'symbol', 'export')) return
 			if (! query.is_type_value(parent.value[1], 'symbol', 'all')) return
 			parent.once('exit', function() {
-				index = query.remove(parents[0], parent)
-				parents[0].emit('node.removed', index)
+				query.climb(parents, function(node, index, parents) {
+					let parent = query.last(parents)
+					index = query.remove(parent, node)
+					parent.emit('node.removed', index)
+				})
 			})
 		}
 	}
