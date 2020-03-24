@@ -50,15 +50,23 @@ function expressions(node, index, parents, state) {
 function iterate(array, func) {
 	
 	let index = 0
+	let length = array.length
 	system.bus.on('node.inserted', function(node, index_) {
-		if (index_ <= index) index++
+		length = array.length
+		if (index_ <= index) {
+			index++
+		}
 	})
 	system.bus.on('node.removed', function(node, index_) {
-		if (index_ <= index) index--
+		length = array.length
+		if (index_ <= index) {
+			index--
+		}
 	})
-	for (index = 0; index < array.length; index++) {
+	for (index = 0; index < length; index++) {
 		let result = func(array[index], index)
 		if (result === false) break
+		length = array.length							// remove this line once counters (index) have expression scope
 	}
 }
 
