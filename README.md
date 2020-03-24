@@ -10,13 +10,13 @@
 
 enter : function(node, index, parents, state) {		
 	
-	if (! shared.is_inside_function(state)) return
-	if (! query.is_type(node, 'number')) return
-	let parent = query.last(parents)
-	if (query.is_type_value(parent.value[0], 'symbol', 'i32.const')) return
-	if (query.is_type_value(parent.value[0], 'symbol', 'br')) return
-	if (query.is_type_value(parent.value[0], 'symbol', 'br_if')) return
-	parent.value[index] = parse(` (i32.const ${node.value})`)[0]
+  if (! shared.is_inside_function(state)) return
+  if (! query.is_type(node, 'number')) return
+  let parent = query.last(parents)
+  if (query.is_type_value(parent.value[0], 'symbol', 'i32.const')) return
+  if (query.is_type_value(parent.value[0], 'symbol', 'br')) return
+  if (query.is_type_value(parent.value[0], 'symbol', 'br_if')) return
+  parent.value[index] = parse(` (i32.const ${node.value})`)[0]
 }
 ```
 
@@ -25,22 +25,22 @@ enter : function(node, index, parents, state) {
 
 enter : function(node, index, parents, state) {
 	
-	let parent = query.last(parents)
-	if (! query.is_type(parent, 'expression')) return
-	if (! query.is_expression_longer(parent, 2)) return
-	if (! query.is_type_value(parent.value[0], 'symbol', 'func')) return
-	if (! query.is_type_value(parent.value[2], 'symbol', 'accepts')) return
-	parent.value.every(function(each, index) {
-		if (index <= 2) return true
-		if (query.is_type(each, 'expression')) return false
-		if (query.is_type(each, 'whitespace')) return true			// whitespace ought to be folded already but encountered an issue anyway
-		let value = shared.dollarize(each.value)
-		parent.value[index] = parse(` (param ${value} i32)`)[0]
-		return true
-	})
-	parent.value.splice(2, 1)
-	system.bus.emit('node.removed', parent, 2)
-	state.locals = shared.find_locals(state)
+  let parent = query.last(parents)
+  if (! query.is_type(parent, 'expression')) return
+  if (! query.is_expression_longer(parent, 2)) return
+  if (! query.is_type_value(parent.value[0], 'symbol', 'func')) return
+  if (! query.is_type_value(parent.value[2], 'symbol', 'accepts')) return
+  parent.value.every(function(each, index) {
+    if (index <= 2) return true
+    if (query.is_type(each, 'expression')) return false
+    if (query.is_type(each, 'whitespace')) return true			// whitespace ought to be folded already but encountered an issue anyway
+    let value = shared.dollarize(each.value)
+    parent.value[index] = parse(` (param ${value} i32)`)[0]
+    return true
+  })
+  parent.value.splice(2, 1)
+  system.bus.emit('node.removed', parent, 2)
+  state.locals = shared.find_locals(state)
 }
 ```
 
@@ -140,6 +140,15 @@ npm start macros
 npm start stress
 npm start tiny
 ```
+
+### Known Issues
+
+- in macro transformations, firing 'node.inserted' and 'node.removed' is used to shift the iteration index as needed when nodes are added or removed
+	- firing 'node.inserted' and 'node.removed' does not currently work property within expression recursion
+	- for example, firing within parent.on('exit') will update the wrong iteration index
+	- likely need to implement recursive scope for iteration index
+	- or store iterator counter value on each expression
+	- this is a new issue now that the macro system has a revised implementation (2020-03-22)
 
 ### Roadmap
 

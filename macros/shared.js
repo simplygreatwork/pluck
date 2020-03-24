@@ -1,5 +1,6 @@
 
 const query = require('../compiler/query')
+const iterate = require('../compiler/utility').iterate
 
 function is_inside_function(state) {
 	return state.func ? true : false
@@ -32,7 +33,7 @@ function find_locals(state) {
 	
 	let elements = []
 	let offset = 0
-	state.func.value.every(function(each, index) {
+	iterate(state.func.value, function(each, index) {
 		if (index <= 1) return true								// e.g. func $name
 		let first = each.value[0]
 		let second = each.value[1]

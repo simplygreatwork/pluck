@@ -5,7 +5,7 @@
 	
 	func main
 		test 42
-	
+		
 	func test accepts value
 		set input to value
 )
