@@ -4,8 +4,6 @@ const parse = require('../compiler/parse')
 const shared = require('./shared')
 const backward = require('../compiler/utility').backward
 
-let configs = []
-
 module.exports = function(system, document) {
 	
 	return {
