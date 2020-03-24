@@ -141,18 +141,9 @@ npm start stress
 npm start tiny
 ```
 
-### Known Issues
-
-- in macro transformations, firing 'node.inserted' and 'node.removed' is used to shift the iteration index as needed when nodes are added or removed
-	- firing 'node.inserted' and 'node.removed' does not currently work property within expression recursion
-	- for example, firing within parent.on('exit') will update the wrong iteration index
-	- likely need to implement recursive scope for iteration index
-	- or store iterator counter value on each expression
-	- this is a new issue now that the macro system has a revised implementation (2020-03-22)
-
 ### Roadmap
 
-- implement a TDOP/Pratt parser for better operator precedence handling
+- perhaps implement a TDOP/Pratt parser for enchanced operator precedence handling
 - allow relative paths for modules
 - create macro for function pointers (tables)
 - create binary search tree instead of hashtable
