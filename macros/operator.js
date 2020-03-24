@@ -18,6 +18,8 @@ function infix(instruction, precedence, node, index, parents, state) {
 				let expression = {type: 'expression', value: [], whitespace: ' '}
 				expression.value.push(...parent.value.splice(index - 1, 3))
 				parent.value.splice(index - 1, 0, expression)
+				parent.emit('node.removed', index + 1)
+				parent.emit('node.removed', index)
 			}
 		}
 	})

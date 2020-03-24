@@ -1,7 +1,7 @@
 
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
-const shared = require('./shared.js')
+const shared = require('./shared')
 
 module.exports = function(system, document) {
 	
