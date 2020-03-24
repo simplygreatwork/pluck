@@ -22,7 +22,7 @@ module.exports = function(system, document) {
 					type: 'symbol',
 					value: 'call'
 				})
-				if (false) parent.emit('node.inserted', index)
+				parent.emit('node.inserted', index)
 			}
 		}
 	}
