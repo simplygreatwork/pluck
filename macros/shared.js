@@ -6,25 +6,25 @@ function is_inside_function(state) {
 	return state.func ? true : false
 }
 
-function is_callable(document, symbol) {			// todo: also use iteration breaking
+function is_callable(document, symbol) {
 	
 	if (document.function_cache === undefined) {
 		document.function_cache = {}
-		document.functions.forEach(function(node) {
+		iterate(document.functions, function(node) {
 			if (query.is_type(node.value[1], 'symbol')) {
 				node.value[1].value = dollarize(node.value[1].value)
 				document.function_cache[node.value[1].value] = true
 			}
 		})
-		Object.keys(document.function_imports).forEach(function(module_) {
-			Object.keys(document.function_imports[module_]).forEach(function(key) {
+		iterate(Object.keys(document.function_imports), function(module_) {
+			iterate(Object.keys(document.function_imports[module_]), function(key) {
 				let node = document.function_imports[module_][key]
 				if (node.value[3].value[0].value == 'func') {
 					key = dollarize(key)
 					document.function_cache[key] = true
 				}
-			}.bind(this))
-		}.bind(this))
+			})
+		})
 	}
 	return document.function_cache[symbol]
 }
