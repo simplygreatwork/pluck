@@ -3,8 +3,8 @@ const print = require('./print')
 const logger = require('./logger')()
 const emitter = require('./emitter')
 
-let document = null
 let system = null
+let document = null
 let macros = null
 
 function transform() {
@@ -109,7 +109,7 @@ function uninstall(node) {
 	delete node.emit
 }
 
-module.exports = function(document_, system_) {
+module.exports = function(system_, document_) {
 	
 	document = document_
 	system = system_
