@@ -89,13 +89,13 @@
 		repeat with k from 0 to 20 every 2		;; every other
 			
 			print_integer k
-			if (k greater 5 and k less 15)
+			if k greater 5 and k less 15
 				print "5 < k < 15"
-			if (k equals 6)
+			if k equals 6
 				print "k equals 6"
-			if (k equals 10)
+			if k equals 10
 				print "k equals 10"
-			if (k greater 15)
+			if k greater 15
 				break
 				
 	func test_negation
