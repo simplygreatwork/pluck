@@ -30,16 +30,16 @@ enter : function(node, index, parents, state) {
   if (! query.is_expression_longer(parent, 2)) return
   if (! query.is_type_value(parent.value[0], 'symbol', 'func')) return
   if (! query.is_type_value(parent.value[2], 'symbol', 'accepts')) return
-  parent.value.every(function(each, index) {
+  iterate(state.func.value, function(each, index) {
     if (index <= 2) return true
     if (query.is_type(each, 'expression')) return false
-    if (query.is_type(each, 'whitespace')) return true			// whitespace ought to be folded already but encountered an issue anyway
+    if (query.is_type(each, 'whitespace')) return true			// whitespace should be folded already but encountered an issue anyway
     let value = shared.dollarize(each.value)
     parent.value[index] = parse(` (param ${value} i32)`)[0]
     return true
   })
   parent.value.splice(2, 1)
-  system.bus.emit('node.removed', parent, 2)
+  parent.emit('node.removed', 2)
   state.locals = shared.find_locals(state)
 }
 ```
