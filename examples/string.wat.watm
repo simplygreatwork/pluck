@@ -9,8 +9,8 @@
 	
 	(func $main
 		
-		call $memory_bootstrap
-		$print (string "string expression")
-		$print "string literal"
+		memory_bootstrap
+		print (string "string expression")
+		print "string literal"
 	)
 )
