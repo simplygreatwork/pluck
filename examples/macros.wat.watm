@@ -97,7 +97,7 @@
 				print "k equals 10"
 			if (k greater 15)
 				break
-
+				
 	func test_negation
 		
 		print "------------------------------"
@@ -133,12 +133,12 @@
 		print_integer first
 		set second to 1 equals 2 or 2 equals 2
 		print_integer second
-
+		
 	func test_true_false
-
+		
 		print_integer true equals true
 		print_integer true equals false
-
+		
 	func test_parameters accepts one two three
 		
 		print "------------------------------"
@@ -148,5 +148,4 @@
 		print one
 		print two
 		print three
-
 )
