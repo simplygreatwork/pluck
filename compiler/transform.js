@@ -48,7 +48,7 @@ function expressions(node, index, parents, state) {
 	parents.pop(node)
 }
 
-function iterate(node, func) {
+function iterate(node, function_) {
 	
 	node.index = 0
 	node.length = node.value.length
@@ -65,7 +65,7 @@ function iterate(node, func) {
 		}
 	})
 	for (node.index = 0; node.index < node.length; node.index++) {
-		let result = func(node.value[node.index], node.index)
+		let result = function_(node.value[node.index], node.index)
 		if (result === false) break
 		node.length = node.value.length							// remove this line once counters () have expression scope
 	}
