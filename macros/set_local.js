@@ -23,7 +23,7 @@ module.exports = function(system, document) {
 			if (query.is_expression_longer(parent, 2)) {
 				if (query.is_type_value(parent.value[2], 'symbol', 'to')) {
 					let index_ = query.remove(parent, parent.value[2])
-					system.fire('node.removed', parent, index_)
+					parent.emit('node.removed', index_)
 				}
 			}
 			return declare(parent.value[1].value, state, system)
@@ -38,7 +38,7 @@ function declare(value, state, system) {
 	(local ${value} i32)
 	`)[0]
 	query.insert(state.func, tree, state.locals.offset)
-	system.fire('node.inserted', state.func, state.locals.offset)
+	state.func.emit('node.inserted', state.locals.offset)
 	state.locals = shared.find_locals(state)
 	return false
 }

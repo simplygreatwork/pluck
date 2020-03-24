@@ -40,34 +40,36 @@ function expressions(node, index, parents, state) {
 	node.once = emitter.once
 	node.emit = emitter.emit
 	node.emit('enter')
-	iterate(node.value, function(each, index_) {
+	iterate(node, function(each, index_) {
 		walk(each, index_, parents, state)
 	})
 	node.emit('exit')
 	parents.pop(node)
 }
 
-function iterate(array, func) {
+function iterate(node, func) {
 	
-	let index = 0
-	let length = array.length
-	system.bus.on('node.inserted', function(node, index_) {
-		length = array.length
-		if (index_ <= index) {
-			index++
+	node.index = 0
+	node.length = node.value.length
+	let inserted = node.on('node.inserted', function(index) {
+		node.length = node.value.length
+		if (index <= node.index) {
+			node.index++
 		}
 	})
-	system.bus.on('node.removed', function(node, index_) {
-		length = array.length
-		if (index_ <= index) {
-			index--
+	let removed = node.on('node.removed', function(index) {
+		node.length = node.value.length
+		if (index <= node.index) {
+			node.index--
 		}
 	})
-	for (index = 0; index < length; index++) {
-		let result = func(array[index], index)
+	for (node.index = 0; node.index < node.length; node.index++) {
+		let result = func(node.value[node.index], node.index)
 		if (result === false) break
-		length = array.length							// remove this line once counters (index) have expression scope
+		node.length = node.value.length							// remove this line once counters () have expression scope
 	}
+	inserted()
+	removed()
 }
 
 function atoms(node, index, parents, state) {

@@ -22,7 +22,7 @@ module.exports = function(system, document) {
 					type: 'symbol',
 					value: 'call'
 				})
-				if (false) system.bus.emit('node.inserted', parent, index)
+				if (false) parent.emit('node.inserted', index)
 			}
 		}
 	}

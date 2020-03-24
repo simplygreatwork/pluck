@@ -17,7 +17,7 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(parent.value[1], 'symbol', 'all')) return
 			parent.once('exit', function() {
 				index = query.remove(parents[0], parent)
-				system.bus.emit('node.removed', parents[0], index)
+				parents[0].emit('node.removed', index)
 			})
 		}
 	}

@@ -22,14 +22,14 @@ module.exports = function(system, document) {
 			parent.once('exit', function() {
 				let func = state.func
 				let repeat = parent
-				let block = create_block(config, repeat, system)
+				let block = create_block(config, repeat, system, document, state)
 				index = query.replace(func, repeat, block)
 				counter = parse (`		(set ${config.with} (i32.const ${config.from}))`)[0]
 				query.insert(func, counter, index)
-				system.bus.emit('node.inserted', func, index)
+				func.emit('node.inserted', index)
 				query.climb(parents, function(node, index, parents) {
 					query.climb(parents, function(node, index, parents) {
-						document.walk(node, index, parents, {})
+						document.walk(node, index, parents, state)
 					})
 				})
 			})
@@ -37,7 +37,7 @@ module.exports = function(system, document) {
 	}
 }
 
-function create_block(config, repeat, system) {
+function create_block(config, repeat, system, document, state) {
 	
 	let block = parse (`
 	(block (loop
@@ -53,8 +53,9 @@ function create_block(config, repeat, system) {
 	.forEach(function(each, index) {
 		index = 2 + index
 		query.insert(loop, each, index)
-		system.bus.emit('node.inserted', loop, index)
+		if (loop.emit) loop.emit('node.inserted', index)
 	})
+	document.walk(loop, 0, [block], state)
 	return block
 }
 

@@ -18,7 +18,7 @@ module.exports = function(system, document) {
 			parent.once('exit', function() {
 				if (parent.value[1].type == 'string') {
 					let index_ = query.remove(parents[0], parent)
-					system.bus.emit('node.removed', parents[0], index_)
+					parents[0].emit('node.removed', index_)
 				}
 			})
 		}
