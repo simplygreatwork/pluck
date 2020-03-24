@@ -21,7 +21,7 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(node, 'symbol', 'if')) return
 			if (! (index === 0)) return
 			if (is_resolved(parent)) return
-			parent.on('exit', function() {
+			parent.once('exit', function() {
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
 					let condition = get_condition(node, index, parents)

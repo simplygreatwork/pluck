@@ -89,35 +89,6 @@ function climb(parents, func) {
 	func(node, index_, parents)
 }
 
-function map_elements(node) {
-	
-	let result = {}
-	node.value.forEach(function(each, index) {
-		if (each.type == 'symbol') {
-			result[each.value] = result[each.value] || []
-			result[each.value].unshift(index)
-		}
-	})
-	return result
-}
-
-function elements(value, node, state, func) {
-	
-	let indices
-	if (state.elements && state.elements[value]) {
-		indices = state.elements[value]
-	} else {
-		indices = []
-	}
-	let length = node.value.length
-	indices.forEach(function(each, index) {
-		func(each, index)
-	})
-	if (node.value.length != length) {
-		state.elements = map_elements(node)
-	}
-}
-
 module.exports = {
 	is_type: is_type,
 	is_type_value: is_type_value,
@@ -136,6 +107,4 @@ module.exports = {
 	prepend,
 	closest,
 	climb,
-	map_elements,
-	elements,
 }

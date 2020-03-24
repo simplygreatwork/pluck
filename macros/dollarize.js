@@ -15,7 +15,7 @@ module.exports = function(system, document) {
 			if (! query.is_type(parent, 'expression')) return
 			if (query.is_type_value(parent.value[0], 'symbol', 'call')) {
 				dollarize(parent.value[1], state, document)
-			} else if (query.is_type_value(node.value[0], 'symbol', 'funcref')) {
+			} else if (query.is_type_value(parent.value[0], 'symbol', 'funcref')) {
 				dollarize(parent.value[1], state, document)
 			} else {
 				dollarize(parent.value[0], state, document)
