@@ -1,12 +1,11 @@
 (module
+	
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
 	func main
+		callable 42
 		
-		test 42
-		
-	func test accepts value
-		
+	func callable accepts value
 		set input to value
 )
