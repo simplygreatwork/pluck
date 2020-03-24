@@ -8,19 +8,7 @@
 	
 	func main
 		
-		setup
-		stress
-		
-	func setup
-		
 		memory_bootstrap
-		
-	func stress
-		
-		print "------------------------------"
-		print "Test stress!"
-		print "------------------------------"
-		
 		set a to 1
 		set a to 1
 		set a to 1

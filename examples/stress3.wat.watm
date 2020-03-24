@@ -1,17 +1,284 @@
 (module
 	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
 	func main
 		
-		stress
+		memory_bootstrap
 		
-	func stress
+		set a to 500
+		set b to 0
 		
-		set a to 1
-		set b to 1
 		if a greater 0 and a less 1000
-			set b to 1
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
+		if a greater 0 and a less 1000
+			set b to b plus 1
 
+		print_integer b			
 )

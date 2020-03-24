@@ -8,21 +8,9 @@
 	
 	func main
 		
-		setup
-		stress
-		
-	func setup
-		
 		memory_bootstrap
 		
-	func stress
-		
-		print "------------------------------"
-		print "Test stress!"
-		print "------------------------------"
-		
 		repeat with k from 0 to 20 every 2
-			
 			print_integer k
 			if (k greater 5 and k less 15)
 				print "5 < k < 15"
@@ -252,5 +240,4 @@
 				print "5 < k < 15"
 			if (k greater 5 and k less 15)
 				print "5 < k < 15"
-
 )
