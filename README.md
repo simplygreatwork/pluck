@@ -44,21 +44,15 @@ enter : function(node, index, parents, state) {
 }
 ```
 
-### [Install](/compiler/runner.js) your macros
+### [Install](/compiler/config.js) your macros
 
 ```javascript
-macros: {
-  expressions: [
-    ...
-    require('./macros/accepts.js')
-    ...
-  ],
-  atoms: [
-    ...
-    require('./macros/integer.js')
-    ...
-  ]
-}
+macros: [
+	...
+	require('./macros/accepts.js')
+	require('./macros/integer.js')
+	...
+]
 ```
 
 ### Write [example](/examples/demo.wat.watm) code to use your new macros

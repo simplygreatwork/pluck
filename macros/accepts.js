@@ -20,7 +20,7 @@ module.exports = function(system, document) {
 			parent.value.every(function(each, index) {
 				if (index <= 2) return true
 				if (query.is_type(each, 'expression')) return false
-				if (query.is_type(each, 'whitespace')) return true			// whitespace ought to be folded already but encountered an issue anyway
+				if (query.is_type(each, 'whitespace')) return true			// whitespace should be folded already but encountered an issue anyway
 				let value = shared.dollarize(each.value)
 				parent.value[index] = parse(` (param ${value} i32)`)[0]
 				return true
