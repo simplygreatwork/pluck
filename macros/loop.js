@@ -31,10 +31,7 @@ module.exports = function(system, document) {
 					parent = query.last(parents)
 					let repeat = node
 					let block = create_block(repeat, state, config, system, document)
-					index = query.replace(parent, repeat, block)
-					counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
-					query.insert(parent, counter, index)
-					parent.emit('node.inserted', index)
+					query.replace(parent, repeat, block)
 				})
 			})
 		}
