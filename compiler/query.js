@@ -85,8 +85,7 @@ function climb(parents, func) {
 	parents = [...parents]
 	let node = parents.pop()
 	let parent = last(parents)
-	let index_ = index(parent, node)
-	func(node, index_, parents)
+	func(node, index(parent, node), parents)
 }
 
 module.exports = {

@@ -18,7 +18,7 @@ module.exports = function(system, document) {
 			parent.once('exit', function() {
 				if (query.is_type(parent.value[1], 'string')) {
 					query.climb(parents, function(node, index, parents) {
-						let parent = query.last(parents)
+						parent = query.last(parents)
 						index = query.remove(parent, node)
 						parent.emit('node.removed', index)
 					})

@@ -17,7 +17,7 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(parent.value[1], 'symbol', 'all')) return
 			parent.once('exit', function() {
 				query.climb(parents, function(node, index, parents) {
-					let parent = query.last(parents)
+					parent = query.last(parents)
 					index = query.remove(parent, node)
 					parent.emit('node.removed', index)
 				})
