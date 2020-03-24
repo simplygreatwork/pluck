@@ -3,8 +3,8 @@
 	memory (import "host" "memory") 1
 	
 	func main
-		test 42
+		callable 42
 		
-	func test accepts value
+	func callable accepts value
 		set input to value
 )
