@@ -21,9 +21,10 @@ module.exports = function(system, document) {
 			if (! (index === 0)) return
 			let config = get_config(parent)
 			query.climb(parents, function(node, index, parents) {
-				let counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
 				let parent = query.last(parents)
-				query.insert(parent, counter, index - 1)
+				let counter = parse (`		(set_local ${config.with} (i32.const ${config.from}))`)[0]
+				query.insert(parent, counter, index)
+				parent.emit('node.inserted', index)
 				shared.declare(shared.dollarize(config.with), state)
 			})
 			parent.once('exit', function() {
