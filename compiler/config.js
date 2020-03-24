@@ -29,8 +29,8 @@ module.exports = [
 	require('../macros/equals'),
 	require('../macros/greater'),
 	require('../macros/less'),
+	require('../macros/not'),
 	require('../macros/and'),
 	require('../macros/or'),
-	require('../macros/xor'),
-	require('../macros/not')
+	require('../macros/xor')
 ]
