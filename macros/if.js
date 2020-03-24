@@ -24,12 +24,14 @@ module.exports = function(system, document) {
 			parent.once('exit', function() {
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
-					let condition = get_condition(node, index, parents)
-					let then = get_then(node, index, parents)
-					let if_ = { type: 'expression', value: [{ type: 'symbol', value: 'if'}] }
-					if_.value.push(condition)
-					if_.value.push(then)
-					query.replace(parent, node, if_)
+					query.replace(parent, node, {
+						type: 'expression',
+						value: [
+							{ type: 'symbol', value: 'if' },
+							get_condition(node, index, parents),
+							get_then(node, index, parents)
+						]
+					})
 				})
 			})
 		}
