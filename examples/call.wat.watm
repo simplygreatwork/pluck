@@ -7,12 +7,9 @@
 	(memory (import "host" "memory") 1)
 	
 	func main
-		setup
+		memory_bootstrap
 		callable
 		
-	func setup
-		memory_bootstrap
-		
 	func callable
-		set result to 1
+		print "The callable has been called."
 )

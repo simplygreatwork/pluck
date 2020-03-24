@@ -6,30 +6,10 @@
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
-	(func $main
+	func main
+		memory_bootstrap
+		callable
 		
-		(call $setup)
-  		(call $test_callable)
-	)
-	
-	(func $setup
-		
-		(call $memory_bootstrap)
-	)
-	
-	(func $test_callable
-		
-		(call $print_string (string "------------------------------"))
-		(call $print_string (string "Test callable"))
-		(call $print_string (string "------------------------------"))
-		($test_callable_b)
-		($print_integer (i32.const 888))
-	)
-	
-	(func $test_callable_b
-		
-		(call $print_string (string "------------------------------"))
-		(call $print_string (string "Test callable b"))
-		(call $print_string (string "------------------------------"))
-	)
+	func callable
+		print "The callable has been called."
 )
