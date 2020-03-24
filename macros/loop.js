@@ -29,7 +29,7 @@ module.exports = function(system, document) {
 			})
 			parent.once('exit', function() {
 				query.climb(parents, function(node, index, parents) {
-					parent = query.last(parents)
+					let parent = query.last(parents)
 					let repeat = node
 					let block = create_block(repeat, state, config, system, document)
 					query.replace(parent, repeat, block)
