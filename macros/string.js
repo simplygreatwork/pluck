@@ -10,7 +10,7 @@ module.exports = function(system, document) {
 		
 		type: 'string',
 		
-		exit : function(node, index, parents, state) {
+		enter : function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
 			if (! shared.is_inside_function(state)) return

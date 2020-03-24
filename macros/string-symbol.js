@@ -13,7 +13,7 @@ module.exports = function(system, document) {
 		type: 'symbol',
 		value: 'string',
 		
-		exit: function(node, index, parents, state) {
+		enter: function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
