@@ -7,10 +7,9 @@
 	memory (import "host" "memory") 1
 	
 	func main
-		
 		setup
 		
 	func setup
-		
 		memory_bootstrap
+		
 )

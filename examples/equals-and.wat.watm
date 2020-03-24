@@ -4,6 +4,6 @@
 	memory (import "host" "memory") 1
 	
 	func main
-		
 		set value 1 equals 1 and 2 equals 2
+		
 )
