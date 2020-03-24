@@ -48,10 +48,10 @@ enter : function(node, index, parents, state) {
 
 ```javascript
 macros: [
-	...
-	require('./macros/accepts.js')
-	require('./macros/integer.js')
-	...
+  ...
+  require('./macros/accepts.js')
+  require('./macros/integer.js')
+  ...
 ]
 ```
 
