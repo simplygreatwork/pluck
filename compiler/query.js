@@ -27,7 +27,7 @@ function get_value(node, index) {
 	return (index === undefined) ? node.value : node.value[index]
 }
 
-function last(array) {	
+function last(array) {
 	return array[array.length - 1]
 }
 

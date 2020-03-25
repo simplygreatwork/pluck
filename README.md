@@ -140,6 +140,11 @@ npm start stress
 npm start tiny
 ```
 
+- You can run any of the files in the examples folder.
+	- npm start if-else
+	- npm start repeat
+	- npm start negation
+
 ### Roadmap
 
 - perhaps implement a TDOP/Pratt parser for enchanced operator precedence handling
