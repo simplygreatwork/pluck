@@ -140,7 +140,7 @@ npm start stress
 npm start tiny
 ```
 
-- You can run any of the files in the examples folder.
+- You can run any of the files in the examples folder. e.g.
 ```
 npm start if-else
 npm start repeat
