@@ -19,7 +19,7 @@ module.exports = [
 	require('../macros/func'),
 	require('../macros/function'),
 	require('../macros/accepts'),
-	require('../macros/loop'),
+	require('../macros/repeat'),
 	require('../macros/break'),
 	require('../macros/if'),
 	require('../macros/else'),
