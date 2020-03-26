@@ -64,13 +64,16 @@ function iterate(node, function_) {
 			node.index--
 		}
 	})
+	let rewind = node.on('node.rewind', function() {
+		node.index = -1
+	})
 	for (node.index = 0; node.index < node.length; node.index++) {
 		let result = function_(node.value[node.index], node.index)
 		if (result === false) break
-		node.length = node.value.length							// remove this line once counters () have expression scope
 	}
 	inserted()
 	removed()
+	rewind()
 }
 
 function atoms(node, index, parents, state) {

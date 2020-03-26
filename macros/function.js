@@ -4,6 +4,8 @@ const parse = require('../compiler/parse')
 const walk = require('../compiler/transform').walk
 const shared = require('./shared')
 
+// review: conversion from function to func would need to occur before the linking phase anyway
+
 module.exports = function(system, document) {
 	
 	return {
@@ -16,9 +18,8 @@ module.exports = function(system, document) {
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
 			if (! query.is_type_value(node.value, 'symbol', 'function')) return
-			// review: conversion to func would need to occur before the linking phase anyway
-			if (query.is_type_value(parent.value[0], 'symbol', 'function')) parent.value[0].value = 'func'
-			walk(node, index, parents, state)
+			parent.value[0].value = 'func'
+			parent.emit('node.rewind')
 		}
 	}
 }

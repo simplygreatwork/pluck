@@ -1,5 +1,4 @@
 
-
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
 const shared = require('./shared')

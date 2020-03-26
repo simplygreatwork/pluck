@@ -1,0 +1,47 @@
+
+;; a very basic conception to illustrate fundamentally how closures might work simply
+;; by using a stack list of argument maps on the heap
+;; consider implementing closures at the library level first before implementing syntax
+;; consider and remember that the inner function could be called externally
+;; so need to maintain a list of stacks per function on entry
+
+(module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		set stack to stack_new
+		stack_enter
+		outer stack
+		stack_exit
+		
+	func outer stack
+		print "@ outer"
+		stack_set "local_one" "one"
+		stack_enter
+		inner stack
+		stack_exit
+		
+	func inner locals
+		print "@ inner"
+		stack_set "local_two" "two"
+		
+	func stack_new
+		set list to list_new
+		
+	func stack_set key value
+		set scope list_last
+		tree_set scope key value
+		
+	func stack_enter
+		
+	func stack_exit
+		
+	func scope_new
+		tree_new
+)

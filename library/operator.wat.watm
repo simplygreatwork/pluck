@@ -1,0 +1,22 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $operator_plus (param $a i32) (param $b i32) (result i32)
+		($number_new (i32.add (get_local $a) (get_local $b)))		
+	)
+	
+	(func $operator_minus (param $a i32) (param $b i32) (result i32)
+		($number_new (i32.sub (get_local $a) (get_local $b)))		
+	)
+	
+	(func $operator_equals (param $a i32) (param $b i32) (result i32)
+		($number_new (i32.eq (get_local $a) (get_local $b)))		
+	)
+	
+	(func $operator_minus (param $a i32) (param $b i32) (result i32)
+		($number_new (i32.sub (get_local $a) (get_local $b)))		
+	)
+)
