@@ -12,7 +12,7 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.infix('i32.eq', precedence, node, index, parents, state)
+			operator.infix('operator_primitive_equals', precedence, node, index, parents, state)
 		}
 	}
 }

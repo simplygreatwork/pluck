@@ -12,7 +12,7 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.prefix('i32.ne', precedence, node, index, parents, state)
+			operator.prefix('operator_primitive_not', precedence, node, index, parents, state)
 		}
 	}
 }

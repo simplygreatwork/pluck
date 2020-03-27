@@ -72,11 +72,11 @@ macros: [
 
 ### Overview
 
-- A work in process to get up and running quickly with WebAssembly text format syntax.
+- A work in process to get up and running quickly with WebAssembly text format.
 - Parses WebAssembly .wat files, transforms using macros, and launches the project's main function.
-- s-expressions in WebAssembly text syntax are parsed using a fork of the simple, tiny parser combinator library: uparse
+- s-expressions in WebAssembly text format are parsed using a fork of the simple, tiny parser combinator library: uparse
   - https://github.com/jimf/uparse
-- The parser infers s-expressions statements from indentations in the source code.
+- The parser infers s-expression statements from indentations in the source code.
 - Transformations for string building and automatic module importing and exporting are included.
 - Each module's functions are exported automatically using macros.
 - Each module's functions are imported automatically using macros.

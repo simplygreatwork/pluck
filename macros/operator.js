@@ -1,10 +1,12 @@
 
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
+const shared = require('./shared')
 
 function infix(instruction, precedence, node, index, parents, state) {
 	
 	let parent = query.last(parents)
+	instruction = shared.dollarize(instruction)
 	initialize(node, index, parent, state)
 	parent.operations.push({
 		index: index,
@@ -14,11 +16,14 @@ function infix(instruction, precedence, node, index, parents, state) {
 			parent.value.splice(index - 1, 0, parent.value.splice(index, 1))
 			parent.value[index - 1].type = 'symbol'
 			parent.value[index - 1].value = instruction
-			if (query.is_expression_longer(parent, 3)) {
+			parent.value[index - 1].whitespace = ' '
+			parent.value.splice(index - 1, 0, {type: 'symbol', value: 'call'})
+			if (query.is_expression_longer(parent, 4)) {
 				let expression = {type: 'expression', value: [], whitespace: ' '}
-				expression.value.push(...parent.value.splice(index - 1, 3))
+				expression.value.push(...parent.value.splice(index - 1, 4))
 				parent.value.splice(index - 1, 0, expression)
-				parent.emit('node.removed', index + 1)
+				parent.emit('node.removed', index)
+				parent.emit('node.removed', index)
 				parent.emit('node.removed', index)
 			}
 		}
@@ -28,6 +33,7 @@ function infix(instruction, precedence, node, index, parents, state) {
 function prefix(instruction, precedence, node, index, parents, state) {
 	
 	let parent = query.last(parents)
+	instruction = shared.dollarize(instruction)
 	initialize(node, index, parent, state)
 	parent.operations.push({
 		index: index,
@@ -35,9 +41,9 @@ function prefix(instruction, precedence, node, index, parents, state) {
 		precedence: precedence,
 		perform: function(index) {
 			let expression = parse (`
-				(${instruction} (i32.const 1))
+				(call ${instruction} (i32.const 1))
 			`)[0]
-			expression.value.splice(1, 0, parent.value[index + 1])
+			expression.value.splice(2, 0, parent.value[index + 1])
 			parent.value[index] = expression
 			parent.value.splice(index + 1, 1)
 			parent.emit('node.removed', index + 1)
