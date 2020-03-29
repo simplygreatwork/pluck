@@ -1,23 +1,47 @@
 
+
+project = 'index'		// such as: index, memory, macros, stress, repeat, etc.
+imports_ = {
+	host: host()
+}
+memory_ = imports_.host.memory
+
 function main() {
 	
-	console.log('inside main')
-	let base = '../work/home/pweaver/Documents/development/pluck/'
-	let build = base + 'examples/index.json'
-	run(build)
+	load()
 }
 
-function run(build) {
+function load() {
 	
-	let imports = {
-		host: host()
-	}
+	let path = '../build/' + project + '/build.json'
+	fetch(path)
+	.then((response) => {
+		return response.json()
+	})
+	.then((data) => {
+		load_wasm(data.modules)
+	})
+}
+
+function load_wasm(paths) {
+	
+	let path = paths.shift()
+	WebAssembly.instantiateStreaming(fetch('../build/' + project + '/' + path), imports_)
+	.then(function(object) {
+		let key = path.split('.')[0]
+		imports_[key] = object.instance.exports
+		if (paths.length > 0) {
+			load_wasm(paths)
+		} else {
+			object.instance.exports.main()
+		}
+	})
 }
 
 function host() {
 	
 	return {
-		memory: new WebAssembly.Memory({
+		memory: memory_ = new WebAssembly.Memory({
 			initial: 100,
 			maximum: 65536
 		}),
@@ -46,7 +70,7 @@ function host() {
 			mutable: true
 		}, 0),
 		print_string: function(offset) {
-			var array = new Uint8Array(this.memory.buffer)
+			var array = new Uint8Array(memory_.buffer)
 			let type = array[offset]
 			offset = offset + 4
 			let length = array[offset]
