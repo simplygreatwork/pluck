@@ -115,7 +115,7 @@ class System {
 		
 		for (let document of this.set.values()) {
 			document.wasm = process_.compile(document).buffer
-			let path_ = path.join(process.cwd(), 'build', this.project, document.id + '.wasm')
+			let path_ = path.join(process.cwd(), 'build', this.project, document.long_id + '.wasm')
 			jetpack.write(path_, '')
 			require('fs').writeFileSync(path_, document.wasm)
 			broadcast.emit('document.compiled', document)
@@ -129,7 +129,7 @@ class System {
 		jetpack.write(build, {
 			modules: Array.from(this.set)
 			.map(function(document) {
-				return document.id + '.wasm'
+				return document.long_id + '.wasm'
 			})
 		})
 	}
@@ -142,6 +142,9 @@ class System {
 		let config = jetpack.read(build, 'json')
 		config.modules.forEach(function(path_) {
 			let document = new Document(path_)
+			console.log('path_: ' + path_)
+			document.long_id = path_.split('.')[0]
+			document.id = document.long_id.split('-')[1]
 			this.set.add(document)
 			this.documents[path_] = document
 		}.bind(this))
@@ -151,11 +154,9 @@ class System {
 		
 		for (let document of this.set.values()) {
 			logger('system').log('instantiate: ' + path.basename(document.path) + ' (' + document.path + ')')
-			let path_ = path.join(process.cwd(), 'build', this.project, document.path + '.wasm')
+			let path_ = path.join(process.cwd(), 'build', this.project, document.long_id + '.wasm')
 			document.wasm = require('fs').readFileSync(path_)
-			let name = path.basename(document.path)
-			let key = name.split('.')[0]
-			this.imports[key] = process_.instantiate(document, this.imports)
+			this.imports[document.id] = process_.instantiate(document, this.imports)
 		}		
 		broadcast.emit('documents.instantiated')
 	}
