@@ -20,9 +20,9 @@ class System {
 		this.string_counter = 0
 	}
 	
-	compile(path_) {
+	compile(root) {
 		
-		this.load_document(path_)
+		this.load_document(root)
 		this.resolve_documents()
 		this.sort_documents()
 		this.render_function_imports()
