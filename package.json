@@ -20,6 +20,7 @@
 		"prompts": "^2.3.0",
 		"remark": "^10.0.1",
 		"remark-parse": "^6.0.3",
+		"tiny-worker": "^2.3.0",
 		"unist-util-visit": "^1.4.0",
 		"wabt": "^1.0.11"
 	}

@@ -1,4 +1,6 @@
 
+const threads = require('./threads')
+
 function Host() {
 	
 	Object.assign(this, {
@@ -30,22 +32,30 @@ function Host() {
 			value: 'i32',
 			mutable: true
 		}, 0),
-		print_string: function(offset) {
-			var array = new Uint8Array(this.memory.buffer)
-			let type = array[offset]
-			offset = offset + 4
-			let length = array[offset]
-			offset = offset + 4
-			var string = ''
-			for (var i = 0; i < length; i++) {
-				string += String.fromCharCode(array[offset + i])
-			}
-			console.log(string)
+		print_string: function(pointer) {
+			console.log(string_unwrap(pointer, this.memory.buffer))
 		}.bind(this),
 		print_integer: function(value) {
 			console.log(value)
-		}
+		},
+		thread_spawn: function(pointer) {
+			threads.spawn(string_unwrap(pointer, this.memory.buffer))
+		}.bind(this)
 	})
+}
+
+function string_unwrap(pointer, buffer) {
+	
+	var array = new Uint8Array(buffer)
+	let type = array[pointer]
+	pointer = pointer + 4
+	let length = array[pointer]
+	pointer = pointer + 4
+	let string = ''
+	for (var i = 0; i < length; i++) {
+		string += String.fromCharCode(array[pointer + i])
+	}
+	return string
 }
 
 module.exports = Host

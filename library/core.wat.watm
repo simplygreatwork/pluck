@@ -534,11 +534,11 @@
 	(func $print_ (param $string i32)
 		(call $print_string_ (get_local $string))
 	)
-
+	
 	(func $print_string_ (param $string i32)
 		(call $host_print_string (i32.add (call $memory_dereference_handle_ (get_local $string)) (i32.const 4)))
 	)
-
+	
 	(func $print_integer_ (param $pointer i32)
 		(call $host_print_integer (get_local $pointer))
 	)

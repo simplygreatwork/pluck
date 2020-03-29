@@ -1,0 +1,11 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "host" "thread_spawn" (func $host_thread_spawn (param i32)))
+	(memory (import "host" "memory") 1)
+	
+	(func $thread_spawn (param $name i32)
+		(call $host_thread_spawn (i32.add (call $memory_dereference_handle (get_local name)) (i32.const 4)))
+	)
+)

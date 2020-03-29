@@ -7,7 +7,7 @@ const logger = require('./logger')([
 ])
 const broadcast = require('./broadcast')
 const System = require('./system')
-const Host = require('./host')
+const Host = require('../runtime/host')
 
 class Runner {
 	
