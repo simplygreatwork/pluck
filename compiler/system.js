@@ -136,17 +136,14 @@ class System {
 	
 	unpackage_documents() {
 		
-		this.documents = {}
 		this.set = new Set()
 		let build = path.join(process.cwd(), 'build', this.project + '/build.json')
 		let config = jetpack.read(build, 'json')
 		config.modules.forEach(function(path_) {
 			let document = new Document(path_)
-			console.log('path_: ' + path_)
 			document.long_id = path_.split('.')[0]
 			document.id = document.long_id.split('-')[1]
 			this.set.add(document)
-			this.documents[path_] = document
 		}.bind(this))
 	}
 	
