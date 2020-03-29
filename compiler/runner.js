@@ -11,9 +11,8 @@ const Host = require('./host')
 
 class Runner {
 	
-	run(root) {
+	constructor() {
 		
-		logger('runner').log('root module: ' + root)
 		this.listen()
 		this.system = new System({
 			imports: {
@@ -22,8 +21,19 @@ class Runner {
 			macros: require('./config')
 		})
 		this.date = new Date()
+	}
+	
+	compile(root) {
+		
+		logger('runner').log('compiling: ' + root)
 		this.system.compile(root)
-		this.system.run(this.system.main)
+	}
+	
+	run(main) {
+		
+		if (this.system.main) main = this.system.main
+		logger('runner').log('running: ' + main)
+		this.system.run(main)
 	}
 	
 	listen() {

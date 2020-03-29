@@ -1,9 +1,18 @@
 
 const path = require('path')
+const Runner = require('./runner') 
 
 console.log('Running pluck with node version: ' + process.version)
 process.argv.shift()
 process.argv.shift()
+let command = 'compile'
+if (process.argv[0] == 'compile') {
+	command = 'compile'
+	process.argv.shift()
+} else if (process.argv[0] == 'run') {
+	command = 'run'
+	process.argv.shift()
+}
 let root = path.join(process.cwd(), './examples/')
 if (process.argv.length > 0) {
 	root = root + process.argv[0]
@@ -13,6 +22,14 @@ if (process.argv.length > 0) {
 if (! root.endsWith('.watm')) {
 	root = root + '.watm'
 }
-let Runner = require('./runner') 
 let runner = new Runner()
-runner.run(root)
+if (command == 'compile') {
+	runner.compile(root)
+	runner.run()
+} else {
+	let array = root.split('.')
+	array.pop()
+	root = array.join('')
+	root = path.join(process.cwd(), 'work', root + '.json')
+	runner.run(root)
+}
