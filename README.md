@@ -4,6 +4,7 @@
 - **pluck** is a programming language construction kit.
 - Get started with WebAssembly text format syntax and macros.
 - Create and use macros to construct your own programming language features.
+- Additional [project documentation](https://www.notion.so/pluck-ad6047f9dd6e4c2dbadd89c69c6914fd) is hosted at Notion.
 
 ### Create a macro to recognize and transpile [integer values](/macros/number.js) to WebAssembly
 ```javascript
@@ -146,12 +147,3 @@ npm start if-else
 npm start repeat
 npm start negation
 ```
-
-### Roadmap
-
-- perhaps implement a TDOP/Pratt parser for enchanced operator precedence handling
-- allow relative paths for modules
-- create macro for function pointers (tables)
-- create binary search tree instead of hashtable
-- create the distinct data structures: array, linked list, and hybrid (vector)
-- fill in blank function stubs: e.g. $boolean_xor
