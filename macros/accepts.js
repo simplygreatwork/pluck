@@ -15,7 +15,7 @@ module.exports = function(system, document) {
 			
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_expression_longer(parent, 2)) return
+			if (! query.is_length_exceeding(parent, 2)) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'func')) return
 			if (! query.is_type_value(parent.value[2], 'symbol', 'accepts')) return
 			iterate(state.func.value, function(each, index) {

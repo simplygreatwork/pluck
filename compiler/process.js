@@ -96,7 +96,7 @@ function find_module_imports(document) {
 	
 	let result = []
 	walk({ root: document.tree[0], visit: function(node, index, parents) {
-		if (query.is_expression_length(node, 2)) {
+		if (query.is_length(node, 2)) {
 			if (query.is_type_value(node.value[0], 'symbol', 'import')) {
 				if (query.is_type(node.value[1], 'string')) {
 					result.push(jetpack.path(document.path, '..', node.value[1].value))

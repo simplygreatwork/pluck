@@ -13,7 +13,7 @@ module.exports = function(system, document) {
 			
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_expression_length(parent, 2)) return
+			if (! query.is_length(parent, 2)) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'import')) return
 			parent.once('exit', function() {
 				if (query.is_type(parent.value[1], 'string')) {

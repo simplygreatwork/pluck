@@ -11,11 +11,11 @@ function is_type_value(node, type, value) {
 	return (node.type == type) && (node.value == value)
 }
 
-function is_expression_length(node, length) {	
+function is_length(node, length) {	
 	return (node.type == 'expression') && (node.value.length === length)
 }
 
-function is_expression_longer(node, length) {
+function is_length_exceeding(node, length) {
 	return (node.type == 'expression') && (node.value.length > length)
 }
 
@@ -91,8 +91,8 @@ function climb(parents, func) {
 module.exports = {
 	is_type: is_type,
 	is_type_value: is_type_value,
-	is_expression_length,
-	is_expression_longer,
+	is_length,
+	is_length_exceeding,
 	is_depth,
 	get_value,
 	last,

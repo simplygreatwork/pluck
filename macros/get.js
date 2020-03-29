@@ -18,14 +18,14 @@ module.exports = function(system, document) {
 			if (! index > 0) return
 			let parent = query.last(parents)
 			let previous = parent.value[index - 1]
-			let substitute = true
-			substitute = (query.is_type_value(previous, 'symbol', 'param')) ? false : substitute
-			substitute = (query.is_type_value(previous, 'symbol', 'result')) ? false : substitute
-			substitute = (query.is_type_value(previous, 'symbol', 'local')) ? false : substitute
-			substitute = (query.is_type_value(previous, 'symbol', 'get_local')) ? false : substitute
-			substitute = (query.is_type_value(previous, 'symbol', 'set_local')) ? false : substitute
-			substitute = (query.is_type_value(previous, 'symbol', 'call')) ? false : substitute
-			if (substitute) {
+			let replace = true
+			replace = (query.is_type_value(previous, 'symbol', 'param')) ? false : replace
+			replace = (query.is_type_value(previous, 'symbol', 'result')) ? false : replace
+			replace = (query.is_type_value(previous, 'symbol', 'local')) ? false : replace
+			replace = (query.is_type_value(previous, 'symbol', 'get_local')) ? false : replace
+			replace = (query.is_type_value(previous, 'symbol', 'set_local')) ? false : replace
+			replace = (query.is_type_value(previous, 'symbol', 'call')) ? false : replace
+			if (replace) {
 				let tree = parse(` (get_local ${value})`)[0]
 				query.replace(parent, node, tree)
 			} else {
