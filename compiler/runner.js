@@ -51,8 +51,8 @@ class Runner {
 		broadcast.on('documents.transformed', function(document) {
 			logger('runner').log('Transformed in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
 		}.bind(this))
-		broadcast.on('document.compiled', function(document, project) {
-			return
+		broadcast.on('document.compiled', function(document) {
+			if (false) logger('transforming').log('compiled: ' + document.id)
 		}.bind(this))
 		broadcast.on('documents.compiled', function(document) {
 			logger('runner').log('Compiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
