@@ -4,13 +4,10 @@
 	(import "./memory.watm")
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
-	(table 3 anyfunc)
+	(import "host" "table" (table 1 anyfunc))
 	(type $void_to_i32 (func (result i32)))
 	(type $i32_to_i32 (func (param i32) (result i32)))	
 	(type $i32_to_void (func (param i32)))	
-	(elem (i32.const 0) $no_param_one_result)
-	(elem (i32.const 1) $one_param_one_result)
-	(elem (i32.const 2) $one_param_no_result)
 	
 	(func $test_table
 		
@@ -19,18 +16,18 @@
 		(call $print_string (string "------------------------------"))		
 		(call $print_integer
 			(call_indirect (type $void_to_i32)
-				(i32.const 0)
+				(funcref "no_param_one_result" "table")
 			)
 		)
 		(call $print_integer
 			(call_indirect (type $i32_to_i32)
 				(i32.const 20)
-				(i32.const 1)
+				(funcref "one_param_one_result" "table")
 			)
 		)
 		(call_indirect (type $i32_to_void)
 			(i32.const 30)
-			(i32.const 2)
+				(funcref "one_param_no_result" "table")
 		)
 	)
 

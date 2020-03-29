@@ -9,7 +9,6 @@
 	(import "./map.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(elem (i32.const 5) $stream_iterate_each_function)
 	(type $i32_to_i32 (func (param i32) (result i32)))
 	
 	(func $stream_bytes (result i32)
@@ -39,12 +38,10 @@
 		
 		(local $list i32)
 		(local $context i32)
-		(local $stream_iterate_each_function i32)
 		(set_local $context (call $map_new))
 		(call $map_set (get_local $context) (string "value") (get_local $value))
 		(set_local $list (call $stream_list (get_local $stream)))
-		(set_local $stream_iterate_each_function (i32.const 5))
-		(call $list_iterate (get_local $list) (get_local $stream_iterate_each_function) (get_local $context))
+		(call $list_iterate (get_local $list) (funcref "stream_iterate_each_function" "stream") (get_local $context))
 	)
 	
 	(func $stream_iterate_each_function (param $item i32) (param $index i32) (param $context i32)

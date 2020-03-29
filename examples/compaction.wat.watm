@@ -20,8 +20,6 @@
 	(memory (import "host" "memory") 1)
 	(global $global (import "host" "global") (mut i32))
 	(global $legend (import "host" "legend") (mut i32))
-	(elem (i32.const 200) $deallocate_iterate_each)
-	(elem (i32.const 201) $display_iterate_each)
 	
 	(func $main
 		
@@ -86,11 +84,9 @@
 	(func $deallocate (param $list i32)
 		
 		(local $context i32)
-		(local $deallocate_iterate_each i32)
 		;;(call $print_string (string "deallocate"))
 		(set_local $context (i32.const 0))
-		(set_local $deallocate_iterate_each (i32.const 200))
-		(call $list_iterate (get_local $list) (get_local $deallocate_iterate_each) (get_local $context))
+		(call $list_iterate (get_local $list) (funcref "deallocate_iterate_each" "compaction") (get_local $context))
 	)
 	
 	(func $deallocate_iterate_each (param $item i32) (param $index i32) (param $context i32)
@@ -125,11 +121,10 @@
 	(func $display (param $list i32)
 		
 		(local $context i32)
-		(local $display_iterate_each i32)
 		;;(call $print_string (string "display"))
 		(call $print_integer (call $number_value (call $list_length (get_local $list))))
 		(set_local $context (i32.const 0))
-		(set_local $display_iterate_each (i32.const 201))
+		(set_local $display_iterate_each (funcref "display_iterate_each" "compaction"))
 	)
 	
 	(func $display_iterate_each (param $item i32) (param $index i32) (param $context i32)

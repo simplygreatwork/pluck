@@ -6,9 +6,6 @@
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(elem (i32.const 1) $list_index_of_iterate_each)
-	(elem (i32.const 2) $list_get_iterate_each)
-	(elem (i32.const 10) $list_set_iterate_each)
 	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
 	
 	(func $list_bytes (result i32)
@@ -78,12 +75,10 @@
 	(func $list_index_of (param $list i32) (param $item i32) (result i32)
 		
 		(local $context i32)
-		(local $list_index_of_iterate_each i32)
-		(set_local $list_index_of_iterate_each (i32.const 1))
 		(set_local $context (call $list_new))
 		(call $list_append (get_local $context) (get_local $item))
 		(call $list_append (get_local $context) (call $number_new (i32.const -1)))
-		(call $list_iterate (get_local $list) (get_local $list_index_of_iterate_each) (get_local $context))
+		(call $list_iterate (get_local $list) (funcref "list_index_of_iterate_each" "list") (get_local $context))
 		(call $number_value (call $item_value (call $item_next (call $item_next (get_local $context)))))
 	)
 	
@@ -102,11 +97,9 @@
 	(func $list_get (param $list i32) (param $index i32) (result i32)
 		
 		(local $context i32)
-		(local $list_get_iterate_each i32)
-		(set_local $list_get_iterate_each (i32.const 2))
 		(set_local $context (call $list_new))
 		(call $list_append (get_local $context) (get_local $index))
-		(call $list_iterate (get_local $list) (get_local $list_get_iterate_each) (get_local $context))
+		(call $list_iterate (get_local $list) (funcref "list_get_iterate_each" "list") (get_local $context))
 		(call $item_value (call $item_next (call $item_next (get_local $context))))
 	)
 	
@@ -121,12 +114,10 @@
 	(func $list_set (param $list i32) (param $index i32) (param $value i32)
 		
 		(local $context i32)
-		(local $list_set_iterate_each i32)
-		(set_local $list_set_iterate_each (i32.const 10))
 		(set_local $context (call $list_new))
 		(call $list_append (get_local $context) (get_local $index))
 		(call $list_append (get_local $context) (get_local $value))
-		(call $list_iterate (get_local $list) (get_local $list_set_iterate_each) (get_local $context))
+		(call $list_iterate (get_local $list) (funcref "list_set_iterate_each" "list") (get_local $context))
 	)
 	
 	(func $list_set_iterate_each (param $item i32) (param $index i32) (param $context i32)
