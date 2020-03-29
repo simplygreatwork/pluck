@@ -2,4 +2,5 @@ node_modules
 bower_components
 package-lock.json
 work
+build
 dist
