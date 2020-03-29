@@ -30,7 +30,6 @@ class System {
 		this.transform_documents()
 		this.compile_documents()
 		this.package_documents()
-		return this.project
 	}
 	
 	run(root) {
