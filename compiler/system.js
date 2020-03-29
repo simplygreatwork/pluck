@@ -125,8 +125,8 @@ class System {
 	
 	package_documents() {
 		
-		let build = path.join(process.cwd(), 'build', this.project + '/build.json')
-		jetpack.write(build, {
+		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
+		jetpack.write(path_, {
 			modules: Array.from(this.set)
 			.map(function(document) {
 				return document.long_id + '.wasm'
@@ -137,8 +137,8 @@ class System {
 	unpackage_documents() {
 		
 		this.set = new Set()
-		let build = path.join(process.cwd(), 'build', this.project + '/build.json')
-		let config = jetpack.read(build, 'json')
+		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
+		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
 			let document = new Document(path_)
 			document.long_id = path_.split('.')[0]
