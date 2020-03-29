@@ -31,9 +31,9 @@ class System {
 		this.package_documents()
 	}
 	
-	run(path_) {
+	run(build) {
 		
-		this.main = path_
+		this.build = build
 		this.unpackage_documents()
 		this.instantiate_documents()
 		this.start()
@@ -118,8 +118,8 @@ class System {
 		
 		let array = Array.from(this.set)
 		let document = array[array.length - 1]
-		this.main = path.join(process.cwd(), 'work', document.path + '.json')
-		jetpack.write(this.main, {
+		this.build = path.join(process.cwd(), 'work', document.path + '.json')
+		jetpack.write(this.build, {
 			modules: this.paths
 		})
 	}
@@ -127,7 +127,7 @@ class System {
 	unpackage_documents() {
 		
 		this.set = new Set()
-		let config = jetpack.read(this.main, 'json')
+		let config = jetpack.read(this.build, 'json')
 		config.modules.forEach(function(path_) {
 			let document = new Document(path_)
 			this.set.add(document)

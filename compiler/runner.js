@@ -29,11 +29,10 @@ class Runner {
 		this.system.compile(root)
 	}
 	
-	run(main) {
+	run(build) {
 		
-		if (this.system.main) main = this.system.main
-		logger('runner').log('running: ' + main)
-		this.system.run(main)
+		logger('runner').log('running: ' + build)
+		this.system.run(build)
 	}
 	
 	listen() {
