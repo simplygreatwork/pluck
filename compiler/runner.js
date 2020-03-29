@@ -31,7 +31,7 @@ class Runner {
 	
 	run(root) {
 		
-		logger('runner').log('running: ' + build)
+		logger('runner').log('running: ' + root)
 		this.system.run(root)
 	}
 	
