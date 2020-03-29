@@ -28,11 +28,7 @@ if (! root.endsWith('.watm')) {
 let runner = new Runner()
 if (command == 'compile') {
 	runner.compile(root)
-	runner.run(runner.system.build)
+	runner.run(root)
 } else {
-	let array = root.split('.')
-	array.pop()
-	root = array.join('')
-	let build = path.join(process.cwd(), 'work', root + '.json')
-	runner.run(build)
+	runner.run(root)
 }

@@ -1,0 +1,15 @@
+{
+  "modules": [
+    "hole.watm",
+    "frame.watm",
+    "allocator.watm",
+    "core.watm",
+    "utility.watm",
+    "memory.watm",
+    "string.watm",
+    "number.watm",
+    "boolean.watm",
+    "operator.watm",
+    "macros.watm"
+  ]
+}

@@ -51,9 +51,8 @@ class Runner {
 		broadcast.on('documents.transformed', function(document) {
 			logger('runner').log('Transformed in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
 		}.bind(this))
-		broadcast.on('document.compiled', function(document) {
-			let path_ = path.join(process.cwd(), 'work', document.path + '.wasm')
-			require('fs').writeFileSync(path_, document.wasm)
+		broadcast.on('document.compiled', function(document, project) {
+			return
 		}.bind(this))
 		broadcast.on('documents.compiled', function(document) {
 			logger('runner').log('Compiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')

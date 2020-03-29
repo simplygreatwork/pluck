@@ -1,0 +1,24 @@
+{
+  "modules": [
+    "hole.watm",
+    "frame.watm",
+    "allocator.watm",
+    "core.watm",
+    "utility.watm",
+    "memory.watm",
+    "array.watm",
+    "legend.watm",
+    "string.watm",
+    "boolean.watm",
+    "number.watm",
+    "function.watm",
+    "list.watm",
+    "assertion.watm",
+    "tree.watm",
+    "map.watm",
+    "stream.watm",
+    "table.watm",
+    "types.watm",
+    "index.watm"
+  ]
+}
