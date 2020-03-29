@@ -62,7 +62,6 @@ class System {
 	
 	resolve_documents() {
 		
-		logger('system').log('resolve_documents')
 		Object.keys(this.documents).forEach(function(key) {
 			let document = this.documents[key]
 			document.module_imports.forEach(function(each, index) {
@@ -73,7 +72,6 @@ class System {
 	
 	sort_documents() {
 		
-		logger('system').log('sort_documents')
 		let documents = Object.values(this.documents)
 		let document = null
 		this.set = new Set()
@@ -94,7 +92,6 @@ class System {
 	
 	render_function_imports() {
 		
-		logger('system').log('render_function_imports')
 		for (let document of this.set.values()) {
 			process_.render_function_imports(document)
 		}
