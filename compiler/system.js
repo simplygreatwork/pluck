@@ -117,7 +117,7 @@ class System {
 		this.paths = []
 		for (let document of this.set.values()) {
 			document.wasm = process_.compile(document).buffer
-			this.paths.push(document.id + '.watm')
+			this.paths.push(document.id + '.wasm')
 			let path_ = path.join(process.cwd(), 'build', this.project, document.id + '.wasm')
 			jetpack.write(path_, '')
 			require('fs').writeFileSync(path_, document.wasm)
