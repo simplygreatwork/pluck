@@ -150,11 +150,11 @@ class System {
 	instantiate_documents() {
 		
 		for (let document of this.set.values()) {
-			logger('system').log('instantiate: ' + path.basename(document.path) + ' (' + document.path + ')')
 			let path_ = path.join(process.cwd(), 'build', this.project, document.long_id + '.wasm')
 			document.wasm = require('fs').readFileSync(path_)
 			this.imports[document.id] = process_.instantiate(document, this.imports)
-		}		
+			broadcast.emit('document.instantiated', document)
+		}
 		broadcast.emit('documents.instantiated')
 	}
 	
