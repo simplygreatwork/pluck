@@ -86,7 +86,6 @@ macros: [
   - strings, lists, booleans, numbers, assertions
 - The parser supports documentation first.
   - Runnable wat source code can be compiled while embedded inside markdown documentation.
-- Currently compiles and runs in Node.js only. Small tweaks are needed to allow running in the browser.
 
 ### Structure
 
