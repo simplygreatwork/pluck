@@ -65,7 +65,7 @@ function noop() {
 	return
 }
 
-function instantiate(document, imports) {
+function compile(document) {
 	
 	let module_ = require('wabt')().parseWat(document.path, document.source, this.flags = {
 		exceptions : false,
@@ -79,11 +79,15 @@ function instantiate(document, imports) {
 	})
 	module_.resolveNames()
 	module_.validate(this.flags)
-	let binary = module_.toBinary({
+	return module_.toBinary({
 		log: false,
 		write_debug_names: false
 	})
-	let wasm = new WebAssembly.Module(binary.buffer)
+}
+
+function instantiate(document, imports) {
+	
+	let wasm = new WebAssembly.Module(document.wasm)
 	document.instance = new WebAssembly.Instance(wasm, imports)
 	return document.instance.exports
 }
@@ -248,5 +252,6 @@ module.exports = {
 	find_function_signature,
 	find_document,
 	find_function,
+	compile,
 	instantiate
 }

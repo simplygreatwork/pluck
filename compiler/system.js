@@ -1,10 +1,11 @@
 
 const fs = require('fs')
 const path = require('path')
+const jetpack = require('fs-jetpack')
 const Document = require('./document')
 const Table = require('./table')
 const Bus = require('./bus')
-const process = require('./process')
+const process_ = require('./process')
 const logger = require('./logger')()
 const broadcast = require('./broadcast')
 
@@ -19,14 +20,23 @@ class System {
 		this.string_counter = 0
 	}
 	
-	start(path_) {
+	compile(path_) {
 		
 		this.load_document(path_)
 		this.resolve_documents()
 		this.sort_documents()
 		this.render_function_imports()
 		this.transform_documents()
+		this.compile_documents()
+		this.package_documents()
+	}
+	
+	run(path_) {
+		
+		this.main = path_
+		this.unpackage_documents()
 		this.instantiate_documents()
+		this.start()
 	}
 	
 	load_document(path_) {
@@ -78,7 +88,7 @@ class System {
 		
 		logger('system').log('render_function_imports')
 		for (let document of this.set.values()) {
-			process.render_function_imports(document)
+			process_.render_function_imports(document)
 		}
 	}
 	
@@ -88,21 +98,61 @@ class System {
 			let transform = require('./transform')(this, document)
 			document.walk = transform.walk
 			document.source = transform.transform()
-			broadcast.emit('transformed', document)
+			broadcast.emit('document.transformed', document)
 		}
-		broadcast.emit('transpiled')
+		broadcast.emit('documents.transformed')
+	}
+	
+	compile_documents() {
+		
+		this.paths = []
+		for (let document of this.set.values()) {
+			document.wasm = process_.compile(document).buffer
+			this.paths.push(document.path + '.watm')
+			broadcast.emit('document.compiled', document)
+		}
+		broadcast.emit('documents.compiled')
+	}
+	
+	package_documents() {
+		
+		let array = Array.from(this.set)
+		let document = array[array.length - 1]
+		this.main = path.join(process.cwd(), 'work', document.path + '.json')
+		jetpack.write(this.main, {
+			modules: this.paths
+		})
+	}
+	
+	unpackage_documents() {
+		
+		this.set = new Set()
+		let config = jetpack.read(this.main, 'json')
+		config.modules.forEach(function(path_) {
+			let document = new Document(path_)
+			this.set.add(document)
+			this.documents[path_] = document
+		}.bind(this))
 	}
 	
 	instantiate_documents() {
 		
 		for (let document of this.set.values()) {
 			logger('system').log('instantiate: ' + path.basename(document.path) + ' (' + document.path + ')')
+			let path_ = path.join(process.cwd(), 'work', document.path + '.wasm')
+			document.wasm = require('fs').readFileSync(path_)
 			let name = path.basename(document.path)
 			let key = name.split('.')[0]
-			let imports = this.imports
-			this.imports[key] = process.instantiate(document, imports)
-		}
-		broadcast.emit('compiled')
+			this.imports[key] = process_.instantiate(document, this.imports)
+		}		
+		broadcast.emit('documents.instantiated')
+	}
+
+	start() {
+		
+		let array = Array.from(this.set)
+		let document = array[array.length - 1]
+		document.instance.exports.main()
 	}
 	
 	fire(message, data) {

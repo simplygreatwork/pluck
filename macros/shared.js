@@ -80,7 +80,6 @@ function declare(value, state) {
 	query.insert(state.func, tree, state.locals.offset)
 	state.func.emit('node.inserted', state.locals.offset)
 	state.locals = find_locals(state)
-	return false
 }
 
 module.exports = {

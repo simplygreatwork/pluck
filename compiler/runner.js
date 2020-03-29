@@ -22,8 +22,8 @@ class Runner {
 			macros: require('./config')
 		})
 		this.date = new Date()
-		this.system.start(root)
-		this.system.documents[root].instance.exports.main()
+		this.system.compile(root)
+		this.system.run(this.system.main)
 	}
 	
 	listen() {
@@ -34,16 +34,23 @@ class Runner {
 		broadcast.on('loaded', function(data) {
 			logger('loading').log('loaded: ' + data)
 		}.bind(this))
-		broadcast.on('transformed', function(document) {
+		broadcast.on('document.transformed', function(document) {
 			logger('transforming').log('transformed: ' + document.id)
 			let path_ = path.join(process.cwd(), 'work', document.path) 
 			jetpack.write(path_, document.source)
 		}.bind(this))
-		broadcast.on('transpiled', function(document) {
-			logger('runner').log('Transpiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
+		broadcast.on('documents.transformed', function(document) {
+			logger('runner').log('Transformed in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
 		}.bind(this))
-		broadcast.on('compiled', function(document) {
+		broadcast.on('document.compiled', function(document) {
+			let path_ = path.join(process.cwd(), 'work', document.path + '.wasm')
+			require('fs').writeFileSync(path_, document.wasm)
+		}.bind(this))
+		broadcast.on('documents.compiled', function(document) {
 			logger('runner').log('Compiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
+		}.bind(this))
+		broadcast.on('documents.instantiated', function(document) {
+			logger('runner').log('Instantiated in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
 		}.bind(this))
 	}
 }
