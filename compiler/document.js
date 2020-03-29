@@ -15,6 +15,7 @@ class Document {
 		this.path = this.trim_path(path_)
 		this.name = path.basename(this.path)
 		this.id = this.name.split('.')[0]
+		this.long_id = path.basename(path.parse(this.path).dir) + '-' + path.basename(this.path)
 		this.define_stages()
 	}
 	
