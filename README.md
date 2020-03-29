@@ -119,11 +119,11 @@ macros: [
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
-npm start
-npm start memory
+npm start index
 npm start macros
 npm start stress
 npm start tiny
+npm start compaction
 ```
 
 ### Run locally
@@ -133,11 +133,11 @@ cd pluck
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
-npm start
-npm start memory
+npm start index
 npm start macros
 npm start stress
 npm start tiny
+npm start compaction
 ```
 
 - You can run any of the files in the examples folder. e.g.

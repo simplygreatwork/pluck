@@ -113,10 +113,8 @@ class System {
 	
 	compile_documents() {
 		
-		this.paths = []
 		for (let document of this.set.values()) {
 			document.wasm = process_.compile(document).buffer
-			this.paths.push(document.id + '.wasm')
 			let path_ = path.join(process.cwd(), 'build', this.project, document.id + '.wasm')
 			jetpack.write(path_, '')
 			require('fs').writeFileSync(path_, document.wasm)
@@ -127,11 +125,12 @@ class System {
 	
 	package_documents() {
 		
-		let array = Array.from(this.set)
-		let document = array[array.length - 1]
 		let build = path.join(process.cwd(), 'build', this.project + '/build.json')
 		jetpack.write(build, {
-			modules: this.paths
+			modules: Array.from(this.set)
+			.map(function(document) {
+				return document.id + '.wasm'
+			})
 		})
 	}
 	
