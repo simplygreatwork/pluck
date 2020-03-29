@@ -1,12 +1,12 @@
 (module
-
+	
 	(import "./core.watm")
 	(memory (import "host" "memory") 1)
 	
 	(func $print (param $string i32)
 		(call $print_ (get_local $string))
 	)
-
+	
 	(func $print_string (param $string i32)
 		(call $print_string_ (get_local $string))
 	)

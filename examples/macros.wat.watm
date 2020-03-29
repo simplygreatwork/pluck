@@ -4,6 +4,7 @@
 	import "../library/memory.watm"
 	import "../library/string.watm"
 	import "../library/operator.watm"
+	import "../library/types.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	type $void_to_void (func)
