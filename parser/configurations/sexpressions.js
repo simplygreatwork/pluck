@@ -1,14 +1,14 @@
 
-var p = require('../src/parsers/core');
-const between = require('../src/parsers/between')
-const split = require('../src/parsers/split')
-const whitespace = require('../src/parsers/whitespace')
-const newline = require('../src/parsers/newline')
-const semicolon = require('../src/parsers/semicolon')
-const number = require('../src/parsers/number')
-const boolean = require('../src/parsers/boolean')
-const string = require('../src/parsers/string')
-const symbol = require('../src/parsers/symbol')
+var p = require('../parsers/core');
+const between = require('../parsers/between')
+const split = require('../parsers/split')
+const whitespace = require('../parsers/whitespace')
+const newline = require('../parsers/newline')
+const semicolon = require('../parsers/semicolon')
+const number = require('../parsers/number')
+const boolean = require('../parsers/boolean')
+const string = require('../parsers/string')
+const symbol = require('../parsers/symbol')
 
 let refs = {}
 

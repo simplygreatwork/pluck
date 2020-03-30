@@ -89,21 +89,14 @@ macros: [
 
 ### Structure
 
-1. lexer
-2. parser (for s-expressions)
-2. abstract syntax tree transformer (s-expressions)
-3. linker
-4. library (wat/wasm)
-
-### Folders
-
 - parser/
 - compiler/
+- runtime/
 - library/
 - macros/
 - examples/
+- browser/
 - fixtures/
-- precedence/
 
 ### Requirements
 
@@ -119,11 +112,16 @@ macros: [
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
-npm start index
-npm start macros
-npm start stress
-npm start tiny
-npm start compaction
+npm start compile index
+npm start run index
+npm start compile macros
+npm start run macros
+npm start compile stress
+npm start run stress
+npm start compile tiny
+npm start run tiny
+npm start compile compaction
+npm start run compaction
 ```
 
 ### Run locally
@@ -133,16 +131,21 @@ cd pluck
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
-npm start index
-npm start macros
-npm start stress
-npm start tiny
-npm start compaction
+npm start compile index
+npm start run index
+npm start compile macros
+npm start run macros
+npm start compile stress
+npm start run stress
+npm start compile tiny
+npm start run tiny
+npm start compile compaction
+npm start run compaction
 ```
 
 - You can run any of the files in the examples folder. e.g.
 ```
-npm start if-else
-npm start repeat
-npm start negation
+npm start compile if-else
+npm start compile repeat
+npm start compile negation
 ```
