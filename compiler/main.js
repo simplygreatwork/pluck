@@ -22,7 +22,8 @@ if (process.argv.length > 0) {
 } else {
 	root = root + 'index'
 }
-if (! jetpack.exists(root)) {
+
+if ((false) && (! jetpack.exists(root))) {
 	console.error('File was not found. Exiting.')
 	process.exit(-1)
 }
