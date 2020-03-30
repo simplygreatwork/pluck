@@ -11,10 +11,8 @@
 	func main
 		
 		memory_bootstrap
-		
-		set value to not true
-		print_integer value
-		
-		set value to not false
-		print_integer value
+		print_integer true
+		print_integer not true
+		print_integer false
+		print_integer not false
 )

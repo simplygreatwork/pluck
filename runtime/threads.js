@@ -4,7 +4,7 @@ var Worker = require('tiny-worker')
 workers = {}
 counter = 0
 
-function spawn(name) {
+function create(name) {
 	
 	var worker = new Worker('./runtime/thread.js')
 	workers[++counter] = worker
@@ -21,5 +21,5 @@ function spawn(name) {
 }
 
 module.exports = {
-	spawn
+	create
 }

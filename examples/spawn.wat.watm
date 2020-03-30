@@ -13,9 +13,9 @@
 	func main
 		
 		memory_bootstrap
-		thread_spawn "one" (funcref "run" "spawn")
-		thread_spawn "two" (funcref "run" "spawn")
-		thread_spawn "three" (funcref "run" "spawn")
+		thread_create "one" (funcref "run" "spawn")
+		thread_create "two" (funcref "run" "spawn")
+		thread_create "three" (funcref "run" "spawn")
 		
 	func run (param $name i32)
 		

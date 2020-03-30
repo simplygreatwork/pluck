@@ -11,6 +11,10 @@
 	func main
 		
 		memory_bootstrap
-		set value to 1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3
-		print_integer value
+		print_integer 1 plus 1 equals 2
+		print_integer 1 plus 1 plus 1 equals 3
+		print_integer 1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3
+		print_integer 1 less 2 and 3 greater 2
+		print_integer 1 less 2 or 3 greater 2
+		print_integer 1 less 2 xor 1 greater 2
 )

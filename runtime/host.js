@@ -1,4 +1,5 @@
 
+
 const threads = require('./threads')
 
 function Host() {
@@ -38,9 +39,12 @@ function Host() {
 		print_integer: function(value) {
 			console.log(value)
 		},
-		thread_spawn: function(string, funcref) {
-			threads.spawn(string_unwrap(string, this), funcref)
-			this.imports.thread.thread_call(funcref, string)
+		thread_create: function(string, funcref) {
+			threads.create(string_unwrap(string, this), funcref)
+			this.imports.thread.thread_start(funcref, string)
+		}.bind(this),
+		thread_start: function(string, funcref) {
+			this.imports.thread.thread_start(funcref, string)
 		}.bind(this)
 	})
 }

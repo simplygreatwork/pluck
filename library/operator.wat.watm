@@ -35,6 +35,10 @@
 		(i32.or (get_local $a) (get_local $b))
 	)
 	
+	(func $operator_primitive_xor (param $a i32) (param $b i32) (result i32)
+		(i32.xor (get_local $a) (get_local $b))
+	)
+	
 	(func $operator_primitive_not (param $a i32) (param $b i32) (result i32)
 		(i32.ne (get_local $a) (get_local $b))
 	)
