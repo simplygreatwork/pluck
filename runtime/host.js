@@ -47,7 +47,7 @@ function Host() {
 
 function string_unwrap(handle, host) {
 	
-	let pointer = host.imports.memory.memory_dereference_handle(handle)
+	let pointer = host.imports.core.memory_dereference_handle_(handle)
 	var array = new Uint8Array(host.memory.buffer)
 	let type = array[pointer]
 	pointer = pointer + 8
