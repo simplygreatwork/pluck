@@ -6,7 +6,6 @@ counter = 0
 
 function spawn(name) {
 	
-	console.log('threads.spawm.name: ' + name)
 	var worker = new Worker('./runtime/thread.js')
 	workers[++counter] = worker
 	worker.onmessage = function(event) {

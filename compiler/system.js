@@ -37,6 +37,7 @@ class System {
 		this.project = this.project_name(root)
 		this.unpackage_documents()
 		this.instantiate_documents()
+		this.imports.host.imports = this.imports
 		this.start()
 	}
 	

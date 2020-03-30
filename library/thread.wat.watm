@@ -2,10 +2,21 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
-	(import "host" "thread_spawn" (func $host_thread_spawn (param i32)))
+	(import "host" "thread_spawn" (func $host_thread_spawn (param i32) (param i32)))
+	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
+	(type $i32_to_void (func (param i32)))
 	
-	(func $thread_spawn (param $name i32)
-		(call $host_thread_spawn (i32.add (call $memory_dereference_handle (get_local name)) (i32.const 4)))
+	(func $thread_spawn (param $name i32) (param $funcref i32)
+		
+		(call $host_thread_spawn
+			(get_local $name)
+			(get_local $funcref)
+		)
+	)
+	
+	(func $thread_call (param $funcref i32) (param $value i32)
+		
+		(call_indirect (type $i32_to_void) (get_local $value) (get_local $funcref))
 	)
 )

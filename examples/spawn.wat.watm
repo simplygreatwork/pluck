@@ -1,21 +1,24 @@
 (module
 	
-	(import "../library/utility.watm")
-	(import "../library/memory.watm")
-	(import "../library/string.watm")
-	(import "../library/types.watm")
-	(import "../library/thread.watm")
-	(import "host" "table" (table 1 anyfunc))
-	(memory (import "host" "memory") 1)
-	(global $global (import "host" "global") (mut i32))
-	(global $legend (import "host" "legend") (mut i32))
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/types.watm"
+	import "../library/thread.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
 	
 	;; This example currently runs in Node.js only and not in the browser
-
+	
 	func main
 		
 		memory_bootstrap
-		thread_spawn "one"
-		thread_spawn "two"
-		thread_spawn "three"
+		thread_spawn "one" (funcref "run" "spawn")
+		thread_spawn "two" (funcref "run" "spawn")
+		thread_spawn "three" (funcref "run" "spawn")
+		
+	func run (param $name i32)
+		
+		print "inside spawn.run"
+		print name
 )

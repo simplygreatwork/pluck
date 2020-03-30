@@ -32,23 +32,25 @@ function Host() {
 			value: 'i32',
 			mutable: true
 		}, 0),
-		print_string: function(pointer) {
-			console.log(string_unwrap(pointer, this.memory.buffer))
+		print_string: function(handle) { + 4
+			console.log(string_unwrap(handle, this))
 		}.bind(this),
 		print_integer: function(value) {
 			console.log(value)
 		},
-		thread_spawn: function(pointer) {
-			threads.spawn(string_unwrap(pointer, this.memory.buffer))
+		thread_spawn: function(handle, funcref) {
+			threads.spawn(string_unwrap(handle, this), funcref)
+			this.imports.thread.thread_call(funcref, handle)
 		}.bind(this)
 	})
 }
 
-function string_unwrap(pointer, buffer) {
+function string_unwrap(handle, host) {
 	
-	var array = new Uint8Array(buffer)
+	let pointer = host.imports.memory.memory_dereference_handle(handle)
+	var array = new Uint8Array(host.memory.buffer)
 	let type = array[pointer]
-	pointer = pointer + 4
+	pointer = pointer + 8
 	let length = array[pointer]
 	pointer = pointer + 4
 	let string = ''
