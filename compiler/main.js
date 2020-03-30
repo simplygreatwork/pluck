@@ -17,14 +17,8 @@ if (process.argv[0] == 'compile') {
 }
 
 let root = path.join(process.cwd(), './examples/')
-if (process.argv.length > 0) {
-	root = root + process.argv[0]
-} else {
-	root = root + 'index'
-}
-if (! root.endsWith('.wat.watm')) {
-	root = root + '.wat.watm'
-}
+root = root + (process.argv.length > 0 ? process.argv[0] : 'index')
+root = root + (! root.endsWith('.wat.watm' > 0) ? '.wat.watm' : '')
 
 if (! jetpack.exists(root)) {
 	console.error('File was not found. Exiting.')
