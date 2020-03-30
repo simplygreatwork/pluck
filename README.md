@@ -9,7 +9,7 @@
 ### Create a macro to recognize and transpile [integer values](/macros/number.js) to WebAssembly
 ```javascript
 
-enter : function(node, index, parents, state) {		
+enter : function(node, index, parents, state) {	
 	
   if (! shared.is_inside_function(state)) return
   if (! query.is_type(node, 'number')) return
