@@ -22,13 +22,13 @@ if (process.argv.length > 0) {
 } else {
 	root = root + 'index'
 }
+if (! root.endsWith('.wat.watm')) {
+	root = root + '.wat.watm'
+}
 
-if ((false) && (! jetpack.exists(root))) {
+if (! jetpack.exists(root)) {
 	console.error('File was not found. Exiting.')
 	process.exit(-1)
-}
-if (! root.endsWith('.watm')) {
-	root = root + '.watm'
 }
 
 let runner = new Runner()
