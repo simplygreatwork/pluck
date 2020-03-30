@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -15,4 +15,4 @@
 		print_integer not true
 		print_integer false
 		print_integer not false
-)
+		

@@ -9,10 +9,12 @@ const number = require('../parsers/number')
 const boolean = require('../parsers/boolean')
 const string = require('../parsers/string')
 const symbol = require('../parsers/symbol')
+const comment = require('../parsers/comment')
+const fold_whitespace = require('./fold-whitespace')
 
 let refs = {}
 
-function main() {
+function expression_contents() {
 	
 	return p.rep (
 		p.alt ([
@@ -38,7 +40,7 @@ function expression() {
 	
 	return between (
 		p.char('('),
-		p.ref(refs, 'main'),
+		p.ref(refs, 'expression_contents'),
 		p.char(')'),
 		function(value) {
 			return {
@@ -49,67 +51,14 @@ function expression() {
 	)
 }
 
-function comment() {
-	
-	let result = [];
-	return p.seq ([
-		p.str (';', function(value) {
-			return value.str
-		}),
-		p.str (';', function(value) {
-			return value.str
-		}),
-		p.rep (
-			p.char ('^\n', function(value) {
-				return value.char;
-			}),
-			0,
-			function(value) {
-				return value.rep
-			}
-		),
-	], function(value) {
-		return {
-			type: 'comment',
-			value: value.seq[0] + value.seq[1] + value.seq[2].join('')
-		}
-	})
-}
-
-function fold_whitespace(value) {
-	
-	let whitespace = []
-	value.map(function(each) {
-		if (each.type == 'whitespace') {
-			whitespace.push(each.value)
-		} else if (each.type == 'newline') {
-			whitespace.push(each.value)
-		} else if (each.type == 'comment') {
-			whitespace.push(each.value)
-		} else {
-			each.whitespace = whitespace.join('')
-			whitespace.splice(0, whitespace.length)
-		}
-	})
-	return value.filter(function(each) {
-		if (each.type == 'whitespace') {
-			return false
-		} else if (each.type == 'newline') {
-			return false
-		} else if (each.type == 'comment') {
-			return false
-		} else {
-			return true
-		}
-	})
-}
-
-refs.main = main
+refs.expression_contents = expression_contents
 
 module.exports = function(code) {
 	
-	return p.parse(
-		main(),
+	let result = p.parse (
+		expression_contents(0),
 		code
-	);
+	)
+	result[0].type = 'expression'
+	return result
 }

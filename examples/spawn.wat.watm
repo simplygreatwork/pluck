@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -21,4 +21,4 @@
 		
 		print "inside spawn.run"
 		print name
-)
+		

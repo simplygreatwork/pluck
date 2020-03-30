@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -283,4 +283,4 @@
 			set b to b plus 1
 
 		print_integer b			
-)
+		

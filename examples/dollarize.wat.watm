@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -13,4 +13,3 @@
 	func setup
 		memory_bootstrap
 		
-)

@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -17,4 +17,4 @@
 		print_integer 1 less 2 and 3 greater 2
 		print_integer 1 less 2 or 3 greater 2
 		print_integer 1 less 2 xor 1 greater 2
-)
+		

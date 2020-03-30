@@ -1,17 +1,16 @@
 
-var p = require('../parsers/core');
+var p = require('../parsers/core')
 
 module.exports = function(string) {
 	
-	string = string || '//';
-	let result = [];
+	string = string || '//'
 	return p.seq ([
 		p.str(string, function(value) {
 			return value.str
 		}),
 		p.rep (
 			p.char ('^\n', function(value) {
-				return value.char;
+				return value.char
 			}),
 			0,
 			function(value) {

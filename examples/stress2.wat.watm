@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -242,4 +242,4 @@
 		set a to 1
 		set a to 1
 		set a to 1
-)
+		

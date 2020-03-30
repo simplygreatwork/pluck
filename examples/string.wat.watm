@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -12,4 +12,4 @@
 		memory_bootstrap
 		print (string "string expression")
 		print "string literal"
-)
+		

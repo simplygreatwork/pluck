@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -17,4 +17,4 @@
 				print_integer j
 				repeat with k from 1 to 3 every 1
 					print_integer k
-)
+					

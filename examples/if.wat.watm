@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -20,4 +20,4 @@
 		
 		if 10 plus 10 greater 15 and 5 plus 5 plus 5 greater 10
 			print "10 plus 10 greater 15 and 5 plus 5 plus 5 greater 10"
-)
+			

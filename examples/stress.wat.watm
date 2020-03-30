@@ -1,4 +1,4 @@
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -200,4 +200,4 @@
 				print "5 < k < 15"
 			if k greater 5 and k less 15
 				print "5 < k < 15"
-)
+				

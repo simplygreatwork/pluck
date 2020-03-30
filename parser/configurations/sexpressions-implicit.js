@@ -9,13 +9,10 @@ const boolean = require('../parsers/boolean')
 const string = require('../parsers/string')
 const symbol = require('../parsers/symbol')
 const comment = require('../parsers/comment')
+const fold_whitespace = require('./fold-whitespace')
+const fold_lines = require('./fold-lines')
 
 let refs = {}
-
-function main() {
-	
-	return expression_contents(0)
-}
 
 function expression(level) {
 	
@@ -168,69 +165,16 @@ function indent() {
 	})
 }
 
-function fold_lines(value) {
-	
-	let result = []
-	value.forEach(function(each, index) {
-		if (each.type == 'line') {
-			if (each.value.length > 0 && each.value[0].type != 'symbol') {
-				each.value[0].whitespace = each.whitespace_
-				result.push(...each.value)
-			} else {
-				if (index === 0) {
-					each.value[0].whitespace = each.whitespace_
-					result.push(...each.value)
-				} else {
-					let significant = each.value.filter(function(each) {
-						if (each.type == 'whitespace') return false
-						else if (each.type == 'newline') return false
-						else if (each.type == 'comment') return false
-						else return true
-					})
-					if (significant.length > 0) {			// line contains significant elements
-						each.type = 'expression'
-						if (each.whitespace_) each.whitespace = each.whitespace_
-						result.push(each)
-					} else {
-						result.push(...each.value)
-					}
-				}
-			}
-		} else {
-			result.push(each)
-		}
-	})
-	return result
-}
-
-function fold_whitespace(value) {
-	
-	let whitespace = []
-	value.map(function(each) {
-		if (each.type == 'whitespace') whitespace.push(each.value)
-		else if (each.type == 'newline') whitespace.push(each.value)
-		else if (each.type == 'comment') whitespace.push(each.value)
-		else {
-			each.whitespace = whitespace.join('')
-			whitespace.splice(0, whitespace.length)
-		}
-	})
-	return value.filter(function(each) {
-		if (each.type == 'whitespace') return false
-		else if (each.type == 'newline') return false
-		else if (each.type == 'comment') return false
-		else return true
-	})
-}
-
 refs.lines = lines
 refs.line_contents = line_contents
 refs.expression_contents = expression_contents
 
 module.exports = function(code) {
 	
-	return p.parse (
-		main(),
+	let result = p.parse (
+		expression_contents(0),
 		code
 	)
+	result[0].type = 'expression'
+	return result
 }

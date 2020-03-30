@@ -1,5 +1,4 @@
 (module
-	(func $one
-		(call $one_1)
-	)
+	
+	(func main)
 )
