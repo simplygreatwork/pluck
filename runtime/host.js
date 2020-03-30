@@ -32,14 +32,14 @@ function Host() {
 			value: 'i32',
 			mutable: true
 		}, 0),
-		print_string: function(handle) { + 4
-			console.log(string_unwrap(handle, this))
+		print_string: function(string) {
+			console.log(string_unwrap(string, this))
 		}.bind(this),
 		print_integer: function(value) {
 			console.log(value)
 		},
-		thread_spawn: function(handle, funcref) {
-			threads.spawn(string_unwrap(handle, this), funcref)
+		thread_spawn: function(string, funcref) {
+			threads.spawn(string_unwrap(string, this), funcref)
 			this.imports.thread.thread_call(funcref, handle)
 		}.bind(this)
 	})
