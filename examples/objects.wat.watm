@@ -1,0 +1,29 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/types.watm"
+	import "../library/function.watm"
+	import "../library/object.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		create_object
+		
+	func create_object
+		
+		set object to (object_new)
+		object_set object "callable" (function_new (funcref "callable" "objects"))
+		set result to (object_call object "callable")
+		print (object_to_string object)
+		print " "
+		
+	func callable
+		
+		print "callable called"
+		

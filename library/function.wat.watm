@@ -13,7 +13,7 @@
 		
 		(local $function i32)
 		(set_local $function (call $memory_allocate (typeof "function") (call $function_bytes)))
-		(call $function_id_set (get_local $function) (call $number_new (get_local $id)))
+		(call $function_id_set (get_local $function) (get_local $id))
 		(get_local $function)
 	)
 	

@@ -25,7 +25,7 @@ enter : function(node, index, parents, state) {
 ```javascript
 
 enter : function(node, index, parents, state) {
-	
+
   let parent = query.last(parents)
   if (! query.is_type(parent, 'expression')) return
   if (! query.is_length_exceeding(parent, 2)) return
@@ -149,3 +149,8 @@ npm start compile if-else
 npm start compile repeat
 npm start compile negation
 ```
+
+## Known Issues
+
+- source files with the same name in different directories with clobber each other during compilation
+- for now, do not name any file with the same name as any file in /library

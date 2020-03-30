@@ -531,8 +531,15 @@
 		))
 	)
 	
-	(func $print_ (param $string i32)
-		(call $print_string_ (get_local $string))
+	(func $print_ (param $value i32)
+		
+		(local $type i32)
+		(set_local $type (call $memory_type_ (get_local $value)))
+		(if (i32.eq (get_local $type) (typeof "string")) (then
+			(call $print_string_ (get_local $value))
+		))
+		(if (i32.eq (get_local $type) (typeof "number")) (then))
+		(if (i32.eq (get_local $type) (typeof "object")) (then))
 	)
 	
 	(func $print_string_ (param $string i32)

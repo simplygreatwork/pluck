@@ -51,7 +51,7 @@
 		(local $value i32)
 		(local $result i32)
 		(set_local $function (call $item_value (get_local $item)))
-		(set_local $function_id (call $number_value (call $function_id (get_local $function))))
+		(set_local $function_id (call $function_id (get_local $function)))
 		(set_local $value (call $map_get (get_local $context) (string "value")))
 		(set_local $result (call_indirect (type $i32_to_i32) (get_local $value) (get_local $function_id)))
 		(call $map_set (get_local $context) (string "value") (get_local $result))

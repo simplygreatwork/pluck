@@ -27,10 +27,10 @@
 		)
 		(call_indirect (type $i32_to_void)
 			(i32.const 30)
-				(funcref "one_param_no_result" "table")
+			(funcref "one_param_no_result" "table")
 		)
 	)
-
+	
 	(func $no_param_one_result (result i32)
 		(i32.const 10)
 	)
