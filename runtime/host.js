@@ -40,7 +40,7 @@ function Host() {
 		},
 		thread_spawn: function(string, funcref) {
 			threads.spawn(string_unwrap(string, this), funcref)
-			this.imports.thread.thread_call(funcref, handle)
+			this.imports.thread.thread_call(funcref, string)
 		}.bind(this)
 	})
 }
