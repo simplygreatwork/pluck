@@ -109,6 +109,8 @@ macros: [
 - Open [pluck](https://gitpod.io/#https://github.com/simplygreatwork/pluck) in GitPod.
 
 ```
+git fetch && git fetch --tags
+git checkout 2020-03-30
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
@@ -128,6 +130,7 @@ npm start run compaction
 ```
 git clone https://github.com/simplygreatwork/pluck.git
 cd pluck
+git checkout 2020-03-30
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
