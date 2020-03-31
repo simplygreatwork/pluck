@@ -3,7 +3,6 @@ const path = require('path')
 const Runner = require('./runner') 
 const jetpack = require('fs-jetpack') 
 
-console.log('Running pluck with node version: ' + process.version)
 process.argv.shift()
 process.argv.shift()
 
@@ -21,9 +20,15 @@ root = root + (process.argv.length > 0 ? process.argv[0] : 'index')
 root = root + (! root.endsWith('.wat.watm' > 0) ? '.wat.watm' : '')
 
 if (! jetpack.exists(root)) {
-	console.error('File was not found. Exiting.')
-	process.exit(-1)
+	console.error('')
+	console.error('>>>>> The file was not found so exiting now. <<<<<')
+	console.error('')
+	process.exit(0)
 }
+
+console.log('')
+console.log('Running pluck with node version: ' + process.version)
+console.log('')
 
 let runner = new Runner()
 if (command == 'compile') {
