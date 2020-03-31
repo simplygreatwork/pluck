@@ -286,7 +286,7 @@
 		(call $print_string (call $number_to_string (get_local $value)))
 		(call $print_integer (get_local $index))
 	)
-
+	
 	(func $test_tree_map
 		
 		(local $map i32)
@@ -295,7 +295,7 @@
 		(call $print_string (string "Testing a tree map"))
 		(call $print_string (string "------------------------------"))
 	)
-
+	
 	(func $test_arguments_dynamic
 		
 		(local $arguments i32)
@@ -372,7 +372,7 @@
 	)
 	
 	(func $test_legend
-
+		
 		(local $legend i32)
 		(local $i i32)
 		(local $max i32)

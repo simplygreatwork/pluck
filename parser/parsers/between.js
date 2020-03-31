@@ -1,5 +1,5 @@
 
-var p = require('../parsers/core');
+var p = require('../parsers/core')
 
 module.exports = function(head, between, tail, transform) {
 	

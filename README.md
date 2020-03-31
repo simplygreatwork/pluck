@@ -89,14 +89,14 @@ macros: [
 
 ### Structure
 
-- parser/
-- compiler/
-- runtime/
-- library/
-- macros/
-- examples/
-- browser/
-- fixtures/
+- /examples
+- /macros
+- /library
+- /compiler
+- /runtime
+- /parser
+- /browser
+- /fixtures
 
 ### Requirements
 

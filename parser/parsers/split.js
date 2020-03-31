@@ -1,10 +1,10 @@
 
-var p = require('../parsers/core');
+var p = require('../parsers/core')
 
 module.exports = function(content, delimiter, transform) {
 	
 	transform = transform || function(value) {
-		return value;
+		return value
 	}
 	
 	return p.seq ([

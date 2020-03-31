@@ -1,9 +1,9 @@
 
-var p = require('../parsers/core');
+var p = require('../parsers/core')
 
 module.exports = function(chars) {
 	
-	chars = chars || '\t\r\n ';
+	chars = chars || '\t\r\n '
 	return p.rep(
 		p.seq([
 			p.char(chars, function(value) {
