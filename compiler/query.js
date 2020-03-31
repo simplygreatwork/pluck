@@ -27,8 +27,10 @@ function get_value(node, index) {
 	return (index === undefined) ? node.value : node.value[index]
 }
 
-function last(array) {
-	return array[array.length - 1]
+function last(array, offset) {
+	
+	offset = (offset + 1) || 1 
+	return array[array.length - offset]
 }
 
 function tail(array, offset) {

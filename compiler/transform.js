@@ -2,6 +2,7 @@
 const print = require('./print')
 const logger = require('./logger')()
 const emitter = require('./emitter')
+const query = require('./query')
 
 let system = null
 let document = null
@@ -42,8 +43,11 @@ function expressions(node, index, parents, state) {
 		walk(each, index_, parents, state)
 	})
 	node.emit('exit')
+	let parent = query.last(parents, 1)
 	node.on('exit', function() {
-		if (false) uninstall(node)
+		parent.once('exit', function() {
+			uninstall(node)													// revisit the reasoning for this logic
+		})
 	})
 	parents.pop(node)
 }

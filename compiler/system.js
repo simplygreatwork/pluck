@@ -43,9 +43,7 @@ class System {
 	
 	project_name(root) {
 		
-		let array = root.split('.')
-		array.pop()
-		return path.basename(array.join(''))
+		return path.basename(root.split('.')[0])
 	}
 	
 	load_document(path_) {

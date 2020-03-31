@@ -1,4 +1,5 @@
 
-;; experiment with detecting inline functions and rearranging them
+;; experiment with detecting and elevating inline functions
 ;; experiment with closures
 ;; experiment with objects
+;; experiment with threads
