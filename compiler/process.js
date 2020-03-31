@@ -67,22 +67,33 @@ function noop() {
 
 function compile(document) {
 	
-	let module_ = require('wabt')().parseWat(document.path, document.source, this.flags = {
-		exceptions : false,
-		mutable_globals : true,
-		sat_float_to_int : false,
-		sign_extension : false,
-		simd : false,
-		threads : false,
-		multi_value : false,
-		tail_call : false
-	})
-	module_.resolveNames()
-	module_.validate(this.flags)
-	return module_.toBinary({
-		log: false,
-		write_debug_names: false
-	})
+	try {
+		let module_ = require('wabt')().parseWat(document.path, document.source, this.flags = {
+			exceptions : false,
+			mutable_globals : true,
+			sat_float_to_int : false,
+			sign_extension : false,
+			simd : false,
+			threads : false,
+			multi_value : false,
+			tail_call : false
+		})
+		module_.resolveNames()
+		module_.validate(this.flags)
+		return module_.toBinary({
+			log: false,
+			write_debug_names: false
+		})
+	} catch (error) {
+		console.error('')
+		console.error('>>>>> Wasm text compilation failed in wabt.js with document: ' + document.id + ' <<<<<')
+		console.error('')
+		console.error(error)
+		console.error('')
+		console.error('Exiting now.')
+		console.error('')
+		process.exit(1)
+	}
 }
 
 function instantiate(document, imports) {

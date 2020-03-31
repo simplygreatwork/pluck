@@ -13,7 +13,7 @@
 	(func $print (param $value i32)
 		(call $console_print (get_local $value))
 	)
-
+	
 	(func $console_print (param $value i32)
 		(call $print_string (call $console_to_string (get_local $value)))
 	)
