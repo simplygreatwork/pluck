@@ -137,7 +137,7 @@ function line_contents(level) {
 
 function indentation(level) {
 	
-	let sequence = [];
+	let sequence = []
 	for (var i = 0; i < level; i++) {
 		sequence.push (
 			indent()
