@@ -2,6 +2,7 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./string.watm")
 	(import "./number.watm")
 	(memory (import "host" "memory") 1)
 	
@@ -23,5 +24,13 @@
 	
 	(func $function_id_set (param $function i32) (param $id i32)
 		(call $memory_store (get_local $function) (i32.const 0) (get_local $id))
+	)
+	
+	(func $function_to_string (param $function i32) (result i32)
+		
+		(call $string_append
+			(string "function ") 
+			(call $number_to_string ($number_new (call $function_id (get_local $function))))
+		)
 	)
 )

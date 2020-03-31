@@ -58,34 +58,54 @@
 	(func $object_to_string (param $object i32) (result i32)
 		
 		(local $result i32)
+		(local $tree i32)
+		(local $length i32)
 		(local $context i32)
 		(set_local $result "object (")
+		(set_local $tree (call $object_tree (get_local $object)))
+		(set_local length (call $tree_length (get_local $tree)))
 		(set_local $context (call $tree_new))
 		(call $tree_set (get_local $context) "string" (get_local $result))
-		(call $tree_iterate_contextual (call $object_tree (get_local $object)) (funcref "$object_to_string_iterate_each" "object") (get_local $context))
+		(call $tree_set (get_local $context) "length" (get_local $length))
+		(call $tree_iterate_contextual (get_local $tree) (funcref "$object_to_string_iterate_each" "object") (get_local $context))
 		(set_local $result (call $tree_get (get_local $context) "string"))
 		(set_local $result (call $string_append (get_local $result) ")"))
-		(call $tree_iterate_contextual (call $object_tree (get_local $object)) (funcref "$object_to_string_iterate_each2" "object") (get_local $context))
 		(get_local $result)
 	)
 	
-	(func $object_to_string_iterate_each (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+	(func $object_to_string_iterate_each (param $tree i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
+		(local $length i32)
 		(local $string i32)
-		(call $print_integer (i32.const 42))
-		(call $print_string (get_local $key))
+		(set_local $length (call $tree_get (get_local $context) "length"))
 		(set_local $string (call $tree_get (get_local $context) "string"))
-		(set_local $string (call $string_append (get_local $string) " "))
 		(set_local $string (call $string_append (get_local $string) (get_local $key)))
-		(set_local $string (call $string_append (get_local $string) " "))
-		;; issue: code below is likely adding a new entry instead of updating existing key
+		(set_local $string (call $string_append (get_local $string) ": "))
+		(set_local $string (call $string_append (get_local $string) (call $object_property_value_to_string (get_local $value))))
+		(if (i32.lt_u (get_local $index) (i32.sub (get_local $length) (i32.const 1))) (then
+			(set_local $string (call $string_append (get_local $string) ", "))
+		))
 		(call $tree_set (get_local $context) "string" (get_local $string))
 	)
-
-	(func $object_to_string_iterate_each2 (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+	
+	(func $object_property_value_to_string (param $value i32) (result i32)
 		
-		(local $string i32)
-		(call $print_integer (i32.const 43))
-		(call $print_string (get_local $key))
+		(local $result i32)
+		(local $type i32)
+		(set_local $result "unknown")
+		(set_local $type (call $memory_type (get_local $value)))
+		(if (i32.eq (get_local $type) (typeof "string")) (then
+			(set_local $result (get_local $value))
+		))
+		(if (i32.eq (get_local $type) (typeof "number")) (then
+			(set_local $result (call $number_to_string (get_local $value)))
+		))
+		(if (i32.eq (get_local $type) (typeof "object")) (then
+			(set_local $result (call $object_to_string (get_local $value)))
+		))
+		(if (i32.eq (get_local $type) (typeof "function")) (then
+			(set_local $result (call $function_to_string (get_local $value)))
+		))
+		(get_local $result)
 	)
 )

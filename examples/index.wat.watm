@@ -280,7 +280,7 @@
 		(call $tree_iterate (get_local $tree) (funcref "test_tree_iterate_each" "index"))
 	)
 	
-	(func $test_tree_iterate_each (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+	(func $test_tree_iterate_each (param $tree i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(call $print_string (get_local $key))
 		(call $print_string (call $number_to_string (get_local $value)))
