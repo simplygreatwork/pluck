@@ -7,6 +7,7 @@ module
 	import "../library/types.watm"
 	import "../library/function.watm"
 	import "../library/object.watm"
+	import "../library/console.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -20,8 +21,7 @@ module
 		set object to (object_new)
 		object_set object "callable" (function_new (funcref "callable" "objects"))
 		set result to (object_call object "callable")
-		print (object_to_string object)
-		print " "
+		print object
 		
 	func callable
 		

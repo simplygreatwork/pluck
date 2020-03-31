@@ -17,6 +17,7 @@
 	(import "../library/table.watm")
 	(import "../library/types.watm")
 	(import "../library/allocator.watm")
+	(import "../library/console.watm")
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	(global $global (import "host" "global") (mut i32))

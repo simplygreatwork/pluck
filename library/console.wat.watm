@@ -1,0 +1,31 @@
+
+(module
+
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./string.watm")
+	(import "./number.watm")
+	(import "./object.watm")
+	
+	(func $print (param $value i32)
+		
+		(local $type i32)
+		(set_local $type (call $memory_type (get_local $value)))
+		(if (i32.eq (get_local $type) (typeof "string")) (then
+			(call $print_string (get_local $value))
+		))
+		(if (i32.eq (get_local $type) (typeof "number")) (then
+			(if (i32.eq (i32.const 0) (i32.const 0)) (then
+				(call $print_integer (call $number_value (get_local $value)))
+			) (else
+				(call $print_string (call $number_to_string (get_local $value)))
+			))
+		))
+		(if (i32.eq (get_local $type) (typeof "object")) (then
+			(call $print_string (call object_to_string (get_local $value)))
+		))
+	)
+)

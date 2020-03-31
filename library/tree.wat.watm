@@ -28,7 +28,7 @@
 	(func $tree_root_set (param $tree i32) (param $node i32)
 		(call $memory_store (get_local $tree) (i32.const 0) (get_local $node))
 	)
-
+	
 	(func $tree_set (param $tree i32) (param $key i32) (param $value i32)
 		
 		(call $tree_root_set
