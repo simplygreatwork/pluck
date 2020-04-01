@@ -41,13 +41,13 @@ function parse(parser, string) {
 }
 
 function str(string, transform) {
-
+	
 	transform = transform || none
 	return function (parseState) {
 		var chunk = parseState.peek(string.length)
 		return (
 			chunk === string ?
-			[transform({ str: chunk }), parseState.read(string.length)] : null
+			[transform(chunk), parseState.read(string.length)] : null
 		)
 	}
 }
@@ -60,7 +60,7 @@ function char(chars, transform) {
 		var regex = new RegExp('[' + chars + ']')
 		return (
 			regex.test(chunk) ?
-			[transform({ char: chunk }), parseState.read(1)] : invalid(parseState)
+			[transform(chunk), parseState.read(1)] : invalid(parseState)
 		)
 	}
 }
@@ -88,7 +88,7 @@ function seq(parsers, transform) {
 		})
 		return (
 			result.success ?
-			[transform({ seq: result.matches }), result.state] : invalid(parseState)
+			[transform(result.matches), result.state] : invalid(parseState)
 		)
 	}
 }
@@ -112,7 +112,7 @@ function rep(parser, reps, transform) {
 		}
 		return (
 			matches.length >= reps ?
-			[transform({ rep: matches }), lastState] : invalid(lastState)
+			[transform(matches), lastState] : invalid(lastState)
 		)
 	}
 }
@@ -125,7 +125,7 @@ function opt(parser, transform) {
 		var parsed = parser(parseState)
 		return (
 			parsed ?
-			[transform({ opt: parsed[0] }), parsed[1]] : [transform({ opt: invalid(lastState) }), parseState]
+			[transform(parsed[0]), parsed[1]] : [transform(invalid(lastState)), parseState]
 		)
 	}
 }
@@ -138,7 +138,7 @@ function alt(parsers, transform) {
 		for (var i = 0, length = parsers.length; i < length; i += 1) {
 			result = parsers[i](parseState)
 			if (result) {
-				return [transform({ alt: result[0] }), result[1]]
+				return [transform(result[0]), result[1]]
 			}
 		}
 		return invalid(parseState)

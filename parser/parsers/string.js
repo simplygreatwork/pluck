@@ -4,25 +4,16 @@ var p = require('../parsers/core');
 module.exports = function() {
 	
 	return p.seq ([
-		p.str ('"', function(value) {
-			return value.str
-		}),
+		p.str ('"'),
 		p.rep (
-			p.char ('-+\/\\\\=$:,<>!_.\(\)a-zA-Z0-9 \t', function(value) {
-				return value.char
-			}),
-			0,
-			function(value) {
-				return value.rep
-			}
+			p.char ('-+\/\\\\=$:,<>!_.\(\)a-zA-Z0-9 \t'),
+			0
 		),
-		p.str ('"', function(value) {
-			return value.str
-		}),
+		p.str ('"'),
 	], function(value) {
 		return {
 			type: 'string',
-			value: value.seq[1].join('')
+			value: value[1].join('')
 		}
 	})
 }

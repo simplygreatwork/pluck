@@ -9,6 +9,8 @@ const boolean = require('../parsers/boolean')
 const string = require('../parsers/string')
 const symbol = require('../parsers/symbol')
 const comment = require('../parsers/comment')
+const indent = require('../parsers/indent')
+const indents = require('../parsers/indents')
 const fold_whitespace = require('./fold-whitespace')
 const fold_lines = require('./fold-lines')
 
@@ -17,9 +19,9 @@ let refs = {}
 function expression(level) {
 	
 	return between (
-		p.char('('),
+		p.char ('('),
 		p.ref(refs, 'expression_contents', level),
-		p.char(')'),
+		p.char (')'),
 		function(value) {
 			return {
 				type: 'expression',
@@ -42,12 +44,10 @@ function expression_contents(level) {
 			string(),
 			symbol(),
 			newline(),
-		], function(value) {
-			return value.alt
-		}),
+		]),
 		0,
 		function(value) {
-			return fold_whitespace(value.rep)
+			return fold_whitespace(value)
 		}
 	)
 }
@@ -55,9 +55,7 @@ function expression_contents(level) {
 function line_blank() {
 	
 	return p.seq ([
-		p.rep (indent(), 0, function(value) {
-			return value.rep
-		}),
+		p.rep (indent(), 0),
 		newline()
 	],
 	function(value) {
@@ -72,13 +70,13 @@ function lines(level) {
 	
 	return p.seq ([
 		line(level),
-		p.opt(line_blank()),
+		p.opt (line_blank()),
 		line_children(level)
 	],
 	function(value) {
-		let line = value.seq[0]
-		let line_blank = value.seq[1].opt
-		let lines = value.seq[2]
+		let line = value[0]
+		let line_blank = value[1]
+		let lines = value[2]
 		if (line_blank) line.value.push(line_blank)
 		line.value.push(...lines)
 		line.value = fold_lines(line.value)
@@ -88,15 +86,15 @@ function lines(level) {
 
 function line(level) {
 	
-	return p.seq([
-		indentation(level),
+	return p.seq ([
+		indents(level),
 		p.ref (refs, 'line_contents', level),
 		newline(),
 	], function(value) {
 		return {
 			type: 'line',
-			value: value.seq[1],
-			whitespace_: value.seq[2].value + value.seq[0].value
+			value: value[1],
+			whitespace_: value[2].value + value[0].value
 		}
 	})
 }
@@ -105,13 +103,8 @@ function line_children(level) {
 	
 	return p.opt (
 		p.rep (
-			p.ref (refs, 'lines', level + 1), 0, function(value) {
-				return value.rep
-			}
-		),
-		function(value) {
-			return value.opt
-		}
+			p.ref (refs, 'lines', level + 1), 0
+		)
 	)
 }
 
@@ -125,44 +118,12 @@ function line_contents(level) {
 			string(),
 			symbol(),
 			comment(';;')
-		], function(value) {
-			return value.alt
-		}),
+		]),
 		1,
 		function(value) {
-			return fold_whitespace(value.rep)
+			return fold_whitespace(value)
 		}
 	)
-}
-
-function indentation(level) {
-	
-	let sequence = []
-	for (var i = 0; i < level; i++) {
-		sequence.push (
-			indent()
-		)
-	}
-	return p.seq (sequence, function(value) {
-		return {
-			type: 'whitespace',
-			value: value.seq.join('')
-		}
-	})
-}
-
-function indent() {
-	
-	return p.alt ([
-		p.char ('\t', function(value) {
-			return value.char
-		}),
-		p.str ('   ', function(value) {
-			return value.str
-		})
-	], function(value) {
-		return value.alt
-	})
 }
 
 refs.lines = lines

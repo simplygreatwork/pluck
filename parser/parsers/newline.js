@@ -6,7 +6,7 @@ module.exports = function(chars) {
 	return p.char ('\n', function(value) {
 		return {
 			type: 'newline',
-			value: value.char
+			value: value
 		}
 	})
 }

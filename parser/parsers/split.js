@@ -16,13 +16,12 @@ module.exports = function(content, delimiter, transform) {
 				p.seq ([
 					content,
 					p.rep (delimiter, 1)
-				], function(value) { return value.seq[0] }),
+				], function(value) { return value[0] }),
 				content
-			], function(value) { return value.alt }),
-			0,
-			function(value) { return value.rep },
+			]),
+			0
 		)
 	], function(value) {
-		return transform( { split: value.seq[1] } )
+		return transform( { split: value[1] } )
 	})
 }

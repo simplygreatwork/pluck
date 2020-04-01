@@ -3,36 +3,19 @@ var p = require('../parsers/core')
 
 module.exports = function() {
 	
-	let result = []
-	return p.alt ([
-		p.str ('-', function(value) {
-			result.push(value.str)
-			return value.str
-		}),
-		p.str ('0', function(value) {
-			result.push(value.str)
-			return value.str
-		}),
-		p.seq ([
-			p.char ('1-9', function(value) {
-				result.push(value.char)
-				return value.char
-			}),
-			p.rep (p.char ('0-9', function(value) {
-				result.push(value.char)
-				return value.char
-			}), 0, function(value) {
-				return value.rep
-			})
-		], function(value) {
-			return value.seq
-		})
+	return p.seq ([
+		p.opt (
+			p.str ('-')
+		),
+		p.rep (
+			p.char ('0-9.'), 1, function(value) {
+				return value.join('')
+			}
+		)
 	], function(value) {
-		let string = result.join('')
-		result = []
 		return {
 			type: 'number',
-			value: string
+			value: value[0] ? value[0] + value[1] : value[1]
 		}
 	})
 }

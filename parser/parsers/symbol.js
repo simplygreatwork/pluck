@@ -5,29 +5,18 @@ module.exports = function() {
 	
 	return p.seq ([
 		p.alt ([
-			p.char ('=$_.a-zA-Z0-9', function(value) {
-				return value.char
-			}),
-		], function(value) {
-			return value.alt
-		}),
+			p.char ('=$_.a-zA-Z0-9'),
+		]),
 		p.rep (
 			p.alt ([
-				p.char ('=$_.a-zA-Z0-9', function(value) {
-					return value.char
-				}),
-			], function(value) {
-				return value.alt
-			}),
-			0,
-			function(value) {
-				return value.rep
-			}
+				p.char ('=$_.a-zA-Z0-9'),
+			]),
+			0
 		)
 	], function(value) {
 		return {
 			type: 'symbol',
-			value: value.seq[0] + value.seq[1].join('')
+			value: value[0] + value[1].join('')
 		}
 	})
 }

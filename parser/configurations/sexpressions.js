@@ -26,12 +26,10 @@ function expression_contents() {
 			string(),
 			symbol(),
 			newline(),
-		], function(value) {
-			return value.alt
-		}),
+		]),
 		0,
 		function(value) {
-			return fold_whitespace(value.rep)
+			return fold_whitespace(value)
 		}
 	)
 }
@@ -39,9 +37,9 @@ function expression_contents() {
 function expression() {
 	
 	return between (
-		p.char('('),
-		p.ref(refs, 'expression_contents'),
-		p.char(')'),
+		p.char ('('),
+		p.ref (refs, 'expression_contents'),
+		p.char (')'),
 		function(value) {
 			return {
 				type: 'expression',
