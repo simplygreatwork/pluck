@@ -23,5 +23,8 @@
 		"tiny-worker": "^2.3.0",
 		"unist-util-visit": "^1.4.0",
 		"wabt": "^1.0.11"
+	},
+	"devDependencies": {
+		"tape": "^4.13.2"
 	}
 }

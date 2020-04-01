@@ -1,5 +1,9 @@
 
-;; experiment with detecting and elevating inline functions
-;; experiment with closures
-;; experiment with objects
-;; experiment with threads
+module
+	
+	func main
+	
+	;; experiment with detecting and elevating inline functions
+	;; experiment with closures
+	;; experiment with objects
+	;; experiment with threads
