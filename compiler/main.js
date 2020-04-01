@@ -23,7 +23,7 @@ if (! jetpack.exists(root)) {
 	console.error('')
 	console.error('>>>>> The file was not found so exiting now. <<<<<')
 	console.error('')
-	process.exit(0)
+	process.exit(1)
 }
 
 console.log('')

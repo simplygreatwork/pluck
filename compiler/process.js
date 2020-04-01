@@ -30,7 +30,7 @@ function process_watm(document) {
 		console.error('Error parsing line ' + line_result.line + ' at character ' + line_result.char + ':')
 		console.error('--> ' + line_result.text)
 		console.error('')
-		process.exit(-1)
+		process.exit(1)
 		return false
 	} else {
 		broadcast.emit('parsed', document.id)

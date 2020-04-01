@@ -99,6 +99,7 @@ class System {
 	transform_documents() {
 		
 		for (let document of this.set.values()) {
+			broadcast.emit('document.transforming', document)
 			let transform = require('./transform')(this, document)
 			document.walk = transform.walk
 			document.source = transform.transform()

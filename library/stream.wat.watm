@@ -44,7 +44,7 @@
 		(call $list_iterate (get_local $list) (funcref "stream_iterate_each_function" "stream") (get_local $context))
 	)
 	
-	(func $stream_iterate_each_function (param $item i32) (param $index i32) (param $context i32)
+	(func $stream_iterate_each_function (param $list i32) (param $item i32) (param $index i32) (param $context i32)
 		
 		(local $function i32)
 		(local $function_id i32)

@@ -28,6 +28,6 @@ module
 		item_remove (item_previous list)
 		list_iterate list (funcref "test_list_iterate_each" "lists") 0
 		
-	func test_list_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	func test_list_iterate_each accepts list item index context
 		print (item_value item)
 		

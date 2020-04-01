@@ -9,7 +9,7 @@
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
+	(type $i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32)))
 	
 	(func $list_bytes (result i32)
 		(i32.const 12)
@@ -58,14 +58,14 @@
 		(local $item_next i32)
 		(set_local $index (i32.const 0))
 		(set_local $item (get_local $list))
-		;; important: must have item_next before call_indirect in case of item deallocation
+		;; important: must retain item_next before call_indirect in case of item deallocation
 		(set_local $item (call $item_next (get_local $item)))
 		(block (loop
 			(set_local $item_next (call $item_next (get_local $item)))
 			;; in case of empty list
 			(br_if 1 (i32.eq (get_local $item) (get_local $item_next)))
-			(call_indirect (type $i32_i32_i32_to_void)
-				(get_local $item) (get_local $index) (get_local $context)
+			(call_indirect (type $i32_i32_i32_i32_to_void)
+				(get_local $list) (get_local $item) (get_local $index) (get_local $context)
 				(get_local $function)
 			)
 			(set_local $item (get_local $item_next))
@@ -85,7 +85,7 @@
 		(call $number_value (call $item_value (call $item_next (call $item_next (get_local $context)))))
 	)
 	
-	(func $list_index_of_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	(func $list_index_of_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
 		
 		(local $find i32)
 		(set_local $find (call $item_value (call $item_next (get_local $context))))
@@ -106,7 +106,7 @@
 		(call $item_value (call $item_next (call $item_next (get_local $context))))
 	)
 	
-	(func $list_get_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	(func $list_get_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
 		
 		(if
 			(i32.eq (get_local $index) (call $item_value (call $item_next (get_local $context))))
@@ -123,7 +123,7 @@
 		(call $list_iterate (get_local $list) (funcref "list_set_iterate_each" "list") (get_local $context))
 	)
 	
-	(func $list_set_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	(func $list_set_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
 		
 		(local $index_ i32)
 		(local $value_ i32)
@@ -147,17 +147,17 @@
 		
 		(local $item i32)
 		(set_local $item (call $memory_allocate (typeof "list_item") (call $item_bytes)))
-		(call $memory_store (get_local $item) (i32.const 0) (get_local $item))				;; next
-		(call $memory_store (get_local $item) (i32.const 4) (get_local $item))				;; previous
-		(call $memory_store (get_local $item) (i32.const 8) (i32.const 0))					;; value
+		(call $item_next_set (get_local $item) (get_local $item))
+		(call $item_previous_set (get_local $item) (get_local $item))
+		(call $item_value_set (get_local $item) (i32.const 0))
 		(get_local $item)
 	)
 	
 	(func $item_dump (param $item i32)
 		
-		(call $print_integer (call $memory_load (get_local $item) (i32.const 0)))
-		(call $print_integer (call $memory_load (get_local $item) (i32.const 4)))
-		(call $print_integer (call $memory_load (get_local $item) (i32.const 8)))
+		(call $print_integer (call $item_next (get_local $item)))
+		(call $print_integer (call $item_previous (get_local $item)))
+		(call $print_integer (call $item_value (get_local $item)))
 	)
 	
 	(func $item_next (param $item i32) (result i32)
@@ -183,7 +183,7 @@
 	(func $item_value_set (param $item i32) (param $value i32)
 		(call $memory_store (get_local $item) (i32.const 8) (get_local $value))
 	)
-
+	
 	(func $item_append (param $item i32) (param $data i32)
 		
 		(local $item_a i32)
@@ -194,11 +194,11 @@
 		(set_local $item_b (call $item_new))
 		(set_local $item_c (call $item_next (get_local $item_a)))
 		
-		(call $memory_store (get_local $item_a) (i32.const 0) (get_local $item_b))
-		(call $memory_store (get_local $item_b) (i32.const 0) (get_local $item_c))
-		(call $memory_store (get_local $item_b) (i32.const 4) (get_local $item_a))
-		(call $memory_store (get_local $item_c) (i32.const 4) (get_local $item_b))
-		(call $memory_store (get_local $item_b) (i32.const 8) (get_local $data))
+		(call $item_next_set (get_local $item_a) (get_local $item_b))
+		(call $item_next_set (get_local $item_b) (get_local $item_c))
+		(call $item_previous_set (get_local $item_b) (get_local $item_a))
+		(call $item_previous_set (get_local $item_c) (get_local $item_b))
+		(call $item_value_set (get_local $item_b) (get_local $data))
 	)
 	
 	(func $item_remove (param $item i32)

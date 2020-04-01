@@ -27,7 +27,7 @@
 	)
 	
 	(func $map_iterate (param $map i32) (param $function i32) (param $context i32)
-		(call $tree_iterate_contextual (get_local $map) (get_local $function) (get_local $context))
+		(call $tree_iterate (get_local $map) (get_local $function) (get_local $context))
 	)
 	
 	(func $map_length (param $map i32) (result i32)

@@ -241,7 +241,7 @@
 		(call $assert_number_equals (call $number_new (call $list_index_of (get_local $list) (string "c"))) (call $number_new (i32.const 2)))
 	)
 	
-	(func $test_list_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	(func $test_list_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
 		
 		(call $print_string (call $item_value (get_local $item)))
 	)

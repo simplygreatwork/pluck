@@ -240,7 +240,7 @@
 		(call $assert_number_equals (call $number_new (call $list_index_of (get_local $list) (string "c"))) (call $number_new (i32.const 2)))
 	)
 	
-	(func $test_list_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	(func $test_list_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
 		
 		(call $print_string (call $item_value (get_local $item)))
 	)
@@ -263,7 +263,7 @@
 		(call $print_string (get_local $key))
 		(call $print_string (call $number_to_string (get_local $value)))
 	)
-
+	
 	(func $test_tree
 		
 		(local $tree i32)
@@ -276,7 +276,7 @@
 		(call $tree_set (get_local $tree) (string "c") (call $number_new (i32.const 3)))
 		(call $tree_set (get_local $tree) (string "e") (call $number_new (i32.const 5)))
 		(call $tree_set (get_local $tree) (string "d") (call $number_new (i32.const 4)))
-		(call $tree_iterate (get_local $tree) (funcref "test_tree_iterate_each" "index"))
+		(call $tree_iterate (get_local $tree) (funcref "test_tree_iterate_each" "index") (i32.const 0))
 	)
 	
 	(func $test_tree_iterate_each (param $tree i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
