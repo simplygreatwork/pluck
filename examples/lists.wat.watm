@@ -18,7 +18,7 @@ module
 		
 	func test_list
 		
-		set list (list_new)
+		set list to (list_new)
 		list_append list "1"
 		list_append list "2"
 		list_append list "3"

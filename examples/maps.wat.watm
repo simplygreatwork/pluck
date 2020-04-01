@@ -13,9 +13,9 @@ module
 	func main
 		
 		memory_bootstrap
-		map_test
+		test_map
 		
-	func map_test
+	func test_map
 		
 		set map to (map_new)
 		map_set map "one.key" "one.value"
@@ -27,8 +27,8 @@ module
 		
 	func map_iterate_each (param $map i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
-		set string key
-		set string (string_append $string ":")
-		set string (string_append $string value)
+		set string to key
+		set string to (string_append string ":")
+		set string to (string_append string value)
 		print string
 		
