@@ -12,6 +12,7 @@
 	(import "./map.watm")
 	(import "./tree.watm")
 	(import "./stream.watm")
+	(import "./stack.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
    (global $type_strings (import "host" "type_strings") (mut i32))
@@ -67,6 +68,7 @@
 		(if (i32.eq (get_local $type) (typeof "tree")) (then (set_local $result (call $tree_bytes))))
 		(if (i32.eq (get_local $type) (typeof "tree_node")) (then (set_local $result (call $node_bytes))))
 		(if (i32.eq (get_local $type) (typeof "stream")) (then (set_local $result (call $stream_bytes))))
+		(if (i32.eq (get_local $type) (typeof "stack")) (then (set_local $result (call $stack_bytes))))
 		(get_local $result)
 	)
 	

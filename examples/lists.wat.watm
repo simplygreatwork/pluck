@@ -1,0 +1,33 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/list.watm"
+	import "../library/types.watm"
+	import "../library/console.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		test_list
+		
+	func test_list
+		
+		set list (list_new)
+		list_append list "1"
+		list_append list "2"
+		list_append list "3"
+		list_append list "4"
+		list_append list "5"
+		item_remove (item_next list)
+		item_remove (item_previous list)
+		list_iterate list (funcref "test_list_iterate_each" "lists") 0
+		
+	func test_list_iterate_each (param $item i32) (param $index i32) (param $context i32)
+		print (item_value item)
+		

@@ -144,17 +144,17 @@
 		
 		(local $item i32)
 		(set_local $item (call $memory_allocate (typeof "list_item") (call $item_bytes)))
-		(call $memory_store (get_local $item) (i32.const 0) (get_local $item))				;; next
-		(call $memory_store (get_local $item) (i32.const 4) (get_local $item))				;; previous
-		(call $memory_store (get_local $item) (i32.const 8) (i32.const 0))					;; value
+		(call $item_next_set (get_local $item) (get_local $item))
+		(call $item_previous_set (get_local $item) (get_local $item))
+		(call $item_value_set (get_local $item) (i32.const 0))
 		(get_local $item)
 	)
 	
 	(func $item_dump (param $item i32)
 		
-		(call $print_integer (call $memory_load (get_local $item) (i32.const 0)))
-		(call $print_integer (call $memory_load (get_local $item) (i32.const 4)))
-		(call $print_integer (call $memory_load (get_local $item) (i32.const 8)))
+		(call $print_integer (call $item_next (get_local $item)))
+		(call $print_integer (call $item_previous (get_local $item)))
+		(call $print_integer (call $item_value (get_local $item)))
 	)
 	
 	(func $item_next (param $item i32) (result i32)
@@ -180,7 +180,7 @@
 	(func $item_value_set (param $item i32) (param $value i32)
 		(call $memory_store (get_local $item) (i32.const 8) (get_local $value))
 	)
-
+	
 	(func $item_append (param $item i32) (param $data i32)
 		
 		(local $item_a i32)
@@ -191,11 +191,11 @@
 		(set_local $item_b (call $item_new))
 		(set_local $item_c (call $item_next (get_local $item_a)))
 		
-		(call $memory_store (get_local $item_a) (i32.const 0) (get_local $item_b))
-		(call $memory_store (get_local $item_b) (i32.const 0) (get_local $item_c))
-		(call $memory_store (get_local $item_b) (i32.const 4) (get_local $item_a))
-		(call $memory_store (get_local $item_c) (i32.const 4) (get_local $item_b))
-		(call $memory_store (get_local $item_b) (i32.const 8) (get_local $data))
+		(call $item_next_set (get_local $item_a) (get_local $item_b))
+		(call $item_next_set (get_local $item_b) (get_local $item_c))
+		(call $item_previous_set (get_local $item_b) (get_local $item_a))
+		(call $item_previous_set (get_local $item_c) (get_local $item_b))
+		(call $item_value_set (get_local $item_b) (get_local $data))
 	)
 	
 	(func $item_remove (param $item i32)

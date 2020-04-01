@@ -1,0 +1,131 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./string.watm")
+	(import "./number.watm")
+	(import "./function.watm")
+	(import "./list.watm")
+	(import "./map.watm")
+	(import "./console.watm")
+	
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(type $i32_i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32) (param i32)))
+	
+	(func $stack_bytes (result i32)
+		(i32.const 4)
+	)
+	
+	(func $stack_new (result i32)
+		
+		(local $stack i32)
+		(set_local $stack (call $memory_allocate (typeof "stack") (call $stack_bytes)))
+		(call $stack_list_set (get_local $stack) (call $list_new))
+		(call $stack_enter (get_local $stack))
+		(get_local $stack)
+	)
+	
+	(func $stack_list (param $stack i32) (result i32)
+		(call $memory_load (get_local $stack) (i32.const 0))
+	)
+	
+	(func $stack_list_set (param $stack i32) (param $map i32)
+		(call $memory_store (get_local $stack) (i32.const 0) (get_local $map))
+	)
+	
+	(func $stack_enter (param $stack i32)
+		(call $list_append (call $stack_list (get_local $stack)) (call $map_new))
+	)
+	
+	(func $stack_exit (param $stack i32)
+		(call $item_remove (call $item_previous (call $stack_list (get_local $stack))))
+	)
+	
+	(func $stack_set (param $stack i32) (param $key i32) (param $value i32)
+		
+		(local $list i32)
+		(local $map i32)
+		(set_local $list (call $stack_list (get_local $stack)))
+		(set_local $map (call $item_value (call $item_previous (get_local $list))))
+		(call $map_set (get_local $map) (get_local $key) (get_local $value))
+	)
+	
+	(func $stack_get (param $stack i32) (param $key i32) (result i32)
+		
+		(local $result i32)
+		(local $context i32)
+		(set_local $context (call $map_new))
+		(call $map_set (get_local $context) "key" (get_local $key))
+		(call $list_iterate (call $stack_list (get_local $stack)) (funcref "$stack_get_iterate_each" "stack") (get_local $context))
+		(set_local $result (call $map_get (get_local $context) "value"))
+		(get_local $result)
+	)
+	
+	(func $stack_get_iterate_each (param $item i32) (param $index i32) (param $context i32)
+		
+		(local $map i32)
+		(local $key i32)
+		(local $value i32)
+		(set_local $map (call $item_value (get_local $item)))
+		(set_local $key (call $map_get (get_local $context) "key"))
+		(set_local $value (call $map_get (get_local $map) (get_local $key)))
+		(if (i32.ne (get_local $value) (i32.const 0)) (then
+			(call $map_set (get_local $context) "value" (get_local $value))
+		))
+	)
+	
+	(func $stack_dump (param $stack i32)
+		
+		(call $print (stack_to_string stack))
+		(call $stack_iterate (get_local $stack) (funcref "$stack_dump_iterate_each" "stack"))
+	)
+	
+	(func $stack_dump_iterate_each (param $stack i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+		
+		(local $string i32)
+		(set_local $string (get_local key))
+		(set_local $string (call $string_append (get_local $string) ":"))
+		(set_local $string (call $string_append (get_local $string) (get_local $value)))
+		(call $print (get_local $string))
+	)
+	
+	(func $stack_iterate (param $stack i32) (param $function i32)
+		
+		(local $list i32)
+		(local $context i32)
+		(set_local $list (call $stack_list (get_local $stack)))
+		(set_local $context (call $map_new))
+		(call $map_set (get_local $context) "stack" (get_local $stack))
+		(call $map_set (get_local $context) "function" (call function_new (get_local $function)))
+		(call $map_set (get_local $context) "index" (i32.const 0))
+		(call $list_iterate (get_local $list) (funcref "$stack_iterate_list_each" "stack") (get_local $context))
+	)
+	
+	(func $stack_iterate_list_each (param $item i32) (param $index i32) (param $context i32)
+		
+		(local $map i32)
+		(set_local $map (call $item_value (get_local $item)))
+		(call $map_iterate (get_local $map) (funcref "$stack_iterate_map_each" "stack") (get_local $context))
+	)
+	
+	(func $stack_iterate_map_each (param $map i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+		
+		(local $stack i32)
+		(local $index_ i32)
+		(local $id i32)
+		(set_local $stack (call $map_get (get_local $context) "stack"))
+		(set_local $index_ (call $map_get (get_local $context) "index"))
+		(set_local $id (call $function_id (call $map_get (get_local $context) "function")))
+		(call_indirect (type $i32_i32_i32_i32_i32_to_void)
+			(get_local $stack) (get_local $key) (get_local $value) (get_local $index_) (i32.const 0)
+			(get_local $id)
+		)
+		(set_local $index_ (i32.add (get_local $index_) (i32.const 1)))
+		(call $map_set (get_local $context) "index" (get_local $index))
+	)
+	
+	(func $stack_to_string (param $stack i32) (result i32)
+		"stack:"
+	)
+)

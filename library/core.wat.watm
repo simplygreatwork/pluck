@@ -140,7 +140,7 @@
 	(func $memory_type_set_ (param $handle i32) (param $type i32)
 		(call $memory_type_set_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)) (get_local $type))
 	)
-
+	
 	(func $memory_type_by_pointer_ (param $pointer i32) (result i32)
 		(i32.load16_u (i32.add (get_local $pointer) (i32.const 0)))
 	)
@@ -148,7 +148,7 @@
 	(func $memory_type_set_by_pointer_ (param $pointer i32) (param $type i32)
 		(i32.store16 (i32.add (get_local $pointer) (i32.const 0)) (get_local $type))
 	)
-
+	
 	(func $memory_active_ (param $handle i32) (result i32)
 		(call $memory_active_by_pointer_ (call $memory_dereference_handle_ (get_local $handle)))
 	)

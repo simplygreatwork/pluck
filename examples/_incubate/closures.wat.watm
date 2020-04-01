@@ -5,7 +5,7 @@
 ;; consider and remember that the inner function could be called externally
 ;; so need to maintain a list of stacks per function on entry
 
-(module
+module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
@@ -21,6 +21,7 @@
 		stack_exit
 		
 	func outer stack
+		
 		print "@ outer"
 		stack_set "local_one" "one"
 		stack_enter
@@ -28,6 +29,7 @@
 		stack_exit
 		
 	func inner locals
+		
 		print "@ inner"
 		stack_set "local_two" "two"
 		
@@ -44,4 +46,4 @@
 		
 	func scope_new
 		tree_new
-)
+		

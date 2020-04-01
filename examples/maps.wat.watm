@@ -1,0 +1,34 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/types.watm"
+	import "../library/console.watm"
+	import "../library/map.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		map_test
+		
+	func map_test
+		
+		set map to (map_new)
+		map_set map "one.key" "one.value"
+		map_set map "two.key" "two.value"
+		map_set map "three.key" "three.value"
+		map_set map "four.key" "four.value"
+		map_set map "five.key" "five.value"
+		map_iterate map (funcref "map_iterate_each" "maps") 0
+		
+	func map_iterate_each (param $map i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+		
+		set string key
+		set string (string_append $string ":")
+		set string (string_append $string value)
+		print string
+		

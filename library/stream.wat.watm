@@ -14,7 +14,7 @@
 	(func $stream_bytes (result i32)
 		(i32.const 4)
 	)
-
+	
 	(func $stream_new (result i32)
 		
 		(local $stream i32)
