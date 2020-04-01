@@ -75,7 +75,7 @@
 	(func $memory_active (param $handle i32) (result i32)
 		(call $memory_active_ (get_local $handle))
 	)
-
+	
 	(func $memory_active_set (param $handle i32) (param $active i32)
 		(call $memory_active_set_ (get_local $handle) (get_local $active))
 	)

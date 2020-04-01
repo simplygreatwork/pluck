@@ -31,7 +31,7 @@
 	(func $legend_counter_set (param $legend i32) (param $counter i32)
 		(call $legend_counter_set_ (get_local $legend) (get_local $counter))
 	)
-
+	
 	(func $legend_array_get (param $legend i32) (result i32)
 		(call $legend_array_get_ (get_local $legend))
 	)
