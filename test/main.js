@@ -13,6 +13,7 @@ let suite = [
 	'if',
 	'index',
 	'macros',
+	'maps',
 	'memory',
 	'negation',
 	'objects',
