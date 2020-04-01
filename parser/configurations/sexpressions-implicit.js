@@ -1,7 +1,6 @@
 
 var p = require('../parsers/core');
 const between = require('../parsers/between')
-const split = require('../parsers/split')
 const whitespace = require('../parsers/whitespace')
 const newline = require('../parsers/newline')
 const number = require('../parsers/number')
