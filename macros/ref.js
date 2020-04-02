@@ -52,13 +52,3 @@ function parse_(path_, document) {
 	}
 	return result
 }
-
-/*
-	
-	./func
-	func = ./func
-	../module/func
-	module/func = ../module/func
-	../../dir/module/func
-	
-*/
