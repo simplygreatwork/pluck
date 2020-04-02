@@ -91,17 +91,17 @@
 		(block (loop
 			(set_local $remainder (i32.rem_u (get_local $primitive) (i32.const 10)))
 			(set_local $primitive (i32.div_u (get_local $primitive) (i32.const 10)))
-			(set_local $result (call $number_to_string_prepend (get_local $result) (get_local $remainder)))
+			(set_local $result (call $number_to_string_concat (get_local $result) (get_local $remainder)))
 			(if (i32.lt_u (get_local $primitive) (i32.const 10)) (then (br 2)))
 			(br 0)
 		))
 		(if (i32.gt_u (get_local $primitive) (i32.const 0)) (then
-			(set_local $result (call $number_to_string_prepend (get_local $result) (get_local $primitive)))
+			(set_local $result (call $number_to_string_concat (get_local $result) (get_local $primitive)))
 		))
 		(get_local $result)
 	)
 	
-	(func $number_to_string_prepend (param $string i32) (param $digit i32) (result i32)
+	(func $number_to_string_concat (param $string i32) (param $digit i32) (result i32)
 		
 		(local $char i32)
 		(set_local $char (call $string_new (i32.const 1)))
