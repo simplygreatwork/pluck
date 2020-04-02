@@ -10,7 +10,7 @@
 ```javascript
 
 enter : function(node, index, parents, state) {	
-	
+  
   if (! shared.is_inside_function(state)) return
   if (! query.is_type(node, 'number')) return
   let parent = query.last(parents)
@@ -25,7 +25,7 @@ enter : function(node, index, parents, state) {
 ```javascript
 
 enter : function(node, index, parents, state) {
-
+  
   let parent = query.last(parents)
   if (! query.is_type(parent, 'expression')) return
   if (! query.is_length_exceeding(parent, 2)) return
@@ -91,7 +91,7 @@ module
 - Each module's functions are exported automatically using macros.
 - Each module's functions are imported automatically using macros.
 - Several macros have been partially implemented such as: repeat, if, break, function references, and some logic and arithmetic operators.
-- Contains the beginning of a basic standard library in WebAssembly text syntax.
+- Contains the beginning of a basic standard library in WebAssembly text format.
   - strings, numbers, booleans, lists, maps, binary trees, assertions
 - The parser supports documentation first.
   - Runnable wat source code can be compiled while embedded inside markdown documentation.
