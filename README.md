@@ -92,7 +92,7 @@ module
 - Each module's functions are imported automatically using macros.
 - Several macros have been partially implemented such as: repeat, if, break, function references, and some logic and arithmetic operators.
 - Contains the beginning of a basic standard library in WebAssembly text syntax.
-  - strings, lists, booleans, numbers, assertions
+  - strings, numbers, booleans, lists, maps, binary trees, assertions
 - The parser supports documentation first.
   - Runnable wat source code can be compiled while embedded inside markdown documentation.
 
