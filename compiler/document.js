@@ -14,9 +14,7 @@ class Document {
 	constructor(path_, root) {
 		
 		this.path = this.trim_path(path_)
-		this.name = path.relative(root.toString(), this.path.toString())
-		this.id = this.name.split('.')[0]
-		this.long_id = path.basename(path.parse(this.path).dir) + '-' + path.basename(this.path)
+		this.id = path.relative(root.toString(), this.path.toString())
 		this.define_stages()
 	}
 	

@@ -233,7 +233,7 @@ function find_function_signature(func) {
 function find_document(system, name) {
 	
 	for (let document of system.set.values()) {
-		if (document.name == name) {
+		if (document.id == name) {
 			return document
 		}
 	}
