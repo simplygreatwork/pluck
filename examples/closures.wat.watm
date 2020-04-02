@@ -2,9 +2,9 @@
 module
 	
 	;; a very basic conception to illustrate fundamentally how closures might work simply
-	;; by using a stack list of argument maps on the heap
+	;; by using an argument stack: a list of maps on the heap
 	;; consider implementing closures at the library level first before implementing syntax
-	;; consider and remember that the inner function could be called externally
+	;; consider and remember that a nested function could be called externally
 	;; so need to maintain a list of stacks per function on entry
 	
 	import "../library/utility.watm"

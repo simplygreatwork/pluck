@@ -15,7 +15,7 @@
 	(import "./stack.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-    (global $type_strings (import "host" "type_strings") (mut i32))
+	(global $type_strings (import "host" "type_strings") (mut i32))
 	
 	(func $types_strings_init
 		

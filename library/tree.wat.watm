@@ -17,7 +17,7 @@
 		
 		(local $tree i32)
 		(set_local $tree (call $memory_allocate (typeof "tree") (call $tree_bytes)))
-		(call $tree_root_set (get_local $tree) (i32.const 0))											;; root (null)
+		(call $tree_root_set (get_local $tree) (i32.const 0))
 		(get_local $tree)
 	)
 
@@ -48,19 +48,19 @@
 		
 		(local $result i32)
 		(set_local $result (get_local $root))
-		(if
-			(i32.eq (get_local $root) (i32.const 0))
-			(then (set_local $result (get_local $node)))
-			(else (if
-				(i32.eq (call $tree_string_compare (call $node_key (get_local $node)) (call $node_key (get_local $root))) (i32.const 0))
-				(then (call $node_value_set (get_local $root) (call $node_value (get_local $node))))
-				(else (if
-					(i32.eq (call $tree_string_compare (call $node_key (get_local $node)) (call $node_key (get_local $root))) (i32.const -1))
-					(then (call $node_left_set (get_local $root) (call $tree_insert (get_local $node) (call $node_left (get_local $root)))))
-					(else (call $node_right_set (get_local $root) (call $tree_insert (get_local $node) (call $node_right (get_local $root)))))
+		(if (i32.eq (get_local $root) (i32.const 0)) (then
+			(set_local $result (get_local $node))
+		) (else
+			(if (i32.eq (call $tree_string_compare (call $node_key (get_local $node)) (call $node_key (get_local $root))) (i32.const 0)) (then
+				(call $node_value_set (get_local $root) (call $node_value (get_local $node)))
+			) (else
+				(if (i32.eq (call $tree_string_compare (call $node_key (get_local $node)) (call $node_key (get_local $root))) (i32.const -1)) (then
+					(call $node_left_set (get_local $root) (call $tree_insert (get_local $node) (call $node_left (get_local $root))))
+				) (else
+					(call $node_right_set (get_local $root) (call $tree_insert (get_local $node) (call $node_right (get_local $root))))
 				))
 			))
-		)
+		))
 		(get_local $result)
 	)
 	
@@ -68,19 +68,19 @@
 		
 		(local $result i32)
 		(set_local $result (i32.const 0))
-		(if
-			(i32.eq (get_local $root) (i32.const 0))
-			(then (set_local $result (i32.const 0)))
-			(else (if
-				(i32.eq (call $tree_string_compare (get_local $key) (call $node_key (get_local $root))) (i32.const 0))
-				(then (set_local $result (call $node_value (get_local $root))))
-				(else (if
-					(i32.eq (call $tree_string_compare (get_local $key) (call $node_key (get_local $root))) (i32.const -1))
-					(then (set_local $result (call $tree_find (get_local $key) (call $node_left (get_local $root)))))
-					(else (set_local $result (call $tree_find (get_local $key) (call $node_right (get_local $root)))))
+		(if (i32.eq (get_local $root) (i32.const 0)) (then
+			(set_local $result (i32.const 0))
+		) (else
+			(if (i32.eq (call $tree_string_compare (get_local $key) (call $node_key (get_local $root))) (i32.const 0)) (then
+				(set_local $result (call $node_value (get_local $root)))
+			) (else
+				(if (i32.eq (call $tree_string_compare (get_local $key) (call $node_key (get_local $root))) (i32.const -1)) (then
+					(set_local $result (call $tree_find (get_local $key) (call $node_left (get_local $root))))
+				) (else
+					(set_local $result (call $tree_find (get_local $key) (call $node_right (get_local $root))))
 				))
 			))
-		)
+		))
 		(get_local $result)
 	)
 	
@@ -102,20 +102,17 @@
 	(func $tree_iterate_walk (param $tree i32) (param $root i32) (param $function i32) (param $index i32) (param $context i32)
 		
 		(local $index_ i32)
-		(if
-			(i32.ne (get_local $root) (i32.const 0))
-			(then
-				(call $tree_iterate_walk (get_local $tree) (call $node_left (get_local $root)) (get_local $function) (get_local $index) (get_local $context))
-				(set_local $index_ (call $number_value (get_local $index)))
-				(call_indirect (type $i32_i32_i32_i32_i32_to_void)
-					(get_local $tree) (call $node_key (get_local $root)) (call $node_value (get_local $root)) (get_local $index_) (get_local $context)
-					(get_local $function)
-				)
-				(set_local $index_ (i32.add (get_local $index_) (i32.const 1)))
-				(call $number_value_set (get_local $index) (get_local $index_))
-				(call $tree_iterate_walk (get_local $tree) (call $node_right (get_local $root)) (get_local $function) (get_local $index) (get_local $context))
+		(if (i32.ne (get_local $root) (i32.const 0)) (then
+			(call $tree_iterate_walk (get_local $tree) (call $node_left (get_local $root)) (get_local $function) (get_local $index) (get_local $context))
+			(set_local $index_ (call $number_value (get_local $index)))
+			(call_indirect (type $i32_i32_i32_i32_i32_to_void)
+				(get_local $tree) (call $node_key (get_local $root)) (call $node_value (get_local $root)) (get_local $index_) (get_local $context)
+				(get_local $function)
 			)
-		)
+			(set_local $index_ (i32.add (get_local $index_) (i32.const 1)))
+			(call $number_value_set (get_local $index) (get_local $index_))
+			(call $tree_iterate_walk (get_local $tree) (call $node_right (get_local $root)) (get_local $function) (get_local $index) (get_local $context))
+		))
 	)
 	
 	(func $tree_length (param $tree i32) (result i32)
@@ -149,10 +146,10 @@
 		
 		(local $node i32)
 		(set_local $node (call $memory_allocate (typeof "tree_node") (call $node_bytes)))
-		(call $memory_store (get_local $node) (i32.const 0) (get_local $key))					;; key
-		(call $memory_store (get_local $node) (i32.const 4) (get_local $value))					;; value
-		(call $memory_store (get_local $node) (i32.const 8) (i32.const 0))						;; left (null)
-		(call $memory_store (get_local $node) (i32.const 12) (i32.const 0))						;; right (null)
+		(call $node_key_set (get_local $node) (get_local $key))
+		(call $node_value_set (get_local $node) (get_local $value))
+		(call $node_left_set (get_local $node) (i32.const 0))
+		(call $node_right_set (get_local $node) (i32.const 0))
 		(get_local $node)
 	)
 	
