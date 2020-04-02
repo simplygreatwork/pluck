@@ -88,7 +88,7 @@
 		(local $context i32)
 		;;(call $print_string (string "deallocate"))
 		(set_local $context (i32.const 0))
-		(call $list_iterate (get_local $list) (funcref "deallocate_iterate_each" "compaction") (get_local $context))
+		(call $list_iterate (get_local $list) (ref "deallocate_iterate_each") (get_local $context))
 	)
 	
 	(func $deallocate_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
@@ -126,7 +126,7 @@
 		;;(call $print_string (string "display"))
 		(call $print_integer (call $number_value (call $list_length (get_local $list))))
 		(set_local $context (i32.const 0))
-		(set_local $display_iterate_each (funcref "display_iterate_each" "compaction"))
+		(set_local $display_iterate_each (ref "display_iterate_each"))
 	)
 	
 	(func $display_iterate_each (param $item i32) (param $index i32) (param $context i32)

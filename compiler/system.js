@@ -4,6 +4,7 @@ const path = require('path')
 const jetpack = require('fs-jetpack')
 const Document = require('./document')
 const Table = require('./table')
+const Transform = require('./transform')
 const Bus = require('./bus')
 const process_ = require('./process')
 const logger = require('./logger')()
@@ -100,8 +101,8 @@ class System {
 		
 		for (let document of this.set.values()) {
 			broadcast.emit('document.transforming', document)
-			let transform = require('./transform')(this, document)
-			document.walk = transform.walk
+			let transform = new Transform(this, document)
+			document.walk = transform.walk.bind(transform)
 			document.source = transform.transform()
 			broadcast.emit('document.transformed', document)
 		}

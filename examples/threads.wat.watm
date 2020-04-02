@@ -15,9 +15,9 @@ module
 	func main
 		
 		memory_bootstrap
-		thread_create "one" (funcref "run" "threads")
-		thread_create "two" (funcref "run" "threads")
-		thread_create "three" (funcref "run" "threads")
+		thread_create "one" (ref "run")
+		thread_create "two" (ref "run")
+		thread_create "three" (ref "run")
 		
 	func run (param $name i32)
 		

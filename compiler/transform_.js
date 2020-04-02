@@ -14,16 +14,16 @@ class Transform {
 	
 	transform() {
 		
-		this.macros = {}
-		this.system.macros.forEach(function(macro, precedence) {
-			macro = macro(this.system, this.document, precedence)
+		macros = {}
+		system.macros.forEach(function(macro, precedence) {
+			macro = macro(system, document, precedence)
 			let key = macro.type + ':' + (macro.value ? macro.value : '')
-			this.macros[key] = this.macros[key] || []
-			this.macros[key].push(macro)
-		}.bind(this))
-		let tree = this.document.tree
-		this.walk(tree[0], 0, [], {})
-		let code = print(tree)
+			macros[key] = macros[key] || []
+			macros[key].push(macro)
+		})
+		let tree = document.tree
+		walk(tree[0], 0, [], {})
+		code = print(tree)
 		logger('transform').log('tree: ' + JSON.stringify(tree, null, 2))
 		logger('transform').log('tree transformed: ' + code)
 		return code
@@ -32,27 +32,27 @@ class Transform {
 	walk(node, index, parents, state) {
 		
 		if (node.type == 'expression') {
-			this.expressions(node, index, parents, state)
+			expressions(node, index, parents, state)
 		} else {
-			this.atoms(node, index, parents, state)
+			atoms(node, index, parents, state)
 		}
 	}
 	
 	expressions(node, index, parents, state) {
 		
 		parents.push(node)
-		this.install(node)
+		install(node)
 		node.emit('enter')
-		this.iterate(node, function(each, index_) {
-			this.walk(each, index_, parents, state)
-		}.bind(this))
+		iterate(node, function(each, index_) {
+			walk(each, index_, parents, state)
+		})
 		node.emit('exit')
 		let parent = query.last(parents, 1)
 		node.on('exit', function() {
 			parent.once('exit', function() {
-				this.uninstall(node)													// revisit the reasoning for this logic
-			}.bind(this))
-		}.bind(this))
+				uninstall(node)													// revisit the reasoning for this logic
+			})
+		})
 		parents.pop(node)
 	}
 	
@@ -86,9 +86,9 @@ class Transform {
 	
 	atoms(node, index, parents, state) {
 		
-		this.install(node)
-		this.atom(node, index, parents, state, this.macros[node.type + ':'])
-		this.atom(node, index, parents, state, this.macros[node.type + ':' + node.value])
+		install(node)
+		atom(node, index, parents, state, macros[node.type + ':'])
+		atom(node, index, parents, state, macros[node.type + ':' + node.value])
 	}
 	
 	atom(node, index, parents, state, macros) {

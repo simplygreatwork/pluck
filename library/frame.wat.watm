@@ -246,47 +246,47 @@
 	)
 	
 	(func $memory_type_by_pointer (param $pointer i32) (result i32)
-		(call_indirect (type $i32_to_i32) (get_local $pointer) (funcref "$memory_type_by_pointer_" "core"))
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (ref "core/memory_type_by_pointer_"))
 	)
 
 	(func $memory_id_by_pointer (param $pointer i32) (result i32)
-		(call_indirect (type $i32_to_i32) (get_local $pointer) (funcref "$memory_id_by_pointer_" "core"))
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (ref "core/memory_id_by_pointer_"))
 	)
 	
 	(func $memory_load (param $address i32) (param $offset i32) (result i32)
-		(call_indirect (type $i32_i32_to_i32) (get_local $address) (get_local $offset) (funcref "$memory_load_" "core"))
+		(call_indirect (type $i32_i32_to_i32) (get_local $address) (get_local $offset) (ref "core/memory_load_"))
 	)
 
 	(func $memory_copy (param $a i32) (param $b i32) (param $length i32)
-		(call_indirect (type $i32_i32_i32_to_void) (get_local $a) (get_local $b) (get_local $length) (funcref "$memory_copy_" "core"))
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $a) (get_local $b) (get_local $length) (ref "core/memory_copy_"))
 	)
 
 	(func $legend_value_set (param $legend i32) (param $key i32) (param $value i32)
-		(call_indirect (type $i32_i32_i32_to_void) (get_local $legend) (get_local $key) (get_local $value) (funcref "$legend_value_set_" "core"))
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $legend) (get_local $key) (get_local $value) (ref "core/legend_value_set_"))
 	)
 
 	(func $legend_value_get (param $legend i32) (param $key i32) (result i32)
-		(call_indirect (type $i32_i32_to_i32) (get_local $legend) (get_local $key) (funcref "$legend_value_get_" "core"))
+		(call_indirect (type $i32_i32_to_i32) (get_local $legend) (get_local $key) (ref "core/legend_value_get_"))
 	)
 
 	(func $legend_array_repoint (param $legend i32) (param $array i32) (param $from i32) (param $to i32)
-		(call_indirect (type $i32_i32_i32_i32_to_void) (get_local $legend) (get_local $array) (get_local $from) (get_local $to) (funcref "$legend_array_repoint_" "core"))
+		(call_indirect (type $i32_i32_i32_i32_to_void) (get_local $legend) (get_local $array) (get_local $from) (get_local $to) (ref "core/legend_array_repoint_"))
 	)
 
 	(func $legend_array_parent (param $array i32) (result i32)
-		(call_indirect (type $i32_to_i32) (get_local $array) (funcref "$array_parent_" "core"))
+		(call_indirect (type $i32_to_i32) (get_local $array) (ref "core/array_parent_"))
 	)
 	
 	(func $types_strings_get (param $type i32) (result i32)
-		(call_indirect (type $i32_to_i32) (get_local $type) (funcref "$types_strings_get" "types"))
+		(call_indirect (type $i32_to_i32) (get_local $type) (ref "types/types_strings_get"))
 	)
 	
 	(func $types_sizeof_type (param $type i32) (result i32)
-		(call_indirect (type $i32_to_i32) (get_local $type) (funcref "$types_sizeof_type" "types"))
+		(call_indirect (type $i32_to_i32) (get_local $type) (ref "types/types_sizeof_type"))
 	)
 
-	(func $types_sizeof_record (param $pointer i32) (result i32)	
-		(call_indirect (type $i32_to_i32) (get_local $pointer) (funcref "$types_sizeof_record" "types"))
+	(func $types_sizeof_record (param $pointer i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (ref "types/types_sizeof_record"))
 	)
 
 	(func $print_integer (param $pointer i32)

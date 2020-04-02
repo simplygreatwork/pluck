@@ -1,0 +1,29 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/console.watm"
+	import "../library/types.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		test_refs
+		
+	func test_refs
+		
+		set function to (ref "callable")
+		;;set function to (ref "callable")
+		;;set function to (ref "../funcref/callable")
+		;;set function to (ref "funcref/callable")
+		;;set function to (ref "../../examples/funcref/callable")
+		set function to (ref "callable")
+		
+	func callable
+		
+		print "callable"
+		

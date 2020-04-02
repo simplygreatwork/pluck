@@ -15,7 +15,7 @@ module.exports = [
 	require('../macros/import'),
 	require('../macros/export'),
 	require('../macros/typeof'),
-	require('../macros/funcref'),
+	require('../macros/ref'),
 	require('../macros/func'),
 	require('../macros/function'),
 	require('../macros/accepts'),

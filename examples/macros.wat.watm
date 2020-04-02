@@ -56,8 +56,8 @@ module
 		print "------------------------------"
 		print "Test function reference macro!"
 		print "------------------------------"
-		call_indirect (type $void_to_void) (funcref "test_function_first_class_a" "macros")
-		call_indirect (type $void_to_void) (funcref "test_function_first_class_b" "macros")
+		call_indirect (type $void_to_void) (ref "test_function_first_class_a")
+		call_indirect (type $void_to_void) (ref "test_function_first_class_b")
 		
 	func test_function_first_class_a
 		

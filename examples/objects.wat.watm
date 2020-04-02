@@ -20,7 +20,7 @@ module
 		
 		set object to (object_new)
 		object_set object "value" "42"
-		object_set object "callable" (function_new (funcref "callable" "objects"))
+		object_set object "callable" (function_new (ref "callable"))
 		set result to (object_call object "callable")
 		print object
 		

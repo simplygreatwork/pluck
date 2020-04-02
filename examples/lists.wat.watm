@@ -26,7 +26,7 @@ module
 		list_append list "5"
 		item_remove (item_next list)
 		item_remove (item_previous list)
-		list_iterate list (funcref "test_list_iterate_each" "lists") 0
+		list_iterate list (ref "test_list_iterate_each") 0
 		
 	func test_list_iterate_each accepts list item index context
 		print (item_value item)
