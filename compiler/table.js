@@ -15,7 +15,7 @@ class Table {
 		this.elements = {}
 	}
 	
-	find_function_id(function_, module_) {
+	find_function_id(module_, function_) {
 		
 		let key = module_ + '/' + function_
 		if (this.elements[key] === undefined) {
@@ -23,7 +23,7 @@ class Table {
 			if (document) {
 				let func = process.find_function(document, function_)
 				if (func) {
-					this.elements[key] = this.counter++;
+					this.elements[key] = this.counter++
 					let id = this.elements[key]
 					let code = `\n\t(elem (i32.const ${id}) ${function_})`
 					let tree = parse(code)

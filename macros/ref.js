@@ -17,7 +17,7 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(node, 'symbol', 'ref')) return
 			if (! (index === 0)) return
 			let parts = parts_(parent.value[1].value, document)
-			let id = system.table.find_function_id(parts.func, parts.module)
+			let id = system.table.find_function_id(parts.module, parts.func)
 			if (id) {
 				parent.value[0].type = 'symbol'
 				parent.value[0].value = 'i32.const'
@@ -25,7 +25,7 @@ module.exports = function(system, document) {
 				parent.value[1].value = id
 			} else {
 				console.error('')
-				console.error(`>>>>> Unable to find function "${result.func}" or module "${result.module}" <<<<<`)
+				console.error(`>>>>> Unable to find function "${parts.func}" or module "${parts.module}" <<<<<`)
 				console.error('')
 				process.exit(1)
 			}
