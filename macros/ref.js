@@ -35,7 +35,7 @@ module.exports = function(system, document) {
 
 function parse_(path_, document) {
 	
-	let result = { module: null, func: null }
+	let result = {}
 	let array = path_.split('/')
 	if (array.length == 1) {
 		result.module = document.id
