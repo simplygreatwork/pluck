@@ -16,7 +16,6 @@ let suite = [
 	'lists',
 	'macros',
 	'maps',
-	'memory',
 	'negation',
 	'objects',
 	'operators',

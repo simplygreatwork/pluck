@@ -40,15 +40,9 @@ function parse_(path_, document) {
 	if (array.length == 1) {
 		result.module = document.id
 		result.func = shared.dollarize(array[0])
-	} else if (array.length == 2) {
-		if (array[0] == '.') result.module = document.id
-		result.module = array[0]
-		result.func = shared.dollarize(array[1])
 	} else {
-		console.error('')
-		console.error(`>>>>> Hierarchical function paths are currently not supported <<<<<`)
-		console.error('')
-		process.exit(1)
+		result.func = shared.dollarize(array.pop())
+		result.module = array.join('/')
 	}
 	return result
 }

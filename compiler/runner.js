@@ -60,7 +60,7 @@ class Runner {
 			logger('runner').log('Compiled in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')
 		}.bind(this))
 		broadcast.on('document.instantiated', function(document) {
-			if (false) logger('runner').log('instantiated: ' + document.long_id)
+			if (false) logger('runner').log('instantiated: ' + document.id)
 		}.bind(this))
 		broadcast.on('documents.instantiated', function(document) {
 			logger('runner').log('Instantiated in ' + ((new Date().getTime() - this.date.getTime()) / 1000) + ' seconds.')

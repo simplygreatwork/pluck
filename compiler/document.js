@@ -4,16 +4,17 @@ const parse = require('./parse')
 const walk = require('./walk')
 const transform = require('./transform')
 const query = require('./query')
-const process = require('./process')
+const process_ = require('./process')
 const logger = require('./logger')()
 const jetpack = require('fs-jetpack')
+const utility = require('./utility')
 
 class Document {
 	
-	constructor(path_) {
+	constructor(path_, root) {
 		
 		this.path = this.trim_path(path_)
-		this.name = path.basename(this.path)
+		this.name = path.relative(root.toString(), this.path.toString())
 		this.id = this.name.split('.')[0]
 		this.long_id = path.basename(path.parse(this.path).dir) + '-' + path.basename(this.path)
 		this.define_stages()
@@ -21,25 +22,20 @@ class Document {
 	
 	trim_path(path_) {
 		
-		let array = path_.split('.')
-		if (array.length > 0) {
-			return array[0]
-		} else {
-			return path_
-		}
+		return utility.truncate_extensions(path_)
 	}
 	
 	define_stages() {
 		
 		this.stages = [{
 			extension: '.md',
-			process: process.process_md
+			process: process_.process_md
 		}, {
 			extension: '.watm',
-			process: process.process_watm
+			process: process_.process_watm
 		}, {
 			extension: '.wat',
-			process: process.process_wat
+			process: process_.process_wat
 		}]
 	}
 	

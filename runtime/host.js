@@ -1,5 +1,4 @@
 
-
 const threads = require('./threads')
 
 function Host() {
@@ -41,17 +40,17 @@ function Host() {
 		},
 		thread_create: function(string, funcref) {
 			threads.create(string_unwrap(string, this), funcref)
-			this.imports.thread.thread_start(funcref, string)
+			this.imports['library/thread'].thread_start(funcref, string)
 		}.bind(this),
 		thread_start: function(string, funcref) {
-			this.imports.thread.thread_start(funcref, string)
+			this.imports['library/thread'].thread_start(funcref, string)
 		}.bind(this)
 	})
 }
 
 function string_unwrap(handle, host) {
 	
-	let pointer = host.imports.core.memory_dereference_handle_(handle)
+	let pointer = host.imports['library/core'].memory_dereference_handle_(handle)
 	var array = new Uint8Array(host.memory.buffer)
 	let type = array[pointer]
 	pointer = pointer + 8

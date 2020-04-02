@@ -152,8 +152,3 @@ npm start compile if-else
 npm start compile repeat
 npm start compile negation
 ```
-
-## Known Issues
-
-- source files with the same name in different directories with clobber each other during compilation
-- for now, do not name any file with the same name as any file in /library

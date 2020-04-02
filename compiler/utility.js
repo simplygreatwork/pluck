@@ -19,5 +19,10 @@ module.exports = {
 				break
 			}
 		}
+	},
+	
+	truncate_extensions: function(path_) {
+		
+		return path_.split('.')[0]
 	}
 }

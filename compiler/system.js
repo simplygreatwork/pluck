@@ -9,6 +9,7 @@ const Bus = require('./bus')
 const process_ = require('./process')
 const logger = require('./logger')()
 const broadcast = require('./broadcast')
+const utility = require('./utility')
 
 class System {
 	
@@ -23,6 +24,7 @@ class System {
 	
 	compile(root) {
 		
+		this.root = process.cwd()
 		this.project = this.project_name(root)
 		this.load_document(root)
 		this.resolve_documents()
@@ -50,7 +52,7 @@ class System {
 	load_document(path_) {
 		
 		if (! this.documents[path_]) {
-			let document = new Document(path_)
+			let document = new Document(path_, this.root)
 			document.load()
 			broadcast.emit('loaded', path.basename(path_) + ' (' + path_ + ')')
 			document.module_imports.forEach(function(each) {
@@ -113,7 +115,7 @@ class System {
 		
 		for (let document of this.set.values()) {
 			document.wasm = process_.compile(document).buffer
-			let path_ = path.join(process.cwd(), 'build', this.project, document.long_id + '.wasm')
+			let path_ = path.join(process.cwd(), 'build', this.project, document.id + '.wasm')
 			jetpack.write(path_, '')
 			require('fs').writeFileSync(path_, document.wasm)
 			broadcast.emit('document.compiled', document)
@@ -127,7 +129,7 @@ class System {
 		jetpack.write(path_, {
 			modules: Array.from(this.set)
 			.map(function(document) {
-				return document.long_id + '.wasm'
+				return document.id + '.wasm'
 			})
 		})
 	}
@@ -138,9 +140,9 @@ class System {
 		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
 		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
-			let document = new Document(path_)
-			document.long_id = path_.split('.')[0]
-			document.id = document.long_id.split('-')[1]
+			let document = {}
+			document.path = path_
+			document.id = utility.truncate_extensions(path_)
 			this.set.add(document)
 		}.bind(this))
 	}
@@ -148,7 +150,7 @@ class System {
 	instantiate_documents() {
 		
 		for (let document of this.set.values()) {
-			let path_ = path.join(process.cwd(), 'build', this.project, document.long_id + '.wasm')
+			let path_ = path.join(process.cwd(), 'build', this.project, document.path)
 			document.wasm = require('fs').readFileSync(path_)
 			this.imports[document.id] = process_.instantiate(document, this.imports)
 			broadcast.emit('document.instantiated', document)
