@@ -12,8 +12,7 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			let instruction = system.use_number_objects ? 'operator_not' : 'operator_not_primitive'
-			operator.prefix(instruction, precedence, node, index, parents, state)
+			operator.prefix('operator_not', precedence, node, index, parents, state)
 		}
 	}
 }

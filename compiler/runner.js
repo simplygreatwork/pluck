@@ -18,8 +18,7 @@ class Runner {
 			imports: {
 				host: new Host()
 			},
-			macros: require('./config'),
-			use_number_objects: true
+			macros: require('./config')
 		})
 		this.date = new Date()
 	}

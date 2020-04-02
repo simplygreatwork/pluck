@@ -1,17 +1,6 @@
 
 module
-	
-	;; a workspace for transitioning to use number objects everywhere (no primitives)
-	;; not in effect yet - requires system.use_number_objects = true
-	
-	;; widespread number objects potentially affects:
-	;; 	repeat macro config detection
-	;; 	operator macro instructions
-	;; 	possibly list, map, tree, string length return values
-	;; 		will want these length functions to return number objects to easily console_print anyway
-	;; 			do that first
-	;; 	also need a solid number_to_string (done)
-	
+		
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
