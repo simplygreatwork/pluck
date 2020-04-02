@@ -59,7 +59,7 @@ macros: [
 ### Write [example](/examples/demo.wat.watm) code to use your new macros
 
 ```wat
-(module
+module
   import "host" "table" (table 1 anyfunc)
   memory (import "host" "memory") 1
   
@@ -68,7 +68,7 @@ macros: [
   
   func test accepts value
     set input to value
-)
+
 ```
 
 ### Overview
