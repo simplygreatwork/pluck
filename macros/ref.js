@@ -16,8 +16,8 @@ module.exports = function(system, document) {
 			if (! query.is_type(parent, 'expression')) return
 			if (! query.is_type_value(node, 'symbol', 'ref')) return
 			if (! (index === 0)) return
-			let result = parse_(parent.value[1].value, document)
-			let id = system.table.find_function_id(result.func, result.module)
+			let parts = parts_(parent.value[1].value, document)
+			let id = system.table.find_function_id(parts.func, parts.module)
 			if (id) {
 				parent.value[0].type = 'symbol'
 				parent.value[0].value = 'i32.const'
@@ -33,7 +33,7 @@ module.exports = function(system, document) {
 	}
 }
 
-function parse_(path_, document) {
+function parts_(path_, document) {
 	
 	let result = {}
 	let array = path_.split('/')

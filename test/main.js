@@ -21,7 +21,6 @@ let suite = [
 	'operators',
 	'repeat',
 	'threads',
-	'stacks',
 	'stress',
 	'stress2',
 	'stress3',
