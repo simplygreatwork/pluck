@@ -17,20 +17,44 @@ module
 		
 		memory_bootstrap
 		test_stack
+		print " "
 		
 	func test_stack
 		
-		set stack to (stack_new)
-		stack_set stack "one.key" "one.value"
-		stack_dump stack
-		stack_enter stack
-		stack_set stack "two.key" "two.value"
-		stack_dump stack
-		stack_enter stack
-		stack_set stack "three.key" "three.value"
-		stack_dump stack
-		stack_exit stack
-		stack_dump stack
-		stack_exit stack
-		stack_dump stack
+		set arguments to (stack_new)
+		stack_set arguments "outer.key" "outer.value"
+		deep arguments
+		print " "
+		print ">>> outer stack <<<"
+		stack_dump arguments
+		stack_exit arguments
+		
+	func deep accepts arguments
+		
+		stack_enter arguments
+		stack_set arguments "deep.key" "deep.value"
+		deeper arguments
+		print " "
+		print ">>> deep stack <<<"
+		stack_dump arguments
+		stack_exit arguments
+		
+	func deeper accepts arguments
+		
+		stack_enter arguments
+		stack_set arguments "deeper.key" "deeper.value"
+		deepest arguments
+		print " "
+		print ">>> deeper stack <<<"
+		stack_dump arguments
+		stack_exit arguments
+		
+	func deepest accepts arguments
+		
+		stack_enter arguments
+		stack_set arguments "deepest.key" "deepest.value"
+		print " "
+		print ">>> deepest stack <<<"
+		stack_dump arguments
+		stack_exit arguments
 		

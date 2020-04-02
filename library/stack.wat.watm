@@ -76,8 +76,6 @@
 	)
 	
 	(func $stack_dump (param $stack i32)
-		
-		(call $print (stack_to_string stack))
 		(call $stack_iterate (get_local $stack) (ref "stack_dump_iterate_each"))
 	)
 	
