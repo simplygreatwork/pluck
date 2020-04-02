@@ -39,7 +39,7 @@ function prefix(instruction, precedence, node, index, parents, state) {
 		precedence: precedence,
 		perform: function(index) {
 			let expression = parse (`
-				(call ${instruction} (i32.const 1))
+				(call ${instruction} (call $boolean_new (i32.const 1)))
 			`)[0]
 			expression.value.splice(2, 0, parent.value[index + 1])
 			parent.value[index] = expression

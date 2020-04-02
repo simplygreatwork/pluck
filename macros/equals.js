@@ -12,7 +12,8 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.infix('operator_primitive_equals', precedence, node, index, parents, state)
+			let instruction = system.use_number_objects ? 'operator_equals' : 'operator_equals_primitive'
+			operator.infix(instruction, precedence, node, index, parents, state)
 		}
 	}
 }

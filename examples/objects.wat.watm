@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/types.watm"
 	import "../library/function.watm"
 	import "../library/object.watm"

@@ -8,6 +8,7 @@
 	(import "./memory.watm")
 	(import "./string.watm")
 	(import "./number.watm")
+	(import "./boolean.watm")
 	(import "./object.watm")
 	
 	(func $print (param $value i32)
@@ -29,6 +30,9 @@
 		))
 		(if (i32.eq (get_local $type) (typeof "number")) (then
 			(set_local $result (call $number_to_string (get_local $value)))
+		))
+		(if (i32.eq (get_local $type) (typeof "boolean")) (then
+			(set_local $result (call $boolean_to_string (get_local $value)))
 		))
 		(if (i32.eq (get_local $type) (typeof "object")) (then
 			(set_local $result (call object_to_string (get_local $value)))

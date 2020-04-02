@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/operator.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
@@ -11,5 +13,7 @@ module
 	memory (import "host" "memory") 1
 	
 	func main
-		print_integer 1 equals 1 and 2 equals 2
+		
+		memory_bootstrap
+		print 1 equals 1 and 2 equals 2
 		

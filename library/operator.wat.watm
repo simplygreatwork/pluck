@@ -7,43 +7,43 @@
 	
 	(memory (import "host" "memory") 1)
 	
-	(func $operator_primitive_add (param $a i32) (param $b i32) (result i32)
+	(func $operator_add_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.add (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_sub (param $a i32) (param $b i32) (result i32)
+	(func $operator_sub_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.sub (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_equals (param $a i32) (param $b i32) (result i32)
+	(func $operator_equals_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.eq (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_greater (param $a i32) (param $b i32) (result i32)
+	(func $operator_greater_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.gt_u (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_less (param $a i32) (param $b i32) (result i32)
+	(func $operator_less_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.lt_u (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_and (param $a i32) (param $b i32) (result i32)
+	(func $operator_and_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.and (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_or (param $a i32) (param $b i32) (result i32)
+	(func $operator_or_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.or (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_xor (param $a i32) (param $b i32) (result i32)
+	(func $operator_xor_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.xor (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_primitive_not (param $a i32) (param $b i32) (result i32)
+	(func $operator_not_primitive (param $a i32) (param $b i32) (result i32)
 		(i32.ne (get_local $a) (get_local $b))
 	)
 	
-	(func $operator_plus (param $a i32) (param $b i32) (result i32)
+	(func $operator_add (param $a i32) (param $b i32) (result i32)
 		
 		($number_new (i32.add 
 			($number_value (get_local $a))
@@ -51,7 +51,7 @@
 		))
 	)
 	
-	(func $operator_minus (param $a i32) (param $b i32) (result i32)
+	(func $operator_sub (param $a i32) (param $b i32) (result i32)
 		
 		($number_new (i32.sub 
 			($number_value (get_local $a))
@@ -94,6 +94,22 @@
 	(func $operator_or (param $a i32) (param $b i32) (result i32)
 		
 		($boolean_new (i32.or 
+			($boolean_value (get_local $a))
+			($boolean_value (get_local $b))
+		))
+	)
+
+	(func $operator_xor (param $a i32) (param $b i32) (result i32)
+		
+		($boolean_new (i32.xor 
+			($boolean_value (get_local $a))
+			($boolean_value (get_local $b))
+		))
+	)
+	
+	(func $operator_not (param $a i32) (param $b i32) (result i32)
+		
+		($boolean_new (i32.ne 
 			($boolean_value (get_local $a))
 			($boolean_value (get_local $b))
 		))

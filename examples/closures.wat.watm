@@ -11,6 +11,7 @@ module
 	import "../library/memory.watm"
 	import "../library/string.watm"
 	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/stack.watm"
 	import "../library/list.watm"
 	import "../library/map.watm"

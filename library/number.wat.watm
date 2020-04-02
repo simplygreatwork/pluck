@@ -82,28 +82,31 @@
 	)
 	
 	(func $number_to_string (param $number i32) (result i32)
-		(call $digit_to_string (call $number_value (get_local $number)))
-	)
-	
-	(func $digit_to_string (param $digit i32) (result i32)
 		
 		(local $result i32)
-		(local $result_code i32)
-		(set_local $result_code (i32.const 63))
-		(if
-			(i32.ge_s (get_local $digit) (i32.const 0))
-			(then
-				(if
-					(i32.le_s (get_local $digit) (i32.const 9))
-					(then
-						(set_local $result_code (i32.add (i32.const 48) (get_local $digit)))
-					)
-				)
-			)
-		)
-		(set_local $result (call $string_new (i32.const 1)))
-		(call $string_set_char (get_local $result) (i32.const 0) (get_local $result_code))
+		(local $primitive i32)
+		(local $remainder i32)
+		(set_local $result (call $string_new (i32.const 0)))
+		(set_local $primitive (call $number_value (get_local $number)))
+		(block (loop
+			(set_local $remainder (i32.rem_u (get_local $primitive) (i32.const 10)))
+			(set_local $primitive (i32.div_u (get_local $primitive) (i32.const 10)))
+			(set_local $result (call $number_to_string_prepend (get_local $result) (get_local $remainder)))
+			(if (i32.lt_u (get_local $primitive) (i32.const 10)) (then (br 2)))
+			(br 0)
+		))
+		(if (i32.gt_u (get_local $primitive) (i32.const 0)) (then
+			(set_local $result (call $number_to_string_prepend (get_local $result) (get_local $primitive)))
+		))
 		(get_local $result)
+	)
+	
+	(func $number_to_string_prepend (param $string i32) (param $digit i32) (result i32)
+		
+		(local $char i32)
+		(set_local $char (call $string_new (i32.const 1)))
+		(call $string_set_char (get_local $char) (i32.const 0) (i32.add (i32.const 48) (get_local $digit)))
+		(call $string_append (get_local $char) (get_local $string))		
 	)
 	
 	(func $number_clone (param $number i32) (result i32)

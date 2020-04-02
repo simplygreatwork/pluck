@@ -1,10 +1,19 @@
 
 module
 	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
+	import "../library/types.watm"
+	import "../library/console.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
 	func main
+
+		memory_bootstrap
 		callable 42
 		
 	func callable accepts value

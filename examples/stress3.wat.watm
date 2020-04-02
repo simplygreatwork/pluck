@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/operator.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
@@ -284,5 +286,5 @@ module
 		if a greater 0 and a less 1000
 			set b to b plus 1
 
-		print_integer b			
+		print b			
 		

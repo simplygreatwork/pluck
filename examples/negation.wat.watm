@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/operator.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
@@ -13,8 +15,8 @@ module
 	func main
 		
 		memory_bootstrap
-		print_integer true
-		print_integer not true
-		print_integer false
-		print_integer not false
+		print true
+		print not true
+		print false
+		print not false
 		

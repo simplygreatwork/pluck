@@ -1,0 +1,54 @@
+
+module
+	
+	;; a workspace for transitioning to use number objects everywhere (no primitives)
+	;; not in effect yet - requires system.use_number_objects = true
+	
+	;; widespread number objects potentially affects:
+	;; 	repeat macro config detection
+	;; 	operator macro instructions
+	;; 	possibly list, map, tree, string length return values
+	;; 		will want these length functions to return number objects to easily console_print anyway
+	;; 			do that first
+	;; 	also need a solid number_to_string (done)
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
+	import "../library/stack.watm"
+	import "../library/list.watm"
+	import "../library/map.watm"
+	import "../library/types.watm"
+	import "../library/console.watm"
+	import "../library/operator.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		test_print
+		
+	func test_print
+		
+		print 1234
+		set list to (list_new)
+		list_append list "one"
+		list_append list "two"
+		print (list_length list)
+		set map to (map_new)
+		map_set map "one.key" "one.value"
+		map_set map "two.key" "two.value"
+		print (map_length map)
+		set string to "st"
+		print (number_new (string_length string))
+		repeat with i from 1 to 121
+			print i
+		set value to 21 plus 21
+		print value
+		if 21 plus 21 equals 42 and 20 plus 22 equals 42
+			print "yes"
+		
+

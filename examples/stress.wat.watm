@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/operator.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
@@ -15,7 +17,7 @@ module
 		memory_bootstrap
 		
 		repeat with k from 0 to 20 every 2
-			print_integer k
+			print k
 			if k greater 5 and k less 15
 				print "5 < k < 15"
 			if k greater 5 and k less 15

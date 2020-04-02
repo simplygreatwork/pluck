@@ -5,6 +5,7 @@ module
 	import "../library/memory.watm"
 	import "../library/string.watm"
 	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/list.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"

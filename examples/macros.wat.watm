@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/operator.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
@@ -49,7 +51,7 @@ module
 		print "------------------------------"
 		print "Test integer macro expansion"
 		print "------------------------------"
-		print_integer 100
+		print 100
 		
 	func test_func_ref_macro
 		
@@ -77,10 +79,10 @@ module
 		print "------------------------------"
 		print "Test local variable get and set! (partially implemented)"
 		print "------------------------------"
-		print_integer a
+		print a
 		print "Set values which have not been declared"
 		set b to 88
-		print_integer b
+		print b
 		set string to "string"
 		;; let a as i32 be 1
 		
@@ -92,7 +94,7 @@ module
 		
 		repeat with k from 0 to 20 every 2		;; every other
 			
-			print_integer k
+			print k
 			if k greater 5 and k less 15
 				print "5 < k < 15"
 			if k equals 6
@@ -110,11 +112,11 @@ module
 		
 		set value to 1
 		set result to not value equals 2
-		print_integer result
+		print result
 		set value to 2
 		set result to not value equals 2
-		print_integer result
-		print_integer not value equals 3
+		print result
+		print not value equals 3
 		
 	func test_arithmetic
 		
@@ -123,9 +125,9 @@ module
 		print "------------------------------"
 		
 		set value to 1 plus 1
-		print_integer value
+		print value
 		set value to value minus 2
-		print_integer value
+		print value
 		
 	func test_and_or
 		
@@ -134,14 +136,14 @@ module
 		print "------------------------------"
 		
 		set first to 1 equals 1 and 2 equals 2
-		print_integer first
+		print first
 		set second to 1 equals 2 or 2 equals 2
-		print_integer second
+		print second
 		
 	func test_true_false
 		
-		print_integer true equals true
-		print_integer true equals false
+		print true equals true
+		print true equals false
 		
 	func test_parameters accepts one two three
 		

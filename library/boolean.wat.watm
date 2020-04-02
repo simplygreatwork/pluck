@@ -2,6 +2,7 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	
 	(func $boolean_bytes (result i32)
@@ -43,8 +44,15 @@
 	(func $boolean_clone (param $boolean i32) (result i32)
 		(call $boolean_new (call $boolean_value (get_local $boolean)))
 	)
-
+	
 	(func $boolean_to_string (param $boolean i32) (result i32)
-		(i32.const 0)
-	)	
+		
+		(local $result i32)
+		(if (i32.eq (call $boolean_value (get_local $boolean)) (i32.const 1)) (then
+			(set_local $result (string "true"))
+		) (else
+			(set_local $result (string "false"))
+		))
+		(get_local $result)
+	)
 )

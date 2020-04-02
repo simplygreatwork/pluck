@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
 	import "host" "table" (table 1 anyfunc)
@@ -16,7 +18,7 @@ module
 		
 	func callable accepts one two three
 		
-		print_integer one
-		print_integer two
-		print_integer three
+		print one
+		print two
+		print three
 		

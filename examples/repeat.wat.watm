@@ -4,6 +4,8 @@ module
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
 	import "host" "table" (table 1 anyfunc)
@@ -14,9 +16,9 @@ module
 		memory_bootstrap
 		
 		repeat with i from 100 to 300 every 100
-			print_integer i
+			print i
 			repeat with j from 10 to 30 every 10
-				print_integer j
+				print j
 				repeat with k from 1 to 3 every 1
-					print_integer k
+					print k
 					
