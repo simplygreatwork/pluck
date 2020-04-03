@@ -102,23 +102,19 @@
 		(local $i i32)
 		(set_local $result (i32.const 0))
 		(set_local $i (i32.const 0))
-		(if
-			(i32.eq (call $string_length (get_local $string)) (call $string_length (get_local $string_b)))
-			(then
-				(set_local $result (i32.const 1))
-				(block (loop
-					(if
-						(i32.eq (call $string_get_char (get_local $string) (get_local $i)) (call $string_get_char (get_local $string_b) (get_local $i)))
-						(then)
-						(else (set_local $result (i32.const 0)))
-					)
-					(set_local $i (i32.add (get_local $i) (i32.const 1)))
-					(br_if 1 (i32.eq (get_local $i) (call $string_length (get_local $string))))
-					(br 0)
+		(if (i32.eq (call $string_length (get_local $string)) (call $string_length (get_local $string_b))) (then
+			(set_local $result (i32.const 1))
+			(block (loop
+				(if (i32.ne (call $string_get_char (get_local $string) (get_local $i)) (call $string_get_char (get_local $string_b) (get_local $i))) (then
+					(set_local $result (i32.const 0))
 				))
-			)
-			(else (set_local $result (i32.const 0)))
-		)
+				(set_local $i (i32.add (get_local $i) (i32.const 1)))
+				(br_if 1 (i32.eq (get_local $i) (call $string_length (get_local $string))))
+				(br 0)
+			))
+		) (else
+			(set_local $result (i32.const 0))
+		))
 		(get_local $result)
 	)
 	
@@ -149,30 +145,22 @@
 					(call $string_get_char (get_local $string_b) (get_local $i))
 				)
 			)
-			(if
-				(i32.ne (get_local $difference) (i32.const 0))
-				(then
-					(set_local $result (get_local $difference))
-					(set_local $done (i32.const 1))
-					(br 2)
-				)
-			)
+			(if (i32.ne (get_local $difference) (i32.const 0)) (then
+				(set_local $result (get_local $difference))
+				(set_local $done (i32.const 1))
+				(br 2)
+			))
 			(set_local $i (i32.add (get_local $i) (i32.const 1)))
 			(br 0)
 		))
-		(if
-			(i32.eq (get_local $done) (i32.const 0))
-			(then 
-				(if
-					(i32.lt_s (get_local $string_a_length) (get_local $string_b_length))
-					(then (set_local $result (i32.const 1)))
-				)
-				(if
-					(i32.lt_s (get_local $string_b_length) (get_local $string_a_length))
-					(then (set_local $result (i32.const -1)))
-				)
-			)
-		)
+		(if (i32.eq (get_local $done) (i32.const 0)) (then 
+			(if (i32.lt_s (get_local $string_a_length) (get_local $string_b_length)) (then 
+				(set_local $result (i32.const 1))
+			))
+			(if (i32.lt_s (get_local $string_b_length) (get_local $string_a_length)) (then 
+				(set_local $result (i32.const -1))
+			))
+		))
 		(get_local $result)
 	)
 	

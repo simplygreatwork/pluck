@@ -67,7 +67,6 @@
 	(func $tree_find (param $key i32) (param $root i32) (result i32)
 		
 		(local $result i32)
-		(set_local $result (i32.const 0))
 		(if (i32.eq (get_local $root) (i32.const 0)) (then
 			(set_local $result (i32.const 0))
 		) (else
@@ -84,19 +83,21 @@
 		(get_local $result)
 	)
 	
-	(func $tree_number_compare (param $number_a i32) (param $number_b i32) (result i32)
-		(call $number_compare (get_local $number_a) (get_local $number_b))
+	(func $tree_number_compare (param $a i32) (param $b i32) (result i32)
+		(call $number_compare (get_local $a) (get_local $b))
 	)
 	
-	(func $tree_string_compare (param $string_a i32) (param $string_b i32) (result i32)
-		(call $string_compare (get_local $string_a) (get_local $string_b))
+	(func $tree_string_compare (param $a i32) (param $b i32) (result i32)
+		(call $string_compare (get_local $a) (get_local $b))
 	)
 	
 	(func $tree_iterate (param $tree i32) (param $function i32) (param $context i32)
 		
+		(local $root i32)
 		(local $index i32)
+		(set_local $root (call $tree_root_get (get_local $tree)))
 		(set_local $index (call $number_new (i32.const 0)))
-		(call $tree_iterate_walk (get_local $tree) (call $tree_root_get (get_local $tree)) (get_local $function) (get_local $index) (get_local $context))
+		(call $tree_iterate_walk (get_local $tree) (get_local $root) (get_local $function) (get_local $index) (get_local $context))
 	)
 	
 	(func $tree_iterate_walk (param $tree i32) (param $root i32) (param $function i32) (param $index i32) (param $context i32)

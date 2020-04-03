@@ -24,18 +24,6 @@
 	(func $boolean_value_set (param $boolean i32) (param $value i32)
 		(call $memory_store (get_local $boolean) (i32.const 0) (get_local $value))
 	)
-
-	(func $boolean_and (param $boolean_a i32) (param $boolean_b i32) (result i32)
-		(i32.const 0)
-	)
-
-	(func $boolean_or (param $boolean_a i32) (param $boolean_b i32) (result i32)
-		(i32.const 0)
-	)
-	
-	(func $boolean_xor (param $boolean_a i32) (param $boolean_b i32) (result i32)
-		(i32.const 0)
-	)
 	
 	(func $boolean_equals (param $boolean_a i32) (param $boolean_b i32) (result i32)
 		(i32.const 0)

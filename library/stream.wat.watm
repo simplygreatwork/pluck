@@ -38,9 +38,9 @@
 		
 		(local $list i32)
 		(local $context i32)
+		(set_local $list (call $stream_list (get_local $stream)))
 		(set_local $context (call $map_new))
 		(call $map_set (get_local $context) (string "value") (get_local $value))
-		(set_local $list (call $stream_list (get_local $stream)))
 		(call $list_iterate (get_local $list) (ref "stream_iterate_each_function") (get_local $context))
 	)
 	
