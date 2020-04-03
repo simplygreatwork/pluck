@@ -38,7 +38,7 @@
 		(call $map_get (call $object_map (get_local $object)) (get_local $key))
 	)
 	
-	(func $object_call (param $object i32) (param $key i32) (result i32)
+	(func $object_call (param $object i32) (param $key i32)
 		
 		(local $map i32)
 		(local $function i32)
@@ -50,7 +50,6 @@
 			(type $void_to_void)
 			(get_local $function_id)
 		)
-		(i32.const 1)
 	)
 	
 	(func $object_to_string (param $object i32) (result i32)
@@ -80,7 +79,7 @@
 		(set_local $string (call $string_append (get_local $string) (get_local $key)))
 		(set_local $string (call $string_append (get_local $string) ": "))
 		(set_local $string (call $string_append (get_local $string) (call $object_property_value_to_string (get_local $value))))
-		(if (i32.lt_u (get_local $index) (i32.sub (get_local $length) (i32.const 1))) (then
+		(if (i32.lt_u (call $number_value (get_local $index)) (i32.sub (call $number_value (get_local $length)) (i32.const 1))) (then
 			(set_local $string (call $string_append (get_local $string) ", "))
 		))
 		(call $map_set (get_local $context) "string" (get_local $string))
