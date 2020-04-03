@@ -91,10 +91,10 @@
 		(call $list_iterate (get_local $list) (ref "deallocate_iterate_each") (get_local $context))
 	)
 	
-	(func $deallocate_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
+	(func $deallocate_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $handle i32)
-		(set_local $handle (call $item_value (get_local $item)))
+		(set_local $handle (get_local $value))
 		(if (i32.eq (i32.rem_u (get_local $index) (i32.const 2)) (i32.const 0)) (then
 			(if (i32.eq (i32.const 1) (i32.const 0)) (then
 				(call $print_integer (get_local $handle))

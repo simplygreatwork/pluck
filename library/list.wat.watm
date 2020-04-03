@@ -6,7 +6,7 @@
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(type $i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32)))
+	(type $i32_i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32) (param i32)))
 	
 	(func $list_bytes (result i32)
 		(i32.const 12)
@@ -53,7 +53,7 @@
 		(local $index i32)
 		(local $item i32)
 		(local $item_next i32)
-		(set_local $index (i32.const 0))
+        (set_local $index (call $number_new (i32.const 0)))
 		(set_local $item (get_local $list))
 		;; important: must retain item_next before call_indirect in case of item deallocation
 		(set_local $item (call $item_next (get_local $item)))
@@ -61,13 +61,13 @@
 			(set_local $item_next (call $item_next (get_local $item)))
 			;; in case of empty list
 			(br_if 1 (i32.eq (get_local $item) (get_local $item_next)))
-			(call_indirect (type $i32_i32_i32_i32_to_void)
-				(get_local $list) (get_local $item) (get_local $index) (get_local $context)
+			(call_indirect (type $i32_i32_i32_i32_i32_to_void)
+				(get_local $list) (get_local $item) (call $item_value (get_local $item)) (get_local $index) (get_local $context)
 				(get_local $function)
 			)
 			(set_local $item (get_local $item_next))
 			(br_if 1 (i32.eq (get_local $item) (get_local $list)))
-			(set_local $index (i32.add (get_local $index) (i32.const 1)))
+            (call $number_value_set (get_local $index) (i32.add (call $number_value (get_local $index)) (i32.const 1)))
 			(br 0)
 		))
 	)
@@ -82,14 +82,14 @@
 		(call $number_value (call $item_value (call $item_next (call $item_next (get_local $context)))))
 	)
 	
-	(func $list_index_of_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
+	(func $list_index_of_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $find i32)
 		(set_local $find (call $item_value (call $item_next (get_local $context))))
-		(if (call $string_equals (get_local $find) (call $item_value (get_local $item))) (then
+		(if (call $string_equals (get_local $find) (get_local $value)) (then
 			(call $number_value_set
 				(call $item_value (call $item_next (call $item_next (get_local $context))))
-				(get_local $index)
+				(call $number_value (get_local $index))
 			)
 		))
 	)
@@ -103,11 +103,11 @@
 		(call $item_value (call $item_next (call $item_next (get_local $context))))
 	)
 	
-	(func $list_get_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
+	(func $list_get_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(if
 			(i32.eq (get_local $index) (call $item_value (call $item_next (get_local $context))))
-			(then (call $list_append (get_local $context) (call $item_value (get_local $item))))
+			(then (call $list_append (get_local $context) (get_local $value)))
 		)
 	)
 	
@@ -120,7 +120,7 @@
 		(call $list_iterate (get_local $list) (ref "list_set_iterate_each") (get_local $context))
 	)
 	
-	(func $list_set_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
+	(func $list_set_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $index_ i32)
 		(local $value_ i32)

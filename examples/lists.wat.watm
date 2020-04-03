@@ -20,15 +20,17 @@ module
 	func test_list
 		
 		set list to (list_new)
+		list_append list "-1"
+		list_append list "0"
 		list_append list "1"
 		list_append list "2"
 		list_append list "3"
-		list_append list "4"
-		list_append list "5"
 		item_remove (item_next list)
 		item_remove (item_previous list)
 		list_iterate list (ref "test_list_iterate_each") 0
 		
-	func test_list_iterate_each accepts list item index context
-		print (item_value item)
+	func test_list_iterate_each accepts list item value index context
+		
+		print (string_append "index: " (number_to_string index))
+		print value
 		

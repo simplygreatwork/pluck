@@ -20,17 +20,18 @@ module
 	func test_map
 		
 		set map to (map_new)
+		map_set map "zero.key" "zero.value"
 		map_set map "one.key" "one.value"
 		map_set map "two.key" "two.value"
 		map_set map "three.key" "three.value"
 		map_set map "four.key" "four.value"
-		map_set map "five.key" "five.value"
 		map_iterate map (ref "map_iterate_each") 0
 		
 	func map_iterate_each accepts map key value index context
 		
+		print (string_append "index: " (number_to_string index))
 		set string to key
 		set string to (string_append string ":")
 		set string to (string_append string value)
 		print string
-		
+	

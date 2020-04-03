@@ -44,13 +44,11 @@
 		(call $list_iterate (get_local $list) (ref "stream_iterate_each_function") (get_local $context))
 	)
 	
-	(func $stream_iterate_each_function (param $list i32) (param $item i32) (param $index i32) (param $context i32)
+	(func $stream_iterate_each_function (param $list i32) (param $item i32) (param $function i32) (param $index i32) (param $context i32)
 		
-		(local $function i32)
 		(local $function_id i32)
 		(local $value i32)
 		(local $result i32)
-		(set_local $function (call $item_value (get_local $item)))
 		(set_local $function_id (call $function_id (get_local $function)))
 		(set_local $value (call $map_get (get_local $context) (string "value")))
 		(set_local $result (call_indirect (type $i32_to_i32) (get_local $value) (get_local $function_id)))

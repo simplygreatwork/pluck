@@ -101,16 +101,14 @@
 	
 	(func $tree_iterate_walk (param $tree i32) (param $root i32) (param $function i32) (param $index i32) (param $context i32)
 		
-		(local $index_ i32)
 		(if (i32.ne (get_local $root) (i32.const 0)) (then
 			(call $tree_iterate_walk (get_local $tree) (call $node_left (get_local $root)) (get_local $function) (get_local $index) (get_local $context))
-			(set_local $index_ (call $number_value (get_local $index)))
 			(call_indirect (type $i32_i32_i32_i32_i32_to_void)
-				(get_local $tree) (call $node_key (get_local $root)) (call $node_value (get_local $root)) (get_local $index_) (get_local $context)
+				(get_local $tree) (call $node_key (get_local $root)) (call $node_value (get_local $root)) (get_local $index) (get_local $context)
 				(get_local $function)
 			)
 			(set_local $index_ (i32.add (get_local $index_) (i32.const 1)))
-			(call $number_value_set (get_local $index) (get_local $index_))
+			(call $number_value_set (get_local $index) (i32.add (call $number_value (get_local $index)) (i32.const 1)))
 			(call $tree_iterate_walk (get_local $tree) (call $node_right (get_local $root)) (get_local $function) (get_local $index) (get_local $context))
 		))
 	)

@@ -64,13 +64,13 @@ module
 	func test_function_first_class_a
 		
 		print "------------------------------"
-		print "First class function A has been called using a funcref macro!"
+		print "First class function A has been called using a ref macro!"
 		print "------------------------------"
 		
 	func test_function_first_class_b
 		
 		print "------------------------------"
-		print "First class function B has been called using a funcref macro!"
+		print "First class function B has been called using a ref macro!"
 		print "------------------------------"
 		
 	func test_set_get_macros (param $a i32)
@@ -84,7 +84,6 @@ module
 		set b to 88
 		print b
 		set string to "string"
-		;; let a as i32 be 1
 		
 	func test_flow_macros
 		
