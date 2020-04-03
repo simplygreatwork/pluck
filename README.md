@@ -161,3 +161,9 @@ npm start compile if-else
 npm start compile repeat
 npm start compile negation
 ```
+
+## Known Issues
+
+- a defect currently exists where if statements are not evaluating correctly
+- the cause is a recent refactor where operators now return boolean objects instead of boolean primitives
+- working on sorting it out :-)
