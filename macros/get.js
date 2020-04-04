@@ -13,8 +13,7 @@ module.exports = function(system, document) {
 			
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'symbol')) return
-			let value = shared.dollarize(node.value)
-			if (! shared.is_local(state, value)) return
+			if (! shared.is_local(state, shared.dollarize(node.value))) return
 			let parent = query.last(parents)
 			let replace = true
 			if (index > 0) {
@@ -25,23 +24,14 @@ module.exports = function(system, document) {
 				replace = (query.is_type_value(previous, 'symbol', 'get_local')) ? false : replace
 				replace = (query.is_type_value(previous, 'symbol', 'set_local')) ? false : replace
 				replace = (query.is_type_value(previous, 'symbol', 'call')) ? false : replace
-			} else {
-				if (node.value == 'type' && parents[parents.length - 2].value[0].value == "call_indirect") {
-					replace = false
-					value = node.value
-				} else if (node.value == 'result' && parent.value.length > 1 && parent.value[1].value == 'i32') {
-					replace = false
-					value = node.value
-				} else if (node.value == 'string' && parent.value.length > 1 && parent.value[1].type == 'string') {
-					replace = false
-					value = node.value
-				} 
 			}
+			else if (node.value == 'type' && parents.length > 1 && parents[parents.length - 2].value[0].value == "call_indirect") replace = false
+			else if (node.value == 'result' && parent.value.length > 1 && parent.value[1].value == 'i32') replace = false
+			else if (node.value == 'string' && parent.value.length > 1 && parent.value[1].type == 'string') replace = false
 			if (replace) {
+				let value = shared.dollarize(node.value)
 				let tree = parse(` (get_local ${value})`)[0]
 				query.replace(parent, node, tree)
-			} else {
-				node.value = value
 			}
 		}
 	}

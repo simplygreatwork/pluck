@@ -80,7 +80,7 @@
 	(func $stack_dump_iterate_each (param $stack i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $string i32)
-		(set_local $string (get_local key))
+		(set_local $string (get_local $key))
 		(set_local $string (call $string_append (get_local $string) ":"))
 		(set_local $string (call $string_append (get_local $string) (get_local $value)))
 		(call $print (get_local $string))
