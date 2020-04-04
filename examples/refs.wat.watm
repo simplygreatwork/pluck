@@ -18,12 +18,9 @@ module
 		
 	func test_refs
 		
-		set function to (ref "callable")
-		;;set function to (ref "callable")
-		;;set function to (ref "../funcref/callable")
-		;;set function to (ref "funcref/callable")
-		;;set function to (ref "../../examples/funcref/callable")
-		set function to (ref "callable")
+		print_integer (ref "callable")
+		print_integer (ref "examples/refs/callable")
+		print_integer (ref "library/types/types_sizeof_record")
 		
 	func callable
 		
