@@ -29,8 +29,10 @@ module.exports = function(system, document) {
 				if (node.value == 'type' && parents[parents.length - 2].value[0].value == "call_indirect") {
 					replace = false
 					value = node.value
-				}
-				if (node.value == 'result' && parent.value.length > 1 && parent.value[1].value == 'i32') {
+				} else if (node.value == 'result' && parent.value.length > 1 && parent.value[1].value == 'i32') {
+					replace = false
+					value = node.value
+				} else if (node.value == 'string' && parent.value.length > 1 && parent.value[1].type == 'string') {
 					replace = false
 					value = node.value
 				} 

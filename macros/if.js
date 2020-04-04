@@ -42,7 +42,6 @@ function is_resolved(node) {
 	if (query.is_type(node.value[1], 'expression')) {
 		if (query.is_type(node.value[2], 'expression')) {
 			if (query.is_type_value(node.value[2].value[0], 'symbol', 'then')) {
-				console.log('resolved')
 				return true
 			}
 		}
