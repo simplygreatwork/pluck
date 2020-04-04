@@ -20,6 +20,7 @@ let suite = [
 	'objects',
 	'operators',
 	'repeat',
+	'repeat-nested',
 	'threads',
 	'stress',
 	'stress2',

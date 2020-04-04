@@ -15,14 +15,30 @@ module
 	func main
 		
 		memory_bootstrap
+		test_if_else
+		test_if_else_parentheses
 		
-		if (11 greater 10)
-			print "11 is greater than 10"
-		else
-			print "11 is not greater than 10"
+	func test_if_else
 		
-		if (9 greater 10)
-			print "9 is greater than 10"
+		print "if-else with parentheses >"
+		if 2 greater 1
+			print "2 is greater than 1"
 		else
-			print "9 is not greater than 10"
+			print "2 is not greater than 1"
+		if 1 greater 2
+			print "1 is greater than 2"
+		else
+			print "1 is not greater than 2"
+			
+	func test_if_else_parentheses
+		
+		print "if-else without parentheses >"
+		if (2 greater 1)
+			print "2 is greater than 1"
+		else
+			print "2 is not greater than 1"
+		if (1 greater 2)
+			print "1 is greater than 2"
+		else
+			print "1 is not greater than 2"
 			

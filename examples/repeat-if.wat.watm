@@ -15,22 +15,24 @@ module
 	func main
 		
 		memory_bootstrap
-		test_if
-		test_if_parentheses
+		test_repeat_if
+		test_repeat_if_parentheses
 		
-	func test_if
+	func test_repeat_if
 		
 		print "if with parentheses >"
-		if 1 equals 1
-			print "1 equals 1"
-		if 1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3
-			print "1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3"
-			
-	func test_if_parentheses
+		repeat from 1 to 5
+			if i equals 3
+				print (string_append (number_to_string i) " equals 3")
+			else
+				print (string_append (number_to_string i) " not equals 3")
+				
+	func test_repeat_if_parentheses
 		
 		print "if without parentheses >"
-		if (1 equals 1)
-			print "1 equals 1"
-		if (1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3)
-			print "1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3"
-			
+		repeat from 1 to 5
+			if (i equals 3)
+				print (string_append (number_to_string i) " equals 3)"
+			else
+				print (string_append (number_to_string i) " not equals 3")
+				
