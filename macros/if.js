@@ -19,16 +19,18 @@ module.exports = function(system, document) {
 			if (! (index === 0)) return
 			if (is_resolved(parent)) return
 			parent.once('exit', function() {
+				if (false) console.log('if parent exit')
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
-					query.replace(parent, node, {
+					let expression = {
 						type: 'expression',
 						value: [
 							{ type: 'symbol', value: 'if' },
-							get_condition(node, index, parents),
+							transform(get_condition(node, index, parents)),
 							get_then(node, index, parents)
 						]
-					})
+					}
+					query.replace(parent, node, expression)
 				})
 			})
 		}
@@ -40,6 +42,7 @@ function is_resolved(node) {
 	if (query.is_type(node.value[1], 'expression')) {
 		if (query.is_type(node.value[2], 'expression')) {
 			if (query.is_type_value(node.value[2].value[0], 'symbol', 'then')) {
+				console.log('resolved')
 				return true
 			}
 		}
@@ -47,7 +50,31 @@ function is_resolved(node) {
 	return false
 }
 
+function transform(condition) {
+	
+	if (condition.value[1] && condition.value[1].value.indexOf('operator') > -1) {
+		let expression = parse(` (call $boolean_value)`)[0]
+		expression.value[2] = condition
+		return expression
+	} else {
+		return condition
+	}
+}
+
 function get_condition(node, index, parents) {
+	
+	if (query.is_type(node.value[1], 'expression')) {
+		return node.value[1]
+	} else {
+		return {type: 'expression', value: node.value.filter(function(each) {
+			if (! query.is_type_value(each, 'symbol', 'if')) return false
+			if (query.is_type(each, 'expression')) return false
+			return true
+		})}
+	}
+}
+
+function get_condition2(node, index, parents) {
 	
 	if (query.is_type(node.value[1], 'expression')) {
 		return node.value[1]

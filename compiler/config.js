@@ -33,5 +33,6 @@ module.exports = [
 	require('../macros/not'),
 	require('../macros/and'),
 	require('../macros/or'),
-	require('../macros/xor')
+	require('../macros/xor'),
+	require('../macros/omit')
 ]

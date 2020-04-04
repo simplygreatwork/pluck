@@ -15,16 +15,26 @@ module.exports = function(system, document) {
 			if (! query.is_type(node, 'symbol')) return
 			let value = shared.dollarize(node.value)
 			if (! shared.is_local(state, value)) return
-			if (! index > 0) return
 			let parent = query.last(parents)
-			let previous = parent.value[index - 1]
 			let replace = true
-			replace = (query.is_type_value(previous, 'symbol', 'param')) ? false : replace
-			replace = (query.is_type_value(previous, 'symbol', 'result')) ? false : replace
-			replace = (query.is_type_value(previous, 'symbol', 'local')) ? false : replace
-			replace = (query.is_type_value(previous, 'symbol', 'get_local')) ? false : replace
-			replace = (query.is_type_value(previous, 'symbol', 'set_local')) ? false : replace
-			replace = (query.is_type_value(previous, 'symbol', 'call')) ? false : replace
+			if (index > 0) {
+				let previous = parent.value[index - 1]
+				replace = (query.is_type_value(previous, 'symbol', 'param')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'result')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'local')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'get_local')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'set_local')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'call')) ? false : replace
+			} else {
+				if (node.value == 'type' && parents[parents.length - 2].value[0].value == "call_indirect") {
+					replace = false
+					value = node.value
+				}
+				if (node.value == 'result' && parent.value.length > 1 && parent.value[1].value == 'i32') {
+					replace = false
+					value = node.value
+				} 
+			}
 			if (replace) {
 				let tree = parse(` (get_local ${value})`)[0]
 				query.replace(parent, node, tree)

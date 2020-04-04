@@ -47,12 +47,12 @@ class Transform {
 			this.walk(each, index_, parents, state)
 		}.bind(this))
 		node.emit('exit')
-		let parent = query.last(parents, 1)
-		node.on('exit', function() {
-			parent.once('exit', function() {
-				this.uninstall(node)													// revisit the reasoning for this logic
-			}.bind(this))
-		}.bind(this))
+		// let parent = query.last(parents, 1)
+		// node.on('exit', function() {
+		// 	parent.once('exit', function() {
+		// 		this.uninstall(node)													// revisit the reasoning for this logic
+		// 	}.bind(this))
+		// }.bind(this))
 		parents.pop(node)
 	}
 	

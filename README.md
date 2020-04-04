@@ -164,6 +164,6 @@ npm start compile negation
 
 ## Known Issues
 
-- a defect currently exists where if statements are not evaluating correctly
-- the cause is a recent refactor where operators now return boolean objects instead of boolean primitives
-- working on sorting it out :-)
+- at the moment, the condition of if statements is only evaluated correctly inside of parentheses
+- related to parent.on('exit') not firing when expected
+- more research is coming

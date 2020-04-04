@@ -15,10 +15,21 @@ module
 	func main
 		
 		memory_bootstrap
+		test
 		
-		if (1 equals 1)
-			print "1 equals 1"
+	func test
 		
-		if (10 plus 10 greater 15 and 5 plus 5 plus 5 greater 10)
-			print "10 plus 10 greater 15 and 5 plus 5 plus 5 greater 10"
+		set value 2
+		repeat from 1 to 5
+			if (i equals value)
+				print "1 equals 2"
+			else
+				print "not 1 equals 2"
 			
+		set result to 5
+		if (result equals 5)
+			print "result equals 5"
+		print result
+		
+	func test2
+		
