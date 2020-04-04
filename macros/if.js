@@ -19,7 +19,6 @@ module.exports = function(system, document) {
 			if (! (index === 0)) return
 			if (is_resolved(parent)) return
 			parent.once('exit', function() {
-				if (false) console.log('if parent exit')
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
 					let expression = {
