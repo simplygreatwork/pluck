@@ -25,8 +25,12 @@
 		(call $memory_store (get_local $boolean) (i32.const 0) (get_local $value))
 	)
 	
-	(func $boolean_equals (param $boolean_a i32) (param $boolean_b i32) (result i32)
-		(i32.const 0)
+	(func $boolean_equals (param $a i32) (param $b i32) (result i32)
+		
+		(call $boolean_new (i32.eq
+			(call $boolean_value (get_local $a))
+			(call $boolean_value (get_local $a)))
+		)
 	)
 	
 	(func $boolean_clone (param $boolean i32) (result i32)

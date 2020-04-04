@@ -98,7 +98,7 @@
 			($boolean_value (get_local $b))
 		))
 	)
-
+	
 	(func $operator_xor (param $a i32) (param $b i32) (result i32)
 		
 		($boolean_new (i32.xor 
