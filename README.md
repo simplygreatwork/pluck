@@ -161,9 +161,3 @@ npm start compile if-else
 npm start compile repeat
 npm start compile negation
 ```
-
-## Known Issues
-
-- at the moment, the condition of if statements is only evaluated correctly inside of parentheses
-- related to parent.on('exit') not firing when expected
-- more research is coming
