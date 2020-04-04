@@ -20,7 +20,7 @@ module
 		
 	func test_if_else
 		
-		print "if-else with parentheses >"
+		print "if-else without parentheses >"
 		if 2 greater 1
 			print "2 is greater than 1"
 		else
@@ -32,7 +32,7 @@ module
 			
 	func test_if_else_parentheses
 		
-		print "if-else without parentheses >"
+		print "if-else with parentheses >"
 		if (2 greater 1)
 			print "2 is greater than 1"
 		else

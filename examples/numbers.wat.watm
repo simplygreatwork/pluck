@@ -33,11 +33,10 @@ module
 		print (map_length map)
 		set string to "st"
 		print (number_new (string_length string))
-		repeat with i from 1 to 121
+		repeat with i from 1 to 100
 			print i
 		set value to 21 plus 21
 		print value
 		if 21 plus 21 equals 42 and 20 plus 22 equals 42
 			print "yes"
-		
-
+			

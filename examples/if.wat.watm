@@ -20,7 +20,7 @@ module
 		
 	func test_if
 		
-		print "if with parentheses >"
+		print "if without parentheses >"
 		if 1 equals 1
 			print "1 equals 1"
 		if 1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3
@@ -28,9 +28,8 @@ module
 			
 	func test_if_parentheses
 		
-		print "if without parentheses >"
+		print "if with parentheses >"
 		if (1 equals 1)
 			print "1 equals 1"
 		if (1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3)
 			print "1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3"
-			
