@@ -3,7 +3,7 @@ const query = require('../compiler/query')
 const parse = require('../compiler/parse')
 const shared = require('./shared')
 
-// todo: a robust return keyword will swallow execution of subsequent lines using if/else
+// todo: a robust return keyword will swallow execution of subsequent lines using if/else transforms
 
 module.exports = function(system, document) {
 	
@@ -19,7 +19,7 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(node, 'symbol', 'return')) return
 			if (! query.is_length_exceeding(node, 1)) return
 			if (! (index === 0)) return
-			parent.on('exit', function() {
+			parent.once('exit', function() {
 				let expression = parent.value[1]
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)

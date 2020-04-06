@@ -14,40 +14,18 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'expression')) return
 			let parent = query.last(parents)
-			parent.on('exit', function() {
+			parent.once('exit', function() {
 				let components = components_(node, index, parents, state, document)
 				if (! (components.subject && components.property)) return
-				let expression
 				if (components.value) {
-					expression = parse(` (call $object_set )`)[0]
-					expression.value[2] = components.subject
-					expression.value[3] = components.property
-					expression.value[4] = components.value
+					object_set(node, index, parents, state, components)
 				} else {
 					if ((! components.arguments) || (components.arguments.length === 0)) {
-						expression = parse(` (call $object_get)`)[0]
-						expression.value[2] = components.subject
-						expression.value[3] = components.property
-						query.climb(parents, function(node, index, parents) {
-							expression = catch_result(expression, query.last(parents), state)
-						})
+						object_get(node, index, parents, state, components)
 					} else {
-						let signature = components.arguments.map(function(argument_) {
-							return 'i32_'
-						}).join('')
-						expression = parse(` (call $object_call_${signature}to_i32)`)[0]
-						expression.value[2] = components.subject
-						expression.value[3] = components.property
-						expression.value.push(...components.arguments)
-						query.climb(parents, function(node, index, parents) {
-							expression = catch_result(expression, query.last(parents), state)
-						})
+						object_call(node, index, parents, state, components)
 					}
 				}
-				query.climb(parents, function(node, index, parents) {
-					let parent = query.last(parents)
-					parent.value[index] = expression
-				})
 			})
 		}
 	}
@@ -94,6 +72,50 @@ function get_arguments(node) {
 	
 	return node.value.filter(function(each, index) {
 		return index > 1
+	})
+}
+
+function object_set(node, index, parents, state, components) {
+	
+	let expression = parse(` (call $object_set )`)[0]
+	expression.value[2] = components.subject
+	expression.value[3] = components.property
+	expression.value[4] = components.value
+	query.climb(parents, function(node, index, parents) {
+		let parent = query.last(parents)
+		parent.value[index] = expression
+	})
+}
+
+function object_get(node, index, parents, state, components) {
+	
+	let expression = parse(` (call $object_get)`)[0]
+	expression.value[2] = components.subject
+	expression.value[3] = components.property
+	query.climb(parents, function(node, index, parents) {
+		expression = catch_result(expression, query.last(parents), state)
+	})
+	query.climb(parents, function(node, index, parents) {
+		let parent = query.last(parents)
+		parent.value[index] = expression
+	})
+}
+
+function object_call(node, index, parents, state, components) {
+	
+	let signature = components.arguments.map(function(argument_) {
+		return 'i32_'
+	}).join('')
+	let expression = parse(` (call $object_call_${signature}to_i32)`)[0]
+	expression.value[2] = components.subject
+	expression.value[3] = components.property
+	expression.value.push(...components.arguments)
+	query.climb(parents, function(node, index, parents) {
+		expression = catch_result(expression, query.last(parents), state)
+	})
+	query.climb(parents, function(node, index, parents) {
+		let parent = query.last(parents)
+		parent.value[index] = expression
 	})
 }
 
