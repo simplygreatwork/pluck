@@ -10,6 +10,7 @@ module
 	import "../library/function.watm"
 	import "../library/object.watm"
 	import "../library/console.watm"
+	import "../library/list.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -25,41 +26,44 @@ module
 		set object to (object_new)
 		object value = 42
 		print (string_append "object value: " (number_to_string (object "value")))
-		object function_with_zero_arguments = (function_new (ref "function_with_zero_arguments") (i32.const 0))
+		object function_with_zero_arguments = (function "function_with_zero_arguments")
 		object function_with_zero_arguments
-		object function_with_one_argument is (function_new (ref "function_with_one_argument") (i32.const 0))
+		object function_with_one_argument is (function "function_with_one_argument")
 		object function_with_one_argument "one"
-		object function_with_two_arguments = (function_new (ref "function_with_two_arguments") (i32.const 0))
+		object function_with_two_arguments = (function "function_with_two_arguments")
 		object function_with_two_arguments "one" "two"
-		object function_with_three_arguments is (function_new (ref "function_with_three_arguments") (i32.const 0))
+		object function_with_three_arguments is (function "function_with_three_arguments")
 		object function_with_three_arguments "one" "two" "three"
+		object add_one = (function "add_one")
+		print (object add_one 1)
 		print object
 		
 	func function_with_zero_arguments
 		
 		print "function_with_zero_arguments called"
 		
-	func function_with_one_argument accepts one (result i32)
+	func function_with_one_argument accepts one
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one " "))
 		print string
-		return string
 		
-	func function_with_two_arguments accepts one two (result i32)
+	func function_with_two_arguments accepts one two
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
 		set string to (string_append string (string_append two " "))
 		print string
-		return string
 		
-	func function_with_three_arguments accepts one two three (result i32)
+	func function_with_three_arguments accepts one two three
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
 		set string to (string_append string (string_append two ", "))
 		set string to (string_append string (string_append three " "))
 		print string
-		return string
+		
+	func add_one accepts value (result i32)
+		
+		return (number_add value 1)
 		

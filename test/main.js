@@ -10,6 +10,7 @@ let suite = [
 	'dollarize',
 	'equals-and',
 	'experimental',
+	'functions',
 	'if-else',
 	'if',
 	'index',

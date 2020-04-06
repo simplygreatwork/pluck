@@ -104,9 +104,9 @@ function object_get(node, index, parents, state, components) {
 function object_call(node, index, parents, state, components) {
 	
 	let signature = components.arguments.map(function(argument_) {
-		return 'i32_'
+		return '_i32'
 	}).join('')
-	let expression = parse(` (call $object_call_${signature}to_i32)`)[0]
+	let expression = parse(` (call $object_call${signature})`)[0]
 	expression.value[2] = components.subject
 	expression.value[3] = components.property
 	expression.value.push(...components.arguments)

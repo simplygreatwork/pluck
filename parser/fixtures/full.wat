@@ -235,7 +235,7 @@
 		(call $list_append (get_local $list) (string "a"))
 		(call $list_append (get_local $list) (string "b"))
 		(call $list_append (get_local $list) (string "c"))
-		(call $list_iterate (get_local $list) (ref "test_list_iterate_each") (i32.const 0))
+		(call $list_iterate (get_local $list) (function "test_list_iterate_each") (i32.const 0))
 		(call $assert_list_type (get_local $list))
 		(call $assert_list_length (get_local $list) (call $number_new (i32.const 3)))
 		(call $assert_number_equals (call $number_new (call $list_index_of (get_local $list) (string "c"))) (call $number_new (i32.const 2)))

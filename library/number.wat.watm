@@ -27,22 +27,22 @@
 		(call $memory_store (get_local $number) (i32.const 0) (get_local $value))
 	)
 	
-	(func $number_add (param $number_a i32) (param $number_b i32) (result i32)
+	(func $number_add (param $a i32) (param $b i32) (result i32)
 		
 		(call $number_new
 			(i32.add
-				(call $number_value (get_local $number_a))
-				(call $number_value (get_local $number_b))
+				(call $number_value (get_local $a))
+				(call $number_value (get_local $b))
 			)
 		)
 	)
 	
-	(func $number_subtract (param $number_a i32) (param $number_b i32) (result i32)
+	(func $number_subtract (param $a i32) (param $b i32) (result i32)
 		
 		(call $number_new
 			(i32.sub
-				(call $number_value (get_local $number_a))
-				(call $number_value (get_local $number_b))
+				(call $number_value (get_local $a))
+				(call $number_value (get_local $b))
 			)
 		)
 	)
