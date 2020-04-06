@@ -23,7 +23,7 @@ module
 		print "if without parentheses >"
 		repeat from 1 to 5
 			if i equals 3
-				print (string_append (number_to_string i) " equals 3)"
+				print (string_append (number_to_string i) " equals 3")
 			else
 				print (string_append (number_to_string i) " not equals 3")
 				

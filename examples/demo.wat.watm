@@ -17,5 +17,6 @@ module
 		callable 42
 		
 	func callable accepts value
-		set input to value
+		
+		print value
 		

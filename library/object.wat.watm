@@ -10,6 +10,9 @@
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	(type $void_to_void (func))
+	(type $i32_to_i32 (func (param $a i32) (result i32)))
+	(type $i32_i32_to_i32 (func (param $a i32) (param $b i32) (result i32)))
+	(type $i32_i32_i32_to_i32 (func (param $a i32) (param $b i32) (param $c i32) (result i32)))
 	
 	(func $object_bytes (result i32)
 		(i32.const 4)
@@ -35,10 +38,18 @@
 	)
 	
 	(func $object_get (param $object i32) (param $key i32) (result i32)
-		(call $map_get (call $object_map (get_local $object)) (get_local $key))
+		
+		(local $result i32)
+		(local $value i32)
+		(set_local $result (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(if (i32.eq (call $memory_type (get_local $result)) (typeof "function")) (then
+			(call $object_call_void_to_void (get_local $object) (get_local $key))
+			(set_local $result (i32.const 0))
+		))
+		(get_local $result)
 	)
 	
-	(func $object_call (param $object i32) (param $key i32)
+	(func $object_call_void_to_void (param $object i32) (param $key i32)
 		
 		(local $map i32)
 		(local $function i32)
@@ -50,6 +61,54 @@
 			(type $void_to_void)
 			(get_local $function_id)
 		)
+	)
+	
+	(func $object_call_i32_to_i32 (param $object i32) (param $key i32) (param $a i32) (result i32)
+		
+		(local $result i32)
+		(local $value i32)
+		(set_local $result (i32.const 0))
+		(set_local $value (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
+			(set_local $result (call_indirect
+				(type $i32_to_i32)
+				(get_local $a)
+				(call $function_id (get_local $value))
+			))
+		))
+		(get_local $result)
+	)
+	
+	(func $object_call_i32_i32_to_i32 (param $object i32) (param $key i32) (param $a i32) (param $b i32) (result i32)
+		
+		(local $result i32)
+		(local $value i32)
+		(set_local $result (i32.const 0))
+		(set_local $value (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
+			(set_local $result (call_indirect
+				(type $i32_i32_to_i32)
+				(get_local $a) (get_local $b)
+				(call $function_id (get_local $value))
+			))
+		))
+		(get_local $result)
+	)
+	
+	(func $object_call_i32_i32_i32_to_i32 (param $object i32) (param $key i32) (param $a i32) (param $b i32) (param $c i32) (result i32)
+		
+		(local $result i32)
+		(local $value i32)
+		(set_local $result (i32.const 0))
+		(set_local $value (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
+			(set_local $result (call_indirect
+				(type $i32_i32_i32_to_i32)
+				(get_local $a) (get_local $b) (get_local $c)
+				(call $function_id (get_local $value))
+			))
+		))
+		(get_local $result)
 	)
 	
 	(func $object_to_string (param $object i32) (result i32)

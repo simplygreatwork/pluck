@@ -53,7 +53,7 @@ function initialize(node, index, parent, state) {
 	
 	if (parent.operations === undefined) {
 		parent.operations = []
-		parent.on('exit', function() {										// review: if does not without parentheses work using once
+		parent.on('exit', function() {										// review: "if" does not work without parentheses using once
 			let operations = parent.operations
 			operations.sort((a, b) => a.precedence - b.precedence)
 			operations.forEach(function(operation, index) {

@@ -43,16 +43,17 @@ class Transform {
 		parents.push(node)
 		this.install(node)
 		node.emit('enter')
+		this.process(node, index, parents, state, this.macros[node.type + ':'])
 		this.iterate(node, function(each, index_) {
 			this.walk(each, index_, parents, state)
 		}.bind(this))
 		node.emit('exit')
-		// let parent = query.last(parents, 1)
-		// node.on('exit', function() {
-		// 	parent.once('exit', function() {
-		// 		this.uninstall(node)													// revisit the reasoning for this logic
-		// 	}.bind(this))
-		// }.bind(this))
+		let parent = query.last(parents, 1)
+		node.on('exit', function() {
+			parent.once('exit', function() {
+				this.uninstall(node)													// revisit the reasoning for this nested logic
+			}.bind(this))
+		}.bind(this))
 		parents.pop(node)
 	}
 	
@@ -87,11 +88,11 @@ class Transform {
 	atoms(node, index, parents, state) {
 		
 		this.install(node)
-		this.atom(node, index, parents, state, this.macros[node.type + ':'])
-		this.atom(node, index, parents, state, this.macros[node.type + ':' + node.value])
+		this.process(node, index, parents, state, this.macros[node.type + ':'])
+		this.process(node, index, parents, state, this.macros[node.type + ':' + node.value])
 	}
 	
-	atom(node, index, parents, state, macros) {
+	process(node, index, parents, state, macros) {
 		
 		if (! macros) return
 		macros.forEach(function(macro) {

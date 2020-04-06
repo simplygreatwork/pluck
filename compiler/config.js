@@ -2,6 +2,7 @@
 module.exports = [
 	
 	require('../macros/expression'),
+	require('../macros/object'),
 	require('../macros/number'),
 	require('../macros/string'),
 	require('../macros/name'),

@@ -13,6 +13,8 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
+	;; object-orientation work in progress
+	
 	func main
 		
 		memory_bootstrap
@@ -21,12 +23,43 @@ module
 	func create_object
 		
 		set object to (object_new)
-		object_set object "value" "42"
-		object_set object "callable" (function_new (ref "callable"))
-		object_call object "callable"
+		object value = 42
+		print (string_append "object value: " (number_to_string (object "value")))
+		object function_with_zero_arguments = (function_new (ref "function_with_zero_arguments"))
+		object function_with_zero_arguments
+		object function_with_one_argument is (function_new (ref "function_with_one_argument"))
+		object function_with_one_argument "one"
+		object function_with_two_arguments = (function_new (ref "function_with_two_arguments"))
+		object function_with_two_arguments "one" "two"
+		object function_with_three_arguments is (function_new (ref "function_with_three_arguments"))
+		object function_with_three_arguments "one" "two" "three"
 		print object
 		
-	func callable
+	func function_with_zero_arguments
 		
-		print "callable called"
+		print "function_with_zero_arguments called"
+		
+	func function_with_one_argument (param $one i32) (result i32)
+		
+		set string to "callable_with_arguments called with value: "
+		set string to (string_append string (string_append one " "))
+		print string
+		(get_local $one)
+		
+	func function_with_two_arguments (param $one i32) (param $two i32) (result i32)
+		
+		set string to "callable_with_arguments called with value: "
+		set string to (string_append string (string_append one ", "))
+		set string to (string_append string (string_append two " "))
+		print string
+		(get_local $one)
+		
+	func function_with_three_arguments (param $one i32) (param $two i32) (param $three i32) (result i32)
+		
+		set string to "callable_with_arguments called with value: "
+		set string to (string_append string (string_append one ", "))
+		set string to (string_append string (string_append two ", "))
+		set string to (string_append string (string_append three " "))
+		print string
+		(get_local $one)
 		
