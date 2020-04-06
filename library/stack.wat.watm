@@ -74,7 +74,7 @@
 	)
 	
 	(func $stack_dump (param $stack i32)
-		(call $stack_iterate (get_local $stack) (ref "stack_dump_iterate_each"))
+		(call $stack_iterate (get_local $stack) (function "stack_dump_iterate_each"))
 	)
 	
 	(func $stack_dump_iterate_each (param $stack i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
@@ -93,7 +93,7 @@
 		(set_local $list (call $stack_list (get_local $stack)))
 		(set_local $context (call $map_new))
 		(call $map_set (get_local $context) "stack" (get_local $stack))
-		(call $map_set (get_local $context) "function" (call function_new (get_local $function)))
+		(call $map_set (get_local $context) "function" (get_local $function))
 		(call $map_set (get_local $context) "index" (i32.const 0))
 		(call $list_iterate (get_local $list) (ref "stack_iterate_list_each") (get_local $context))
 	)

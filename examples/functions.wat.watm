@@ -1,0 +1,32 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
+	import "../library/types.watm"
+	import "../library/function.watm"
+	import "../library/object.watm"
+	import "../library/console.watm"
+	import "../library/list.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		memory_bootstrap
+		create_function
+		
+	func create_function
+		
+		set func_ to (function "function_with_arguments")
+		set result to (function_result func_)
+		print result
+		
+	func function_with_arguments (param $one i32) (param $two i32) (param $three i32) (result i32)
+		
+		set result to " "
+		return result
+		

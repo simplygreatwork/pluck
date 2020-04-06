@@ -184,7 +184,7 @@ function render_function_exports(document) {
 function render_function_imports(document) {
 	
 	document.module_imports.forEach(function(document_) {
-		document_.functions.forEach(function(func) {
+		document_.functions.forEach(function(func, index) {
 			let name = func.value[1].value
 			if (! has_function_import(document, document_.id, name.substring(1))) {
 				let code = `\n\t(import "${document_.id}" "${name.substring(1)}" (func ${name}))`

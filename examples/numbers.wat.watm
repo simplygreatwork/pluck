@@ -39,5 +39,4 @@ module
 		print value
 		if 21 plus 21 equals 42 and 20 plus 22 equals 42
 			print "yes"
-		
-
+			

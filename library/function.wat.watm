@@ -4,17 +4,19 @@
 	(import "./memory.watm")
 	(import "./string.watm")
 	(import "./number.watm")
+	(import "./list.watm")
 	(memory (import "host" "memory") 1)
 	
 	(func $function_bytes (result i32)
-		(i32.const 4)
+		(i32.const 8)
 	)
 	
-	(func $function_new (param $id i32) (result i32)
+	(func $function_new (param $id i32) (param $signature i32) (result i32)
 		
 		(local $function i32)
 		(set_local $function (call $memory_allocate (typeof "function") (call $function_bytes)))
 		(call $function_id_set (get_local $function) (get_local $id))
+		(call $function_signature_set (get_local $function) (get_local $signature))
 		(get_local $function)
 	)
 	
@@ -24,6 +26,18 @@
 	
 	(func $function_id_set (param $function i32) (param $id i32)
 		(call $memory_store (get_local $function) (i32.const 0) (get_local $id))
+	)
+	
+	(func $function_signature (param $function i32) (result i32)
+		(call $memory_load (get_local $function) (i32.const 4))
+	)
+	
+	(func $function_signature_set (param $function i32) (param $signature i32)
+		(call $memory_store (get_local $function) (i32.const 4) (get_local $signature))
+	)
+	
+	(func $function_result (param $function i32) (result i32)
+		(call $list_get (call $function_signature (get_local $function)) (i32.const 0))
 	)
 	
 	(func $function_to_string (param $function i32) (result i32)

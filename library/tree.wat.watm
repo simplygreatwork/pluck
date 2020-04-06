@@ -4,7 +4,6 @@
 	(import "./memory.watm")
 	(import "./number.watm")
 	(import "./string.watm")
-	(import "./list.watm")
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	(type $i32_i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32) (param i32)))
