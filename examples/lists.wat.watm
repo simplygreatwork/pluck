@@ -9,6 +9,7 @@ module
 	import "../library/list.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
+	import "../library/function.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -27,7 +28,7 @@ module
 		list_append list "3"
 		item_remove (item_next list)
 		item_remove (item_previous list)
-		list_iterate list (ref "test_list_iterate_each") 0
+		list_iterate list (function "test_list_iterate_each") 0
 		
 	func test_list_iterate_each accepts list item value index context
 		

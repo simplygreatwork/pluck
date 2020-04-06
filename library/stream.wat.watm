@@ -41,7 +41,7 @@
 		(set_local $list (call $stream_list (get_local $stream)))
 		(set_local $context (call $map_new))
 		(call $map_set (get_local $context) (string "value") (get_local $value))
-		(call $list_iterate (get_local $list) (ref "stream_iterate_each_function") (get_local $context))
+		(call $list_iterate (get_local $list) (function "stream_iterate_each_function") (get_local $context))
 	)
 	
 	(func $stream_iterate_each_function (param $list i32) (param $item i32) (param $function i32) (param $index i32) (param $context i32)

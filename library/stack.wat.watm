@@ -57,7 +57,7 @@
 		(local $context i32)
 		(set_local $context (call $map_new))
 		(call $map_set (get_local $context) "key" (get_local $key))
-		(call $list_iterate (call $stack_list (get_local $stack)) (ref "stack_get_iterate_each") (get_local $context))
+		(call $list_iterate (call $stack_list (get_local $stack)) (function "stack_get_iterate_each") (get_local $context))
 		(set_local $result (call $map_get (get_local $context) "value"))
 		(get_local $result)
 	)
@@ -95,7 +95,7 @@
 		(call $map_set (get_local $context) "stack" (get_local $stack))
 		(call $map_set (get_local $context) "function" (get_local $function))
 		(call $map_set (get_local $context) "index" (i32.const 0))
-		(call $list_iterate (get_local $list) (ref "stack_iterate_list_each") (get_local $context))
+		(call $list_iterate (get_local $list) (function "stack_iterate_list_each") (get_local $context))
 	)
 	
 	(func $stack_iterate_list_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)

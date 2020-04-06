@@ -4,7 +4,6 @@
 	(import "./memory.watm")
 	(import "./string.watm")
 	(import "./number.watm")
-	(import "./list.watm")
 	(memory (import "host" "memory") 1)
 	
 	(func $function_bytes (result i32)

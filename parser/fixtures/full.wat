@@ -6,13 +6,13 @@
 	(import "../library/legend.watm")
 	(import "../library/memory.watm")
 	(import "../library/string.watm")
-	(import "../library/boolean.watm")
 	(import "../library/number.watm")
+	(import "../library/boolean.watm")
 	(import "../library/function.watm")
 	(import "../library/list.watm")
-	(import "../library/assertion.watm")
-	(import "../library/tree.watm")
 	(import "../library/map.watm")
+	(import "../library/tree.watm")
+	(import "../library/assertion.watm")
 	(import "../library/stream.watm")
 	(import "../library/table.watm")
 	(import "../library/types.watm")
@@ -38,7 +38,6 @@
 		(call $test_list)
 		(call $test_map)
 		(call $test_tree)
-		(call $test_tree_map)
 		(call $test_arguments_dynamic)
 		(call $test_stream)
 		(call $test_table)
@@ -241,9 +240,9 @@
 		(call $assert_number_equals (call $number_new (call $list_index_of (get_local $list) (string "c"))) (call $number_new (i32.const 2)))
 	)
 	
-	(func $test_list_iterate_each (param $list i32) (param $item i32) (param $index i32) (param $context i32)
+	(func $test_list_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
-		(call $print_string (call $item_value (get_local $item)))
+		(call $print_string (get_local $value))
 	)
 	
 	(func $test_map
@@ -259,12 +258,12 @@
 		(call $map_iterate (get_local $map) (ref "test_map_iterate_each") (i32.const 0))
 	)
 	
-	(func $test_map_iterate_each (param $key i32) (param $value i32) (param $index i32) (param $context i32)
+	(func $test_map_iterate_each (param $map i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(call $print_string (get_local $key))
 		(call $print_string (call $number_to_string (get_local $value)))
 	)
-
+	
 	(func $test_tree
 		
 		(local $tree i32)
@@ -277,45 +276,36 @@
 		(call $tree_set (get_local $tree) (string "c") (call $number_new (i32.const 3)))
 		(call $tree_set (get_local $tree) (string "e") (call $number_new (i32.const 5)))
 		(call $tree_set (get_local $tree) (string "d") (call $number_new (i32.const 4)))
-		(call $tree_iterate (get_local $tree) (ref "test_tree_iterate_each"))
+		(call $tree_iterate (get_local $tree) (ref "test_tree_iterate_each") (i32.const 0))
 	)
 	
 	(func $test_tree_iterate_each (param $tree i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(call $print_string (get_local $key))
 		(call $print_string (call $number_to_string (get_local $value)))
-		(call $print_integer (get_local $index))
-	)
-	
-	(func $test_tree_map
-		
-		(local $map i32)
-		(local $test_map_iterate_each i32)
-		(call $print_string (string "------------------------------"))
-		(call $print_string (string "Testing a tree map"))
-		(call $print_string (string "------------------------------"))
+		(call $print (get_local $index))
 	)
 	
 	(func $test_arguments_dynamic
 		
 		(local $arguments i32)
-		(set_local $arguments (call $tree_new))
-		(call $tree_set (get_local $arguments) (string "key:one") (string "value:one"))
-		(call $tree_set (get_local $arguments) (string "key:two") (string "value:two"))
+		(set_local $arguments (call $map_new))
+		(call $map_set (get_local $arguments) (string "key:one") (string "value:one"))
+		(call $map_set (get_local $arguments) (string "key:two") (string "value:two"))
 		(call $print_string (string "------------------------------"))
 		(call $print_string (string "Testing dynamic arguments"))
 		(call $print_string (string "(requires map implementation)"))
 		(call $print_string (string "------------------------------"))
 		(call $test_arguments_dynamic_callee (get_local $arguments))
 	)
-
+	
 	(func $test_arguments_dynamic_callee (param $arguments i32)
 		
 		(call $print_string (string "------------------------------"))
 		(call $print_string (string "Dynamic arguments callee"))
 		(call $print_string (string "------------------------------"))
-		(call $print_string (call $tree_get (get_local $arguments) (string "key:one")))
-		(call $print_string (call $tree_get (get_local $arguments) (string "key:two")))
+		(call $print_string (call $map_get (get_local $arguments) (string "key:one")))
+		(call $print_string (call $map_get (get_local $arguments) (string "key:two")))
 	)
 	
 	(func $test_stream
@@ -328,17 +318,17 @@
 		(call $print_string (string "------------------------------"))
 		(set_local $stream (call $stream_new))
 		(set_local $list (call $list_new))
-		(call $list_append (get_local $list) (call $function_new (ref "test_stream_step_one")))
-		(call $list_append (get_local $list) (call $function_new (ref "test_stream_step_two")))
-		(call $list_append (get_local $list) (call $function_new (ref "test_stream_step_three")))
+		(call $list_append (get_local $list) (function "test_stream_step_one"))
+		(call $list_append (get_local $list) (function "test_stream_step_two"))
+		(call $list_append (get_local $list) (function "test_stream_step_three"))
 		(call $stream_list_set (get_local $stream) (get_local $list))
 		(call $stream_push (get_local $stream) (string "a"))
 	)
-
+	
 	(func $test_stream_step_one (param $value i32) (result i32)
 		(call $string_append (get_local $value) (string "b"))
 	)
-
+	
 	(func $test_stream_step_two (param $value i32) (result i32)
 		(call $string_append (get_local $value) (string "c"))
 	)
