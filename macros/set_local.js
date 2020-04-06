@@ -17,7 +17,7 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'set_local')) return
 			parent.value[1].value = shared.dollarize(parent.value[1].value)
-			return shared.declare(parent.value[1].value, state)
+			shared.declare(parent.value[1].value, state)
 		}
 	}
 }

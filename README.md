@@ -1,7 +1,7 @@
 
 # pluck
 
-- **pluck** is a programming language construction kit.
+- **pluck** is a modular and composable programming language construction kit.
 - Get started with WebAssembly text format syntax and macros.
 - Create and use macros to construct your own programming language features.
 - Additional [project documentation](https://www.notion.so/pluck-ad6047f9dd6e4c2dbadd89c69c6914fd) is hosted at Notion.

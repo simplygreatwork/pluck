@@ -37,7 +37,7 @@ function components_(node, index, parents, state, document) {
 	result.subject = get_subject(node, parents, state)
 	if (result.subject) result.property = get_property(node, index, parents, state, document)
 	if (result.property) result.value = get_value(node)
-	if (! result.value) result.arguments = get_arguments(node)
+	if (result.subject && ! result.value) result.arguments = get_arguments(node)
 	return result
 }
 
