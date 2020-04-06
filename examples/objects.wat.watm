@@ -39,27 +39,27 @@ module
 		
 		print "function_with_zero_arguments called"
 		
-	func function_with_one_argument (param $one i32) (result i32)
+	func function_with_one_argument accepts one (result i32)
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one " "))
 		print string
-		(get_local $one)
+		return string
 		
-	func function_with_two_arguments (param $one i32) (param $two i32) (result i32)
+	func function_with_two_arguments accepts one two (result i32)
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
 		set string to (string_append string (string_append two " "))
 		print string
-		(get_local $one)
+		return string
 		
-	func function_with_three_arguments (param $one i32) (param $two i32) (param $three i32) (result i32)
+	func function_with_three_arguments accepts one two three (result i32)
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
 		set string to (string_append string (string_append two ", "))
 		set string to (string_append string (string_append three " "))
 		print string
-		(get_local $one)
+		return string
 		

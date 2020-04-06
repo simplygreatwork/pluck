@@ -22,6 +22,7 @@ module.exports = [
 	require('../macros/accepts'),
 	require('../macros/repeat'),
 	require('../macros/break'),
+	require('../macros/return'),
 	require('../macros/if'),
 	require('../macros/else'),
 	require('../macros/true'),
