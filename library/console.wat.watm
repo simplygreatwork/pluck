@@ -25,6 +25,10 @@
 		(local $type i32)
 		(set_local $result " ")
 		(set_local $type (call $memory_type (get_local $value)))
+		(if (i32.eq (get_local $type) (typeof "object")) (then
+			(set_local $value (call object_subject (get_local $value)))
+		))
+		(set_local $type (call $memory_type (get_local $value)))
 		(if (i32.eq (get_local $type) (typeof "string")) (then
 			(set_local $result (get_local $value))
 		))

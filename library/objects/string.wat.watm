@@ -1,0 +1,107 @@
+(module
+	
+	(import "../utility.watm")
+	(import "../memory.watm")
+	(import "../number.watm")
+	(import "../string.watm")
+	(import "../map.watm")
+	(import "../function.watm")
+	(import "../object.watm")
+	(import "../list.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(global $global (import "host" "global") (mut i32))
+	
+	(func $string_prototype (result i32)
+		
+		(local $global i32)
+		(local $map i32)
+		(set_local $global (get_global $global))
+		(if (i32.eq (get_global $global) (i32.const 0)) (then
+			(set_global $global (call $map_new))
+			(set_local $global (get_global $global))
+		))
+		(set_local $map (call $map_get (get_local $global) (string "string")))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $map_new))
+			(call $map_set $global (string "string") (get_local $map))
+			(call $map_set $map (string "length") (function "string_object_length"))
+			(call $map_set $map (string "chars") (function "string_object_chars"))
+			(call $map_set $map (string "char_set") (function "string_object_set_char"))
+			(call $map_set $map (string "char_get") (function "string_object_get_char"))
+			(call $map_set $map (string "clone") (function "string_object_clone"))
+			(call $map_set $map (string "append") (function "string_object_append"))
+			(call $map_set $map (string "equals") (function "string_object_equals"))
+			(call $map_set $map (string "compare") (function "string_object_compare"))
+			(call $map_set $map (string "index_of") (function "string_object_index_of"))
+			(call $map_set $map (string "split") (function "string_object_split"))
+		))
+		(get_local $map)
+	)
+	
+	(func $string_object_new (param $length i32) (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (call $string_new (get_local $length)))
+		(call $object_prototype_set (get_local $object) (call $string_prototype))
+		(get_local $object)
+	)
+	
+	(func $string_object_from_string (param $string i32) (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (get_local $string))
+		(call $object_prototype_set (get_local $object) (call $string_prototype))
+		(get_local $object)
+	)
+	
+	(func $string_object_length (param $object i32) (result i32)
+		(call $string_length (call $object_subject (get_local $object)))
+	)
+	
+	(func $string_object_chars (param $object i32) (result i32)
+		(call $string_chars (call $object_subject (get_local $object)))
+	)
+	
+	(func $string_object_set_char (param $object i32) (param $index i32) (param $value i32)
+		(call $string_set_char (call $object_subject (get_local $object)) (get_local $index) (get_local $value))
+	)
+	
+	(func $string_object_get_char (param $object i32) (param $index i32) (result i32)
+		(call $string_get_char (call $object_subject (get_local $object)) (get_local $index))
+	)
+	
+	(func $string_object_clone (param $object i32) (result i32)
+		
+		(call $object_clone_with_subject 
+			(get_local $object)
+			(call $string_clone (call $object_subject (get_local $object)))
+		)
+	)
+	
+	(func $string_object_append (param $object i32) (param $string_b i32) (result i32)
+		
+		(call $object_clone_with_subject 
+			(get_local $object)
+			(call $string_append (call $object_subject (get_local $object)) (get_local $string_b))
+		)
+	)
+	
+	(func $string_object_equals (param $object i32) (param $string_b i32) (result i32)
+		(call $string_equals (call $object_subject (get_local $object)) (get_local $string_b))
+	)
+	
+	(func $string_object_compare (param $object i32) (param $string_b i32) (result i32)
+		(call $string_compare (call $object_subject (get_local $object)) (get_local $string_b))
+	)
+	
+	(func $string_object_index_of (param $object i32) (param $string_b i32) (result i32)
+		(call $string_index_of (call $object_subject (get_local $object)) (get_local $string_b))
+	)
+	
+	(func $string_object_split (param $object i32) (param $string_b i32) (result i32)
+		(call $string_split (call $object_subject (get_local $object)) (get_local $string_b))
+	)
+)

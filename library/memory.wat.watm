@@ -63,15 +63,15 @@
 	(func $memory_type_set (param $handle i32) (param $type i32)
 		(call $memory_type_set_ (get_local $handle) (get_local $type))
 	)
-
+	
 	(func $memory_type_by_pointer (param $pointer i32) (result i32)
 		(call $memory_type_by_pointer_ (get_local $pointer))
 	)
-
+	
 	(func $memory_type_set_by_pointer (param $pointer i32) (param $type i32)
 		(call $memory_type_set_by_pointer_ (get_local $pointer) (get_local $type))
 	)
-
+	
 	(func $memory_active (param $handle i32) (result i32)
 		(call $memory_active_ (get_local $handle))
 	)
@@ -79,7 +79,7 @@
 	(func $memory_active_set (param $handle i32) (param $active i32)
 		(call $memory_active_set_ (get_local $handle) (get_local $active))
 	)
-
+	
 	(func $memory_active_by_pointer (param $pointer i32) (result i32)
 		(call $memory_active_by_pointer_ (get_local $pointer))
 	)

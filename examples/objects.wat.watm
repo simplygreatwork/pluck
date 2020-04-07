@@ -11,6 +11,8 @@ module
 	import "../library/object.watm"
 	import "../library/console.watm"
 	import "../library/list.watm"
+	import "../library/objects/list.watm"
+	import "../library/objects/string.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -20,6 +22,7 @@ module
 		
 		memory_bootstrap
 		create_list
+		create_string
 		create_object
 		
 	func create_list
@@ -33,6 +36,12 @@ module
 	func create_list_iterate_each accepts list item value index context
 		
 		print value
+		
+	func create_string
+		
+		set string to (string_object_from_string "abc")
+		set string to (string append "123")
+		print string
 		
 	func create_object
 		
