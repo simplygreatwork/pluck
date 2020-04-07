@@ -71,7 +71,7 @@ function get_value(node) {
 function get_arguments(node) {
 	
 	return node.value.filter(function(each, index) {
-		return index > 1
+		return index > 1 && query.is_type(each, 'expression')				// fixme: review root cause in parser: unexpected whitespace node
 	})
 }
 

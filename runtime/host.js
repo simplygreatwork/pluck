@@ -12,15 +12,15 @@ function Host() {
 			initial: 65336,
 			element: 'anyfunc'
 		}),
-		global: new WebAssembly.Global({
-			value: 'i32',
-			mutable: true
-		}, 0),
 		legend: new WebAssembly.Global({
 			value: 'i32',
 			mutable: true
 		}, 0),
 		type_strings: new WebAssembly.Global({
+			value: 'i32',
+			mutable: true
+		}, 0),
+		global: new WebAssembly.Global({
 			value: 'i32',
 			mutable: true
 		}, 0),

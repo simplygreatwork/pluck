@@ -11,41 +11,72 @@
 	(memory (import "host" "memory") 1)
 	(type $void_to_void (func))
 	(type $void_to_i32 (func (result i32)))
-	(type $i32_to_void (func (param $a i32)))
-	(type $i32_to_i32 (func (param $a i32) (result i32)))
-	(type $i32_i32_to_void (func (param $a i32) (param $b i32)))
-	(type $i32_i32_to_i32 (func (param $a i32) (param $b i32) (result i32)))
-	(type $i32_i32_i32_to_void (func (param $a i32) (param $b i32) (param $c i32)))
-	(type $i32_i32_i32_to_i32 (func (param $a i32) (param $b i32) (param $c i32) (result i32)))
+	(type $i32_to_void (func (param $object i32)))
+	(type $i32_to_i32 (func (param $object i32) (result i32)))
+	(type $i32_i32_to_void (func (param $object i32) (param $a i32)))
+	(type $i32_i32_to_i32 (func (param $object i32) (param $a i32) (result i32)))
+	(type $i32_i32_i32_to_void (func (param $object i32) (param $a i32) (param $b i32)))
+	(type $i32_i32_i32_to_i32 (func (param $object i32) (param $a i32) (param $b i32) (result i32)))
+	(type $i32_i32_i32_i32_to_void (func (param $object i32) (param $a i32) (param $b i32) (param $c i32)))
+	(type $i32_i32_i32_i32_to_i32 (func (param $object i32) (param $a i32) (param $b i32) (param $c i32) (result i32)))
 	
 	(func $object_bytes (result i32)
-		(i32.const 4)
+		(i32.const 12)
 	)
-	
+   
 	(func $object_new (result i32)
 		
 		(local $object i32)
 		(set_local $object (call $memory_allocate (typeof "object") (call $object_bytes)))
+		(call $object_subject_set (get_local $object) (get_local $object))
+		(call $object_prototype_set (get_local $object) (i32.const 0))
+		(call $object_map_set (get_local $object) (call $map_new))
 		(get_local $object)
 	)
 	
-	(func $object_map (param $object i32) (result i32)
+	(func $object_subject (param $object i32) (result i32)
 		(call $memory_load (get_local $object) (i32.const 0))
 	)
 	
+	(func $object_subject_set (param $object i32) (param $proto i32)
+		(call $memory_store (get_local $object) (i32.const 0) (get_local $proto))
+	)
+	
+	(func $object_prototype (param $object i32) (result i32)
+		(call $memory_load (get_local $object) (i32.const 4))
+	)
+	
+	(func $object_prototype_set (param $object i32) (param $proto i32)
+		(call $memory_store (get_local $object) (i32.const 4) (get_local $proto))
+	)
+	
+	(func $object_map (param $object i32) (result i32)
+		(call $memory_load (get_local $object) (i32.const 8))
+	)
+	
 	(func $object_map_set (param $object i32) (param $value i32)
-		(call $memory_store (get_local $object) (i32.const 0) (get_local $value))
+		(call $memory_store (get_local $object) (i32.const 8) (get_local $value))
 	)
 	
 	(func $object_set (param $object i32) (param $key i32) (param $value i32)
 		(call $map_set (call $object_map (get_local $object)) (get_local $key) (get_local $value))
 	)
 	
+	(func $object_load (param $object i32) (param $key i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(if (i32.eq (get_local $result) (i32.const 0)) (then
+			(set_local $result (call $map_get (call $object_prototype (get_local $object)) (get_local $key)))
+		))
+		(get_local $result)
+	)
+	
 	(func $object_get (param $object i32) (param $key i32) (result i32)
 		
 		(local $result i32)
 		(local $value i32)
-		(set_local $result (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(set_local $result (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $result)) (typeof "function")) (then
 			(call $object_call_void (get_local $object) (get_local $key))
 			(set_local $result (i32.const 0))
@@ -59,16 +90,18 @@
 		(local $function i32)
 		(local $function_id i32)
 		(set_local $map (call $object_map (get_local $object)))
-		(set_local value (call $map_get (get_local $map) (get_local $key)))
+		(set_local $value (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
 			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
 				(call_indirect
-					(type $void_to_void)
+					(type $i32_to_void)
+					(call $object_subject (get_local $object))
 					(call $function_id (get_local $value))
 				)
 			) (else
 				(set_local $result (call_indirect
-					(type $void_to_i32)
+					(type $i32_to_i32)
+					(call $object_subject (get_local $object))
 					(call $function_id (get_local $value))
 				))
 			))
@@ -79,19 +112,21 @@
 		
 		(local $result i32)
 		(local $value i32)
+		(local $subject i32)
 		(set_local $result (i32.const 0))
-		(set_local $value (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(set_local $value (call $object_load (get_local $object) (get_local $key)))
+		(set_local $subject (call $object_subject (get_local $object)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
 			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
 				(call_indirect
-					(type $i32_to_void)
-					(get_local $a)
+					(type $i32_i32_to_void)
+					(get_local $subject) (get_local $a)
 					(call $function_id (get_local $value))
 				)
 			) (else
 				(set_local $result (call_indirect
-					(type $i32_to_i32)
-					(get_local $a)
+					(type $i32_i32_to_i32)
+					(get_local $subject) (get_local $a)
 					(call $function_id (get_local $value))
 				))
 			))
@@ -104,21 +139,23 @@
 		(local $result i32)
 		(local $value i32)
 		(set_local $result (i32.const 0))
-		(set_local $value (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(set_local $value (call $object_load (get_local $object) (get_local $key)))
+		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
 			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
 				(call_indirect
-					(type $i32_i32_to_void)
-					(get_local $a) (get_local $b)
+					(type $i32_i32_i32_to_void)
+					(call $object_subject (get_local $object)) (get_local $a) (get_local $b)
 					(call $function_id (get_local $value))
 				)
 			) (else
 				(set_local $result (call_indirect
-					(type $i32_i32_to_i32)
-					(get_local $a) (get_local $b)
+					(type $i32_i32_i32_to_i32)
+					(call $object_subject (get_local $object)) (get_local $a) (get_local $b)
 					(call $function_id (get_local $value))
 				))
 			))
-		(get_local $result)
+		))
+		(get_local $object)
 	)
 	
 	(func $object_call_i32_i32_i32 (param $object i32) (param $key i32) (param $a i32) (param $b i32) (param $c i32) (result i32)
@@ -126,20 +163,22 @@
 		(local $result i32)
 		(local $value i32)
 		(set_local $result (i32.const 0))
-		(set_local $value (call $map_get (call $object_map (get_local $object)) (get_local $key)))
+		(set_local $value (call $object_load (get_local $object) (get_local $key)))
+		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
 			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
 				(call_indirect
-					(type $i32_i32_i32_to_void)
-					(get_local $a) (get_local $b) (get_local $c)
+					(type $i32_i32_i32_i32_to_void)
+					(call $object_subject (get_local $object)) (get_local $a) (get_local $b) (get_local $c)
 					(call $function_id (get_local $value))
 				)
 			) (else
 				(set_local $result (call_indirect
-					(type $i32_i32_i32_to_i32)
-					(get_local $a) (get_local $b) (get_local $c)
+					(type $i32_i32_i32_i32_to_i32)
+					(call $object_subject (get_local $object)) (get_local $a) (get_local $b) (get_local $c)
 					(call $function_id (get_local $value))
 				))
 			))
+		))
 		(get_local $result)
 	)
 	

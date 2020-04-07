@@ -19,7 +19,20 @@ module
 	func main
 		
 		memory_bootstrap
+		create_list
 		create_object
+		
+	func create_list
+		
+		set list to (list_object_new)
+		list append "1"
+		list append "2"
+		list append "3"
+		list iterate (function "create_list_iterate_each") 0
+		
+	func create_list_iterate_each accepts list item value index context
+		
+		print value
 		
 	func create_object
 		
@@ -35,27 +48,27 @@ module
 		object function_with_three_arguments is (function "function_with_three_arguments")
 		object function_with_three_arguments "one" "two" "three"
 		object add_one = (function "add_one")
-		print (object add_one 1)
+		print (object add_one 41)
 		print object
 		
-	func function_with_zero_arguments
+	func function_with_zero_arguments accepts object
 		
 		print "function_with_zero_arguments called"
 		
-	func function_with_one_argument accepts one
+	func function_with_one_argument accepts object one
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one " "))
 		print string
 		
-	func function_with_two_arguments accepts one two
+	func function_with_two_arguments accepts object one two
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
 		set string to (string_append string (string_append two " "))
 		print string
 		
-	func function_with_three_arguments accepts one two three
+	func function_with_three_arguments accepts object one two three
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
@@ -63,7 +76,7 @@ module
 		set string to (string_append string (string_append three " "))
 		print string
 		
-	func add_one accepts value (result i32)
+	func add_one accepts object value (result i32)
 		
 		return (number_add value 1)
 		

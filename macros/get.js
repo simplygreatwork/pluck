@@ -23,6 +23,8 @@ module.exports = function(system, document) {
 				replace = (query.is_type_value(previous, 'symbol', 'local')) ? false : replace
 				replace = (query.is_type_value(previous, 'symbol', 'get_local')) ? false : replace
 				replace = (query.is_type_value(previous, 'symbol', 'set_local')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'get_global')) ? false : replace
+				replace = (query.is_type_value(previous, 'symbol', 'set_global')) ? false : replace
 				replace = (query.is_type_value(previous, 'symbol', 'call')) ? false : replace
 			}
 			else if (node.value == 'type' && parents.length > 1 && parents[parents.length - 2].value[0].value == "call_indirect") replace = false
