@@ -10,7 +10,7 @@ module.exports = function(system, document) {
 		type: 'symbol',
 		value: 'false',
 		
-		enter : function(node, index, parents, state) {		
+		enter : function(node, index, parents, state) {
 			
 			if (! query.is_type_value(node, 'symbol', 'false')) return
 			let tree = parse(` (call $boolean_new (i32.const 0))`)[0]

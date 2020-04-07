@@ -1,0 +1,60 @@
+(module
+	
+	(import "../utility.watm")
+	(import "../memory.watm")
+	(import "../string.watm")
+	(import "../list.watm")
+	(import "../function.watm")
+	(import "../object.watm")
+	(import "../map.watm")
+	(import "../number.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(global $global (import "host" "global") (mut i32))
+	
+	(func $object_map_prototype (result i32)
+		
+		(local $global i32)
+		(local $map i32)
+		(set_local $global (get_global $global))
+		(if (i32.eq (get_global $global) (i32.const 0)) (then
+			(set_global $global (call $map_new))
+			(set_local $global (get_global $global))
+		))
+		(set_local $map (call $map_get (get_local $global) (string "map")))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $map_new))
+			(call $map_set $global (string "map") (get_local $map))
+			(call $map_set $map (string "put") (function "$object_map_set_"))
+			(call $map_set $map (string "get") (function "object_map_get"))
+			(call $map_set $map (string "iterate") (function "object_map_iterate"))
+			(call $map_set $map (string "length") (function "object_map_length"))
+		))
+		(get_local $map)
+	)
+	
+	(func $object_map_new (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (call $map_new))
+		(call $object_prototype_set (get_local $object) (call $object_map_prototype))
+		(get_local $object)
+	)
+	
+	(func $object_map_set_ (param $object i32) (param $key i32) (param $value i32)
+		(call $map_set (call $object_subject (get_local $object)) (get_local $key) (get_local $value))
+	)
+	
+	(func $object_map_get (param $object i32) (param $key i32) (result i32)
+		(call $map_get (call $object_subject (get_local $object)) (get_local $key))
+	)
+	
+	(func $object_map_iterate (param $object i32) (param $function i32) (param $context i32)
+		(call $map_iterate (call $object_subject (get_local $object)) (get_local $function) (get_local $context))
+	)
+	
+	(func $object_map_length (param $object i32) (result i32)
+		(call $map_length (call $object_subject (get_local $object)))
+	)
+)

@@ -6,7 +6,6 @@
 	(import "./string.watm")
 	(import "./map.watm")
 	(import "./function.watm")
-	(import "./object.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -212,11 +211,9 @@
 		(local $item_a i32)
 		(local $item_b i32)
 		(local $item_c i32)
-		
 		(set_local $item_a (get_local $item))
 		(set_local $item_b (call $item_new))
 		(set_local $item_c (call $item_next (get_local $item_a)))
-		
 		(call $item_next_set (get_local $item_a) (get_local $item_b))
 		(call $item_next_set (get_local $item_b) (get_local $item_c))
 		(call $item_previous_set (get_local $item_b) (get_local $item_a))

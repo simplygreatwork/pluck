@@ -11,8 +11,13 @@ module
 	import "../library/object.watm"
 	import "../library/console.watm"
 	import "../library/list.watm"
-	import "../library/objects/list.watm"
+	import "../library/map.watm"
 	import "../library/objects/string.watm"
+	import "../library/objects/list.watm"
+	import "../library/objects/map.watm"
+	import "../library/objects/number.watm"
+	import "../library/objects/boolean.watm"
+	import "../library/objects/function.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -22,12 +27,16 @@ module
 		
 		memory_bootstrap
 		create_list
+		create_map
 		create_string
+		create_number
+		create_boolean
+		create_function
 		create_object
 		
 	func create_list
 		
-		set list to (list_object_new)
+		set list to (object_list_new)
 		list append "1"
 		list append "2"
 		list append "3"
@@ -37,11 +46,46 @@ module
 		
 		print value
 		
+	func create_map
+		
+		set map to (object_map_new)
+		map put "one" "1"
+		map put "two" "2"
+		map put "three" "3"
+		map iterate (function "create_map_iterate_each") 0
+		
+	func create_map_iterate_each accepts map key value index context
+		
+		print key
+		print value
+		
 	func create_string
 		
-		set string to (string_object_from_string "abc")
+		set string to (object_string_from_string "abc")
 		set string to (string append "123")
 		print string
+		
+	func create_number
+		
+		set a to (object_number_from_number 1)
+		set b to (object_number_from_number 2)
+		set c to (object_number_from_number 3)
+		set number to (a add b)
+		set number to (number add c)
+		print number
+		
+	func create_boolean
+		
+		set boolean to (object_boolean_from_string "true")
+		print boolean
+		set boolean to (object_boolean_from_string "false")
+		print boolean
+		
+	func create_function
+		
+		set function_ to (object_function_from_function (function "create_list_iterate_each"))
+		print_integer (function_ id)
+		print (function_ result)
 		
 	func create_object
 		

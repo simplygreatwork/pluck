@@ -42,7 +42,7 @@
 		(i32.add (call $memory_dereference_handle (get_local $string)) (i32.const 12))
 	)
 	
-	(func $string_set_char (param $string i32) (param $index i32) (param $value i32)
+	(func $string_char_set (param $string i32) (param $index i32) (param $value i32)
 		
 		(call $memory_store8
 			(get_local $string)
@@ -51,7 +51,7 @@
 		)
 	)
 	
-	(func $string_get_char (param $string i32) (param $index i32) (result i32)
+	(func $string_char_get (param $string i32) (param $index i32) (result i32)
 		
 		(call $memory_load8_u
 			(get_local $string)
@@ -106,7 +106,7 @@
 		(if (i32.eq (call $string_length (get_local $string)) (call $string_length (get_local $string_b))) (then
 			(set_local $result (i32.const 1))
 			(block (loop
-				(if (i32.ne (call $string_get_char (get_local $string) (get_local $i)) (call $string_get_char (get_local $string_b) (get_local $i))) (then
+				(if (i32.ne (call $string_char_get (get_local $string) (get_local $i)) (call $string_char_get (get_local $string_b) (get_local $i))) (then
 					(set_local $result (i32.const 0))
 				))
 				(set_local $i (i32.add (get_local $i) (i32.const 1)))
@@ -142,8 +142,8 @@
 			)
 			(set_local $difference
 				(i32.sub
-					(call $string_get_char (get_local $string_a) (get_local $i))
-					(call $string_get_char (get_local $string_b) (get_local $i))
+					(call $string_char_get (get_local $string_a) (get_local $i))
+					(call $string_char_get (get_local $string_b) (get_local $i))
 				)
 			)
 			(if (i32.ne (get_local $difference) (i32.const 0)) (then

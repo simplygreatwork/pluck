@@ -1,0 +1,63 @@
+(module
+	
+	(import "../utility.watm")
+	(import "../memory.watm")
+	(import "../string.watm")
+	(import "../list.watm")
+	(import "../function.watm")
+	(import "../object.watm")
+	(import "../map.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(global $global (import "host" "global") (mut i32))
+	
+	(func $object_function_prototype (result i32)
+		
+		(local $global i32)
+		(local $map i32)
+		(set_local $global (get_global $global))
+		(if (i32.eq (get_global $global) (i32.const 0)) (then
+			(set_global $global (call $map_new))
+			(set_local $global (get_global $global))
+		))
+		(set_local $map (call $map_get (get_local $global) (string "function")))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $map_new))
+			(call $map_set $global (string "function") (get_local $map))
+			(call $map_set $map (string "id") (function "object_function_id"))
+			(call $map_set $map (string "parameters") (function "object_function_parameters"))
+			(call $map_set $map (string "result") (function "object_function_result"))
+		))
+		(get_local $map)
+	)
+	
+	(func $object_function_new (param $id i32) (param $parameters i32) (param $result i32) (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (call $function_new (get_local $id) (get_local $parameters) (get_local $result)))
+		(call $object_prototype_set (get_local $object) (call $object_function_prototype))
+		(get_local $object)
+	)
+	
+	(func $object_function_from_function (param $function i32) (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (get_local $function))
+		(call $object_prototype_set (get_local $object) (call $object_function_prototype))
+		(get_local $object)
+	)
+	
+	(func $object_function_id (param $object i32) (result i32)
+		(call $function_id (call $object_subject (get_local $object)))
+	)
+	
+	(func $object_function_parameters (param $object i32) (result i32)
+		(call $function_parameters (call $object_subject (get_local $object)))
+	)
+	
+	(func $object_function_result (param $object i32) (result i32)
+		(call $function_result (call $object_subject (get_local $object)))
+	)
+)

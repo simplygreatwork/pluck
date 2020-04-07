@@ -102,7 +102,7 @@
 		
 		(local $map i32)
 		(set_local $map (call $item_value (get_local $item)))
-		(call $map_iterate (get_local $map) (ref "stack_iterate_map_each") (get_local $context))
+		(call $map_iterate (get_local $map) (function "stack_iterate_map_each") (get_local $context))
 	)
 	
 	(func $stack_iterate_map_each (param $map i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)

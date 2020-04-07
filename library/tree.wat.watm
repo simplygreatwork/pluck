@@ -4,6 +4,7 @@
 	(import "./memory.watm")
 	(import "./number.watm")
 	(import "./string.watm")
+	(import "./function.watm")
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	(type $i32_i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32) (param i32)))
@@ -91,6 +92,10 @@
 	)
 	
 	(func $tree_iterate (param $tree i32) (param $function i32) (param $context i32)
+		(call $tree_iterate_local (get_local $tree) (call $function_id (get_local $function)) (get_local $context))
+	)
+	
+	(func $tree_iterate_local (param $tree i32) (param $function i32) (param $context i32)
 		
 		(local $root i32)
 		(local $index i32)
@@ -118,7 +123,7 @@
 		(local $context i32)
 		(set_local $context (call $tree_new))
 		(call tree_set (get_local $context) "length" (call $number_new (i32.const 0)))
-		(call $tree_iterate (get_local $tree) (ref "tree_length_iterate_each") (get_local $context))
+		(call $tree_iterate_local (get_local $tree) (ref "tree_length_iterate_each") (get_local $context))
 		(call $tree_get (get_local $context) "length")
 	)
 	

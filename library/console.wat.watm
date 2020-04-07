@@ -1,15 +1,17 @@
 
 (module
-	
-	(memory (import "host" "memory") 1)
-	(import "host" "table" (table 1 anyfunc))
-	
+
 	(import "./utility.watm")
 	(import "./memory.watm")
 	(import "./string.watm")
 	(import "./number.watm")
 	(import "./boolean.watm")
 	(import "./object.watm")
+	(import "./list.watm")
+	(import "./function.watm")
+	(import "./map.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
 	
 	(func $print (param $value i32)
 		(call $console_print (get_local $value))

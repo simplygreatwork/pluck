@@ -1,14 +1,16 @@
 
 (module
 	
-	(import "./utility.watm")
-	(import "./memory.watm")
-	(import "./number.watm")
-	(import "./string.watm")
-	(import "./map.watm")
-	(import "./function.watm")
-	(import "host" "table" (table 1 anyfunc))
-	(memory (import "host" "memory") 1)
+	import "./utility.watm"
+	import "./memory.watm"
+	import "./string.watm"
+	import "./number.watm"
+	import "./boolean.watm"
+	import "./map.watm"
+	import "./list.watm"
+	import "./function.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
 	(type $void_to_void (func))
 	(type $void_to_i32 (func (result i32)))
 	(type $i32_to_void (func (param $object i32)))
@@ -213,7 +215,7 @@
 		(set_local $context (call $map_new))
 		(call $map_set (get_local $context) "string" (get_local $result))
 		(call $map_set (get_local $context) "length" (get_local $length))
-		(call $map_iterate (get_local $map) (ref "object_to_string_iterate_each") (get_local $context))
+		(call $map_iterate (get_local $map) (function "object_to_string_iterate_each") (get_local $context))
 		(set_local $result (call $map_get (get_local $context) "string"))
 		(set_local $result (call $string_append (get_local $result) ")"))
 		(get_local $result)

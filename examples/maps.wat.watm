@@ -9,6 +9,8 @@ module
 	import "../library/types.watm"
 	import "../library/console.watm"
 	import "../library/map.watm"
+	import "../library/list.watm"
+	import "../library/function.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -25,7 +27,7 @@ module
 		map_set map "two.key" "two.value"
 		map_set map "three.key" "three.value"
 		map_set map "four.key" "four.value"
-		map_iterate map (ref "map_iterate_each") 0
+		map_iterate map (function "map_iterate_each") 0
 		
 	func map_iterate_each accepts map key value index context
 		

@@ -19,7 +19,6 @@
 	(import "../library/console.watm")
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
-	(global $global (import "host" "global") (mut i32))
 	(global $legend (import "host" "legend") (mut i32))
 	
 	(func $main
@@ -49,7 +48,6 @@
 	(func $setup
 		
 		(call $memory_bootstrap)
-		(set_global $global (call $map_new))
 	)
 	
 	(func $test_typeof
@@ -255,7 +253,7 @@
 		(call $map_set (get_local $map) (string "one") (call $number_new (i32.const 1)))
 		(call $map_set (get_local $map) (string "two") (call $number_new (i32.const 2)))
 		(call $map_set (get_local $map) (string "three") (call $number_new (i32.const 3)))
-		(call $map_iterate (get_local $map) (ref "test_map_iterate_each") (i32.const 0))
+		(call $map_iterate (get_local $map) (function "test_map_iterate_each") (i32.const 0))
 	)
 	
 	(func $test_map_iterate_each (param $map i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
@@ -276,7 +274,7 @@
 		(call $tree_set (get_local $tree) (string "c") (call $number_new (i32.const 3)))
 		(call $tree_set (get_local $tree) (string "e") (call $number_new (i32.const 5)))
 		(call $tree_set (get_local $tree) (string "d") (call $number_new (i32.const 4)))
-		(call $tree_iterate (get_local $tree) (ref "test_tree_iterate_each") (i32.const 0))
+		(call $tree_iterate (get_local $tree) (function "test_tree_iterate_each") (i32.const 0))
 	)
 	
 	(func $test_tree_iterate_each (param $tree i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
