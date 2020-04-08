@@ -1,0 +1,30 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./string.watm")
+	(import "./list.watm")
+	(import "./function.watm")
+	(import "./object.watm")
+	(import "./map.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(global $global (import "host" "global") (mut i32))
+	
+	(func $prototype_get (param $key i32) (result i32)
+		
+		(local $global i32)
+		(local $map i32)
+		(set_local $global (get_global $global))
+		(if (i32.eq (get_global $global) (i32.const 0)) (then
+			(set_global $global (call $map_new))
+			(set_local $global (get_global $global))
+		))
+		(set_local $map (call $map_get (get_local $global) (get_local $key)))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $map_new))
+		))
+		(call $map_set $global (get_local $key) (get_local $map))
+		(get_local $map)
+	)
+)

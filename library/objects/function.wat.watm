@@ -8,27 +8,18 @@
 	(import "../object.watm")
 	(import "../map.watm")
 	(import "../console.watm")
+	(import "../prototype.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
 	
 	(func $object_function_prototype (result i32)
 		
-		(local $global i32)
 		(local $map i32)
-		(set_local $global (get_global $global))
-		(if (i32.eq (get_global $global) (i32.const 0)) (then
-			(set_global $global (call $map_new))
-			(set_local $global (get_global $global))
-		))
-		(set_local $map (call $map_get (get_local $global) (string "function")))
-		(if (i32.eq (get_local $map) (i32.const 0)) (then
-			(set_local $map (call $map_new))
-			(call $map_set $global (string "function") (get_local $map))
-			(call $map_set $map (string "id") (function "object_function_id"))
-			(call $map_set $map (string "parameters") (function "object_function_parameters"))
-			(call $map_set $map (string "result") (function "object_function_result"))
-		))
+		(set_local $map (call $prototype_get (string "function")))
+		(call $map_set $map (string "id") (function "object_function_id"))
+		(call $map_set $map (string "parameters") (function "object_function_parameters"))
+		(call $map_set $map (string "result") (function "object_function_result"))
 		(get_local $map)
 	)
 	

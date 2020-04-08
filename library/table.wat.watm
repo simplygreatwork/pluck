@@ -13,35 +13,21 @@
 		
 		(call $print_string (string "------------------------------"))
 		(call $print_string (string "Testing WASM tables"))
-		(call $print_string (string "------------------------------"))		
-		(call $print_integer
-			(call_indirect (type $void_to_i32)
-				(ref "no_param_one_result")
-			)
-		)
-		(call $print_integer
-			(call_indirect (type $i32_to_i32)
-				(i32.const 20)
-				(ref "one_param_one_result")
-			)
-		)
-		(call_indirect (type $i32_to_void)
-			(i32.const 30)
-			(ref "one_param_no_result")
-		)
+		(call $print_string (string "------------------------------"))
+		(call $print_integer (call_indirect (type $void_to_i32) (ref "no_param_one_result")))
+		(call $print_integer (call_indirect (type $i32_to_i32) (i32.const 20) (ref "one_param_one_result")))
+		(call_indirect (type $i32_to_void) (i32.const 30) (ref "one_param_no_result"))
 	)
 	
 	(func $no_param_one_result (result i32)
 		(i32.const 10)
 	)
-
+	
 	(func $one_param_one_result (param $value i32) (result i32)
 		(get_local $value)
 	)
 	
 	(func $one_param_no_result (param $value i32)
-		(call $print_integer
-			(get_local $value)
-		)
+		(call $print_integer (get_local $value))
 	)
 )
