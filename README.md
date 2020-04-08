@@ -9,7 +9,7 @@
 ### Create a macro to recognize and transpile [integer values](/macros/number.js) to WebAssembly
 ```javascript
 
-enter : function(node, index, parents, state) {	
+enter : function(node, index, parents, state) {
   
   if (! shared.is_inside_function(state)) return
   if (! query.is_type(node, 'number')) return
@@ -119,7 +119,7 @@ module
 
 ```
 git fetch && git fetch --tags
-git checkout 2020-04-04
+git checkout 2020-04-07
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
@@ -139,7 +139,7 @@ npm start run compaction
 ```
 git clone https://github.com/simplygreatwork/pluck.git
 cd pluck
-git checkout 2020-04-04
+git checkout 2020-04-07
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
