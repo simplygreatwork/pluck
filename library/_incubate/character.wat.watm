@@ -1,43 +1,35 @@
 (module
-	(import "utility" "print_string" (func $print_string (param i32)))
-	(import "utility" "print_integer" (func $print_integer (param i32)))
-	(import "memory" "memory_allocate" (func $memory_allocate (param i32) (result i32)))
-	(import "memory" "memory_copy" (func $memory_copy (param i32) (param i32) (param i32)))
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
 	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
 	
-	(func char_is_digit (param $value i32) (result i32)
-		(i32.const 0)
-	)
-	
-	(func char_is_letter (param $value i32) (result i32)
+	(func character_is_digit (param $value i32) (result i32)
 		(i32.const 0)
 	)
 	
-	(func char_is_alphanumeric (param $value i32) (result i32)
+	(func character_is_letter (param $value i32) (result i32)
 		(i32.const 0)
 	)
 	
-	(func char_is_lowercase (param $value i32) (result i32)
+	(func character_is_alphanumeric (param $value i32) (result i32)
 		(i32.const 0)
 	)
 	
-	(func char_is_uppercase (param $value i32) (result i32)
-		(i32.const 0)
-	)
-
-	(func char_is_whitespace (param $value i32) (result i32)
-		(i32.const 0)
-	)
-
-	(func char_is_newline (param $value i32) (result i32)
+	(func character_is_lowercase (param $value i32) (result i32)
 		(i32.const 0)
 	)
 	
-	(export "char_is_digit" (func $char_is_digit))
-	(export "char_is_letter" (func $char_is_digit))
-	(export "char_is_alphanumeric" (func $char_is_digit))
-	(export "char_is_lowercase" (func $char_is_digit))
-	(export "char_is_uppercase" (func $char_is_digit))
-	(export "char_is_whitespace" (func $char_is_digit))
-	(export "char_is_newline" (func $char_is_digit))
+	(func character_is_uppercase (param $value i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func character_is_whitespace (param $value i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func character_is_newline (param $value i32) (result i32)
+		(i32.const 0)
+	)
 )

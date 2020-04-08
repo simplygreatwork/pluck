@@ -20,7 +20,7 @@ module.exports = function(system, document) {
 			let config = get_config(parent)
 			query.climb(parents, function(node, index, parents) {
 				let parent = query.last(parents)
-				let counter = parse (`		(set_local ${config.with} (call $number_new (i32.const ${config.from})))`)[0]
+				let counter = parse (` (set_local ${config.with} (call $number_new (i32.const ${config.from})))`)[0]
 				query.insert(parent, counter, index)
 				parent.emit('inserted', index)
 				shared.declare(shared.dollarize(config.with), state)
@@ -42,13 +42,7 @@ function create_block(repeat, state, config, system, document) {
 	let block = parse (`
 	(block (loop
 		(if (i32.gt_u (call $number_value (get_local ${config.with})) (i32.const ${config.to})) (then (br 2)))
-		(call $number_value_set
-			(get_local ${config.with})
-			(i32.add 
-				(call $number_value (get_local ${config.with}))
-				(i32.const ${config.every})
-			)
-		)
+		(call $number_value_set (get_local ${config.with}) (i32.add (call $number_value (get_local ${config.with})) (i32.const ${config.every})))
 		(br 0)
 	))
 	`)[0]

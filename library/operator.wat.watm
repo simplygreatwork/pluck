@@ -4,44 +4,11 @@
 	(import "./memory.watm")
 	(import "./number.watm")
 	(import "./boolean.watm")
+	(import "./object.watm")
+	(import "./objects/number.watm")
+	(import "./objects/boolean.watm")
 	
 	(memory (import "host" "memory") 1)
-	
-	(func $operator_add_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.add (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_sub_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.sub (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_equals_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.eq (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_greater_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.gt_u (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_less_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.lt_u (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_and_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.and (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_or_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.or (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_xor_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.xor (get_local $a) (get_local $b))
-	)
-	
-	(func $operator_not_primitive (param $a i32) (param $b i32) (result i32)
-		(i32.ne (get_local $a) (get_local $b))
-	)
 	
 	(func $operator_add (param $a i32) (param $b i32) (result i32)
 		
@@ -108,6 +75,94 @@
 	)
 	
 	(func $operator_not (param $a i32) (param $b i32) (result i32)
+		
+		($boolean_new (i32.ne 
+			($boolean_value (get_local $a))
+			($boolean_value (get_local $b))
+		))
+	)
+	
+	(func $operator_add_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_number_from_primitive
+			(i32.add
+				(object_subject ($number_value (get_local $a)))
+				(object_subject ($number_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_sub_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_number_from_primitive
+			(i32.sub
+				(object_subject ($number_value (get_local $a)))
+				(object_subject ($number_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_equals_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_boolean_from_primitive
+			(i32.eq
+				(object_subject ($number_value (get_local $a)))
+				(object_subject ($number_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_greater_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_boolean_from_primitive
+			(i32.gt_u
+				(object_subject ($number_value (get_local $a)))
+				(object_subject ($number_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_less_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_boolean_from_primitive
+			(i32.lt_u
+				(object_subject ($number_value (get_local $a)))
+				(object_subject ($number_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_and_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_boolean_from_primitive
+			(i32.and
+				(object_subject ($boolean_value (get_local $a)))
+				(object_subject ($boolean_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_or_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_boolean_from_primitive
+			(i32.or
+				(object_subject ($boolean_value (get_local $a)))
+				(object_subject ($boolean_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_xor_object (param $a i32) (param $b i32) (result i32)
+		
+		(call $object_boolean_from_primitive
+			(i32.xor
+				(object_subject ($boolean_value (get_local $a)))
+				(object_subject ($boolean_value (get_local $b)))
+			)
+		)
+	)
+	
+	(func $operator_not_object (param $a i32) (param $b i32) (result i32)
 		
 		($boolean_new (i32.ne 
 			($boolean_value (get_local $a))

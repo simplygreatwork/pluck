@@ -1,0 +1,42 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $list_first (param $list i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $list_last (param $list i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $list_push (param $list i32)
+		(i32.const 0)
+	)
+	
+	(func $list_pop (param $list i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $list_loop (param $list i32)
+		(i32.const 0)
+	)
+	
+	(func $list_join (param $list i32) (param $string i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $list_concat (param $list i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $list_reverse (param $list i32) (result i32)
+		(i32.const 0)
+	)
+	
+	(func $list_sort (param $list i32)
+		(i32.const 0)
+	)
+)

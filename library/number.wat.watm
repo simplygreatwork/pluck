@@ -29,36 +29,29 @@
 	
 	(func $number_add (param $a i32) (param $b i32) (result i32)
 		
-		(call $number_new
-			(i32.add
-				(call $number_value (get_local $a))
-				(call $number_value (get_local $b))
-			)
-		)
+		(call $number_new (i32.add
+			(call $number_value (get_local $a))
+			(call $number_value (get_local $b))
+		))
 	)
 	
 	(func $number_subtract (param $a i32) (param $b i32) (result i32)
 		
-		(call $number_new
-			(i32.sub
-				(call $number_value (get_local $a))
-				(call $number_value (get_local $b))
-			)
-		)
+		(call $number_new (i32.sub
+			(call $number_value (get_local $a))
+			(call $number_value (get_local $b))
+		))
 	)
-
+	
 	(func $number_equals (param $a i32) (param $b i32) (result i32)
 		
 		(local $result i32)
 		(set_local $result (i32.const 0))
-		(if
-			(i32.eq
-				(call $number_value (get_local $a))
-				(call $number_value (get_local $b))
-			)
-			(then (set_local $result (i32.const 1)))
-			(else (set_local $result (i32.const 0)))
-		)
+		(if (i32.eq (call $number_value (get_local $a)) (call $number_value (get_local $b))) (then
+			(set_local $result (i32.const 1))
+		) (else
+			(set_local $result (i32.const 0))
+		))
 		(get_local $result)
 	)
 	
@@ -66,14 +59,13 @@
 		
 		(local $result i32)
 		(set_local $result (i32.const 0))
-		(if
-			(i32.lt_s (call $number_value (get_local $a)) (call $number_value (get_local $b)))
-			(then (set_local $result (i32.const -1)))
-			(else (if
-				(i32.gt_s (call $number_value (get_local $a)) (call $number_value (get_local $b)))
-				(then (set_local $result (i32.const 1)))
+		(if (i32.lt_s (call $number_value (get_local $a)) (call $number_value (get_local $b))) (then
+			(set_local $result (i32.const -1))
+		) (else
+			(if (i32.gt_s (call $number_value (get_local $a)) (call $number_value (get_local $b))) (then
+				(set_local $result (i32.const 1))
 			))
-		)
+		))
 		(get_local $result)
 	)
 	

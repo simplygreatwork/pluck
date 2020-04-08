@@ -8,7 +8,7 @@
 	(import "../object.watm")
 	(import "../map.watm")
 	(import "../number.watm")
-	(import "../prototype.watm")
+	(import "../system.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -16,7 +16,7 @@
 	(func $object_map_prototype (result i32)
 		
 		(local $map i32)
-		(set_local $map (call $prototype_get (string "map")))
+		(set_local $map (call $system_prototype (string "map")))
 		(call $map_set $map (string "put") (function "$object_map_set_"))
 		(call $map_set $map (string "get") (function "object_map_get"))
 		(call $map_set $map (string "iterate") (function "object_map_iterate"))

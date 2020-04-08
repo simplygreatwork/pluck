@@ -11,7 +11,7 @@
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
 	
-	(func $prototype_get (param $key i32) (result i32)
+	(func $system_prototype (param $key i32) (result i32)
 		
 		(local $global i32)
 		(local $map i32)
@@ -26,5 +26,13 @@
 		))
 		(call $map_set $global (get_local $key) (get_local $map))
 		(get_local $map)
+	)
+	
+	(func system_string (result i32)
+		(i32.const 0)
+	)
+	
+	(func system_string_set (result i32)
+		(i32.const 0)
 	)
 )

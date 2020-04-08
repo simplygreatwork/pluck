@@ -15,10 +15,10 @@ module
 		
 		memory_bootstrap
 		
-		repeat with i from 100 to 300 every 100
+		repeat with i from 1 to 2 every 1
 			print i
-			repeat with j from 10 to 30 every 10
-				print j
-				repeat with k from 1 to 3 every 1
-					print k
+			repeat with j from 10 to 20 every 10
+				print (string_append " " (number_to_string j))
+				repeat with k from 100 to 200 every 100
+					print (string_append "  " (number_to_string k))
 					
