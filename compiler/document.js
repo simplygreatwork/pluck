@@ -33,7 +33,7 @@ class Document {
 			process: process_.process_watm
 		}, {
 			extension: '.wat',
-			process: process_.process_wat
+			process: function noop() {}
 		}]
 	}
 	

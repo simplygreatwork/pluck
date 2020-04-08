@@ -34,7 +34,7 @@ module
 		create_function
 		create_object
 		
-	func create_list
+	function create_list
 		
 		heading "create_list"
 		set list to (object_list_new)

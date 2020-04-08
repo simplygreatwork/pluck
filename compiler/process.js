@@ -8,6 +8,7 @@ const walk = require('./walk')
 const query = require('./query')
 const logger = require('./logger')()
 const broadcast = require('./broadcast')
+const Transform = require('./transform')
 
 function process_md(document) {
 	
@@ -33,14 +34,8 @@ function process_watm(document) {
 		process.exit(1)
 		return false
 	} else {
-		broadcast.emit('parsed', document.id)
 		document.tree = result
-		document.functions = find_functions(document)
-		document.function_exports = find_function_exports(document)
-		render_function_exports(document)
-		document.function_imports = find_function_imports(document)
-		document.module_imports = find_module_imports(document)
-		return true
+		broadcast.emit('parsed', document.id)
 	}
 }
 
@@ -55,14 +50,13 @@ function find_line(document, position) {
 	return result
 }
 
-function process_wat(document, imports) {
+function link(document) {
 	
-	return noop()
-}
-
-function noop() {
-	
-	return
+	document.functions = find_functions(document)
+	document.function_exports = find_function_exports(document)
+	render_function_exports(document)
+	document.function_imports = find_function_imports(document)
+	document.module_imports = find_module_imports(document)
 }
 
 function compile(document) {
@@ -252,7 +246,6 @@ module.exports = {
 	
 	process_md,
 	process_watm,
-	process_wat,
 	find_module_imports,
 	find_function_imports,
 	find_functions,
@@ -263,6 +256,7 @@ module.exports = {
 	find_function_signature,
 	find_document,
 	find_function,
+	link,
 	compile,
 	instantiate
 }

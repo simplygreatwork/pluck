@@ -12,12 +12,10 @@ module.exports = function(system, document) {
 		
 		enter : function(node, index, parents, state) {		
 			
-			if (false) {
-				let parent = query.last(parents)
-				if (! query.is_type_value(parent.value[0], 'symbol', 'function')) return
-				if (! query.is_type(parent.value[1], 'symbol')) return
-				parent.value[0].value = 'func'
-			}
+			let parent = query.last(parents)
+			if (! query.is_type_value(parent.value[0], 'symbol', 'function')) return
+			if (! query.is_type(parent.value[1], 'symbol')) return
+			parent.value[0].value = 'func'
 		}
 	}
 }

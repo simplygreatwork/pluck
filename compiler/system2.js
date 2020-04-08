@@ -30,16 +30,16 @@ class System {
 		this.load(root)
 		this.resolve()
 		this.sort()
-		this.postprocess()
-		this.compile_()
-		this.package_()
+		this.postprocess_documents()
+		this.compile_documents()
+		this.package_documents()
 	}
 	
 	run(root) {
 		
 		this.project = this.project_name(root)
-		this.unpackage()
-		this.instantiate()
+		this.unpackage_documents()
+		this.instantiate_documents()
 		this.imports.host.imports = this.imports
 		this.start()
 	}
@@ -60,7 +60,7 @@ class System {
 			transform.transform(this.macros.prelink)
 			process_.link(document)
 			document.module_imports.forEach(function(each) {
-				this.load(each)
+				this.load_document(each)
 			}.bind(this))
 			this.documents[path_] = document
 		}
@@ -96,7 +96,7 @@ class System {
 		}
 	}
 	
-	postprocess() {
+	postprocess_documents() {
 		
 		for (let document of this.set.values()) {
 			broadcast.emit('document.transforming', document)
@@ -110,7 +110,7 @@ class System {
 		broadcast.emit('documents.transformed')
 	}
 	
-	compile_() {
+	compile_documents() {
 		
 		for (let document of this.set.values()) {
 			document.wasm = process_.compile(document).buffer
@@ -122,7 +122,7 @@ class System {
 		broadcast.emit('documents.compiled')
 	}
 	
-	package_() {
+	package_documents() {
 		
 		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
 		jetpack.write(path_, {
@@ -133,7 +133,7 @@ class System {
 		})
 	}
 	
-	unpackage() {
+	unpackage_documents() {
 		
 		this.set = new Set()
 		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
@@ -146,7 +146,7 @@ class System {
 		}.bind(this))
 	}
 	
-	instantiate() {
+	instantiate_documents() {
 		
 		for (let document of this.set.values()) {
 			let path_ = path.join(process.cwd(), 'build', this.project, document.path)
