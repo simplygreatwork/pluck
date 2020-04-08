@@ -9,17 +9,18 @@ module.exports = function(system, document) {
 	return {
 		
 		type: 'symbol',
-		value: 'string',
+		value: 'list',
 		
 		enter: function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
+			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_type_value(parent.value[0], 'symbol', 'string')) return
+			if (! query.is_type_value(parent.value[0], 'symbol', 'list')) return
 			parent.once('exit', function() {
-				let string = parent.value[1].value
-				let func_name = shared_string.function_new(parents[0], string, system)
-				shared_string.string_call(parents[parents.length - 2], parent, func_name)
+				query.climb(parents, function(node, index, parents) {
+					let parent = query.last(parents)
+				})
 			})
 		}
 	}

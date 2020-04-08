@@ -20,7 +20,7 @@ class System {
 		this.documents = {}
 		this.table = new Table(this)
 		this.bus = new Bus()
-		this.string_counter = 0
+		this.static_id = 0
 	}
 	
 	compile(root) {

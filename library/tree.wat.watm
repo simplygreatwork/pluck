@@ -122,15 +122,15 @@
 		
 		(local $context i32)
 		(set_local $context (call $tree_new))
-		(call tree_set (get_local $context) "length" (call $number_new (i32.const 0)))
+		(call tree_set (get_local $context) (string "length") (call $number_new (i32.const 0)))
 		(call $tree_iterate_local (get_local $tree) (ref "tree_length_iterate_each") (get_local $context))
-		(call $tree_get (get_local $context) "length")
+		(call $tree_get (get_local $context) (string "length"))
 	)
 	
 	(func $tree_length_iterate_each (param $tree i32) (param $key i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $length i32)
-		(set_local $length (call $tree_get (get_local $context) "length"))
+		(set_local $length (call $tree_get (get_local $context) (string "length")))
 		(call $number_value_set
 			(get_local $length)
 			(i32.add (call $number_value (get_local $length)) (i32.const 1))

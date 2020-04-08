@@ -3,13 +3,18 @@ module.exports = {
 	
 	prelink: [
 		require('../macros/func-prelink'),
-		require('../macros/function-prelink'),
+		require('../macros/function-prelink')
 	],
 	postlink: [
 		require('../macros/expression'),
 		require('../macros/object'),
-		require('../macros/number'),
 		require('../macros/string'),
+		require('../macros/string-literal'),
+		require('../macros/number'),
+		require('../macros/number-literal'),
+		require('../macros/true'),
+		require('../macros/false'),
+		require('../macros/boolean'),
 		require('../macros/name'),
 		require('../macros/symbol'),
 		require('../macros/set'),
@@ -17,7 +22,6 @@ module.exports = {
 		require('../macros/get'),
 		require('../macros/dollarize'),
 		require('../macros/callable'),
-		require('../macros/string-symbol'),
 		require('../macros/import'),
 		require('../macros/export'),
 		require('../macros/typeof'),
@@ -30,8 +34,6 @@ module.exports = {
 		require('../macros/return'),
 		require('../macros/if'),
 		require('../macros/else'),
-		require('../macros/true'),
-		require('../macros/false'),
 		require('../macros/plus'),
 		require('../macros/minus'),
 		require('../macros/equals'),

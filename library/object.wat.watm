@@ -115,7 +115,7 @@
 		(set_local $map (call $object_map (get_local $object)))
 		(set_local $value (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $value)) (string "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_to_void)
 					(get_local $object)
@@ -140,7 +140,7 @@
 		(set_local $result (i32.const 0))
 		(set_local $value (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $value)) (string "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_i32_to_void)
 					(get_local $object) (get_local $a)
@@ -164,7 +164,7 @@
 		(set_local $result (i32.const 0))
 		(set_local $value (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $value)) (string "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_i32_i32_to_void)
 					(get_local $object) (get_local $a) (get_local $b)
@@ -188,7 +188,7 @@
 		(set_local $result (i32.const 0))
 		(set_local $value (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $value)) "void") (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $value)) (string "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_i32_i32_i32_to_void)
 					(get_local $object) (get_local $a) (get_local $b) (get_local $c)
@@ -211,15 +211,15 @@
 		(local $map i32)
 		(local $length i32)
 		(local $context i32)
-		(set_local $result "object (")
+		(set_local $result (string "object ("))
 		(set_local $map (call $object_map (get_local $object)))
 		(set_local length (call $map_length (get_local $map)))
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) "string" (get_local $result))
-		(call $map_set (get_local $context) "length" (get_local $length))
+		(call $map_set (get_local $context) (string "string") (get_local $result))
+		(call $map_set (get_local $context) (string "length") (get_local $length))
 		(call $map_iterate (get_local $map) (function "object_to_string_iterate_each") (get_local $context))
-		(set_local $result (call $map_get (get_local $context) "string"))
-		(set_local $result (call $string_append (get_local $result) ")"))
+		(set_local $result (call $map_get (get_local $context) (string "string")))
+		(set_local $result (call $string_append (get_local $result) (string ")")))
 		(get_local $result)
 	)
 	
@@ -227,22 +227,22 @@
 		
 		(local $length i32)
 		(local $string i32)
-		(set_local $length (call $map_get (get_local $context) "length"))
-		(set_local $string (call $map_get (get_local $context) "string"))
+		(set_local $length (call $map_get (get_local $context) (string "length")))
+		(set_local $string (call $map_get (get_local $context) (string "string")))
 		(set_local $string (call $string_append (get_local $string) (get_local $key)))
-		(set_local $string (call $string_append (get_local $string) ": "))
+		(set_local $string (call $string_append (get_local $string) (string ": ")))
 		(set_local $string (call $string_append (get_local $string) (call $object_property_value_to_string (get_local $value))))
 		(if (i32.lt_u (call $number_value (get_local $index)) (i32.sub (call $number_value (get_local $length)) (i32.const 1))) (then
-			(set_local $string (call $string_append (get_local $string) ", "))
+			(set_local $string (call $string_append (get_local $string) (string ", ")))
 		))
-		(call $map_set (get_local $context) "string" (get_local $string))
+		(call $map_set (get_local $context) (string "string") (get_local $string))
 	)
 	
 	(func $object_property_value_to_string (param $value i32) (result i32)
 		
 		(local $result i32)
 		(local $type i32)
-		(set_local $result "unknown")
+		(set_local $result (string "unknown"))
 		(set_local $type (call $memory_type (get_local $value)))
 		(if (i32.eq (get_local $type) (typeof "string")) (then
 			(set_local $result (get_local $value))

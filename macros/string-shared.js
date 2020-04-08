@@ -10,7 +10,7 @@ function string_call(parent, node, func_name) {
 
 function function_new(node, string, system) {
 	
-	let func_name = '$string_static_' + (++system.string_counter)
+	let func_name = '$string_static_' + (++system.static_id)
 	let ast = parse(
 		`\n\n\t(func ${func_name} (result i32)
 		\n\t\t(local $string i32)
