@@ -1,5 +1,4 @@
 
-const print = require('./print')
 const logger = require('./logger')()
 const emitter = require('./emitter')
 const query = require('./query')
@@ -12,10 +11,10 @@ class Transform {
 		this.document = document
 	}
 	
-	transform() {
+	transform(macros_) {
 		
 		this.macros = {}
-		this.system.macros.forEach(function(macro, precedence) {
+		macros_.forEach(function(macro, precedence) {
 			macro = macro(this.system, this.document, precedence)
 			let key = macro.type + ':' + (macro.value ? macro.value : '')
 			this.macros[key] = this.macros[key] || []
@@ -23,10 +22,6 @@ class Transform {
 		}.bind(this))
 		let tree = this.document.tree
 		this.walk(tree[0], 0, [], {})
-		let code = print(tree)
-		logger('transform').log('tree: ' + JSON.stringify(tree, null, 2))
-		logger('transform').log('tree transformed: ' + code)
-		return code
 	}
 	
 	walk(node, index, parents, state) {
@@ -49,11 +44,7 @@ class Transform {
 		}.bind(this))
 		node.emit('exit')
 		let parent = query.last(parents, 1)
-		node.on('exit', function() {
-			parent.once('exit', function() {
-				this.uninstall(node)													// revisit the reasoning for this nested logic
-			}.bind(this))
-		}.bind(this))
+		if (false) cleanup(node, parent)										// issue: failing now that using pre and post macros
 		parents.pop(node)
 	}
 	
@@ -119,6 +110,15 @@ class Transform {
 		delete node.on
 		delete node.once
 		delete node.emit
+	}
+	
+	cleanup(node, parent) {
+		
+		if (node.on) node.on('exit', function() {
+			if (parent && parent.once) parent.once('exit', function() {
+				this.uninstall(node)													// revisit the reasoning for this nested logic
+			}.bind(this))
+		}.bind(this))
 	}
 }
 

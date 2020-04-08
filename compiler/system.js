@@ -7,6 +7,7 @@ const Table = require('./table')
 const Transform = require('./transform')
 const Bus = require('./bus')
 const process_ = require('./process')
+const print = require('./print')
 const logger = require('./logger')()
 const broadcast = require('./broadcast')
 const utility = require('./utility')
@@ -29,8 +30,9 @@ class System {
 		this.load_document(root)
 		this.resolve_documents()
 		this.sort_documents()
-		this.render_function_imports()
-		this.transform_documents()
+		this.pre_process_documents()
+		this.process_documents()
+		this.post_process_documents()
 		this.compile_documents()
 		this.package_documents()
 	}
@@ -92,20 +94,30 @@ class System {
 		}
 	}
 	
-	render_function_imports() {
+	pre_process_documents() {
+		
+		for (let document of this.set.values()) {
+			let transform = new Transform(this, document)
+			document.walk = transform.walk.bind(transform)
+			document.source = transform.transform(this.macros.prelink)
+		}
+	}
+	
+	process_documents() {
 		
 		for (let document of this.set.values()) {
 			process_.render_function_imports(document)
 		}
 	}
 	
-	transform_documents() {
+	post_process_documents() {
 		
 		for (let document of this.set.values()) {
 			broadcast.emit('document.transforming', document)
 			let transform = new Transform(this, document)
 			document.walk = transform.walk.bind(transform)
-			document.source = transform.transform()
+			transform.transform(this.macros.postlink)
+			document.source = print(document.tree)
 			broadcast.emit('document.transformed', document)
 		}
 		broadcast.emit('documents.transformed')

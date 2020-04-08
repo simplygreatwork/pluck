@@ -23,7 +23,7 @@ module
 	
 	;; object-orientation work in progress
 	
-	func main
+	function main
 		
 		memory_bootstrap
 		create_list
@@ -34,7 +34,7 @@ module
 		create_function
 		create_object
 		
-	func create_list
+	function create_list
 		
 		heading "create_list"
 		set list to (object_list_new)
@@ -43,11 +43,11 @@ module
 		list append "3"
 		list iterate (function "create_list_iterate_each") 0
 		
-	func create_list_iterate_each accepts list item value index context
+	function create_list_iterate_each accepts list item value index context
 		
 		print value
 		
-	func create_map
+	function create_map
 		
 		heading "create_map"
 		set map to (object_map_new)
@@ -56,19 +56,19 @@ module
 		map put "three" "3"
 		map iterate (function "create_map_iterate_each") 0
 		
-	func create_map_iterate_each accepts map key value index context
+	function create_map_iterate_each accepts map key value index context
 		
 		print key
 		print value
 		
-	func create_string
+	function create_string
 		
 		heading "create_string"
 		set string to (object_string_from_string "abc")
 		set string to (string append "123")
 		print string
 		
-	func create_number
+	function create_number
 		
 		heading "create_number"
 		set a to (object_number_from_number 1)
@@ -78,7 +78,7 @@ module
 		set number to (number add c)
 		print number
 		
-	func create_boolean
+	function create_boolean
 		
 		heading "create_boolean"
 		set boolean to (object_boolean_from_string "true")
@@ -86,14 +86,14 @@ module
 		set boolean to (object_boolean_from_string "false")
 		print boolean
 	
-	func create_function
+	function create_function
 		
 		heading "create_function"
 		set function_ to (object_function_from_function (function "create_list_iterate_each"))
 		print (object_number_from_primitive (function_ id))
 		print (function_ result)
 		
-	func create_object
+	function create_object
 		
 		heading "create_object"
 		set object to (object_new)
@@ -111,24 +111,24 @@ module
 		print (object add_one 41)
 		print object
 		
-	func function_with_zero_arguments accepts object
+	function function_with_zero_arguments accepts object
 		
 		print "function_with_zero_arguments called"
 		
-	func function_with_one_argument accepts object one
+	function function_with_one_argument accepts object one
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one " "))
 		print string
 		
-	func function_with_two_arguments accepts object one two
+	function function_with_two_arguments accepts object one two
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
 		set string to (string_append string (string_append two " "))
 		print string
 		
-	func function_with_three_arguments accepts object one two three
+	function function_with_three_arguments accepts object one two three
 		
 		set string to "callable_with_arguments called with value: "
 		set string to (string_append string (string_append one ", "))
@@ -136,11 +136,11 @@ module
 		set string to (string_append string (string_append three " "))
 		print string
 		
-	func add_one accepts object value (result i32)
+	function add_one accepts object value (result i32)
 		
 		return (number_add value 1)
 		
-	func heading accepts value
+	function heading accepts value
 		
 		print " "
 		print "--------------------"
