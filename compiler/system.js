@@ -163,10 +163,6 @@ class System {
 		let document = array[array.length - 1]
 		document.instance.exports.main()
 	}
-	
-	fire(message, data) {
-		this.bus.emit(message, data)
-	}
 }
 
 module.exports = System
