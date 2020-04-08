@@ -112,12 +112,4 @@
 	(func $number_clone (param $number i32) (result i32)
 		(call $number_new (call $number_value (get_local $number)))
 	)
-	
-	(func $Number_random (result i32)
-		(i32.const 0)		
-	)
-	
-	(func $Number_max (param $number_a i32) (param $number_b i32) (result i32)
-		(i32.const 0)
-	)
 )

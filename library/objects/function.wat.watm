@@ -7,6 +7,7 @@
 	(import "../function.watm")
 	(import "../object.watm")
 	(import "../map.watm")
+	(import "../console.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -59,5 +60,9 @@
 	
 	(func $object_function_result (param $object i32) (result i32)
 		(call $function_result (call $object_subject (get_local $object)))
+	)
+	
+	(func $object_function_test (param $object i32) (result i32)
+		(string "test")
 	)
 )

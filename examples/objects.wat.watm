@@ -36,6 +36,7 @@ module
 		
 	func create_list
 		
+		heading "create_list"
 		set list to (object_list_new)
 		list append "1"
 		list append "2"
@@ -48,6 +49,7 @@ module
 		
 	func create_map
 		
+		heading "create_map"
 		set map to (object_map_new)
 		map put "one" "1"
 		map put "two" "2"
@@ -61,12 +63,14 @@ module
 		
 	func create_string
 		
+		heading "create_string"
 		set string to (object_string_from_string "abc")
 		set string to (string append "123")
 		print string
 		
 	func create_number
 		
+		heading "create_number"
 		set a to (object_number_from_number 1)
 		set b to (object_number_from_number 2)
 		set c to (object_number_from_number 3)
@@ -76,19 +80,22 @@ module
 		
 	func create_boolean
 		
+		heading "create_boolean"
 		set boolean to (object_boolean_from_string "true")
 		print boolean
 		set boolean to (object_boolean_from_string "false")
 		print boolean
-		
+	
 	func create_function
 		
+		heading "create_function"
 		set function_ to (object_function_from_function (function "create_list_iterate_each"))
-		print_integer (function_ id)
+		print (object_number_from_primitive (function_ id))
 		print (function_ result)
 		
 	func create_object
 		
+		heading "create_object"
 		set object to (object_new)
 		object value = 42
 		print (string_append "object value: " (number_to_string (object "value")))
@@ -132,4 +139,11 @@ module
 	func add_one accepts object value (result i32)
 		
 		return (number_add value 1)
+		
+	func heading accepts value
+		
+		print " "
+		print "--------------------"
+		print value
+		print "--------------------"
 		

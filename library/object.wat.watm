@@ -100,17 +100,18 @@
 		(local $value i32)
 		(set_local $result (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $result)) (typeof "function")) (then
-			(call $object_call_void (get_local $object) (get_local $key))
-			(set_local $result (i32.const 0))
+			(set_local $result (call $object_call_void (get_local $object) (get_local $key)))
 		))
 		(get_local $result)
 	)
 	
-	(func $object_call_void (param $object i32) (param $key i32)
+	(func $object_call_void (param $object i32) (param $key i32) (result i32)
 		
+		(local $result i32)
 		(local $map i32)
 		(local $function i32)
 		(local $function_id i32)
+		(set_local $result (i32.const 0))
 		(set_local $map (call $object_map (get_local $object)))
 		(set_local $value (call $object_load (get_local $object) (get_local $key)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "function")) (then
@@ -128,6 +129,7 @@
 				))
 			))
 		))
+		(get_local $result)
 	)
 	
 	(func $object_call_i32 (param $object i32) (param $key i32) (param $a i32) (result i32)

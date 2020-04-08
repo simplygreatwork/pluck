@@ -1,0 +1,15 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./string.watm")
+	(memory (import "host" "memory") 1)
+	
+	(func $math_random (result i32)
+		(i32.const 0)		
+	)
+	
+	(func $math_max (param $number_a i32) (param $number_b i32) (result i32)
+		(i32.const 0)
+	)
+)
