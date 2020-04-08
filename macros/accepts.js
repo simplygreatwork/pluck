@@ -27,7 +27,7 @@ module.exports = function(system, document) {
 				return true
 			})
 			parent.value.splice(2, 1)
-			parent.emit('node.removed', 2)
+			parent.emit('removed', 2)
 			state.locals = shared.find_locals(state)
 		}
 	}

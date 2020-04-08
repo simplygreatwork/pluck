@@ -99,7 +99,7 @@ class System {
 		for (let document of this.set.values()) {
 			let transform = new Transform(this, document)
 			document.walk = transform.walk.bind(transform)
-			document.source = transform.transform(this.macros.prelink)
+			transform.transform(this.macros.prelink)
 		}
 	}
 	

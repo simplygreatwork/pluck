@@ -24,7 +24,7 @@ module.exports = function(system, document) {
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
 					parent.value.splice(index, 1)
-					parent.emit('node.removed', index)
+					parent.emit('removed', index)
 					console.log('omit removed')
 				})
 			})

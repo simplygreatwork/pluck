@@ -22,7 +22,7 @@ module.exports = function(system, document) {
 				let parent = query.last(parents)
 				let counter = parse (`		(set_local ${config.with} (call $number_new (i32.const ${config.from})))`)[0]
 				query.insert(parent, counter, index)
-				parent.emit('node.inserted', index)
+				parent.emit('inserted', index)
 				shared.declare(shared.dollarize(config.with), state)
 			})
 			parent.once('exit', function() {
@@ -82,8 +82,8 @@ function symbol_(each, index, parent, config, symbol) {
 	if (each.value == symbol) {
 		config[symbol] = parent.value[index + 1].value
 		parent.value.splice(index, 2)
-		parent.emit('node.removed', index)
-		parent.emit('node.removed', index)
+		parent.emit('removed', index)
+		parent.emit('removed', index)
 	}
 }
 

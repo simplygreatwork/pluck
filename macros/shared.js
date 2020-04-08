@@ -78,7 +78,7 @@ function declare(value, state) {
 	(local ${value} i32)
 	`)[0]
 	query.insert(state.func, tree, state.locals.offset)
-	state.func.emit('node.inserted', state.locals.offset)
+	state.func.emit('inserted', state.locals.offset)
 	state.locals = find_locals(state)
 }
 

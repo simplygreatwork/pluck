@@ -23,7 +23,7 @@ module.exports = function(system, document) {
 					let previous = parent.value[index - 1]
 					if (previous.value[0].value == 'if') {
 						index = query.remove(parent, node)
-						parent.emit('node.removed', index)
+						parent.emit('removed', index)
 						previous.value.push(node)
 					}
 				})

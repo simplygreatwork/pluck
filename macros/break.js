@@ -22,7 +22,7 @@ module.exports = function(system, document) {
 				value: '2',
 				whitespace: ' '
 			})
-			parent.emit('node.inserted', 1)
+			parent.emit('inserted', 1)
 		}
 	}
 }

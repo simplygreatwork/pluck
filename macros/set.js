@@ -19,11 +19,11 @@ module.exports = function(system, document) {
 			if (query.is_length_exceeding(parent, 2)) {
 				if (query.is_type_value(parent.value[2], 'symbol', 'to')) {
 					let index_ = query.remove(parent, parent.value[2])
-					parent.emit('node.removed', index_)
+					parent.emit('removed', index_)
 				}
 			}
 			parent.value[0].value = 'set_local'
-			parent.emit('node.rewind')
+			parent.emit('rewind')
 		}
 	}
 }

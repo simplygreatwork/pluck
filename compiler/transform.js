@@ -52,19 +52,19 @@ class Transform {
 		
 		node.index = 0
 		node.length = node.value.length
-		let inserted = node.on('node.inserted', function(index) {
+		let inserted = node.on('inserted', function(index) {
 			node.length = node.value.length
 			if (index <= node.index) {
 				node.index++
 			}
 		})
-		let removed = node.on('node.removed', function(index) {
+		let removed = node.on('removed', function(index) {
 			node.length = node.value.length
 			if (index <= node.index) {
 				node.index--
 			}
 		})
-		let rewind = node.on('node.rewind', function() {
+		let rewind = node.on('rewind', function() {
 			node.index = -1
 		})
 		for (node.index = 0; node.index < node.length; node.index++) {

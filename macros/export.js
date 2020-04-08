@@ -19,7 +19,7 @@ module.exports = function(system, document) {
 				query.climb(parents, function(node, index, parents) {
 					parent = query.last(parents)
 					index = query.remove(parent, node)
-					parent.emit('node.removed', index)
+					parent.emit('removed', index)
 				})
 			})
 		}
