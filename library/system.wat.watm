@@ -17,10 +17,6 @@
 		(local $magic i32)
 		(call $memory_bootstrap)
 		(set_local $list (call $system_strings))
-		;;(call $list_append_ (get_local $list) (call $number_new_ (i32.const 55555)))
-		;;(set_local $result (call $list_get_ (get_local $list) (i32.const 0)))
-		;;(set_local $result (call $system_string_static (get_local $list) (i32.const 0)))
-		;;(call $system_string_static_set (call $system_strings) (i32.const 1) (call $number_new_ (i32.const 668)))
 	)
 	
 	(func $system_strings (result i32)
