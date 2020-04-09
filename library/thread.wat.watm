@@ -2,6 +2,8 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./number.watm")
+	(import "./vector.watm")
 	(import "host" "thread_create" (func $host_thread_create (param i32) (param i32)))
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
