@@ -1,0 +1,34 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
+	import "../library/types.watm"
+	import "../library/console.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	func main
+		
+		system_bootstrap
+		set method to (func one accepts value
+			print value
+		)
+		set method to (func accepts value
+			print value
+		)
+		invoke method()
+		
+		parent on "exit" (function accepts node index
+			
+		)
+
+	func callable accepts one two three
+		
+		print one
+		print two
+		print three
+		

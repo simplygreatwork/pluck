@@ -3,6 +3,7 @@ module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
+	import "../library/system.watm"
 	import "../library/string.watm"
 	import "../library/number.watm"
 	import "../library/boolean.watm"
@@ -14,6 +15,8 @@ module
 	func main
 
 		memory_bootstrap
+		system_bootstrap
+		
 		callable 42
 		
 	func callable accepts value

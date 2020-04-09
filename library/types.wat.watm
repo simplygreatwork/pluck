@@ -3,6 +3,7 @@
 	(import "./core.watm")
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./system.watm")
 	(import "./array.watm")
 	(import "./string.watm")
 	(import "./boolean.watm")

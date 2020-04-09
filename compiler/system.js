@@ -21,6 +21,7 @@ class System {
 		this.table = new Table(this)
 		this.bus = new Bus()
 		this.static_id = 0
+		this.string_id = 0
 	}
 	
 	compile(root) {

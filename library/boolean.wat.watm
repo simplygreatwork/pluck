@@ -2,6 +2,7 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./system.watm")
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	

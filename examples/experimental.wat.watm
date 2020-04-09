@@ -8,6 +8,7 @@ module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
+	import "../library/system.watm"
 	import "../library/string.watm"
 	import "../library/number.watm"
 	import "../library/boolean.watm"
@@ -18,4 +19,5 @@ module
 	
 	func main
 	
+		system_bootstrap
 		

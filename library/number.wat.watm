@@ -2,8 +2,10 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./system.watm")
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
 	
 	;; use f32 float instead
 	

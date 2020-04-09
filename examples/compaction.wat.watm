@@ -5,6 +5,7 @@
 	(import "../library/array.watm")
 	(import "../library/legend.watm")
 	(import "../library/memory.watm")
+	(import "../library/system.watm")
 	(import "../library/string.watm")
 	(import "../library/boolean.watm")
 	(import "../library/number.watm")
@@ -31,7 +32,7 @@
 	
 	(func $setup
 		
-		(call $memory_bootstrap)
+		(call $system_bootstrap)
 		(call $types_strings_init)
 		(set_global $global (i32.const 0))
 	)

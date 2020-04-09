@@ -2,6 +2,7 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "./system.watm")
 	(import "./number.watm")
 	(import "./string.watm")
 	(import "./map.watm")

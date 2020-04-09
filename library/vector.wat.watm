@@ -1,0 +1,100 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./system.watm")
+	(import "./string.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	
+	(func $vector_bytes (result i32)
+		(i32.const 16)
+	)
+	
+	(func $vector_new (result i32)
+		
+		(local $vector i32)
+		(set_local $vector (call $memory_allocate_block (typeof "legend") (call $vector_bytes_)))
+		(call $vector_base_set (get_local $vector) (i32.const 16))
+		(call $vector_exponent_set (get_local $vector) (i32.const 8))
+		(call $vector_counter_set (get_local $vector) (i32.const 0))
+		(call $vector_array_set_ (get_local $vector) (call $array_new (get_local $vector)))
+		(get_local $vector)
+	)
+	
+	(func $vector_base (param $vector i32) (result i32)
+		(i32.load (i32.add (get_local $vector) (i32.const 8)))
+	)
+	
+	(func $vector_base_set (param $vector i32) (param $base i32)
+		(i32.store (i32.add (get_local $vector) (i32.const 8)) (get_local $base))
+	)
+	
+	(func $vector_exponent (param $vector i32) (result i32)
+		(i32.load (i32.add (get_local $vector) (i32.const 12)))
+	)
+	
+	(func $vector_exponent_set (param $vector i32) (param $exponent i32)
+		(i32.store (i32.add (get_local $vector) (i32.const 12)) (get_local $exponent))
+	)
+	
+	(func $vector_counter (param $vector i32) (result i32)
+		(i32.load (i32.add (get_local $vector) (i32.const 16)))
+	)
+	
+	(func $vector_counter_set (param $vector i32) (param $counter i32)
+		(i32.store (i32.add (get_local $vector) (i32.const 16)) (get_local $counter))
+	)
+	
+	(func $vector_array_get (param $vector i32) (result i32)
+		(i32.load (i32.add (get_local $vector) (i32.const 20)))
+	)
+	
+	(func $vector_array_set (param $vector i32) (param $array i32)
+		(i32.store (i32.add (get_local $vector) (i32.const 20)) (get_local $array))
+	)
+	
+	(func $vector_value_set (param $vector i32) (param $key i32) (param $value i32)
+		
+		(local $base i32)
+		(local $exponent i32)
+		(local $power i32)
+		(local $array i32)
+		(local $indice i32)
+		(set_local $base (call $vector_base (get_local $vector)))
+		(set_local $exponent (i32.sub (call $vector_exponent (get_local $vector)) (i32.const 1)))
+		(set_local $array (call $vector_array_get (get_local $vector)))
+		(block (loop
+			(set_local $power (call $math_power (get_local $base) (get_local $exponent)))
+			(set_local $indice (i32.div_u (get_local $key) (get_local $power)))
+			(set_local $array (call $vector_array_load (get_local $vector) (get_local $array) (get_local $indice)))
+			(set_local $key (i32.rem_u (get_local $key) (get_local $power)))
+			(set_local $exponent (i32.sub (get_local $exponent) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $exponent) (i32.const 0)))
+			(br 0)
+		))
+		(call $array_value_set (get_local $array) (get_local $key) (get_local $value))
+	)
+	
+	(func $vector_value_get (param $vector i32) (param $key i32) (result i32)
+		
+		(local $base i32)
+		(local $exponent i32)
+		(local $power i32)
+		(local $array i32)
+		(local $indice i32)
+		(set_local $base (call $vector_base (get_local $vector)))
+		(set_local $exponent (i32.sub (call $vector_exponent (get_local $vector)) (i32.const 1)))
+		(set_local $array (call $vector_array_get (get_local $vector)))
+		(block (loop
+			(set_local $power (call $math_power (get_local $base) (get_local $exponent)))
+			(set_local $indice (i32.div_u (get_local $key) (get_local $power)))
+			(set_local $array (call $vector_array_load (get_local $vector) (get_local $array) (get_local $indice)))
+			(set_local $key (i32.rem_u (get_local $key) (get_local $power)))
+			(set_local $exponent (i32.sub (get_local $exponent) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $exponent) (i32.const 0)))
+			(br 0)
+		))
+		(call $array_value_get (get_local $array) (get_local $key))
+	)
+)
