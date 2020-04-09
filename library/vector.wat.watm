@@ -21,7 +21,7 @@
 		(call $vector_base_set (get_local $vector) (i32.const 16))
 		(call $vector_exponent_set (get_local $vector) (i32.const 8))
 		(call $vector_counter_set (get_local $vector) (i32.const 0))
-		(call $vector_array_set (get_local $vector) (call $array_new (get_local $vector)))
+		(call $vector_array_set (get_local $vector) (call $vector_array_new (get_local $vector)))
 		(get_local $vector)
 	)
 	
