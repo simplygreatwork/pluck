@@ -15,7 +15,7 @@ module
 	memory (import "host" "memory") 1
 	type $void_to_void (func)
 	
-	func main
+	function main
 		
 		setup
 		test_call_macro
@@ -30,11 +30,11 @@ module
 		test_true_false
 		test_parameters "one" "two" "three"
 		
-	func setup
+	function setup
 		
 		system_bootstrap
 		
-	func test_call_macro
+	function test_call_macro
 		
 		print "------------------------------"
 		print "Test call macro!"
@@ -42,20 +42,20 @@ module
 		(call print (string "with call keyword, with string keyword"))
 		print "without call keyword, without string keyword"
 		
-	func test_string_macro_expansion
+	function test_string_macro_expansion
 		
 		print "------------------------------"
 		print "Test string macro"
 		print "------------------------------"
 		
-	func test_integer_macro_expansion
+	function test_integer_macro_expansion
 		
 		print "------------------------------"
 		print "Test integer macro expansion"
 		print "------------------------------"
 		print 100
 		
-	func test_func_ref_macro
+	function test_func_ref_macro
 		
 		print "------------------------------"
 		print "Test function reference macro!"
@@ -63,19 +63,19 @@ module
 		call_indirect (type $void_to_void) (ref "test_function_first_class_a")
 		call_indirect (type $void_to_void) (ref "test_function_first_class_b")
 		
-	func test_function_first_class_a
+	function test_function_first_class_a
 		
 		print "------------------------------"
 		print "First class function A has been called using a ref macro!"
 		print "------------------------------"
 		
-	func test_function_first_class_b
+	function test_function_first_class_b
 		
 		print "------------------------------"
 		print "First class function B has been called using a ref macro!"
 		print "------------------------------"
 		
-	func test_set_get_macros (param $a i32)
+	function test_set_get_macros (param $a i32)
 		
 		local $c i32
 		print "------------------------------"
@@ -87,7 +87,7 @@ module
 		print b
 		set string to "string"
 		
-	func test_flow_macros
+	function test_flow_macros
 		
 		print "------------------------------"
 		print "Test flow macros!"
@@ -105,7 +105,7 @@ module
 			if k greater 15
 				break
 				
-	func test_negation
+	function test_negation
 		
 		print "------------------------------"
 		print "Test negation!"
@@ -119,7 +119,7 @@ module
 		print result
 		print not value equals 3
 		
-	func test_arithmetic
+	function test_arithmetic
 		
 		print "------------------------------"
 		print "Test arithmetic!"
@@ -130,7 +130,7 @@ module
 		set value to value minus 2
 		print value
 		
-	func test_and_or
+	function test_and_or
 		
 		print "------------------------------"
 		print "Test and/or!"
@@ -141,12 +141,12 @@ module
 		set second to 1 equals 2 or 2 equals 2
 		print second
 		
-	func test_true_false
+	function test_true_false
 		
 		print true equals true
 		print true equals false
 		
-	func test_parameters accepts one two three
+	function test_parameters accepts one two three
 		
 		print "------------------------------"
 		print "Test parameters!"

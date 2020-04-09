@@ -16,7 +16,7 @@ module
 	
 	;; This example currently runs in Node.js only and not in the browser
 	
-	func main
+	function main
 		
 		system_bootstrap
 		
@@ -24,7 +24,7 @@ module
 		thread_create "two" (ref "run")
 		thread_create "three" (ref "run")
 		
-	func run (param $name i32)
+	function run (param $name i32)
 		
 		print "inside spawn.run"
 		print name

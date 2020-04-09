@@ -25,20 +25,20 @@
 	(global $global (import "host" "global") (mut i32))
 	(global $legend (import "host" "legend") (mut i32))
 	
-	(func $main
+	(function $main
 		
 		(call $setup)
 		(call $start)
 	)
 	
-	(func $setup
+	(function $setup
 		
 		(call $system_bootstrap)
 		(call $types_strings_init)
 		(set_global $global (i32.const 0))
 	)
 	
-	(func $start
+	(function $start
 		
 		(local $list i32)
 		(local $i i32)
@@ -53,14 +53,14 @@
 		(call $boundary)
 	)
 	
-	(func $exercise (param $list i32)
+	(function $exercise (param $list i32)
 		
 		(call $allocate (get_local $list))
 		(call $deallocate (get_local $list))
 		(call $display (get_local $list))
 	)
 	
-	(func $allocate (param $list i32)
+	(function $allocate (param $list i32)
 		
 		(local $pointer i32)
 		(local $string i32)
@@ -84,7 +84,7 @@
 		))
 	)
 	
-	(func $deallocate (param $list i32)
+	(function $deallocate (param $list i32)
 		
 		(local $context i32)
 		;;(call $print_string (string "deallocate"))
@@ -92,7 +92,7 @@
 		(call $list_iterate_primitive (get_local $list) (ref "deallocate_iterate_each") (get_local $context))
 	)
 	
-	(func $deallocate_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
+	(function $deallocate_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $handle i32)
 		(set_local $handle (get_local $value))
@@ -105,7 +105,7 @@
 		))
 	)
 	
-	(func $compact (param $list i32)
+	(function $compact (param $list i32)
 
 		;;(call $print_string (string "compact"))
 		(if (i32.eq (i32.const 0) (i32.const 0)) (then
@@ -113,7 +113,7 @@
 		))
 	)
 
-	(func $validate (param $list i32)
+	(function $validate (param $list i32)
 		
 		;;(call $print_string (string "validate"))
 		(if (i32.eq (i32.const 1) (i32.const 0)) (then
@@ -121,7 +121,7 @@
 		))
 	)
 	
-	(func $display (param $list i32)
+	(function $display (param $list i32)
 		
 		(local $context i32)
 		;;(call $print_string (string "display"))
@@ -130,7 +130,7 @@
 		(set_local $display_iterate_each (ref "display_iterate_each"))
 	)
 	
-	(func $display_iterate_each (param $item i32) (param $index i32) (param $context i32)
+	(function $display_iterate_each (param $item i32) (param $index i32) (param $context i32)
 		
 		(local $value i32)
 		(set_local $value (call $item_value (get_local $item)))
@@ -144,13 +144,13 @@
 		))
 	)
 	
-	(func $boundary
+	(function $boundary
 		
 		(call $print_string (string "allocator boundaries"))
 		(call $allocator_info)
 	)
 	
-	(func $legend_print_strings
+	(function $legend_print_strings
 		
 		(local $handle i32)
 		(local $max i32)
@@ -174,5 +174,5 @@
 		))
 	)
 
-	(export "main" (func $main))
+	(export "main" (function $main))
 )

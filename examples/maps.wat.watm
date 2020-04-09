@@ -16,12 +16,12 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_map
 		
-	func test_map
+	function test_map
 		
 		set map to (map_new)
 		map_set map "zero.key" "zero.value"
@@ -31,7 +31,7 @@ module
 		map_set map "four.key" "four.value"
 		map_iterate map (function "map_iterate_each") 0
 		
-	func map_iterate_each accepts map key value index context
+	function map_iterate_each accepts map key value index context
 		
 		print (string_append "index: " (number_to_string index))
 		set string to key

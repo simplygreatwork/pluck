@@ -13,14 +13,14 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		set stack to stack_new
 		stack_enter
 		outer stack
 		stack_exit
 		
-	func outer stack
+	function outer stack
 		
 		print "@ outer"
 		stack_set "local_one" "one"
@@ -28,22 +28,25 @@ module
 		inner stack
 		stack_exit
 		
-	func inner locals
+	function inner locals
 		
 		print "@ inner"
 		stack_set "local_two" "two"
 		
-	func stack_new
+	function stack_new
+		
 		set list to list_new
 		
-	func stack_set key value
+	function stack_set key value
+		
 		set scope list_last
 		tree_set scope key value
 		
-	func stack_enter
+	function stack_enter
 		
-	func stack_exit
+	function stack_exit
 		
-	func scope_new
+	function scope_new
+		
 		tree_new
 		

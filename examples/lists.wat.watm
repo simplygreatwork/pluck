@@ -15,12 +15,12 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_list
 		
-	func test_list
+	function test_list
 		
 		set list to (list_new)
 		list_append list "-1"
@@ -32,7 +32,7 @@ module
 		item_remove (item_previous list)
 		list_iterate list (function "test_list_iterate_each") 0
 		
-	func test_list_iterate_each accepts list item value index context
+	function test_list_iterate_each accepts list item value index context
 		
 		print (string_append "index: " (number_to_string index))
 		print value

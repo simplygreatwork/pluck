@@ -17,12 +17,12 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_print
 		
-	func test_print
+	function test_print
 		
 		print 1234
 		set list to (list_new)

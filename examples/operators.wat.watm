@@ -14,13 +14,13 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_true
 		test_false
 		
-	func test_true
+	function test_true
 		
 		print 1 plus 1 equals 2
 		print 1 plus 1 plus 1 equals 3
@@ -29,7 +29,7 @@ module
 		print 1 less 2 or 3 greater 2
 		print 1 less 2 xor 1 greater 2
 		
-	func test_false
+	function test_false
 		
 		print 1 plus 1 equals 3
 		print 1 plus 1 plus 1 equals 4

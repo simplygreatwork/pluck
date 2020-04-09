@@ -13,11 +13,11 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		setup
 		
-	func setup
+	function setup
 		
 		system_bootstrap
 		

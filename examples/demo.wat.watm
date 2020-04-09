@@ -13,12 +13,12 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		callable 42
 		
-	func callable accepts value
+	function callable accepts value
 		
 		print value
 		

@@ -14,13 +14,13 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_if
 		test_if_parentheses
 		
-	func test_if
+	function test_if
 		
 		print "if without parentheses >"
 		if 1 equals 1
@@ -28,7 +28,7 @@ module
 		if 1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3
 			print "1 plus 1 equals 2 and 1 plus 1 plus 1 equals 3"
 			
-	func test_if_parentheses
+	function test_if_parentheses
 		
 		print "if with parentheses >"
 		if (1 equals 1)

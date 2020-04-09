@@ -14,13 +14,13 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_repeat_if
 		test_repeat_if_parentheses
 		
-	func test_repeat_if
+	function test_repeat_if
 		
 		print "if without parentheses >"
 		repeat from 1 to 5
@@ -29,7 +29,7 @@ module
 			else
 				print (string_append (number_to_string i) " not equals 3")
 				
-	func test_repeat_if_parentheses
+	function test_repeat_if_parentheses
 		
 		print "if with parentheses >"
 		repeat from 1 to 5

@@ -22,13 +22,13 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_stack
 		print " "
 		
-	func test_stack
+	function test_stack
 		
 		set arguments to (stack_new)
 		stack_set arguments "outer.key" "outer.value"
@@ -38,7 +38,7 @@ module
 		stack_dump arguments
 		stack_exit arguments
 		
-	func deep accepts arguments
+	function deep accepts arguments
 		
 		stack_enter arguments
 		stack_set arguments "deep.key" "deep.value"
@@ -48,7 +48,7 @@ module
 		stack_dump arguments
 		stack_exit arguments
 		
-	func deeper accepts arguments
+	function deeper accepts arguments
 		
 		stack_enter arguments
 		stack_set arguments "deeper.key" "deeper.value"
@@ -58,7 +58,7 @@ module
 		stack_dump arguments
 		stack_exit arguments
 		
-	func deepest accepts arguments
+	function deepest accepts arguments
 		
 		stack_enter arguments
 		stack_set arguments "deepest.key" "deepest.value"

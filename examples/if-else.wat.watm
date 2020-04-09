@@ -14,13 +14,13 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	func main
+	function main
 		
 		system_bootstrap
 		test_if_else
 		test_if_else_parentheses
 		
-	func test_if_else
+	function test_if_else
 		
 		print "if-else without parentheses >"
 		if 2 greater 1
@@ -32,7 +32,7 @@ module
 		else
 			print "1 is not greater than 2"
 			
-	func test_if_else_parentheses
+	function test_if_else_parentheses
 		
 		print "if-else with parentheses >"
 		if (2 greater 1)
