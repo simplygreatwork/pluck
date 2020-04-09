@@ -93,29 +93,30 @@ class System {
 				documents.push(document)
 			}
 		}
+		this.documents = Array.from(this.set)
 	}
 	
 	post_process() {
 		
-		for (let document of this.set.values()) {
+		this.documents.forEach(function(document) {
 			broadcast.emit('document.transforming', document)
 			process_.render_function_imports(document)
 			process_.transform(this, document, this.macros.postlink)
 			document.source = print(document.tree)
 			broadcast.emit('document.transformed', document)
-		}
+		}.bind(this))
 		broadcast.emit('documents.transformed')
 	}
 	
 	compile_() {
 		
-		for (let document of this.set.values()) {
+		this.documents.forEach(function(document) {
 			document.wasm = process_.compile(document).buffer
 			let path_ = path.join(process.cwd(), 'build', document.id + '.wasm')
 			jetpack.write(path_, '')
 			require('fs').writeFileSync(path_, document.wasm)
 			broadcast.emit('document.compiled', document)
-		}
+		}.bind(this))
 		broadcast.emit('documents.compiled')
 	}
 	
@@ -123,7 +124,7 @@ class System {
 		
 		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
 		jetpack.write(path_, {
-			modules: Array.from(this.set)
+			modules: this.documents
 			.map(function(document) {
 				return document.id + '.wasm'
 			})
@@ -132,33 +133,30 @@ class System {
 	
 	unpackage() {
 		
-		this.set = new Set()
+		this.documents = []
 		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
 		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
 			let document = {}
 			document.path = path_
 			document.id = utility.truncate_extensions(path_)
-			this.set.add(document)
+			this.documents.push(document)
 		}.bind(this))
 	}
 	
 	instantiate() {
 		
-		for (let document of this.set.values()) {
+		this.documents.forEach(function(document) {
 			let path_ = path.join(process.cwd(), 'build', document.path)
 			document.wasm = require('fs').readFileSync(path_)
 			this.imports[document.id] = process_.instantiate(document, this.imports)
 			broadcast.emit('document.instantiated', document)
-		}
+		}.bind(this))
 		broadcast.emit('documents.instantiated')
 	}
 	
 	start() {
-		
-		let array = Array.from(this.set)
-		let document = array[array.length - 1]
-		document.instance.exports.main()
+		this.documents.pop().instance.exports.main()
 	}
 }
 
