@@ -11,6 +11,7 @@
 	(import "../library/number.watm")
 	(import "../library/function.watm")
 	(import "../library/list.watm")
+	(import "../library/vector.watm")
 	(import "../library/assertion.watm")
 	(import "../library/tree.watm")
 	(import "../library/map.watm")
@@ -56,7 +57,6 @@
 		
 		(call $allocate (get_local $list))
 		(call $deallocate (get_local $list))
-		(call $compact (get_local $list))
 		(call $display (get_local $list))
 	)
 	
@@ -68,7 +68,7 @@
 		;;(call $print_string (string "allocate"))
 		(set_local $i (i32.const 0))
 		(block (loop
-			(if (i32.eq (i32.const 1) (i32.const 0)) (then
+			(if (i32.eq (i32.const 0) (i32.const 0)) (then
 				(set_local $pointer (call $number_new (get_local $i)))
 			) (else
 				(set_local $pointer (string "hellohellohellohellohello"))

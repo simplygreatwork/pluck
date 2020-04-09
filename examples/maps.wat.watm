@@ -12,6 +12,7 @@ module
 	import "../library/map.watm"
 	import "../library/list.watm"
 	import "../library/function.watm"
+	import "../library/vector.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
@@ -37,4 +38,4 @@ module
 		set string to (string_append string ":")
 		set string to (string_append string value)
 		print string
-	
+		

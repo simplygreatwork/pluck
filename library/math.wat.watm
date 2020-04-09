@@ -1,11 +1,23 @@
 (module
 	
-	(import "./utility.watm")
-	(import "./memory.watm")
-	(import "./system.watm")
-	(import "./string.watm")
+	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
+	(func $math_power (param $base i32) (param $exponent i32) (result i32)
+		
+		(local $result i32)
+		(local $i i32)
+		(set_local $result (i32.const 1))
+		(set_local $i (i32.const 0))
+		(block (loop
+			(set_local $result (i32.mul (get_local $result) (get_local $base)))
+			(set_local $i (i32.add (get_local $i) (i32.const 1)))
+			(br_if 1 (i32.eq (get_local $i) (get_local $exponent)))
+			(br 0)
+		))
+		(get_local $result)
+	)
+    
 	(func $math_random (result i32)
 		(i32.const 0)		
 	)

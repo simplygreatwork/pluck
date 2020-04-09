@@ -15,6 +15,7 @@ module
 	import "../library/boolean.watm"
 	import "../library/stack.watm"
 	import "../library/list.watm"
+	import "../library/vector.watm"
 	import "../library/map.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"

@@ -2,14 +2,15 @@
 (module
 	
 	import "./utility.watm"
-	(import "./memory.watm")
-	(import "./system.watm")
+	import "./memory.watm"
+	import "./system.watm"
 	import "./string.watm"
 	import "./number.watm"
 	import "./boolean.watm"
 	import "./map.watm"
 	import "./list.watm"
 	import "./function.watm"
+	import "./vector.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	(type $void_to_void (func))

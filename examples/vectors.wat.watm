@@ -9,17 +9,23 @@ module
 	import "../library/boolean.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
+	import "../library/function.watm"
+	import "../library/list.watm"
 	import "../library/vector.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
 	func main
 		
-		memory_bootstrap
 		system_bootstrap
+		test_vector
 		
-		callable 42
+	func test_vector
 		
-	func callable accepts value
-		set input to value
-		
+		set vector to (vector_new)
+		vector_set vector 1 "one"
+		vector_set vector 2 "two"
+		vector_set vector 3 "three"
+		print (vector_get vector 1)
+		print (vector_get vector 2)
+		print (vector_get vector 3)

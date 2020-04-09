@@ -2,6 +2,7 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
+	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
 	(func $array_bytes (result i32)

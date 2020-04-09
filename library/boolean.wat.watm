@@ -4,6 +4,9 @@
 	(import "./memory.watm")
 	(import "./system.watm")
 	(import "./string.watm")
+	(import "./vector.watm")
+	(import "./number.watm")
+	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
 	(func $boolean_bytes (result i32)

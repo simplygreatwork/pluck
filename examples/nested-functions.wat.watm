@@ -8,6 +8,7 @@ module
 	import "../library/boolean.watm"
 	import "../library/types.watm"
 	import "../library/console.watm"
+	import "../library/vector.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	

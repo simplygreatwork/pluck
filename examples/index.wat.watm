@@ -18,6 +18,7 @@
 	(import "../library/table.watm")
 	(import "../library/types.watm")
 	(import "../library/console.watm")
+	(import "../library/vector.watm")
 	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	(global $legend (import "host" "legend") (mut i32))

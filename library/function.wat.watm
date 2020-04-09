@@ -47,10 +47,6 @@
 	)
 	
 	(func $function_to_string (param $function i32) (result i32)
-		
-		(call $string_append
-			(string "function ") 
-			(call $number_to_string ($number_new (call $function_id (get_local $function))))
-		)
+		(call $number_to_string ($number_new (call $function_id (get_local $function))))
 	)
 )

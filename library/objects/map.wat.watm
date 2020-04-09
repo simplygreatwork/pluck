@@ -9,6 +9,7 @@
 	(import "../object.watm")
 	(import "../map.watm")
 	(import "../number.watm")
+	(import "../vector.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))

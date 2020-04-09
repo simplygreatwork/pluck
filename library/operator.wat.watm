@@ -7,7 +7,7 @@
 	(import "./object.watm")
 	(import "./objects/number.watm")
 	(import "./objects/boolean.watm")
-	
+	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
 	(func $operator_add (param $a i32) (param $b i32) (result i32)

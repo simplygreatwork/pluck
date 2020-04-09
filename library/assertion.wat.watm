@@ -6,6 +6,8 @@
 	(import "./string.watm")
 	(import "./number.watm")
 	(import "./list.watm")
+	(import "./vector.watm")
+	(import "host" "table" (table 1 anyfunc))
 	(memory (import "host" "memory") 1)
 	
 	(func $assert_string_type (param $string i32)

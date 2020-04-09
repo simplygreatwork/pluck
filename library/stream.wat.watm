@@ -8,6 +8,7 @@
 	(import "./function.watm")
 	(import "./list.watm")
 	(import "./map.watm")
+	(import "./vector.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(type $i32_to_i32 (func (param i32) (result i32)))

@@ -3,6 +3,7 @@
 	(import "./allocator.watm")
 	(import "./frame.watm")
 	(import "./hole.watm")
+	(import "./math.watm")
 	(import "host" "print_string" (func $host_print_string (param i32)))
 	(import "host" "print_integer" (func $host_print_integer (param i32)))
 	(import "host" "table" (table 1 anyfunc))
@@ -390,7 +391,7 @@
 		(set_local $exponent (i32.sub (call $legend_exponent_ (get_local $legend)) (i32.const 1)))
 		(set_local $array (call $legend_array_get_ (get_local $legend)))
 		(block (loop
-			(set_local $power (call $math_power_ (get_local $base) (get_local $exponent)))
+			(set_local $power (call $math_power (get_local $base) (get_local $exponent)))
 			(set_local $indice (i32.div_u (get_local $key) (get_local $power)))
 			(set_local $array (call $legend_array_load_ (get_local $legend) (get_local $array) (get_local $indice)))
 			(set_local $key (i32.rem_u (get_local $key) (get_local $power)))
@@ -412,7 +413,7 @@
 		(set_local $exponent (i32.sub (call $legend_exponent_ (get_local $legend)) (i32.const 1)))
 		(set_local $array (call $legend_array_get_ (get_local $legend)))
 		(block (loop
-			(set_local $power (call $math_power_ (get_local $base) (get_local $exponent)))
+			(set_local $power (call $math_power (get_local $base) (get_local $exponent)))
 			(set_local $indice (i32.div_u (get_local $key) (get_local $power)))
 			(set_local $array (call $legend_array_load_ (get_local $legend) (get_local $array) (get_local $indice)))
 			(set_local $key (i32.rem_u (get_local $key) (get_local $power)))
@@ -538,22 +539,7 @@
 	(func $print_integer_ (param $pointer i32)
 		(call $host_print_integer (get_local $pointer))
 	)
-	
-	(func $math_power_ (param $base i32) (param $exponent i32) (result i32)
 		
-		(local $result i32)
-		(local $i i32)
-		(set_local $result (i32.const 1))
-		(set_local $i (i32.const 0))
-		(block (loop
-			(set_local $result (i32.mul (get_local $result) (get_local $base)))
-			(set_local $i (i32.add (get_local $i) (i32.const 1)))
-			(br_if 1 (i32.eq (get_local $i) (get_local $exponent)))
-			(br 0)
-		))
-		(get_local $result)
-	)
-	
 	(func $swap_test_ (param $reference_a i32) (param $reference_b i32)	;; need to use compilation phase
 		
 		(local $a i32)

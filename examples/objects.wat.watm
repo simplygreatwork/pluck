@@ -13,6 +13,7 @@ module
 	import "../library/console.watm"
 	import "../library/list.watm"
 	import "../library/map.watm"
+	import "../library/vector.watm"
 	import "../library/objects/string.watm"
 	import "../library/objects/list.watm"
 	import "../library/objects/map.watm"

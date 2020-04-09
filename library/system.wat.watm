@@ -14,12 +14,24 @@
 	
 	(func $system_bootstrap
 		
-		(local $result i32)
-		(local $strings i32)
+		(local $magic i32)
 		(call $memory_bootstrap)
-		(set_global $global (call $map_new_))
-		(set_global $strings (call $list_new_))
+		(set_local $list (call $system_strings))
+		;;(call $list_append_ (get_local $list) (call $number_new_ (i32.const 55555)))
+		;;(set_local $result (call $list_get_ (get_local $list) (i32.const 0)))
+		;;(set_local $result (call $system_string_static (get_local $list) (i32.const 0)))
+		;;(call $system_string_static_set (call $system_strings) (i32.const 1) (call $number_new_ (i32.const 668)))
+	)
+	
+	(func $system_strings (result i32)
+		
+		(local $strings i32)
 		(set_local $strings (get_global $strings))
+		(if (i32.eq (get_global $strings) (i32.const 0)) (then
+			(set_global $strings (call $vector_new_))
+			(set_local $strings (get_global $strings))
+		))
+		(get_local $strings)
 	)
 	
 	(func $system_prototype (param $key i32) (result i32)
@@ -39,28 +51,8 @@
 		(get_local $map)
 	)
 	
-	(func $system_string_static (param $index i32) (result i32)
-		(call $list_get_ (get_global $strings) (call $number_new_ (get_local $index)))
-	)
-	
-	(func $system_string_static_set (param $index i32) (param $string i32)
-		(call $list_append_ (get_global $strings) (get_local $string))
-	)
-	
-	(func $number_new_ (param $value i32) (result i32)
-		(call_indirect (type $i32_to_i32) (get_local $value) (ref "library/number/number_new"))
-	)
-	
-	(func $list_new_ (result i32)
-		(call_indirect (type $void_to_i32) (ref "library/list/list_new"))
-	)
-	
-	(func $list_append_ (param $list i32) (param $data i32)
-		(call_indirect (type $i32_i32_to_void) (get_local $list) (get_local $data) (ref "library/list/list_append"))
-	)
-	
-	(func $list_get_ (param $list i32) (param $index i32) (result i32)
-		(call_indirect (type $i32_i32_to_i32) (get_local $list) (get_local $index) (ref "library/list/list_get"))
+	(func $vector_new_ (result i32)
+		(call_indirect (type $void_to_i32) (ref "library/vector/vector_new"))
 	)
 	
 	(func $map_new_ (result i32)

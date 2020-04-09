@@ -12,6 +12,7 @@ module
 	import "../library/object.watm"
 	import "../library/console.watm"
 	import "../library/list.watm"
+	import "../library/vector.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
