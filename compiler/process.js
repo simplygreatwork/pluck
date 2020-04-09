@@ -50,6 +50,13 @@ function find_line(document, position) {
 	return result
 }
 
+function transform(system, document, macros) {
+	
+	let transform = new Transform(system, document)
+	document.walk = transform.walk.bind(transform)
+	transform.transform(macros)
+}
+
 function link(document) {
 	
 	document.functions = find_functions(document)
@@ -246,6 +253,10 @@ module.exports = {
 	
 	process_md,
 	process_watm,
+	transform,
+	link,
+	compile,
+	instantiate,
 	find_module_imports,
 	find_function_imports,
 	find_functions,
@@ -255,8 +266,5 @@ module.exports = {
 	has_function_import,
 	find_function_signature,
 	find_document,
-	find_function,
-	link,
-	compile,
-	instantiate
+	find_function
 }

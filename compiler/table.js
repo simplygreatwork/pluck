@@ -34,7 +34,7 @@ class Table {
 		return this.elements[key]
 	}
 	
-	find_function(module_, function_) {				// find a new location for this function
+	find_function(module_, function_) {					// find a new location for this function
 		
 		let key = module_ + '/' + function_
 		let document = process.find_document(this.system, module_)

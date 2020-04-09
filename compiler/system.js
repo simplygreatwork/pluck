@@ -31,7 +31,7 @@ class System {
 		this.load(root)
 		this.resolve()
 		this.sort()
-		this.postprocess()
+		this.post_process()
 		this.compile_()
 		this.package_()
 	}
@@ -56,9 +56,7 @@ class System {
 			let document = new Document(path_, this.root)
 			document.load()
 			broadcast.emit('loaded', path.basename(path_) + ' (' + path_ + ')')
-			let transform = new Transform(this, document)
-			document.walk = transform.walk.bind(transform)
-			transform.transform(this.macros.prelink)
+			process_.transform(this, document, this.macros.prelink)
 			process_.link(document)
 			document.module_imports.forEach(function(each) {
 				this.load(each)
@@ -97,14 +95,12 @@ class System {
 		}
 	}
 	
-	postprocess() {
+	post_process() {
 		
 		for (let document of this.set.values()) {
 			broadcast.emit('document.transforming', document)
 			process_.render_function_imports(document)
-			let transform = new Transform(this, document)
-			document.walk = transform.walk.bind(transform)
-			transform.transform(this.macros.postlink)
+			process_.transform(this, document, this.macros.postlink)
 			document.source = print(document.tree)
 			broadcast.emit('document.transformed', document)
 		}
@@ -115,7 +111,7 @@ class System {
 		
 		for (let document of this.set.values()) {
 			document.wasm = process_.compile(document).buffer
-			let path_ = path.join(process.cwd(), 'build', this.project, document.id + '.wasm')
+			let path_ = path.join(process.cwd(), 'build', document.id + '.wasm')
 			jetpack.write(path_, '')
 			require('fs').writeFileSync(path_, document.wasm)
 			broadcast.emit('document.compiled', document)
@@ -125,7 +121,7 @@ class System {
 	
 	package_() {
 		
-		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
+		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
 		jetpack.write(path_, {
 			modules: Array.from(this.set)
 			.map(function(document) {
@@ -137,7 +133,7 @@ class System {
 	unpackage() {
 		
 		this.set = new Set()
-		let path_ = path.join(process.cwd(), 'build', this.project + '/build.json')
+		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
 		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
 			let document = {}
@@ -150,7 +146,7 @@ class System {
 	instantiate() {
 		
 		for (let document of this.set.values()) {
-			let path_ = path.join(process.cwd(), 'build', this.project, document.path)
+			let path_ = path.join(process.cwd(), 'build', document.path)
 			document.wasm = require('fs').readFileSync(path_)
 			this.imports[document.id] = process_.instantiate(document, this.imports)
 			broadcast.emit('document.instantiated', document)
