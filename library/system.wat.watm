@@ -47,8 +47,12 @@
 		(get_local $map)
 	)
 	
-	(func $vector_new_ (result i32)
-		(call_indirect (type $void_to_i32) (ref "library/vector/vector_new"))
+	(func $system_string_static (param $key i32) (result i32)
+		(call $vector_get_ (call $system_strings) (call $number_new_ (get_local $key)))
+	)
+	
+	(func $system_string_static_set (param $key i32) (param $string i32)
+		(call $vector_set_ (call $system_strings) (call $number_new_ (get_local $key)) (get_local $string))
 	)
 	
 	(func $map_new_ (result i32)
@@ -69,5 +73,21 @@
 	
 	(func $map_length_ (param $map i32) (result i32)
 		(call_indirect (type $i32_to_i32) (get_local $map) (ref "library/map/map_length"))
+	)
+	
+	(func $vector_new_ (result i32)
+		(call_indirect (type $void_to_i32) (ref "library/vector/vector_new"))
+	)
+	
+	(func $vector_set_ (param $vector i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $vector) (get_local $key) (get_local $value) (ref "library/vector/vector_set"))
+	)
+	
+	(func $vector_get_ (param $vector i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $vector) (get_local $key) (ref "library/vector/vector_get"))
+	)
+	
+	(func $number_new_ (param $value i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $value) (ref "library/number/number_new"))
 	)
 )
