@@ -17,7 +17,7 @@ module
 	
 	function main
 		
-		setup
+		system_bootstrap
 		test_call_macro
 		test_string_macro_expansion
 		test_integer_macro_expansion
@@ -29,10 +29,6 @@ module
 		test_and_or
 		test_true_false
 		test_parameters "one" "two" "three"
-		
-	function setup
-		
-		system_bootstrap
 		
 	function test_call_macro
 		
