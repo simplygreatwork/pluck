@@ -38,15 +38,22 @@ function prefix(instruction, precedence, node, index, parents, state) {
 		instruction: instruction,
 		precedence: precedence,
 		perform: function(index) {
-			let expression = parse (`
-				(call ${instruction} (call $boolean_new (i32.const 1)))
-			`)[0]
+			let expression = expression_(instruction, system)
 			expression.value.splice(2, 0, parent.value[index + 1])
 			parent.value[index] = expression
 			parent.value.splice(index + 1, 1)
 			parent.emit('removed', index + 1)
 		}
 	})
+}
+
+function expression_(instruction, system) {
+	
+	if (system.objectize) {
+		return parse (`(call ${instruction} (call $object_boolean_from_boolean (call $boolean_new (i32.const 1))))`)[0]
+	} else {
+		return parse (`(call ${instruction} (call $boolean_new (i32.const 1)))`)[0]
+	}
 }
 
 function initialize(node, index, parent, state) {
