@@ -115,7 +115,7 @@ module
 
 ### Run with GitPod
 
-- Open [pluck](https://gitpod.io/#https://github.com/simplygreatwork/pluck) in GitPod.
+Open [pluck](https://gitpod.io/#https://github.com/simplygreatwork/pluck) in GitPod.
 
 ```
 git fetch && git fetch --tags
@@ -156,7 +156,7 @@ npm start operators
 npm start negation
 ```
 
-- You can also optionally clean, compile, and run. e.g.
+You can also optionally clean, compile, and run. e.g.
 ```
 npm start index --clean
 npm start index --no-run
