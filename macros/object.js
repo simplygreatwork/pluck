@@ -54,7 +54,7 @@ function get_property(node, index, parents, state, document) {
 	if (node.value.length > 1) {
 		if (query.is_type(node.value[1], 'symbol')) {
 			node.value[1].type = 'string'
-			document.walk(node.value[1], 0, parents, state)
+			document.walk(node.value[1], 1, parents, state)
 		}
 		return node.value[1]
 	}

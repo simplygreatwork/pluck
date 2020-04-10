@@ -17,21 +17,18 @@ module
 	function main
 		
 		system_bootstrap
-		set method to (function one accepts value
+		
+		set method to (function name accepts value
 			print value
 		)
+		method "value"
+		
 		set method to (function accepts value
 			print value
 		)
-		invoke method()
+		method "value"
 		
 		parent on "exit" (function accepts node index
 			print "exited"
 		)
-		
-	function callable accepts one two three
-		
-		print one
-		print two
-		print three
-		
+		parent emit "exit" node index
