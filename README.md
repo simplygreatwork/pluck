@@ -144,16 +144,16 @@ npm start macros
 
 You can run any of the files in the examples folder. Here are some highlights:
 ```
-npm start compile objects
-npm start compile lists
-npm start compile maps
-npm start compile if
-npm start compile if-else
-npm start compile repeat
-npm start compile repeat-if
-npm start compile repeat-nested
-npm start compile operators
-npm start compile negation
+npm start objects
+npm start lists
+npm start maps
+npm start if
+npm start if-else
+npm start repeat
+npm start repeat-if
+npm start repeat-nested
+npm start operators
+npm start negation
 ```
 
 - You can also optionally clean, compile, and run. e.g.
