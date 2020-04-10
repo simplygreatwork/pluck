@@ -1,3 +1,5 @@
 module
 	
 	func main
+		
+		true

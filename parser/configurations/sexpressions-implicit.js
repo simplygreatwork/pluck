@@ -41,6 +41,7 @@ function expression_contents(level) {
 			whitespace('\t\r '),
 			number(),
 			string(),
+			boolean(),
 			symbol(),
 			newline(),
 		]),
@@ -115,6 +116,7 @@ function line_contents(level) {
 			whitespace('\t\r '),
 			number(),
 			string(),
+			boolean(),
 			symbol(),
 			comment(';;')
 		]),

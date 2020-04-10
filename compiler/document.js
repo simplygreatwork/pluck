@@ -13,14 +13,9 @@ class Document {
 	
 	constructor(path_, root) {
 		
-		this.path = this.trim_path(path_)
+		this.path = utility.truncate_extensions(path_)
 		this.id = path.relative(root.toString(), this.path.toString())
 		this.define_stages()
-	}
-	
-	trim_path(path_) {
-		
-		return utility.truncate_extensions(path_)
 	}
 	
 	define_stages() {
@@ -43,9 +38,8 @@ class Document {
 			let extension = this.extension(index)
 			let path_ = this.path + extension
 			if (this.source == null) {
-				let source = this.load_file(path_)
-				if (source) {
-					this.source = source
+				if (jetpack.exists(path_) == 'file') {
+					this.source = jetpack.read(path_, 'utf8')
 					this.path_absolute = path_
 				}
 			}
@@ -64,15 +58,6 @@ class Document {
 			}
 		})
 		return result.join('')
-	}
-	
-	load_file(path_) {
-		
-		if (jetpack.exists(path_) == 'file') {
-			return jetpack.read(path_, 'utf8')
-		} else {
-			return null
-		}
 	}
 }
 

@@ -11,7 +11,9 @@ class State {
 			id_static: 0,
 			id_string: 0,
 			id_table: 4096,
-			index_table: {}
+			id_type: 0,
+			index_table: {},
+			index_type: {}
 		})
 	}
 	

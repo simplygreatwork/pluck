@@ -2,9 +2,6 @@
 const query = require('../compiler/query')
 const parse = require('../compiler/parse')
 
-let counter = 1;
-let types = {}
-
 module.exports = function(system, document) {
 	
 	return {
@@ -18,14 +15,15 @@ module.exports = function(system, document) {
 			if (! query.is_type(parent, 'expression')) return
 			if (! query.is_type_value(node, 'symbol', 'typeof')) return
 			if (! (index === 0)) return
-			if (types[parent.value[1].value] === undefined) {
-				types[parent.value[1].value] = counter;
+			let type = parent.value[1].value
+			if (system.state.index_type[type] === undefined) {
+				system.state.index_type[type] = system.state.id_type
 				if (false) print(parent)
-				counter++
+				system.state.id_type++
 			}
 			parent.value[0].value = 'i32.const'
 			parent.value[1].type = 'number'
-			parent.value[1].value = types[parent.value[1].value]
+			parent.value[1].value = system.state.index_type[type]
 		}
 	}
 }
