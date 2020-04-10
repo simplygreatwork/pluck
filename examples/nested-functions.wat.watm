@@ -12,6 +12,8 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
+	;; work in process - merely illustrative for now
+	
 	function main
 		
 		system_bootstrap
@@ -24,7 +26,7 @@ module
 		invoke method()
 		
 		parent on "exit" (function accepts node index
-			
+			print "exited"
 		)
 		
 	function callable accepts one two three

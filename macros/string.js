@@ -19,7 +19,11 @@ module.exports = function(system, document) {
 			parent.once('exit', function() {
 				let string = parent.value[1].value
 				let func_name = shared_string.function_new(parents[0], string, system)
-				shared_string.string_call(parents[parents.length - 2], parent, func_name)
+				query.climb(parents, function(node, index, parents) {
+					let parent = query.last(parents)
+					let tree = parse(` (call ${func_name})`)[0]
+					parent.value[index] = tree
+				})
 			})
 		}
 	}

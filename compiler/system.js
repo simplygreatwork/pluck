@@ -162,7 +162,7 @@ class System {
 	
 	package_() {
 		
-		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/build.json')
+		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/package.json')
 		jetpack.write(path_, {
 			modules: this.documents
 			.map(function(document) {
@@ -174,7 +174,7 @@ class System {
 	unpackage() {
 		
 		this.documents = []
-		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/build.json')
+		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/package.json')
 		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
 			this.documents.push({ path: path_, id: utility.truncate_extensions(path_) })

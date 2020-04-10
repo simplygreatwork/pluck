@@ -15,7 +15,7 @@
 	(func $legend_base_set (param $legend i32) (param $base i32)
 		(call $legend_base_set_ (get_local $legend) (get_local $base))
 	)
-
+	
 	(func $legend_exponent (param $legend i32) (result i32)
 		(call $legend_exponent_ (get_local $legend))
 	)

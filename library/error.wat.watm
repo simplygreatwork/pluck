@@ -1,0 +1,50 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./system.watm")
+	(import "./string.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	
+	(func $error_bytes (result i32)
+		(i32.const 8)
+	)
+	
+	(func $error_new (param $code i32) (param $message i32) (result i32)
+		
+		(local $error i32)
+		(set_local $error (call $memory_allocate (typeof "error") (call $error_bytes)))
+		(call $error_code_set (get_local $result) (get_local $code))
+		(call $error_message_set (get_local $result) (get_local $message))
+		(get_local $error)
+	)
+	
+	(func $error_code (param $error i32) (result i32)
+		(call $memory_load (get_local $error) (i32.const 0))
+	)
+	
+	(func $error_code_set (param $error i32) (param $code i32)
+		(call $memory_store (get_local $error) (i32.const 0) (get_local $code))
+	)
+	
+	(func $error_message (param $error i32) (result i32)
+		(call $memory_load (get_local $error) (i32.const 4))
+	)
+	
+	(func $error_message_set (param $error i32) (param $message i32)
+		(call $memory_store (get_local $error) (i32.const 4) (get_local $message))
+	)
+	
+	(func $error_to_string (param $error i32) (param $message i32)
+		
+		(local $result i32)
+		(set_local $result (string "error ("))
+		(set_local $result (call $string_append (get_local $string) (string "code: ")))
+		(set_local $result (call $string_append (get_local $string) (call $number_to_string (call $error_code (get_local $error)))))
+		(set_local $result (call $string_append (get_local $string) (string ", message: ")))
+		(set_local $result (call $string_append (get_local $string) (call $error_message (get_local $error))))
+		(set_local $result (call $string_append (get_local $string) (string ")")))
+		(get_local $result)
+	)
+)

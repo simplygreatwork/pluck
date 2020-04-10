@@ -1,0 +1,54 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./system.watm")
+	(import "./string.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	
+	(func $result_bytes (result i32)
+		(i32.const 8)
+	)
+	
+	(func $result_new (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $memory_allocate (typeof "result") (call $result_bytes)))
+		(call $result_value_set (get_local $result) (i32.const 0))
+		(call $result_error_set (get_local $result) (i32.const 0))
+		(get_local $result)
+	)
+	
+	(func $result_with_value (param $value i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $result_new))
+		(call $result_value_set (get_local $result) (get_local $value))
+		(get_local $result)
+	)
+	
+	(func $result_with_error (param $error i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $result_new))
+		(call $result_value_set (get_local $result) (get_local $error))
+		(get_local $result)
+	)
+	
+	(func $result_value (param $result i32) (result i32)
+		(call $memory_load (get_local $result) (i32.const 0))
+	)
+	
+	(func $result_value_set (param $result i32) (param $value i32)
+		(call $memory_store (get_local $result) (i32.const 0) (get_local $value))
+	)
+	
+	(func $result_error (param $result i32) (result i32)
+		(call $memory_load (get_local $result) (i32.const 4))
+	)
+	
+	(func $result_error_set (param $result i32) (param $error i32)
+		(call $memory_store (get_local $result) (i32.const 4) (get_local $error))
+	)
+)
