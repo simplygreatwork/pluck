@@ -122,11 +122,9 @@ function object_call(node, index, parents, state, components) {
 function catch_result(expression, parent, state) {
 	
 	if (parent.value[0].value == 'func') {
-		let dispose = '$___dispose___'
-		let expression_ = parse(` (set_local ${dispose})`)[0]
-		expression_.value[2] = expression
+		let expression_ = parse(`(drop)`)[0]
+		expression_.value[1] = expression
 		expression = expression_
-		shared.declare(shared.dollarize(dispose), state)
 	}
 	return expression
 }

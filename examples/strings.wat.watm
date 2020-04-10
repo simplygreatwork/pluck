@@ -1,0 +1,25 @@
+
+module
+	
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/system.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/types.watm"
+	import "../library/vector.watm"
+	import "../library/console.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	
+	function main
+		
+		(local $empty i32)
+		system_bootstrap
+		set_local $empty "a"
+		print (string_append empty "hello")
+		print "world"
+		
+	function test
+		
+		print "test"

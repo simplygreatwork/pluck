@@ -125,6 +125,19 @@ function line_contents(level) {
 	)
 }
 
+function sanitize(node) {													// related to: if (line_blank) line.value.push(line_blank)
+	
+	if (node.type == 'expression') {
+		for (let i = node.value.length - 1; i >= 0; i--) {
+			let child = node.value[i]
+			if (child.type == 'whitespace') {
+				node.value.splice(i, 1)
+			}
+			sanitize(child)
+		}
+	}
+}
+
 refs.lines = lines
 refs.line_contents = line_contents
 refs.expression_contents = expression_contents
@@ -136,5 +149,6 @@ module.exports = function(code) {
 		code
 	)
 	result[0].type = 'expression'
+	sanitize(result[0])
 	return result
 }

@@ -4,8 +4,8 @@ const parse = require('../compiler/parse')
 
 function string_call(parent, node, func_name) {
 	
-	let tree = parse(` (call ${func_name})`)
-	query.replace(parent, node, tree[0])
+	let tree = parse(` (call ${func_name})`)[0]
+	query.replace(parent, node, tree)
 }
 
 function function_new(node, string, system) {

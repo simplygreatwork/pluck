@@ -55,6 +55,7 @@ class System {
 		if (! this.documents[path_]) {
 			let document = new Document(path_, this.root)
 			document.load()
+			if (this.should_process(document)) document.process = true
 			broadcast.emit('loaded', path.basename(path_) + ' (' + path_ + ')')
 			process_.transform(this, document, this.macros.prelink)
 			process_.link(document)
@@ -63,6 +64,13 @@ class System {
 			}.bind(this))
 			this.documents[path_] = document
 		}
+	}
+	
+	should_process(document) {
+		
+		if (true) return true
+		let path_ = path.join(process.cwd(), 'build', document.id + '.wasm')
+		return jetpack.exists(path_) ? false : true
 	}
 	
 	resolve() {
@@ -101,7 +109,7 @@ class System {
 		this.documents.forEach(function(document) {
 			broadcast.emit('document.transforming', document)
 			process_.render_function_imports(document)
-			process_.transform(this, document, this.macros.postlink)
+			if (document.process) process_.transform(this, document, this.macros.postlink)
 			document.source = print(document.tree)
 			broadcast.emit('document.transformed', document)
 		}.bind(this))
@@ -111,6 +119,7 @@ class System {
 	compile_() {
 		
 		this.documents.forEach(function(document) {
+			if (! document.process) return
 			document.wasm = process_.compile(document).buffer
 			let path_ = path.join(process.cwd(), 'build', document.id + '.wasm')
 			jetpack.write(path_, '')
@@ -137,10 +146,7 @@ class System {
 		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
 		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
-			let document = {}
-			document.path = path_
-			document.id = utility.truncate_extensions(path_)
-			this.documents.push(document)
+			this.documents.push({ path: path_, id: utility.truncate_extensions(path_) })
 		}.bind(this))
 	}
 	

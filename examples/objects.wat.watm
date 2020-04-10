@@ -40,10 +40,12 @@ module
 		
 		heading "create_list"
 		set list to (object_list_new)
+		list append "0"
 		list append "1"
 		list append "2"
-		list append "3"
 		list iterate (function "create_list_iterate_each") 0
+		list get 0
+		print (list get 1)
 		
 	function create_list_iterate_each accepts list item value index context
 		
@@ -53,10 +55,12 @@ module
 		
 		heading "create_map"
 		set map to (object_map_new)
+		map put "zero" "0"
 		map put "one" "1"
 		map put "two" "2"
-		map put "three" "3"
 		map iterate (function "create_map_iterate_each") 0
+		map get "zero"
+		print (map get "one")
 		
 	function create_map_iterate_each accepts map key value index context
 		

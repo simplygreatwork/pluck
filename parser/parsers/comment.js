@@ -7,7 +7,7 @@ module.exports = function(string) {
 	return p.seq ([
 		p.str (string),
 		p.rep (
-			p.char ('^\n'),	1
+			p.char ('^\n'), 1
 		),
 	], function(value) {
 		return {
