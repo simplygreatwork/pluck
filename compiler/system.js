@@ -55,7 +55,7 @@ class System {
 		if (! this.documents[path_]) {
 			let document = new Document(path_, this.root)
 			document.load()
-			if (this.should_process(document)) document.process = true
+			if (this['process?'](document)) document.process = true
 			broadcast.emit('loaded', path.basename(path_) + ' (' + path_ + ')')
 			process_.transform(this, document, this.macros.prelink)
 			process_.link(document)
@@ -66,11 +66,31 @@ class System {
 		}
 	}
 	
-	should_process(document) {
+	'process?'(document) {
 		
-		if (true) return true
-		let path_ = path.join(process.cwd(), 'build', document.id + '.wasm')
-		return jetpack.exists(path_) ? false : true
+		let result = true
+		let states = document.states = {
+			source: { path: document.path_absolute},
+			result: { path: path.join(process.cwd(), 'build', 'product', this.project, document.id + '.wasm') },
+			cache: { path: path.join(process.cwd(), 'build', 'cache', document.id + '.wasm') }
+		}
+		if (this.clean) {
+			if (jetpack.exists(states.result.path)) jetpack.remove(states.result.path)
+			if (jetpack.exists(states.cache.path)) jetpack.remove(states.cache.path)
+		}
+		if (jetpack.exists(states.result.path)) {
+			if (! this['changed?'](states)) {
+				result = false
+			}
+		}
+		return result
+	}
+	
+	'changed?'(states) {
+		
+		states.source.modified = jetpack.inspect(states.source.path, {times: true}).modifyTime
+		states.result.modified = jetpack.inspect(states.result.path, {times: true}).modifyTime
+		return states.source.modified > states.result.modified
 	}
 	
 	resolve() {
@@ -121,9 +141,10 @@ class System {
 		this.documents.forEach(function(document) {
 			if (! document.process) return
 			document.wasm = process_.compile(document).buffer
-			let path_ = path.join(process.cwd(), 'build', document.id + '.wasm')
-			jetpack.write(path_, '')
-			require('fs').writeFileSync(path_, document.wasm)
+			jetpack.write(document.states.cache.path, '')
+			require('fs').writeFileSync(document.states.cache.path, document.wasm)
+			jetpack.write(document.states.result.path, '')
+			require('fs').writeFileSync(document.states.result.path, document.wasm)
 			broadcast.emit('document.compiled', document)
 		}.bind(this))
 		broadcast.emit('documents.compiled')
@@ -131,7 +152,7 @@ class System {
 	
 	package_() {
 		
-		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
+		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/build.json')
 		jetpack.write(path_, {
 			modules: this.documents
 			.map(function(document) {
@@ -143,7 +164,7 @@ class System {
 	unpackage() {
 		
 		this.documents = []
-		let path_ = path.join(process.cwd(), 'build', this.project + '.json')
+		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/build.json')
 		let config = jetpack.read(path_, 'json')
 		config.modules.forEach(function(path_) {
 			this.documents.push({ path: path_, id: utility.truncate_extensions(path_) })
@@ -153,7 +174,7 @@ class System {
 	instantiate() {
 		
 		this.documents.forEach(function(document) {
-			let path_ = path.join(process.cwd(), 'build', document.path)
+			let path_ = path.join(process.cwd(), 'build', 'cache', document.path)
 			document.wasm = require('fs').readFileSync(path_)
 			this.imports[document.id] = process_.instantiate(document, this.imports)
 			broadcast.emit('document.instantiated', document)

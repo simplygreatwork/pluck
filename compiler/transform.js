@@ -44,7 +44,7 @@ class Transform {
 		}.bind(this))
 		node.emit('exit')
 		let parent = query.last(parents, 1)
-		if (false) cleanup(node, parent)										// issue: failing now that using pre and post macros
+		if (false) strike(node, parent)										// issue: failing now that using pre and post macros
 		parents.pop(node)
 	}
 	
@@ -112,7 +112,7 @@ class Transform {
 		delete node.emit
 	}
 	
-	cleanup(node, parent) {
+	strike(node, parent) {
 		
 		if (node.on) node.on('exit', function() {
 			if (parent && parent.once) parent.once('exit', function() {

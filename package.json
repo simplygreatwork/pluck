@@ -17,7 +17,6 @@
 	"dependencies": {
 		"fs-jetpack": "^2.2.2",
 		"minimist": "^1.2.0",
-		"prompts": "^2.3.0",
 		"remark": "^10.0.1",
 		"remark-parse": "^6.0.3",
 		"tiny-worker": "^2.3.0",

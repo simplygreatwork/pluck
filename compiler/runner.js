@@ -23,6 +23,12 @@ class Runner {
 		this.date = new Date()
 	}
 	
+	clean(root) {
+		
+		this.system.clean = true
+		logger('runner').log('cleaning: ' + root)
+	}
+	
 	compile(root) {
 		
 		logger('runner').log('compiling: ' + root)

@@ -1,39 +1,59 @@
 
 const path = require('path')
-const Runner = require('./runner') 
+const minimist = require('minimist') 
 const jetpack = require('fs-jetpack') 
+const Runner = require('./runner') 
 
-process.argv.shift()
-process.argv.shift()
+var options = options_()
+var root = root_(options)
+inform()
 
-let command = 'compile'
-if (process.argv[0] == 'compile') {
-	command = 'compile'
-	process.argv.shift()
-} else if (process.argv[0] == 'run') {
-	command = 'run'
-	process.argv.shift()
-}
-
-let root = path.join(process.cwd(), './examples/')
-root = root + (process.argv.length > 0 ? process.argv[0] : 'index')
-root = root + (! root.endsWith('.wat.watm' > 0) ? '.wat.watm' : '')
-
-if (! jetpack.exists(root)) {
-	console.error('')
-	console.error('>>>>> The file was not found so exiting now. <<<<<')
-	console.error('')
-	process.exit(1)
-}
-
-console.log('')
-console.log('Running pluck with node version: ' + process.version)
-console.log('')
+/***
+Always cleaning for now until a persistent
+WASM table function lookup is implemented for all builds.
+Otherwise, function signature mismatch is encountered.
+***/
 
 let runner = new Runner()
-if (command == 'compile') {
-	runner.compile(root)
-	runner.run(root)
+if (options.clean) {
+	runner.clean(root)
 } else {
+	if (true) runner.clean(root)
+}
+runner.compile(root)
+if (options.run) {
 	runner.run(root)
+}
+
+function options_() {
+	
+	var options = minimist(process.argv.slice(2), {
+		boolean: ['run', 'clean'],
+		alias: { r: 'run', c: 'clean' },
+		default: { clean: false, run: true }
+	})
+	if (options._.length === 0) options._ = ['index']
+	options.subject = options._[0]
+	return options
+}
+
+function root_(options) {
+	
+	let root = path.join(process.cwd(), './examples/')
+	root = root + options.subject
+	root = root + (! root.endsWith('.wat.watm' > 0) ? '.wat.watm' : '')
+	if (! jetpack.exists(root)) {
+		console.error('')
+		console.error('>>>>> The file was not found so exiting now. <<<<<')
+		console.error('')
+		process.exit(1)
+	}
+	return root
+}
+
+function inform() {
+	
+	console.log('')
+	console.log('Running pluck with node version: ' + process.version)
+	console.log('')
 }

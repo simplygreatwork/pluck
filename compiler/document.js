@@ -41,13 +41,12 @@ class Document {
 		
 		this.stages.forEach(function(stage, index) {
 			let extension = this.extension(index)
-			logger('document').log('extension: ' + extension)
-			let path_exact = this.path + extension
-			logger('document').log('path_exact: ' + path_exact)
+			let path_ = this.path + extension
 			if (this.source == null) {
-				this.source = this.load_file(path_exact)
-				if (this.source != null) {
-					logger('document').log('loaded: ' + path_exact)
+				let source = this.load_file(path_)
+				if (source) {
+					this.source = source
+					this.path_absolute = path_
 				}
 			}
 			if (this.source != null) {
