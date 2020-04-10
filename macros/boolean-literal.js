@@ -15,8 +15,11 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'boolean')) return
 			let value = node.value == 'true' ? 1 : 0
-			parent.value[index] = parse(` (call $boolean_new (i32.const ${value}))`)[0]
-			if (false) parent.value[index] = parse(` (call $object_boolean_from_number_primitive (i32.const ${value}))`)[0]
+			if (system.objectize) {
+				parent.value[index] = parse(` (call $object_boolean_from_number_primitive (i32.const ${value}))`)[0]
+			} else {
+				parent.value[index] = parse(` (call $boolean_new (i32.const ${value}))`)[0]
+			}
 		}
 	}
 }

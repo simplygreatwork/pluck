@@ -17,8 +17,11 @@ module.exports = function(system, document) {
 			if (query.is_type_value(parent.value[0], 'symbol', 'i32.const')) return
 			if (query.is_type_value(parent.value[0], 'symbol', 'br')) return
 			if (query.is_type_value(parent.value[0], 'symbol', 'br_if')) return
-			parent.value[index] = parse(` (call $number_new (i32.const ${node.value}))`)[0]
-			if (false) parent.value[index] = parse(` (call $object_number_from_primitive (i32.const ${value}))`)[0]
+			if (system.objectize) {
+				parent.value[index] = parse(` (call $object_number_from_primitive (i32.const ${value}))`)[0]
+			} else {
+				parent.value[index] = parse(` (call $number_new (i32.const ${node.value}))`)[0]
+			}
 		}
 	}
 }

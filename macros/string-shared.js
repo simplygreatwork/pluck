@@ -20,6 +20,7 @@ function function_new(node, string, system) {
 			(set_local $string (call $string_new (i32.const ${string.length})))
 			${string_char_sets(string)}
 			(call $system_string_static_set (i32.const ${id}) (get_local $string))
+			${objectize(system)}
 		))
 		(get_local $string)
 	)`)
@@ -35,6 +36,15 @@ function string_char_sets(string) {
 		result.push(`\t\t(call $string_char_set (get_local $string) (i32.const ${index}) (i32.const ${char_code}))`)
 	})
 	return result.join('\n')
+}
+
+function objectize(system) {
+	
+	if (system.objectize) {
+		return `(set_local $string (call $object_string_from_string (get_local $string)))`
+	} else {
+		return ''
+	}
 }
 
 module.exports = {
