@@ -1,5 +1,10 @@
 
-var test = require('tape')				// https://github.com/substack/tape
+const fs = require('fs')
+const path = require('path')
+const jetpack = require('fs-jetpack')
+const test = require('tape')				// https://github.com/substack/tape
+
+jetpack.remove(path.join(process.cwd(), '../build'))
 
 let suite = [
 	'accepts',
@@ -57,10 +62,11 @@ function execute(command, callback) {
 	})
 }
 
-function run(file_name) {
+function run(subject) {
 	
+	process.chdir('../');
 	let root = path.join(process.cwd(), './examples/')
-	root = root + (process.argv.length > 0 ? process.argv[0] : 'index')
+	root = root + subject
 	root = root + (! root.endsWith('.wat.watm' > 0) ? '.wat.watm' : '')
 	if (! jetpack.exists(root)) {
 		console.error('')

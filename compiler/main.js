@@ -6,31 +6,19 @@ const Runner = require('./runner')
 
 var options = options_()
 var root = root_(options)
-inform()
-
-/***
-Always cleaning for now until a persistent
-WASM table function lookup is implemented for all builds.
-Otherwise, function signature mismatch is encountered.
-***/
+inform(options)
 
 let runner = new Runner()
-if (options.clean) {
-	runner.clean(root)
-} else {
-	if (true) runner.clean(root)
-}
-runner.compile(root)
-if (options.run) {
-	runner.run(root)
-}
+if (options.clean) runner.clean(root)
+if (options.compile) runner.compile(root)
+if (options.run) runner.run(root)
 
 function options_() {
 	
 	var options = minimist(process.argv.slice(2), {
-		boolean: ['run', 'clean'],
-		alias: { r: 'run', c: 'clean' },
-		default: { clean: false, run: true }
+		boolean: ['clean', 'compile', 'run'],
+		alias: { x: 'clean', c: 'compile', r: 'run' },
+		default: { clean: false, compile: true, run: true }
 	})
 	if (options._.length === 0) options._ = ['index']
 	options.subject = options._[0]
@@ -51,7 +39,7 @@ function root_(options) {
 	return root
 }
 
-function inform() {
+function inform(options) {
 	
 	console.log('')
 	console.log('Running pluck with node version: ' + process.version)

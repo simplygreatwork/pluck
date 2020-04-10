@@ -1,45 +1,52 @@
 
 const fs = require('fs')
 const path = require('path')
+const jetpack = require('fs-jetpack')
 const parse = require('./parse')
 const query = require('./query')
 const print = require('./print')
-const process = require('./process')
+const process_ = require('./process')
 
 class Table {
 	
-	constructor(system) {
+	constructor(system, state) {
 		
 		this.system = system
+		this.path_ = path.join(process.cwd(), 'build', 'table.json')
+		this.index = {}
 		this.counter = 4096
-		this.elements = {}
+		if (state.id_table === undefined) state.id_table = 4096
+		if (state.index_table === undefined) state.index_table = {}
+		this.cached = state
 	}
 	
 	find_function_id(module_, function_) {
 		
 		let key = module_ + '/' + function_
-		if (this.elements[key] === undefined) {
-			let document = process.find_document(this.system, module_)
+		if (this.index[key] === undefined) {
+			let document = process_.find_document(this.system, module_)
 			if (document) {
-				let func = process.find_function(document, function_)
+				let func = process_.find_function(document, function_)
 				if (func) {
-					this.elements[key] = this.counter++
-					let id = this.elements[key]
+					if (this.cached.index_table[key] === undefined) {
+						this.cached.index_table[key] = this.cached.id_table++
+					}
+					let id = this.index[key] = this.cached.index_table[key]
 					let code = `\n\t(elem (i32.const ${id}) ${function_})`
 					let tree = parse(code)
 					query.append(document.tree[0], tree[0])
 				}
 			}
 		}
-		return this.elements[key]
+		return this.index[key]
 	}
 	
 	find_function(module_, function_) {					// find a new location for this function
 		
 		let key = module_ + '/' + function_
-		let document = process.find_document(this.system, module_)
+		let document = process_.find_document(this.system, module_)
 		if (document) {
-			let func = process.find_function(document, function_)
+			let func = process_.find_function(document, function_)
 			return func
 		}
 	}

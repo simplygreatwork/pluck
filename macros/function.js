@@ -52,7 +52,7 @@ function parts_(path_, document) {
 
 function function_embed(node, index, parents, state, id, signature, system, document) {
 	
-	let func_name = '$signature_static_' + (++system.static_id)
+	let func_name = '$signature_static_' + (++system.state.id_static)
 	let ast = parse(
 		`\n\n\t(func ${func_name} (result i32)
 		\n\t\t(local $function i32)

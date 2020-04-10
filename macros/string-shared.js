@@ -10,7 +10,7 @@ function string_call(parent, node, func_name) {
 
 function function_new(node, string, system) {
 	
-	let id = system.string_id++
+	let id = system.state.id_string++
 	let func_name = '$string_static_' + id
 	let ast = parse(`
 	(func ${func_name} (result i32)

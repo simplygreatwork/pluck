@@ -123,16 +123,11 @@ git checkout 2020-04-07
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
-npm start compile index
-npm start run index
-npm start compile macros
-npm start run macros
-npm start compile stress
-npm start run stress
-npm start compile tiny
-npm start run tiny
-npm start compile compaction
-npm start run compaction
+npm start index
+npm start macros
+npm start stress
+npm start tiny
+npm start compaction
 ```
 
 ### Run locally
@@ -143,21 +138,30 @@ git checkout 2020-04-07
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
-npm start compile index
-npm start run index
-npm start compile macros
-npm start run macros
-npm start compile stress
-npm start run stress
-npm start compile tiny
-npm start run tiny
-npm start compile compaction
-npm start run compaction
+npm start index
+npm start macros
 ```
 
-- You can run any of the files in the examples folder. e.g.
+You can run any of the files in the examples folder. Here are some highlights:
 ```
+npm start compile objects
+npm start compile lists
+npm start compile maps
+npm start compile if
 npm start compile if-else
 npm start compile repeat
+npm start compile repeat-if
+npm start compile repeat-nested
+npm start compile operators
 npm start compile negation
 ```
+
+- You can also optionally clean, compile, and run. e.g.
+```
+npm start index --clean
+npm start index --no-run
+npm start index --no-compile
+npm start index --clean --no-run
+```
+
+If you encounter any troubles compiling or running, use the option `--clean` or delete the `build` folder.

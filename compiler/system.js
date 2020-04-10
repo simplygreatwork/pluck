@@ -4,6 +4,7 @@ const path = require('path')
 const jetpack = require('fs-jetpack')
 const Document = require('./document')
 const Table = require('./table')
+const State = require('./state')
 const Transform = require('./transform')
 const Bus = require('./bus')
 const process_ = require('./process')
@@ -18,10 +19,10 @@ class System {
 		
 		Object.assign(this, options)
 		this.documents = {}
-		this.table = new Table(this)
+		this.state = new State()
+		this.state.deserialize()
+		this.table = new Table(this, this.state)
 		this.bus = new Bus()
-		this.static_id = 0
-		this.string_id = 0
 	}
 	
 	compile(root) {
@@ -34,6 +35,7 @@ class System {
 		this.post_process()
 		this.compile_()
 		this.package_()
+		this.state.serialize()
 	}
 	
 	run(root) {
@@ -71,7 +73,7 @@ class System {
 		let result = true
 		let states = document.states = {
 			source: { path: document.path_absolute},
-			result: { path: path.join(process.cwd(), 'build', 'product', this.project, document.id + '.wasm') },
+			result: { path: path.join(process.cwd(), 'build', 'results', this.project, document.id + '.wasm') },
 			cache: { path: path.join(process.cwd(), 'build', 'cache', document.id + '.wasm') }
 		}
 		if (this.clean) {
@@ -80,6 +82,12 @@ class System {
 		}
 		if (jetpack.exists(states.result.path)) {
 			if (! this['changed?'](states)) {
+				result = false
+			}
+		}
+		if (jetpack.exists(states.cache.path)) {
+			if (! jetpack.exists(states.result.path)) {
+				jetpack.copy(states.cache.path, states.result.path)
 				result = false
 			}
 		}
@@ -127,11 +135,13 @@ class System {
 	post_process() {
 		
 		this.documents.forEach(function(document) {
-			broadcast.emit('document.transforming', document)
-			process_.render_function_imports(document)
-			if (document.process) process_.transform(this, document, this.macros.postlink)
-			document.source = print(document.tree)
-			broadcast.emit('document.transformed', document)
+			if (document.process) {
+				broadcast.emit('document.transforming', document)
+				process_.render_function_imports(document)
+				process_.transform(this, document, this.macros.postlink)
+				document.source = print(document.tree)
+				broadcast.emit('document.transformed', document)
+			}
 		}.bind(this))
 		broadcast.emit('documents.transformed')
 	}
