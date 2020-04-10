@@ -4,7 +4,7 @@ const jetpack = require('fs-jetpack')
 
 class State {
 	
-	constructor(name, start) {
+	constructor() {
 		
 		this.path_ = path.join(process.cwd(), 'build', 'state.json')
 		Object.assign(this, {
