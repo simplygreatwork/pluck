@@ -2,7 +2,7 @@
 	
 	(import "../utility.watm")
 	(import "../memory.watm")
-	(import "../system.watm")
+	(import "../resource.watm")
 	(import "../string.watm")
 	(import "../list.watm")
 	(import "../function.watm")
@@ -17,11 +17,15 @@
 	(func $object_map_prototype (result i32)
 		
 		(local $map i32)
-		(set_local $map (call $system_prototype (string "map")))
-		(call $map_set $map (string "put") (function "$object_map_set_"))
-		(call $map_set $map (string "get") (function "object_map_get"))
-		(call $map_set $map (string "iterate") (function "object_map_iterate"))
-		(call $map_set $map (string "length") (function "object_map_length"))
+		(set_local $map (call $resource_prototype (string "map")))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "put") (function "$object_map_set_"))
+			(call $map_set $map (string "get") (function "object_map_get"))
+			(call $map_set $map (string "iterate") (function "object_map_iterate"))
+			(call $map_set $map (string "length") (function "object_map_length"))
+			(call $resource_prototype_set (string "map") (get_local $map))
+		))
 		(get_local $map)
 	)
 	

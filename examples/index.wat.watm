@@ -5,6 +5,7 @@
 	(import "../library/array.watm")
 	(import "../library/legend.watm")
 	(import "../library/memory.watm")
+	(import "../library/resource.watm")
 	(import "../library/system.watm")
 	(import "../library/string.watm")
 	(import "../library/number.watm")

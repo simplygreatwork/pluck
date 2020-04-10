@@ -8,6 +8,7 @@ module
 	
 	import "../library/utility.watm"
 	import "../library/memory.watm"
+	import "../library/resource.watm"
 	import "../library/system.watm"
 	import "../library/string.watm"
 	import "../library/number.watm"

@@ -3,7 +3,7 @@
 	
 	import "./utility.watm"
 	import "./memory.watm"
-	import "./system.watm"
+	import "./resource.watm"
 	import "./string.watm"
 	import "./number.watm"
 	import "./boolean.watm"
@@ -28,6 +28,14 @@
 		(i32.const 12)
 	)
    
+	(func $object_object_prototype (result i32)
+		
+		(local $map i32)
+		(set_local $map (call $map_new))
+		(call $map_set $map (string "subject") (function "object_subject"))
+		(get_local $map)
+	)
+	
 	(func $object_new (result i32)
 		
 		(local $object i32)

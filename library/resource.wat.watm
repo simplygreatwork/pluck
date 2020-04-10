@@ -1,0 +1,87 @@
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(global $global (import "host" "global") (mut i32))
+	(global $strings (import "host" "strings") (mut i32))
+	(type $void_to_i32 (func (result i32)))
+	(type $i32_to_i32 (func (param i32) (result i32)))
+	(type $i32_i32_to_void (func (param i32) (param i32)))
+	(type $i32_i32_to_i32 (func (param i32) (param i32) (result i32)))
+	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
+	
+	(func $resource_strings (result i32)
+		
+		(local $strings i32)
+		(set_local $strings (get_global $strings))
+		(if (i32.eq (get_global $strings) (i32.const 0)) (then
+			(set_global $strings (call $vector_new_))
+			(set_local $strings (get_global $strings))
+		))
+		(get_local $strings)
+	)
+	
+	(func $resource_prototype (param $key i32) (result i32)
+		
+		(local $global i32)
+		(set_local $global (get_global $global))
+		(if (i32.eq (get_global $global) (i32.const 0)) (then
+			(set_global $global (call $map_new_))
+			(set_local $global (get_global $global))
+		))
+		(call $map_get_ (get_local $global) (get_local $key))
+	)
+	
+	(func $resource_prototype_set (param $key i32) (param $map i32)
+		
+		(local $global i32)
+		(set_local $global (get_global $global))
+		(call $map_set_ (get_local $global) (get_local $key) (get_local $map))
+	)
+	
+	(func $resource_string_static (param $key i32) (result i32)
+		(call $vector_get_ (call $resource_strings) (call $number_new_ (get_local $key)))
+	)
+	
+	(func $resource_string_static_set (param $key i32) (param $string i32)
+		(call $vector_set_ (call $resource_strings) (call $number_new_ (get_local $key)) (get_local $string))
+	)
+	
+	(func $map_new_ (result i32)
+		(call_indirect (type $void_to_i32) (ref "library/map/map_new"))
+	)
+	
+	(func $map_set_ (param $map i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $map) (get_local $key) (get_local $value) (ref "library/map/map_set"))
+	)
+	
+	(func $map_get_ (param $map i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $map) (get_local $key) (ref "library/map/map_get"))
+	)
+	
+	(func $map_iterate_ (param $map i32) (param $function i32) (param $context i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $map) (get_local $function) (get_local $context) (ref "library/map/map_iterate"))
+	)
+	
+	(func $map_length_ (param $map i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $map) (ref "library/map/map_length"))
+	)
+	
+	(func $vector_new_ (result i32)
+		(call_indirect (type $void_to_i32) (ref "library/vector/vector_new"))
+	)
+	
+	(func $vector_set_ (param $vector i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $vector) (get_local $key) (get_local $value) (ref "library/vector/vector_set"))
+	)
+	
+	(func $vector_get_ (param $vector i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $vector) (get_local $key) (ref "library/vector/vector_get"))
+	)
+	
+	(func $number_new_ (param $value i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $value) (ref "library/number/number_new"))
+	)
+)

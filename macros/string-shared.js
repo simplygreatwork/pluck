@@ -15,11 +15,11 @@ function function_new(node, string, system) {
 	let ast = parse(`
 	(func ${func_name} (result i32)
 		(local $string i32)
-		(set_local $string (call $system_string_static (i32.const ${id})))
+		(set_local $string (call $resource_string_static (i32.const ${id})))
 		(if (i32.eq (get_local $string) (i32.const 0)) (then
 			(set_local $string (call $string_new (i32.const ${string.length})))
 			${string_char_sets(string)}
-			(call $system_string_static_set (i32.const ${id}) (get_local $string))
+			(call $resource_string_static_set (i32.const ${id}) (get_local $string))
 			${objectize(system)}
 		))
 		(get_local $string)

@@ -28,7 +28,7 @@ function infix(instruction, precedence, node, index, parents, state) {
 	})
 }
 
-function prefix(instruction, precedence, node, index, parents, state) {
+function prefix(instruction, precedence, node, index, parents, state, system) {
 	
 	let parent = query.last(parents)
 	instruction = shared.dollarize(instruction)

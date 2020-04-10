@@ -2,7 +2,7 @@
 	
 	(import "./utility.watm")
 	(import "./memory.watm")
-	(import "./system.watm")
+	(import "./resource.watm")
 	(import "./string.watm")
 	(import "./number.watm")
 	(import "./vector.watm")
