@@ -8,7 +8,7 @@ function string_call(parent, node, func_name) {
 	query.replace(parent, node, tree)
 }
 
-function function_new(node, string, system) {
+function function_new(node, string, system, objectify) {
 	
 	let id = system.state.id_string++
 	let func_name = '$string_static_' + id
@@ -19,8 +19,8 @@ function function_new(node, string, system) {
 		(if (i32.eq (get_local $string) (i32.const 0)) (then
 			(set_local $string (call $string_new (i32.const ${string.length})))
 			${string_char_sets(string)}
+			${objectify_(objectify, system)}
 			(call $resource_string_static_set (i32.const ${id}) (get_local $string))
-			${objectize(system)}
 		))
 		(get_local $string)
 	)`)
@@ -38,10 +38,14 @@ function string_char_sets(string) {
 	return result.join('\n')
 }
 
-function objectize(system) {
+function objectify_(objectify, system) {
 	
-	if (system.objectize) {
-		return `(set_local $string (call $object_string_from_string (get_local $string)))`
+	if (true) {
+		if (objectify && system.objectify) {
+			return `(set_local $string (call $object_string_from_string (get_local $string)))`
+		} else {
+			return ''
+		}
 	} else {
 		return ''
 	}

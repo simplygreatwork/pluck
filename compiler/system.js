@@ -23,7 +23,7 @@ class System {
 		this.state.deserialize()
 		this.table = new Table(this, this.state)
 		this.bus = new Bus()
-		this.objectize = false
+		this.objectify = false
 	}
 	
 	compile(root) {

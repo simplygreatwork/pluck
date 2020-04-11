@@ -6,6 +6,7 @@ module.exports = {
 		require('../macros/function-prelink')
 	],
 	postlink: [
+		require('../macros/directive'),
 		require('../macros/expression'),
 		require('../macros/object'),
 		require('../macros/string'),

@@ -56,21 +56,21 @@
 	(func $object_list_iterate (param $object i32) (param $function i32) (param $context i32)
 		(call $list_iterate (call $object_subject (get_local $object)) (get_local $function) (get_local $context))
 	)
-    
+   
 	(func $object_list_iterate_primitive (param $object i32) (param $function_id i32) (param $context i32)
 		(call $list_iterate_primitive (call $object_subject (get_local $object)) (get_local $function_id) (get_local $context))
 	)
 
 	(func $object_list_index_of (param $object i32) (param $item i32) (result i32)
-		(call $list_index_of (call $object_subject (get_local $object)) (get_local $item))
+		(call $list_index_of (call $object_subject (get_local $object)) (call $object_subject (get_local $item)))
 	)
 	
 	(func $object_list_get (param $object i32) (param $index i32) (result i32)
-		(call $list_get (call $object_subject (get_local $object)) (get_local $index))
+		(call $list_get (call $object_subject (get_local $object)) (call $object_subject (get_local $index)))
 	)
 	
 	(func $object_list_set (param $object i32) (param $index i32) (param $value i32)
-		(call $list_set (call $object_subject (get_local $object)) (get_local $index) (get_local $value))
+		(call $list_set (call $object_subject (get_local $object)) (call $object_subject (get_local $index)) (call $object_subject (get_local $value)))
 	)
 	
 	(func $object_list_to_string (param $object i32) (result i32)

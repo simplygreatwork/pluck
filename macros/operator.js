@@ -49,7 +49,7 @@ function prefix(instruction, precedence, node, index, parents, state, system) {
 
 function expression_(instruction, system) {
 	
-	if (system.objectize) {
+	if (system.objectify) {
 		return parse (`(call ${instruction} (call $object_boolean_from_boolean (call $boolean_new (i32.const 1))))`)[0]
 	} else {
 		return parse (`(call ${instruction} (call $boolean_new (i32.const 1)))`)[0]

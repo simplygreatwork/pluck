@@ -16,11 +16,11 @@ module.exports = function(system, document) {
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'number')) return
+			let value = parent.value[1].value
 			parent.once('exit', function() {
-				let number = parent.value[1].value
 				query.climb(parents, function(node, index, parents) {
 					let parent = query.last(parents)
-					parent.value[index] = parse(` (call $number_new (i32.const ${node.value}))`)[0]
+					parent.value[index] = parse(` (call $number_new (i32.const ${value}))`)[0]
 				})
 			})
 		}

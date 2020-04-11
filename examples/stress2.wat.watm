@@ -1,6 +1,7 @@
 
 module
 	
+	directive literals as primitives
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/resource.watm"

@@ -80,7 +80,3 @@ function symbol_(each, index, parent, config, symbol) {
 		parent.emit('removed', index)
 	}
 }
-
-function print_config() {
-	console.log('config: ' + JSON.stringify(config, null, 2))
-}

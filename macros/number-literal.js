@@ -14,11 +14,12 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'number')) return
 			let parent = query.last(parents)
+			if (query.is_type_value(parent.value[0], 'symbol', 'number')) return
 			if (query.is_type_value(parent.value[0], 'symbol', 'i32.const')) return
 			if (query.is_type_value(parent.value[0], 'symbol', 'br')) return
 			if (query.is_type_value(parent.value[0], 'symbol', 'br_if')) return
-			if (system.objectize) {
-				parent.value[index] = parse(` (call $object_number_from_primitive (i32.const ${value}))`)[0]
+			if (system.objectify) {
+				parent.value[index] = parse(` (call $object_number_from_primitive (i32.const ${node.value}))`)[0]
 			} else {
 				parent.value[index] = parse(` (call $number_new (i32.const ${node.value}))`)[0]
 			}

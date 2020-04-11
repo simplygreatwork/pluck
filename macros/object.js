@@ -18,12 +18,12 @@ module.exports = function(system, document) {
 				let components = components_(node, index, parents, state, document)
 				if (! (components.subject && components.property)) return
 				if (components.value) {
-					object_set(node, index, parents, state, components)
+					object_set(node, index, parents, state, components, system)
 				} else {
 					if ((! components.arguments) || (components.arguments.length === 0)) {
-						object_get(node, index, parents, state, components)
+						object_get(node, index, parents, state, components, system)
 					} else {
-						object_call(node, index, parents, state, components)
+						object_call(node, index, parents, state, components, system)
 					}
 				}
 			})
@@ -75,11 +75,12 @@ function get_arguments(node) {
 	})
 }
 
-function object_set(node, index, parents, state, components) {
+function object_set(node, index, parents, state, components, system) {
 	
 	let expression = parse(` (call $object_set )`)[0]
 	expression.value[2] = components.subject
 	expression.value[3] = components.property
+	expose_property(expression, system)
 	expression.value[4] = components.value
 	query.climb(parents, function(node, index, parents) {
 		let parent = query.last(parents)
@@ -87,11 +88,12 @@ function object_set(node, index, parents, state, components) {
 	})
 }
 
-function object_get(node, index, parents, state, components) {
+function object_get(node, index, parents, state, components, system) {
 	
 	let expression = parse(` (call $object_get)`)[0]
 	expression.value[2] = components.subject
 	expression.value[3] = components.property
+	expose_property(expression, system)
 	query.climb(parents, function(node, index, parents) {
 		expression = catch_result(expression, query.last(parents), state)
 	})
@@ -101,7 +103,7 @@ function object_get(node, index, parents, state, components) {
 	})
 }
 
-function object_call(node, index, parents, state, components) {
+function object_call(node, index, parents, state, components, system) {
 	
 	let signature = components.arguments.map(function(argument_) {
 		return '_i32'
@@ -109,6 +111,7 @@ function object_call(node, index, parents, state, components) {
 	let expression = parse(` (call $object_call${signature})`)[0]
 	expression.value[2] = components.subject
 	expression.value[3] = components.property
+	expose_property(expression, system)
 	expression.value.push(...components.arguments)
 	query.climb(parents, function(node, index, parents) {
 		expression = catch_result(expression, query.last(parents), state)
@@ -117,6 +120,15 @@ function object_call(node, index, parents, state, components) {
 		let parent = query.last(parents)
 		parent.value[index] = expression
 	})
+}
+
+function expose_property(expression, system) {
+	
+	if (system.objectify) {
+		let expression_ = parse(` (call $object_subject)`)[0]
+		expression_.value[2] = expression.value[3]
+		expression.value[3] = expression_
+	}
 }
 
 function catch_result(expression, parent, state) {

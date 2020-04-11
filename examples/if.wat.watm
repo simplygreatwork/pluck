@@ -1,6 +1,7 @@
 
 module
 	
+	directive literals as primitives
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/resource.watm"
@@ -20,6 +21,8 @@ module
 		system_bootstrap
 		test_if
 		test_if_parentheses
+		if true
+			print "yes"
 		
 	function test_if
 		

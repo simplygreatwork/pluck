@@ -25,8 +25,8 @@ module.exports = function(system, document) {
 						type: 'expression',
 						value: [
 							{ type: 'symbol', value: 'if' },
-							get_condition(node, index, parents),
-							get_then(node, index, parents)
+							get_condition(node, index, parents, state, system),
+							get_then(node, index, parents, state, system)
 						]
 					}
 					query.replace(parent, node, expression)
@@ -48,7 +48,7 @@ function is_resolved(node) {
 	return false
 }
 
-function get_condition(node, index, parents) {
+function get_condition(node, index, parents, state, system) {
 	
 	let result
 	if (query.is_type(node.value[1], 'expression')) {
@@ -63,12 +63,17 @@ function get_condition(node, index, parents) {
 	if (result.value[1] && result.value[1].value.indexOf('operator') > -1) {
 		let expression = parse(` (call $boolean_value)`)[0]
 		expression.value[2] = result
+		if (system.objectify) {
+			let expression_ = parse(` (call $object_subject)`)[0]
+			expression_.value[2] = expression
+			expression = expression_
+		}
 		result = expression
 	}
 	return result
 }
 
-function get_then(node, index, parents) {
+function get_then(node, index, parents, state, system) {
 	
 	let expressions
 	if (query.is_type(node.value[1], 'expression')) {

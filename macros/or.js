@@ -12,7 +12,8 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.infix('operator_or', precedence, node, index, parents, state)
+			let instruction = system.objectify ? 'operator_less_or' : 'operator_or'
+			operator.infix(instruction, precedence, node, index, parents, state)
 		}
 	}
 }

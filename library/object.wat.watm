@@ -70,8 +70,8 @@
 		(call $memory_load (get_local $object) (i32.const 0))
 	)
 	
-	(func $object_subject_set (param $object i32) (param $proto i32)
-		(call $memory_store (get_local $object) (i32.const 0) (get_local $proto))
+	(func $object_subject_set (param $object i32) (param $subject i32)
+		(call $memory_store (get_local $object) (i32.const 0) (get_local $subject))
 	)
 	
 	(func $object_prototype (param $object i32) (result i32)

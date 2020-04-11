@@ -10,6 +10,7 @@
 	(import "../map.watm")
 	(import "../number.watm")
 	(import "../vector.watm")
+	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -80,7 +81,7 @@
 	)
 	
 	(func $object_number_to_string (param $object i32) (result i32)
-		(call $number_to_string (call $object_subject (get_local $object)))
+		(call $object_string_from_string (call $number_to_string (call $object_subject (get_local $object)))) 
 	)
 	
 	(func $object_number_clone (param $object i32) (result i32)

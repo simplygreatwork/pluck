@@ -12,7 +12,8 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.infix('operator_add', precedence, node, index, parents, state)
+			let instruction = system.objectify ? 'operator_add_object' : 'operator_add'
+			operator.infix(instruction, precedence, node, index, parents, state)
 		}
 	}
 }

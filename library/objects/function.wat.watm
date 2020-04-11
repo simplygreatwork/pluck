@@ -11,6 +11,7 @@
 	(import "../console.watm")
 	(import "../vector.watm")
 	(import "../number.watm")
+	(import "./number.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -48,7 +49,7 @@
 	)
 	
 	(func $object_function_id (param $object i32) (result i32)
-		(call $function_id (call $object_subject (get_local $object)))
+		(call $object_number_from_primitive (call $function_id (call $object_subject (get_local $object))))
 	)
 	
 	(func $object_function_parameters (param $object i32) (result i32)

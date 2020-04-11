@@ -12,7 +12,8 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.infix('operator_and', precedence, node, index, parents, state)
+			let instruction = system.objectify ? 'operator_and_object' : 'operator_and'
+			operator.infix(instruction, precedence, node, index, parents, state)
 		}
 	}
 }

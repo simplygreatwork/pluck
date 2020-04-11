@@ -6,6 +6,7 @@ module
 	;; experiment with objects
 	;; experiment with threads
 	
+	directive literals as primitives
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/resource.watm"

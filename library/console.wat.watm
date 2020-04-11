@@ -1,6 +1,6 @@
 
 (module
-
+	
 	(import "./utility.watm")
 	(import "./memory.watm")
 	(import "./resource.watm")
@@ -30,7 +30,7 @@
 		(set_local $result (string " "))
 		(set_local $type (call $memory_type (get_local $value)))
 		(if (i32.eq (get_local $type) (typeof "object")) (then
-			(set_local $value (call object_subject (get_local $value)))
+			(set_local $value (call $object_subject (get_local $value)))
 		))
 		(set_local $type (call $memory_type (get_local $value)))
 		(if (i32.eq (get_local $type) (typeof "string")) (then
@@ -43,7 +43,7 @@
 			(set_local $result (call $boolean_to_string (get_local $value)))
 		))
 		(if (i32.eq (get_local $type) (typeof "object")) (then
-			(set_local $result (call object_to_string (get_local $value)))
+			(set_local $result (call $object_to_string (get_local $value)))
 		))
 		(get_local $result)
 	)

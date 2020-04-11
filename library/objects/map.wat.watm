@@ -10,6 +10,7 @@
 	(import "../map.watm")
 	(import "../number.watm")
 	(import "../vector.watm")
+	(import "./number.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -39,11 +40,11 @@
 	)
 	
 	(func $object_map_set_ (param $object i32) (param $key i32) (param $value i32)
-		(call $map_set (call $object_subject (get_local $object)) (get_local $key) (get_local $value))
+		(call $map_set (call $object_subject (get_local $object)) (call $object_subject (get_local $key)) (call $object_subject (get_local $value)))
 	)
 	
 	(func $object_map_get (param $object i32) (param $key i32) (result i32)
-		(call $map_get (call $object_subject (get_local $object)) (get_local $key))
+		(call $map_get (call $object_subject (get_local $object)) (call $object_subject (get_local $key)))
 	)
 	
 	(func $object_map_iterate (param $object i32) (param $function i32) (param $context i32)
@@ -51,6 +52,6 @@
 	)
 	
 	(func $object_map_length (param $object i32) (result i32)
-		(call $map_length (call $object_subject (get_local $object)))
+		(call $object_number_from_number (call $map_length (call $object_subject (get_local $object))))
 	)
 )

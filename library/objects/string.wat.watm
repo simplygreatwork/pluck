@@ -30,6 +30,7 @@
 			(call $map_set $map (string "compare") (function "object_string_compare"))
 			(call $map_set $map (string "index_of") (function "object_string_index_of"))
 			(call $map_set $map (string "split") (function "object_string_split"))
+			(call $map_set $map (string "to_string") (function "object_string_to_string"))
 			(call $resource_prototype_set (string "string") (get_local $map))
 		))
 		(get_local $map)
@@ -79,9 +80,11 @@
 	
 	(func $object_string_append (param $object i32) (param $string_b i32) (result i32)
 		
+		(local $string i32)
+		(set_local $string ($object_call_void (get_local $string_b) (string "to_string")))
 		(call $object_clone_with_subject 
 			(get_local $object)
-			(call $string_append (call $object_subject (get_local $object)) (get_local $string_b))
+			(call $string_append (call $object_subject (get_local $object)) (call $object_subject (get_local $string)))
 		)
 	)
 	
@@ -99,5 +102,9 @@
 	
 	(func $object_string_split (param $object i32) (param $string_b i32) (result i32)
 		(call $string_split (call $object_subject (get_local $object)) (get_local $string_b))
+	)
+
+	(func $object_string_to_string (param $object i32) (result i32)
+		(get_local $object)
 	)
 )
