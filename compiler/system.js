@@ -30,13 +30,15 @@ class System {
 		
 		this.root = process.cwd()
 		this.project = this.project_name(root)
-		this.load(root)
-		this.resolve()
-		this.sort()
-		this.post_process()
-		this.compile_()
-		this.package_()
-		this.state.serialize()
+		if (this['any-changes ? ']()) {
+			this.load(root)
+			this.resolve()
+			this.sort()
+			this.post_process()
+			this.compile_()
+			this.package_()
+			this.state.serialize()
+		}
 	}
 	
 	run(root) {
@@ -58,7 +60,7 @@ class System {
 		if (! this.documents[path_]) {
 			let document = new Document(path_, this.root)
 			document.load()
-			if (this['process?'](document)) document.process = true
+			if (this['process ? '](document)) document.process = true
 			broadcast.emit('loaded', path.basename(path_) + ' (' + path_ + ')')
 			process_.transform(this, document, this.macros.prelink)
 			process_.link(document)
@@ -67,39 +69,6 @@ class System {
 			}.bind(this))
 			this.documents[path_] = document
 		}
-	}
-	
-	'process?'(document) {
-		
-		let result = true
-		let states = document.states = {
-			source: { path: document.path_absolute},
-			result: { path: path.join(process.cwd(), 'build', 'results', this.project, document.id + '.wasm') },
-			cache: { path: path.join(process.cwd(), 'build', 'cache', document.id + '.wasm') }
-		}
-		if (this.clean) {
-			if (jetpack.exists(states.result.path)) jetpack.remove(states.result.path)
-			if (jetpack.exists(states.cache.path)) jetpack.remove(states.cache.path)
-		}
-		if (jetpack.exists(states.result.path)) {
-			if (! this['changed?'](states)) {
-				result = false
-			}
-		}
-		if (jetpack.exists(states.cache.path)) {
-			if (! jetpack.exists(states.result.path)) {
-				jetpack.copy(states.cache.path, states.result.path)
-				result = false
-			}
-		}
-		return result
-	}
-	
-	'changed?'(states) {
-		
-		states.source.modified = jetpack.inspect(states.source.path, {times: true}).modifyTime
-		states.result.modified = jetpack.inspect(states.result.path, {times: true}).modifyTime
-		return states.source.modified > states.result.modified
 	}
 	
 	resolve() {
@@ -165,9 +134,9 @@ class System {
 		
 		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/package.json')
 		jetpack.write(path_, {
-			modules: this.documents
+			sources: this.documents
 			.map(function(document) {
-				return document.id + '.wasm'
+				return document.id + document.extension
 			})
 		})
 	}
@@ -177,15 +146,16 @@ class System {
 		this.documents = []
 		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/package.json')
 		let config = jetpack.read(path_, 'json')
-		config.modules.forEach(function(path_) {
-			this.documents.push({ path: path_, id: utility.truncate_extensions(path_) })
+		config.sources.forEach(function(path_) {
+			path_ = utility.truncate_extensions(path_)
+			this.documents.push({ path: path_, id: path_ })
 		}.bind(this))
 	}
 	
 	instantiate() {
 		
 		this.documents.forEach(function(document) {
-			let path_ = path.join(process.cwd(), 'build', 'cache', document.path)
+			let path_ = path.join(process.cwd(), 'build', 'cache', document.path + '.wasm')
 			document.wasm = require('fs').readFileSync(path_)
 			this.imports[document.id] = process_.instantiate(document, this.imports)
 			broadcast.emit('document.instantiated', document)
@@ -195,6 +165,60 @@ class System {
 	
 	start() {
 		this.documents.pop().instance.exports.main()
+	}
+	
+	'any-changes ? '() {
+		
+		let result = false
+		if (this.clean) return true
+		let path_ = path.join(process.cwd(), 'build', 'results', this.project + '/package.json')
+		if (! jetpack.exists(path_)) return true 
+		let config = jetpack.read(path_, 'json')
+		config.sources.forEach(function(path_) {
+			let states = {
+				source: { path: path.join(process.cwd(), path_)},
+				result: { path: path.join(process.cwd(), 'build', 'results', this.project, path_) },
+			}
+			if (jetpack.exists(states.result.path)) {
+				if (this['changed ? '](states)) {
+					result = true
+				}
+			}
+		}.bind(this))
+		return result
+	}
+	
+	'process ? '(document) {
+		
+		let result = true
+		let states = document.states = {
+			source: { path: document.path + document.extension},
+			result: { path: path.join(process.cwd(), 'build', 'results', this.project, document.id + '.wasm') },
+			cache: { path: path.join(process.cwd(), 'build', 'cache', document.id + '.wasm') }
+		}
+		if (this.clean) {
+			if (jetpack.exists(states.result.path)) jetpack.remove(states.result.path)
+			if (jetpack.exists(states.cache.path)) jetpack.remove(states.cache.path)
+		}
+		if (jetpack.exists(states.result.path)) {
+			if (! this['changed?'](states)) {
+				result = false
+			}
+		}
+		if (jetpack.exists(states.cache.path)) {
+			if (! jetpack.exists(states.result.path)) {
+				jetpack.copy(states.cache.path, states.result.path)
+				result = false
+			}
+		}
+		return result
+	}
+	
+	'changed ? '(states) {
+		
+		states.source.modified = jetpack.inspect(states.source.path, {times: true}).modifyTime
+		states.result.modified = jetpack.inspect(states.result.path, {times: true}).modifyTime
+		return states.source.modified > states.result.modified
 	}
 }
 

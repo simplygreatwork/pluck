@@ -35,12 +35,12 @@ class Document {
 	load() {
 		
 		this.stages.forEach(function(stage, index) {
-			let extension = this.extension(index)
+			let extension = this.extension_(index)
 			let path_ = this.path + extension
 			if (this.source == null) {
 				if (jetpack.exists(path_) == 'file') {
 					this.source = jetpack.read(path_, 'utf8')
-					this.path_absolute = path_
+					this.extension = extension
 				}
 			}
 			if (this.source != null) {
@@ -49,7 +49,7 @@ class Document {
 		}.bind(this))
 	}
 	
-	extension(index_) {
+	extension_(index_) {
 		
 		let result = []
 		this.stages.forEach(function(each, index) {
