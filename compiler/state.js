@@ -10,10 +10,10 @@ class State {
 		Object.assign(this, {
 			id_static: 0,
 			id_string: 0,
-			id_table: 4096,
 			id_type: 0,
-			index_table: {},
-			index_type: {}
+			index_type: {},
+			id_table: 4096,
+			index_table: {}
 		})
 	}
 	
@@ -25,7 +25,14 @@ class State {
 	}
 	
 	serialize() {
-		jetpack.write(this.path_, JSON.stringify(this, ['id_static', 'id_string', 'id_table', 'index_table']))
+		jetpack.write(this.path_, {
+			id_static: this.id_static,
+			id_string: this.id_string,
+			id_type: this.id_type,
+			index_type: this.index_type,
+			id_table: this.id_table,
+			index_table: this.index_table
+		})
 	}
 }
 

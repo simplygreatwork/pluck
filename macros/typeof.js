@@ -18,7 +18,7 @@ module.exports = function(system, document) {
 			let type = parent.value[1].value
 			if (system.state.index_type[type] === undefined) {
 				system.state.index_type[type] = system.state.id_type
-				if (false) print(parent)
+				if (false) console.log('type ' + type + ' = ' + system.state.id_type)
 				system.state.id_type++
 			}
 			parent.value[0].value = 'i32.const'
@@ -26,8 +26,4 @@ module.exports = function(system, document) {
 			parent.value[1].value = system.state.index_type[type]
 		}
 	}
-}
-
-function print(parent) {
-	console.log('type ' + parent.value[1].value + ' = ' + counter)
 }

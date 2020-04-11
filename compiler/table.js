@@ -15,8 +15,6 @@ class Table {
 		this.path_ = path.join(process.cwd(), 'build', 'table.json')
 		this.index = {}
 		this.counter = 4096
-		if (state.id_table === undefined) state.id_table = 4096
-		if (state.index_table === undefined) state.index_table = {}
 		this.cached = state
 	}
 	
