@@ -11,6 +11,7 @@
 	(import "../number.watm")
 	(import "../boolean.watm")
 	(import "../vector.watm")
+	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
@@ -78,6 +79,6 @@
 	)
 	
 	(func $object_boolean_to_string (param $object i32) (result i32)
-		(call $boolean_to_string (call $object_subject (get_local $object)))
+		(call $object_string_from_string (call $boolean_to_string (call $object_subject (get_local $object)))) 
 	)
 )

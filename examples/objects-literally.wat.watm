@@ -111,6 +111,9 @@ module
 		object function_with_two_arguments "one" "two"
 		object function_with_three_arguments is (function "function_with_three_arguments")
 		object function_with_three_arguments "one" "two" "three"
+		object add_one = (function "add_one")
+		print (object add_one 41)
+		print object
 		
 	function function_with_zero_arguments accepts object
 		
@@ -139,7 +142,7 @@ module
 		
 	function add_one accepts object value (result i32)
 		
-		return (number_add value 1)
+		return (value add 1)
 		
 	function heading accepts value
 		
