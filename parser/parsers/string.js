@@ -6,7 +6,7 @@ module.exports = function() {
 	return p.seq ([
 		p.str ('"'),
 		p.rep (
-			p.char ('-+\/\\\\=$:,<>!_.\(\)a-zA-Z0-9 \t'),
+			p.char ('-+\/\'\\\\=$:,<>!_.\(\)a-zA-Z0-9 \t'),
 			0
 		),
 		p.str ('"'),

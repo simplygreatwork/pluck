@@ -43,44 +43,45 @@ module
 		
 		heading "create_list"
 		set list to (object_list_new)
-		list append "0"
-		list_append (list subject) "1"
-		list append "2"
+		list append "zero"
+		list_append (list subject) "one"
+		list append "two"
 		list iterate (function "create_list_iterate_each") 0
 		list get 0
+		print (list get 0)
 		print (list get 1)
+		print (list get 2)
 		
 	function create_list_iterate_each accepts list item value index context
 		
-		print value
+		print ("value: '" append (value append ("', index: " append index)))
 		
 	function create_map
 		
 		heading "create_map"
 		set map to (object_map_new)
-		map put "zero" "0"
-		map put "one" "1"
-		map put "two" "2"
+		map put "0" "zero"
+		map put "1" "one"
+		map put "2" "two"
 		map iterate (function "create_map_iterate_each") 0
-		print (map get "zero")
-		print (map get "one")
-		print (map_get (map subject) (string "two"))
-		map get "two"
+		print (map get "0")
+		print (map get "1")
+		print (map_get (map subject) (string "2"))
+		map get "2"
 		
 	function create_map_iterate_each accepts map key value index context
 		
-		print key
-		print value
+		print ("key: '" append (key append ("', value: '" append (value append ("', index: " append index)))))
 		
 	function create_string
 		
 		heading "create_string"
-		print ("abc" append "123")
+		print ("Hello" append " world!")
 		
 	function create_number
 		
 		heading "create_number"
-		print ((1 add 2) add 3)
+		print ((20 add 20) add 2)
 		
 	function create_boolean
 		
