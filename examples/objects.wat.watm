@@ -1,7 +1,7 @@
 
 module
 	
-	directive literals as primitives
+	directive literals as objects
 	import "../library/utility.watm"
 	import "../library/memory.watm"
 	import "../library/resource.watm"
@@ -16,6 +16,7 @@ module
 	import "../library/list.watm"
 	import "../library/map.watm"
 	import "../library/vector.watm"
+	import "../library/operator.watm"
 	import "../library/objects/string.watm"
 	import "../library/objects/list.watm"
 	import "../library/objects/map.watm"
@@ -25,7 +26,7 @@ module
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
 	
-	;; object-orientation work in progress (with literal primitives)
+	;; object-orientation work in progress (with literal objects)
 	
 	function main
 		
@@ -42,65 +43,59 @@ module
 		
 		heading "create_list"
 		set list to (object_list_new)
-		list append "0"
-		list_append (list subject) "1"
-		list append "2"
+		list append "zero"
+		list_append (list subject) "one"
+		list append "two"
 		list iterate (function "create_list_iterate_each") 0
 		list get 0
+		print (list get 0)
 		print (list get 1)
+		print (list get 2)
 		
 	function create_list_iterate_each accepts list item value index context
 		
-		print value
+		print ("value: '" append (value append ("', index: " append index)))
 		
 	function create_map
 		
 		heading "create_map"
 		set map to (object_map_new)
-		map put "zero" "0"
-		map put "one" "1"
-		map put "two" "2"
+		map put "0" "zero"
+		map put "1" "one"
+		map put "2" "two"
 		map iterate (function "create_map_iterate_each") 0
-		print (map get "zero")
-		print (map_get (map subject) "one")
-		print (map get "two")
-		map get "zero"
+		print (map get "0")
+		print (map get "1")
+		print (map_get (map subject) (string "2"))
+		map get "2"
 		
 	function create_map_iterate_each accepts map key value index context
 		
-		print key
-		print value
+		print ("key: '" append (key append ("', value: '" append (value append ("', index: " append index)))))
 		
 	function create_string
 		
 		heading "create_string"
-		set string to (object_string_from_string "abc")
-		set string to (string append "123")
-		print string
+		print ("Hello" append " world!")
 		
 	function create_number
 		
 		heading "create_number"
-		set a to (object_number_from_number 1)
-		set b to (object_number_from_number 2)
-		set c to (object_number_from_number 3)
-		set number to (a add b)
-		set number to (number add c)
-		print number
+		print ((20 add 20) add 2)
 		
 	function create_boolean
 		
 		heading "create_boolean"
-		set boolean to (object_boolean_from_string "true")
-		print boolean
-		set boolean to (object_boolean_from_string "false")
-		print boolean
+		print ("true: " append true)
+		print ("false: " append false)
+		set condition to (1 plus 1 equals 2)
+		if condition (print "1 plus 1 equals 2")
 		
 	function create_function
 		
 		heading "create_function"
 		set function_ to (object_function_from_function (function "create_list_iterate_each"))
-		print (object_number_from_primitive (function_ id))
+		print (function_ id)
 		print (function_ result)
 		
 	function create_object
@@ -108,7 +103,7 @@ module
 		heading "create_object"
 		set object to (object_new)
 		object value = 42
-		print (string_append "object value: " (number_to_string (object "value")))
+		print ("object value: " append (object value))
 		object function_with_zero_arguments = (function "function_with_zero_arguments")
 		object function_with_zero_arguments
 		object function_with_one_argument is (function "function_with_one_argument")
@@ -127,28 +122,28 @@ module
 		
 	function function_with_one_argument accepts object one
 		
-		set string to "callable_with_arguments called with value: "
-		set string to (string_append string (string_append one " "))
+		set string to "function_with_one_argument called with value: "
+		set string to (string append one)
 		print string
 		
 	function function_with_two_arguments accepts object one two
 		
-		set string to "callable_with_arguments called with value: "
-		set string to (string_append string (string_append one ", "))
-		set string to (string_append string (string_append two " "))
+		set string to "function_with_two_arguments called with values: "
+		set string to (string append (one append ", "))
+		set string to (string append (two append " "))
 		print string
 		
 	function function_with_three_arguments accepts object one two three
 		
-		set string to "callable_with_arguments called with value: "
-		set string to (string_append string (string_append one ", "))
-		set string to (string_append string (string_append two ", "))
-		set string to (string_append string (string_append three " "))
+		set string to "function_with_two_arguments called with values: "
+		set string to (string append (one append ", "))
+		set string to (string append (two append ", "))
+		set string to (string append (three append " "))
 		print string
 		
 	function add_one accepts object value (result i32)
 		
-		return (number_add value 1)
+		return (value add 1)
 		
 	function heading accepts value
 		
