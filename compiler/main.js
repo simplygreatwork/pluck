@@ -32,7 +32,7 @@ function root_(options) {
 	root = root + (! root.endsWith('.wat.watm' > 0) ? '.wat.watm' : '')
 	if (! jetpack.exists(root)) {
 		console.error('')
-		console.error('>>>>> The file was not found so exiting now. <<<<<')
+		console.error(`>>>>> Error: The root source file could not be loaded: ${root} <<<<<`)
 		console.error('')
 		process.exit(1)
 	}

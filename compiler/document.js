@@ -13,6 +13,7 @@ class Document {
 	
 	constructor(path_, root) {
 		
+		this.original = path_
 		this.path = utility.truncate_extensions(path_)
 		this.id = path.relative(root.toString(), this.path.toString())
 		this.define_stages()
@@ -47,6 +48,12 @@ class Document {
 				stage.process(this)
 			}
 		}.bind(this))
+		if (! this.source) {
+			console.error('')
+			console.error(`>>>>> Error: A source file could not be loaded: ${this.original} <<<<<`)
+			console.error('')
+			process.exit(1)
+		}
 	}
 	
 	extension_(index_) {
