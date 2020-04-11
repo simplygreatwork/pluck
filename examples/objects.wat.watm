@@ -57,11 +57,13 @@ module
 		heading "create_map"
 		set map to (object_map_new)
 		map put "zero" "0"
+		map put "one" "1"
 		map put "two" "2"
 		map iterate (function "create_map_iterate_each") 0
+		print (map get "zero")
 		print (map_get (map subject) "one")
+		print (map get "two")
 		map get "zero"
-		print (map get "one")
 		
 	function create_map_iterate_each accepts map key value index context
 		

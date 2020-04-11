@@ -1,18 +1,18 @@
 
 (module
 	
-	import "./utility.watm"
-	import "./memory.watm"
-	import "./resource.watm"
-	import "./string.watm"
-	import "./number.watm"
-	import "./boolean.watm"
-	import "./map.watm"
-	import "./list.watm"
-	import "./function.watm"
-	import "./vector.watm"
-	import "host" "table" (table 1 anyfunc)
-	memory (import "host" "memory") 1
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./resource.watm")
+	(import "./string.watm")
+	(import "./number.watm")
+	(import "./boolean.watm")
+	(import "./map.watm")
+	(import "./list.watm")
+	(import "./function.watm")
+	(import "./vector.watm")
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
 	(type $void_to_void (func))
 	(type $void_to_i32 (func (result i32)))
 	(type $i32_to_void (func (param $object i32)))

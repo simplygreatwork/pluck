@@ -177,7 +177,7 @@ class System {
 		config.sources.forEach(function(path_) {
 			let states = {
 				source: { path: path.join(process.cwd(), path_)},
-				result: { path: path.join(process.cwd(), 'build', 'results', this.project, path_) },
+				result: { path: path.join(process.cwd(), 'build', 'results', this.project, utility.truncate_extensions(path_) + '.wasm') },
 			}
 			if (jetpack.exists(states.result.path)) {
 				if (this['changed ? '](states)) {
@@ -201,7 +201,7 @@ class System {
 			if (jetpack.exists(states.cache.path)) jetpack.remove(states.cache.path)
 		}
 		if (jetpack.exists(states.result.path)) {
-			if (! this['changed?'](states)) {
+			if (! this['changed ? '](states)) {
 				result = false
 			}
 		}
