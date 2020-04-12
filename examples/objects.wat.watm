@@ -135,7 +135,7 @@ module
 		
 	function function_with_three_arguments accepts object one two three
 		
-		set string to "function_with_two_arguments called with values: "
+		set string to "function_with_three_arguments called with values: "
 		set string to (string append (one append ", "))
 		set string to (string append (two append ", "))
 		set string to (string append (three append " "))
