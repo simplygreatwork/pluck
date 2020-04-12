@@ -40,12 +40,8 @@ function string_char_sets(string) {
 
 function objectify_(objectify, system) {
 	
-	if (true) {
-		if (objectify && system.objectify) {
-			return `(set_local $string (call $object_string_from_string (get_local $string)))`
-		} else {
-			return ''
-		}
+	if (objectify && system.objectify) {
+		return `(set_local $string (call $object_string_from_string (get_local $string)))`
 	} else {
 		return ''
 	}
