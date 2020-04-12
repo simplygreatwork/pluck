@@ -15,22 +15,32 @@ module.exports = function(system, document) {
 			let parent = query.last(parents)
 			if (! query.is_type_value(parent.value[0], 'symbol', 'func')) return
 			if (query.is_depth(parents, 2)) return
-			if (query.is_length_exceeding(parent, 1)) {
-				let func_name = parent.value[1].value
-				query.climb(parents, function(node, index, parents) {
-					let parent = query.last(parents)
-					if (! parent) return 
-					if (! parent.value[0]) return 
-					if (query.is_type_value(parent.value[0], 'symbol', 'module')) return
-					if (query.is_type_value(parent.value[0], 'symbol', 'import')) return
-					if (query.is_type_value(parent.value[0], 'symbol', 'type')) return
-					let length = parents[0].value.length
-					query.append(parents[0], node)
-					parents[0].emit('inserted', length)
-					let expression = parse(` (function "${func_name}")`)[0]
-					parent.value[index] = expression
-				})
-			}
+			if (! query.is_length_exceeding(parent, 1)) return
+			query.climb(parents, function(node_, index_, parents_) {
+				let parent_ = query.last(parents_)
+				if (query.is_type_value(parent_.value[0], 'symbol', 'module')) return
+				if (query.is_type_value(parent_.value[0], 'symbol', 'import')) return
+				if (query.is_type_value(parent_.value[0], 'symbol', 'type')) return
+				let func_name = func_name_(parent, system)
+				let length = parents_[0].value.length
+				query.append(parents_[0], node_)
+				parents_[0].emit('inserted', length)
+				let expression = parse(` (function "${func_name}")`)[0]
+				parent_.value[index_] = expression
+			})
 		}
+	}
+}
+
+function func_name_(parent, system) {
+	
+	if (query.is_type(parent.value[1], 'symbol')) {
+		return parent.value[1].value
+	} else {
+		let symbol = '$function_static_' + (++system.state.id_function)
+		let expression = parse(`( ${symbol})`)[0].value[0]
+		parent.value.splice(1, 0, expression)
+		parent.emit('inserted', 1)
+		return symbol
 	}
 }

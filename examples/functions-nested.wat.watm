@@ -27,15 +27,15 @@ module
 		
 	function create_functions
 		
-		set a to (func func_a
+		set a to (func
 			print "hello"
 		)
 		a
-		set b to (func func_b (result i32)
+		set b to (func (result i32)
 			return 42
 		)
 		print (b)
-		set c to (func func_c (param $value i32) (result i32)
+		set c to (func (param $value i32) (result i32)
 			return (value plus 1)
 		)
 		print (c 41)
