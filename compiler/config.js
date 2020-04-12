@@ -3,7 +3,8 @@ module.exports = {
 	
 	prelink: [
 		require('../macros/func-prelink'),
-		require('../macros/function-prelink')
+		require('../macros/function-prelink'),
+		require('../macros/accepts'),
 	],
 	postlink: [
 		require('../macros/directive'),

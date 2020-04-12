@@ -23,9 +23,9 @@ module
 	function main
 		
 		system_bootstrap
-		create_functions
+		create_functions "one"
 		
-	function create_functions
+	function create_functions accepts one
 		
 		set a to (func
 			print "hello"
@@ -35,7 +35,7 @@ module
 			return 42
 		)
 		print (b)
-		set c to (func (param $value i32) (result i32)
+		set c to (func accepts value (result i32)
 			return (value plus 1)
 		)
 		print (c 41)
