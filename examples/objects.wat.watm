@@ -95,7 +95,7 @@ module
 		
 		heading "create_function"
 		set function_ to (object_function_from_function (function "create_list_iterate_each"))
-		print (function_ id)
+		print (number_new (function_id function_))
 		print (function_ result)
 		
 	function create_object

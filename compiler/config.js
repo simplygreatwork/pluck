@@ -8,7 +8,7 @@ module.exports = {
 	postlink: [
 		require('../macros/directive'),
 		require('../macros/expression'),
-		require('../macros/object'),
+		require('../macros/evaluate'),
 		require('../macros/string'),
 		require('../macros/string-literal'),
 		require('../macros/number'),

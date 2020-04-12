@@ -26,8 +26,8 @@ module
 	function create_function
 		
 		set func_ to (function "function_with_arguments")
-		set result to (function_result func_)
-		print result
+		print (number_new (function_id func_))
+		print (function_result func_)
 		
 	function function_with_arguments (param $one i32) (param $two i32) (param $three i32) (result i32)
 		

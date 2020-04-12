@@ -10,28 +10,33 @@ module
 	import "../library/number.watm"
 	import "../library/boolean.watm"
 	import "../library/types.watm"
+	import "../library/function.watm"
+	import "../library/object.watm"
 	import "../library/console.watm"
+	import "../library/list.watm"
+	import "../library/map.watm"
 	import "../library/vector.watm"
+	import "../library/operator.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
-	
-	;; work in process - merely illustrative for now
 	
 	function main
 		
 		system_bootstrap
+		create_functions
 		
-		set method to (function name accepts value
-			print value
-		)
-		method "value"
+	function create_functions
 		
-		set method to (function accepts value
-			print value
+		set a to (func func_a
+			print "hello"
 		)
-		method "value"
+		a
+		set b to (func func_b (result i32)
+			return 42
+		)
+		print (b)
+		set c to (func func_c (param $value i32) (result i32)
+			return (value plus 1)
+		)
+		print (c 41)
 		
-		parent on "exit" (function accepts node index
-			print "exited"
-		)
-		parent emit "exit" node index

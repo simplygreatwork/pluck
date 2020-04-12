@@ -16,6 +16,7 @@ let suite = [
 	'equals-and',
 	'experimental',
 	'functions',
+	'functions-nested',
 	'if-else',
 	'if',
 	'index',
