@@ -43,8 +43,7 @@ class Transform {
 			this.walk(each, index_, parents, state)
 		}.bind(this))
 		node.emit('exit')
-		let parent = query.last(parents, 1)
-		if (false) strike(node, parent)										// issue: failing now that using pre and post macros
+		if (false) strike(node, parents)										// issue: failing now that using pre and post macros
 		parents.pop(node)
 	}
 	
@@ -68,8 +67,7 @@ class Transform {
 			node.index = -1
 		})
 		for (node.index = 0; node.index < node.length; node.index++) {
-			let result = function_(node.value[node.index], node.index)
-			if (result === false) break
+			function_(node.value[node.index], node.index)
 		}
 		inserted()
 		removed()
@@ -112,8 +110,9 @@ class Transform {
 		delete node.emit
 	}
 	
-	strike(node, parent) {
+	strike(node, parents) {
 		
+		let parent = query.last(parents, 1)
 		if (node.on) node.on('exit', function() {
 			if (parent && parent.once) parent.once('exit', function() {
 				this.uninstall(node)													// revisit the reasoning for this nested logic

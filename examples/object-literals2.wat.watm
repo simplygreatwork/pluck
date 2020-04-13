@@ -40,5 +40,16 @@ module
 			one "1"
 			two "2"
 			three "3"
+			more (list "a" "b" "c")
 		)
+		print (value as json)
 		
+	function create_object_literal_again
+		
+		set value to (map
+			one "1"
+			two "2"
+			three "3"
+			more (list "a" "b" "c")
+		)
+		print (value as json)

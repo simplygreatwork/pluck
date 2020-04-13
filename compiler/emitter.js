@@ -25,12 +25,9 @@ function emit(key) {
 	let channel = this.channels[key]
 	if (channel) {
 		for (let i = 0; i < channel.length; i++) {
-			let index = channel.length - i - 1			// reverse order yet permitting growth of length (still review)
-			result = channel[index].apply(this, Array.from(arguments).splice(1))
-			if (result == false) return false
+			channel[channel.length - i - 1].apply(this, Array.from(arguments).splice(1))
 		}
 	}
-	return true
 }
 
 module.exports = {

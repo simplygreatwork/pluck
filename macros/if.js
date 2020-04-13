@@ -24,7 +24,7 @@ module.exports = function(system, document) {
 					let expression = {
 						type: 'expression',
 						value: [
-							{ type: 'symbol', value: 'if' },
+							{ type: 'symbol', value: 'if'},
 							get_condition(node, index, parents, state, system),
 							get_then(node, index, parents, state, system)
 						]

@@ -107,7 +107,8 @@ function instantiate(document, imports) {
 function find_module_imports(document) {
 	
 	let result = []
-	walk({ root: document.tree[0], visit: function(node, index, parents) {
+	walk({ root: document.tree[0], enter: function(node, index, parents) {
+		if (! query.is_type(node, 'expression')) return
 		if (query.is_length(node, 2)) {
 			if (query.is_type_value(node.value[0], 'symbol', 'import')) {
 				if (query.is_type(node.value[1], 'string')) {
@@ -122,16 +123,15 @@ function find_module_imports(document) {
 function find_function_imports(document) {
 	
 	let result = {}
-	walk({ root: document.tree[0], visit: function(node, index, parents) {
+	walk({ root: document.tree[0], enter: function(node, index, parents) {
+		if (! query.is_type(node, 'expression')) return
 		if (query.is_depth(parents, 1)) {
-			if (query.is_type(node, 'expression')) {
-				if (node.value.length > 2) {
-					if (query.is_type_value(node.value[0], 'symbol', 'import')) {
-						let module = node.value[1].value
-						let func = node.value[2].value
-						result[module] = result[module] || {}
-						result[module][func] = node
-					}
+			if (node.value.length > 2) {
+				if (query.is_type_value(node.value[0], 'symbol', 'import')) {
+					let module = node.value[1].value
+					let func = node.value[2].value
+					result[module] = result[module] || {}
+					result[module][func] = node
 				}
 			}
 		}
@@ -142,7 +142,8 @@ function find_function_imports(document) {
 function find_functions(document) {
 	
 	let result = []
-	walk({ root: document.tree[0], visit: function(node, index, parents) {
+	walk({ root: document.tree[0], enter: function(node, index, parents) {
+		if (! query.is_type(node, 'expression')) return
 		if (query.is_depth(parents, 1)) {
 			if (query.is_type(node, 'expression')) {
 				if (query.is_type_value(node.value[0], 'symbol', 'func')) {
@@ -157,7 +158,8 @@ function find_functions(document) {
 function find_function_exports(document) {
 	
 	let result = {}
-	walk({ root: document.tree[0], visit: function(node, index, parents) {
+	walk({ root: document.tree[0], enter: function(node, index, parents) {
+		if (! query.is_type(node, 'expression')) return
 		if (query.is_depth(parents, 1)) {
 			if (query.is_type(node, 'expression')) {
 				if (query.is_type_value(node.value[0], 'symbol', 'export')) {
@@ -218,14 +220,13 @@ function has_function_import(document, module, func) {
 function find_function_signature(func) {
 	
 	let result = []
-	walk({ root: func, visit: function(node, index, parents) {
-		if (query.is_type(node, 'expression')) {
-			if (query.is_type_value(node.value[0], 'symbol', 'param')) {
-				result.push(node)
-			}
-			if (query.is_type_value(node.value[0], 'symbol', 'result')) {
-				result.push(node)
-			}
+	walk({ root: func, enter: function(node, index, parents) {
+		if (! query.is_type(node, 'expression')) return
+		if (query.is_type_value(node.value[0], 'symbol', 'param')) {
+			result.push(node)
+		}
+		if (query.is_type_value(node.value[0], 'symbol', 'result')) {
+			result.push(node)
 		}
 	}})
 	return result
