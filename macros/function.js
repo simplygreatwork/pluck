@@ -53,7 +53,7 @@ function parts_(path_, document) {
 function function_embed(node, index, parents, state, id, signature, system, document) {
 	
 	let func_name = '$signature_static_' + (++system.state.id_signature)
-	let ast = parse(
+	let tree = parse(
 		`\n\n\t(func ${func_name} (result i32)
 		\n\t\t(local $function i32)
 		\n\t\t(local $parameters i32)
@@ -64,8 +64,8 @@ function function_embed(node, index, parents, state, id, signature, system, docu
 		\n\t\t(call $function_new (i32.const ${id}) (get_local $parameters) (get_local $result))
 		\n)
 	`)[0]
-	document.walk(ast, 0, parents, {})
-	query.append(node, ast)
+	document.walk(tree, 0, parents, {})
+	query.append(node, tree)
 	return func_name
 }
 

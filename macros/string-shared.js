@@ -12,7 +12,7 @@ function function_new(node, string, system, objectify) {
 	
 	let id = system.state.id_string++
 	let func_name = '$string_static_' + id
-	let ast = parse(`
+	let tree = parse(`
 	(func ${func_name} (result i32)
 		(local $string i32)
 		(set_local $string (call $resource_string_static (i32.const ${id})))
@@ -23,8 +23,8 @@ function function_new(node, string, system, objectify) {
 			(call $resource_string_static_set (i32.const ${id}) (get_local $string))
 		))
 		(get_local $string)
-	)`)
-	query.append(node, ast[0])
+	)`)[0]
+	query.append(node, tree)
 	return func_name
 }
 

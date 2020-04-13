@@ -1,7 +1,7 @@
 
 const walk = require('./walk')
 
-function preserved(tree) {
+function print_preserved(tree) {
 	
 	let result = []
 	walk({
@@ -27,9 +27,9 @@ function preserved(tree) {
 	return result.join('')
 }
 
-// if any expression will fit under 80 chars then print on a single line
+// if any expression ancestor will fit under 80 chars (with indent) then print on a single line
 
-function pretty(tree) {
+function print_tidy(tree) {
 	
 	let result = []
 	walk({
@@ -75,4 +75,4 @@ function padding(parents) {
 	return result.join('')
 }
 
-module.exports = preserved
+module.exports = print_preserved

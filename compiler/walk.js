@@ -3,7 +3,6 @@ const utility = require('./utility')
 
 function walk(options) {
 	
-	if (options.visit) options.enter = options.visit
 	let root = options.root
 	let enter = options.enter || noop
 	let exit = options.exit || noop

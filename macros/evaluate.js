@@ -18,7 +18,7 @@ module.exports = function(system, document) {
 				if (! query.is_type(node.value[0], 'expression')) return
 				query.climb(parents, function(node, index, parents_) {
 					let parent = query.last(parents_)
-					let signature = node.value.map(function(value, index) {
+					let signature = node.value.map(function(each, index) {
 						return '_i32'
 					}).join('')
 					let expression = parse(` (call $system_evaluate${signature})`)[0]
@@ -36,11 +36,11 @@ module.exports = function(system, document) {
 
 function symbols_stringify(node, index, parents, state, document) {
 	
-	node.value.forEach(function(value, index) {
-		if (query.is_type(value, 'symbol')) {
-			value.type = 'string'
+	node.value.forEach(function(each, index) {
+		if (query.is_type(each, 'symbol')) {
+			each.type = 'string'
 			let parent = query.last(parents)
-			document.walk(value, index, parents, state)
+			document.walk(each, index, parents, state)
 		}
 	})
 }

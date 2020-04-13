@@ -172,7 +172,7 @@
 	(func $string_split (param $string i32) (param $string_b i32) (result i32)
 		(i32.const 0)
 	)
-
+	
 	(func $string_to_string (param $string i32) (result i32)
 		(get_local $string)
 	)
