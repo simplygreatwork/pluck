@@ -12,7 +12,8 @@ module.exports = function(system, document, precedence) {
 		
 		enter : function(node, index, parents, state) {
 			
-			operator.prefix('operator_not', precedence, node, index, parents, state, system)
+			let instruction = system.objectify ? 'operator_not_object' : 'operator_not'
+			operator.prefix(instruction, precedence, node, index, parents, state, system)
 		}
 	}
 }

@@ -16,6 +16,7 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(parent.value[0], 'symbol', 'function')) return
 			if (! query.is_type(parent.value[1], 'symbol')) return
 			parent.value[0].value = 'func'
+			if (false) parent.emit('rewind')
 			if (false) document.walk(node, index, parents, state)
 		}
 	}
