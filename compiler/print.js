@@ -28,6 +28,7 @@ function print_preserved(tree) {
 }
 
 // if any expression ancestor will fit under 80 chars (with indent) then print on a single line
+// actually instead use rules for: import, func, param, result, if, then, else, call_indirect
 
 function print_pretty(tree) {
 	
