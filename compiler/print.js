@@ -29,7 +29,7 @@ function print_preserved(tree) {
 
 // if any expression ancestor will fit under 80 chars (with indent) then print on a single line
 
-function print_tidy(tree) {
+function print_pretty(tree) {
 	
 	let result = []
 	walk({
