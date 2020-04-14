@@ -37,6 +37,7 @@
 		(call $test_string_append)
 		(call $test_string_compare)
 		(call $test_number_add)
+		(call $test_number_iterate)
 		(call $test_boolean_and)
 		(call $test_list)
 		(call $test_map)
@@ -205,7 +206,7 @@
 		(call $print_string (string "------------------------------"))
 		(call $print_string (string "Iterating a number"))
 		(call $print_string (string "------------------------------"))
-		(call $number_iterate (call $number_new (i32.const 5) (function "test_number_iterate_each")) 0)
+		(call $number_iterate (call $number_new (i32.const 5)) (function "test_number_iterate_each") 0)
 	)
 	
 	(function $test_number_iterate_each (param $number i32) (param $index i32) (param $context i32)
