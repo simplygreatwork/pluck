@@ -205,14 +205,13 @@
 		(call $print_string (string "------------------------------"))
 		(call $print_string (string "Iterating a number"))
 		(call $print_string (string "------------------------------"))
-		(call $number_iterate (call $number_new (i32.const 5)))
+		(call $number_iterate (call $number_new (i32.const 5) (function "test_number_iterate_each")) 0)
 	)
 	
-	(function $test_number_iterate_each (param $index i32)
-		
-		(call $print_integer (get_local $index))
+	(function $test_number_iterate_each (param $number i32) (param $index i32) (param $context i32)
+		(call $print_integer (call $number_value (get_local $index)))
 	)
-
+	
 	(function $test_boolean_and
 		
 		(local $boolean_a i32)
