@@ -14,6 +14,7 @@
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $global (import "host" "global") (mut i32))
+	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
 	
 	(func $object_number_prototype (result i32)
 		
@@ -76,8 +77,25 @@
 		(call $number_compare (call $object_subject (get_local $a)) (get_local $b))
 	)
 	
-	(func $object_number_iterate (param $object i32)
-		(call $number_iterate (call $object_subject (get_local $object)))
+	(func $object_number_iterate (param $object i32) (param $function i32)
+		
+		(local $context i32)
+		(set_local $context (call $map_new))
+		(call $map_set (get_local $context) (string "function") (get_local $function))
+		(call $number_iterate (call $object_subject (get_local $object)) (function "$object_number_iterate_each") (get_local $context))
+	)
+	
+	(func $object_number_iterate_each (param $number i32) (param $index i32) (param $context i32)
+		
+		(local $context_ i32)
+		(local $function i32)
+		(set_local $context_ (call $map_get (get_local $context) (string "context")))
+		(set_local $function (call $map_get (get_local $context) (string "function")))
+		(set_local $index (call $object_number_from_number (get_local $index)))
+		(call_indirect (type $i32_i32_i32_to_void)
+			(get_local $number) (get_local $index) (get_local $context)
+			(call $function_id (get_local $function))
+		)
 	)
 	
 	(func $object_number_to_string (param $object i32) (result i32)

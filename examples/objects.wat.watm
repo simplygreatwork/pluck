@@ -55,7 +55,7 @@ module
 		list pop
 		set list to (list map (function "create_list_map_each"))
 		list iterate (function "create_list_iterate_each") 0
-		print (list join ", ")
+		print ("joined: " append (list join ", "))
 		
 	function create_list_map_each accepts value (result i32)
 		
@@ -87,11 +87,20 @@ module
 		
 		heading "create_string"
 		print ("Hello" append " world!")
+		set string to "Hello world!"
+		string print
 		
 	function create_number
 		
 		heading "create_number"
 		print ((20 add 20) add 2)
+		print "iterating over the number 3:"
+		set number to 3	
+		number "iterate" (function "create_number_iterate_each")
+		
+	function create_number_iterate_each accepts number index context
+		
+		print index
 		
 	function create_boolean
 		

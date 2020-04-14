@@ -1,0 +1,107 @@
+(module
+	
+	
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	(global $global (import "host" "global") (mut i32))
+	(type $void_to_void (func))
+	(type $void_to_i32 (func (result i32)))
+	(type $i32_to_void (func (param i32)))
+	(type $i32_to_i32 (func (param i32) (result i32)))
+	(type $i32_i32_to_void (func (param i32) (param i32)))
+	(type $i32_i32_to_i32 (func (param i32) (param i32) (result i32)))
+	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
+	(type $i32_i32_i32_to_i32 (func (param i32) (param i32) (param i32) (result i32)))
+	(type $i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32)))
+	(type $i32_i32_i32_i32_to_i32 (func (param i32) (param i32) (param i32) (param i32) (result i32)))
+	(type $i32_i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32) (param i32)))
+	(type $i32_i32_i32_i32_i32_to_i32 (func (param i32) (param i32) (param i32) (param i32) (param i32) (result i32)))
+	
+	(func $memory_type_by_pointer_ (param $pointer i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (ref "library/core/memory_type_by_pointer_"))
+	)
+	
+	(func $memory_id_by_pointer_ (param $pointer i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (ref "library/core/memory_id_by_pointer_"))
+	)
+	
+	(func $memory_load_ (param $address i32) (param $offset i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $address) (get_local $offset) (ref "library/core/memory_load_"))
+	)
+	
+	(func $memory_copy_ (param $a i32) (param $b i32) (param $length i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $a) (get_local $b) (get_local $length) (ref "library/core/memory_copy_"))
+	)
+	
+	(func $legend_value_set_ (param $legend i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $legend) (get_local $key) (get_local $value) (ref "library/core/legend_value_set_"))
+	)
+	
+	(func $legend_value_get_ (param $legend i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $legend) (get_local $key) (ref "library/core/legend_value_get_"))
+	)
+	
+	(func $legend_array_repoint_ (param $legend i32) (param $array i32) (param $from i32) (param $to i32)
+		(call_indirect (type $i32_i32_i32_i32_to_void) (get_local $legend) (get_local $array) (get_local $from) (get_local $to) (ref "library/core/legend_array_repoint_"))
+	)
+	
+	(func $legend_array_parent_ (param $array i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $array) (ref "library/core/array_parent_"))
+	)
+	
+	(func $types_strings_get_ (param $type i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $type) (ref "library/types/types_strings_get"))
+	)
+	
+	(func $types_sizeof_type_ (param $type i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $type) (ref "library/types/types_sizeof_type"))
+	)
+	
+	(func $types_sizeof_record_ (param $pointer i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $pointer) (ref "library/types/types_sizeof_record"))
+	)
+	
+	(func $map_new_ (result i32)
+		(call_indirect (type $void_to_i32) (ref "library/map/map_new"))
+	)
+	
+	(func $map_set_ (param $map i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $map) (get_local $key) (get_local $value) (ref "library/map/map_set"))
+	)
+	
+	(func $map_get_ (param $map i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $map) (get_local $key) (ref "library/map/map_get"))
+	)
+	
+	(func $map_iterate_ (param $map i32) (param $function i32) (param $context i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $map) (get_local $function) (get_local $context) (ref "library/map/map_iterate"))
+	)
+	
+	(func $map_length_ (param $map i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $map) (ref "library/map/map_length"))
+	)
+	
+	(func $vector_new_ (result i32)
+		(call_indirect (type $void_to_i32) (ref "library/vector/vector_new"))
+	)
+	
+	(func $vector_set_ (param $vector i32) (param $key i32) (param $value i32)
+		(call_indirect (type $i32_i32_i32_to_void) (get_local $vector) (get_local $key) (get_local $value) (ref "library/vector/vector_set"))
+	)
+	
+	(func $vector_get_ (param $vector i32) (param $key i32) (result i32)
+		(call_indirect (type $i32_i32_to_i32) (get_local $vector) (get_local $key) (ref "library/vector/vector_get"))
+	)
+	
+	(func $number_new_ (param $value i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $value) (ref "library/number/number_new"))
+	)
+
+	(func $console_print_ (param $string i32)
+		(call_indirect (type $i32_to_void) (get_local $string) (ref "library/console/console_print"))
+	)
+	
+	(func $function_id_ (param $function i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $function) (ref "library/function/function_id"))
+	)
+)

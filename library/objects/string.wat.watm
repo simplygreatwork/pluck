@@ -20,6 +20,8 @@
 		(set_local $map (call $resource_prototype (string "string")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "to_string") (function "object_string_to_string"))
+			(call $map_set $map (string "print") (function "object_string_print"))
 			(call $map_set $map (string "length") (function "object_string_length"))
 			(call $map_set $map (string "chars") (function "object_string_chars"))
 			(call $map_set $map (string "char_set") (function "object_string_char_set"))
@@ -30,7 +32,6 @@
 			(call $map_set $map (string "compare") (function "object_string_compare"))
 			(call $map_set $map (string "index_of") (function "object_string_index_of"))
 			(call $map_set $map (string "split") (function "object_string_split"))
-			(call $map_set $map (string "to_string") (function "object_string_to_string"))
 			(call $resource_prototype_set (string "string") (get_local $map))
 		))
 		(get_local $map)
@@ -52,6 +53,14 @@
 		(call $object_subject_set (get_local $object) (get_local $string))
 		(call $object_prototype_set (get_local $object) (call $object_string_prototype))
 		(get_local $object)
+	)
+	
+	(func $object_string_to_string (param $object i32) (result i32)
+		(call $object_string_from_string (call $string_to_string (call $object_subject (get_local $object))))
+	)
+	
+	(func $object_string_print (param $object i32)
+		(call $string_print (call $object_subject (get_local $object)))
 	)
 	
 	(func $object_string_length (param $object i32) (result i32)
@@ -102,9 +111,5 @@
 	
 	(func $object_string_split (param $object i32) (param $string_b i32) (result i32)
 		(call $string_split (call $object_subject (get_local $object)) (get_local $string_b))
-	)
-	
-	(func $object_string_to_string (param $object i32) (result i32)
-		(call $object_string_from_string (call $string_to_string (call $object_subject (get_local $object))))
 	)
 )

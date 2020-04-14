@@ -525,7 +525,7 @@
 		(block (loop
 			(call $print_integer (get_local $i))
 			(call $print_integer (call $legend_value_get_ (get_global $legend) (get_local $i)))
-			(call $legend_value_set (get_global $legend) (get_local $i) (i32.const 0))
+			(call $legend_value_set_ (get_global $legend) (get_local $i) (i32.const 0))
 			(set_local $i (i32.add (get_local $i) (i32.const 1)))
 			(br_if 1 (i32.eq (get_local $i) (get_local $max)))
 			(br 0)
