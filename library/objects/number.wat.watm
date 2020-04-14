@@ -21,6 +21,7 @@
 		(set_local $map (call $resource_prototype (string "number")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "to_string") (function "object_number_to_string"))
 			(call $map_set $map (string "value") (function "object_number_value"))
 			(call $map_set $map (string "value_set") (function "object_number_value_set"))
 			(call $map_set $map (string "add") (function "object_number_add"))
@@ -28,7 +29,6 @@
 			(call $map_set $map (string "equals") (function "object_number_equals"))
 			(call $map_set $map (string "compare") (function "object_number_compare"))
 			(call $map_set $map (string "iterate") (function "object_number_iterate"))
-			(call $map_set $map (string "to_string") (function "object_number_to_string"))
 			(call $map_set $map (string "clone") (function "object_number_clone"))
 			(call $resource_prototype_set (string "number") (get_local $map))
 		))
@@ -81,7 +81,7 @@
 	)
 	
 	(func $object_number_to_string (param $object i32) (result i32)
-		(call $object_string_from_string (call $number_to_string (call $object_subject (get_local $object)))) 
+		(call $object_string_from_string (call $number_to_string (call $object_subject (get_local $object))))
 	)
 	
 	(func $object_number_clone (param $object i32) (result i32)

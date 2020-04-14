@@ -103,8 +103,8 @@
 	(func $object_string_split (param $object i32) (param $string_b i32) (result i32)
 		(call $string_split (call $object_subject (get_local $object)) (get_local $string_b))
 	)
-
+	
 	(func $object_string_to_string (param $object i32) (result i32)
-		(get_local $object)
+		(call $object_string_from_string (call $string_to_string (call $object_subject (get_local $object))))
 	)
 )
