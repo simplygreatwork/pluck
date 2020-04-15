@@ -14,14 +14,14 @@
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(global $global (import "host" "global") (mut i32))
-	
+
 	(func $object_boolean_prototype (result i32)
 		
 		(local $map i32)
 		(set_local $map (call $resource_prototype (string "boolean")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "clone") (function "$object_boolean_clone"))
 			(call $map_set $map (string "value") (function "object_boolean_value"))
 			(call $map_set $map (string "value_set") (function "object_boolean_value_set"))
 			(call $map_set $map (string "equals") (function "object_boolean_equals"))
@@ -32,6 +32,14 @@
 		(get_local $map)
 	)
 	
+	(func $object_boolean_new (result i32)
+		(call $object_boolean_from_primitive (i32.const 0))
+	)
+	
+	(func $object_boolean_from_primitive (param $primitive i32) (result i32)
+		(call $object_boolean_from_boolean (call $boolean_new (get_local $primitive)))
+	)
+	
 	(func $object_boolean_from_boolean (param $boolean i32) (result i32)
 		
 		(local $object i32)
@@ -39,10 +47,6 @@
 		(call $object_subject_set (get_local $object) (get_local $boolean))
 		(call $object_prototype_set (get_local $object) (call $object_boolean_prototype))
 		(get_local $object)
-	)
-	
-	(func $object_boolean_from_primitive (param $primitive i32) (result i32)
-		(call $object_boolean_from_boolean (call $boolean_new (get_local $primitive)))
 	)
 	
 	(func $object_boolean_from_string (param $string i32) (result i32)
@@ -58,6 +62,10 @@
 		(get_local $object)
 	)
 	
+	(func $object_boolean_clone (param $object i32) (result i32)
+		(call $object_boolean_from_boolean (call $boolean_clone (call $object_subject (get_local $object))))
+	)
+	
 	(func $object_boolean_value (param $object i32) (result i32)
 		(call $boolean_value (call $object_subject (get_local $object)))
 	)
@@ -68,14 +76,6 @@
 	
 	(func $object_boolean_equals (param $a i32) (param $b i32) (result i32)
 		(call $boolean_equals (call $object_subject (get_local $a)) (get_local $b))
-	)
-	
-	(func $object_boolean_clone (param $object i32) (result i32)
-		
-		(call $object_clone_with_subject 
-			(get_local $object)
-			(call $boolean_clone (call $object_subject (get_local $object)))
-		)
 	)
 	
 	(func $object_boolean_to_string (param $object i32) (result i32)

@@ -6,12 +6,35 @@
 	(import "./function.watm")
 	(import "./object.watm")
 	(import "./string.watm")
+	(import "./map.watm")
+	(import "./objects/system.watm")
+	(import "./objects/string.watm")
+	(import "./objects/number.watm")
+	(import "./objects/boolean.watm")
+	(import "./objects/function.watm")
+	(import "./objects/list.watm")
+	(import "./objects/map.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
+	(global $system (import "host" "system") (mut i32))
 	
 	(func $system_bootstrap
 		
 		(call $memory_bootstrap)
+		(call $system_bootstrap_objects)
+		(set_global $system (call $object_system_new))
+	)
+	
+	(func $system_bootstrap_objects
+		
+		(local $objects i32)
+		(set_local $objects (call $resource_objects))
+		(call $map_set (get_local $objects) (string "Object") (call $object_new))
+		(call $map_set (get_local $objects) (string "String") (call $object_string_new (i32.const 0)))
+		(call $map_set (get_local $objects) (string "Number") (call $object_number_new))
+		(call $map_set (get_local $objects) (string "Boolean") (call $object_boolean_new))
+		(call $map_set (get_local $objects) (string "List") (call $object_list_new))
+		(call $map_set (get_local $objects) (string "Map") (call $object_map_new))
 	)
 	
 	(func $system_evaluate_i32 (param $1 i32) (result i32)

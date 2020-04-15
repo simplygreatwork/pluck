@@ -13,7 +13,6 @@
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(global $global (import "host" "global") (mut i32))
 	(type $i32_i32_i32_to_void (func (param i32) (param i32) (param i32)))
 	
 	(func $object_number_prototype (result i32)
@@ -22,6 +21,7 @@
 		(set_local $map (call $resource_prototype (string "number")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "clone") (function "$object_number_clone"))
 			(call $map_set $map (string "to_string") (function "object_number_to_string"))
 			(call $map_set $map (string "value") (function "object_number_value"))
 			(call $map_set $map (string "value_set") (function "object_number_value_set"))
@@ -36,6 +36,14 @@
 		(get_local $map)
 	)
 	
+	(func $object_number_new (result i32)
+		(call $object_number_from_primitive (i32.const 0))
+	)
+	
+	(func $object_number_from_primitive (param $primitive i32) (result i32)
+		(call $object_number_from_number (call $number_new (get_local $primitive)))
+	)
+	
 	(func $object_number_from_number (param $number i32) (result i32)
 		
 		(local $object i32)
@@ -45,8 +53,8 @@
 		(get_local $object)
 	)
 	
-	(func $object_number_from_primitive (param $primitive i32) (result i32)
-		(call $object_number_from_number (call $number_new (get_local $primitive)))
+	(func $object_number_clone (param $object i32) (result i32)
+		(call $object_number_from_number (call $number_clone (call $object_subject (get_local $object))))
 	)
 	
 	(func $object_number_value (param $object i32) (result i32)
@@ -100,13 +108,5 @@
 	
 	(func $object_number_to_string (param $object i32) (result i32)
 		(call $object_string_from_string (call $number_to_string (call $object_subject (get_local $object))))
-	)
-	
-	(func $object_number_clone (param $object i32) (result i32)
-		
-		(call $object_clone_with_subject 
-			(get_local $object)
-			(call $number_clone (call $object_subject (get_local $object)))
-		)
 	)
 )

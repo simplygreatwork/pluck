@@ -12,7 +12,6 @@
 	(import "../number.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(global $global (import "host" "global") (mut i32))
 	
 	(func $object_string_prototype (result i32)
 		
@@ -20,6 +19,7 @@
 		(set_local $map (call $resource_prototype (string "string")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "clone") (function "object_string_clone"))
 			(call $map_set $map (string "to_string") (function "object_string_to_string"))
 			(call $map_set $map (string "print") (function "object_string_print"))
 			(call $map_set $map (string "length") (function "object_string_length"))
@@ -55,6 +55,10 @@
 		(get_local $object)
 	)
 	
+	(func $object_string_clone (param $object i32) (result i32)
+		(call $object_string_from_string (call $string_clone (call $object_subject (get_local $object))))
+	)
+	
 	(func $object_string_to_string (param $object i32) (result i32)
 		(call $object_string_from_string (call $string_to_string (call $object_subject (get_local $object))))
 	)
@@ -77,14 +81,6 @@
 	
 	(func $object_string_char_get (param $object i32) (param $index i32) (result i32)
 		(call $string_char_get (call $object_subject (get_local $object)) (get_local $index))
-	)
-	
-	(func $object_string_clone (param $object i32) (result i32)
-		
-		(call $object_clone_with_subject 
-			(get_local $object)
-			(call $string_clone (call $object_subject (get_local $object)))
-		)
 	)
 	
 	(func $object_string_append (param $object i32) (param $string_b i32) (result i32)

@@ -16,15 +16,27 @@ function Host() {
 			value: 'i32',
 			mutable: true
 		}, 0),
+		global: new WebAssembly.Global({
+			value: 'i32',
+			mutable: true
+		}, 0),
+		system: new WebAssembly.Global({
+			value: 'i32',
+			mutable: true
+		}, 0),
 		strings: new WebAssembly.Global({
 			value: 'i32',
 			mutable: true
 		}, 0),
-		type_strings: new WebAssembly.Global({
+		prototypes: new WebAssembly.Global({
 			value: 'i32',
 			mutable: true
 		}, 0),
-		global: new WebAssembly.Global({
+		objects: new WebAssembly.Global({
+			value: 'i32',
+			mutable: true
+		}, 0),
+		type_strings: new WebAssembly.Global({
 			value: 'i32',
 			mutable: true
 		}, 0),

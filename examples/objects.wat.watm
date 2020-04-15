@@ -25,6 +25,7 @@ module
 	import "../library/objects/function.watm"
 	import "host" "table" (table 1 anyfunc)
 	memory (import "host" "memory") 1
+	global $system (import "host" "system") (mut i32)
 	
 	;; object-orientation work in progress (with literal objects)
 	
@@ -42,7 +43,8 @@ module
 	function create_list
 		
 		heading "create_list"
-		set list to (object_list_new)
+		set proto to (system object "List")
+		set list to (proto clone)
 		list push "zero"
 		list_push (list subject) "one"
 		list push "two"
@@ -69,7 +71,8 @@ module
 	function create_map
 		
 		heading "create_map"
-		set map to (object_map_new)
+		set proto to (system object "Map")
+		set map to (proto clone)
 		map put "0" "zero"
 		map put "1" "one"
 		map put "2" "two"
@@ -86,8 +89,10 @@ module
 	function create_string
 		
 		heading "create_string"
-		print ("Hello" append " world!")
-		set string to "Hello world!"
+		set string to ("Hello" append " world!")
+		string print
+		set string to "Hello universe!"
+		set string to (string clone)
 		string print
 		
 	function create_number
@@ -95,8 +100,10 @@ module
 		heading "create_number"
 		print ((20 add 20) add 2)
 		print "iterating over the number 3:"
-		set number to 3	
+		set number to 3
 		number "iterate" (function "create_number_iterate_each")
+		set b to (number clone)
+		print (number add b)
 		
 	function create_number_iterate_each accepts number index context
 		
@@ -109,6 +116,8 @@ module
 		print ("false: " append false)
 		set condition to (1 plus 1 equals 2)
 		if condition (print "1 plus 1 equals 2")
+		print (true clone)
+		print (false clone)
 		
 	function create_function
 		

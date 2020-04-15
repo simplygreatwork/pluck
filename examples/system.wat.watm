@@ -1,0 +1,74 @@
+
+module
+	
+	directive literals as objects
+	import "../library/utility.watm"
+	import "../library/memory.watm"
+	import "../library/resource.watm"
+	import "../library/system.watm"
+	import "../library/string.watm"
+	import "../library/number.watm"
+	import "../library/boolean.watm"
+	import "../library/types.watm"
+	import "../library/function.watm"
+	import "../library/object.watm"
+	import "../library/console.watm"
+	import "../library/list.watm"
+	import "../library/map.watm"
+	import "../library/vector.watm"
+	import "../library/operator.watm"
+	import "../library/objects/string.watm"
+	import "../library/objects/list.watm"
+	import "../library/objects/map.watm"
+	import "../library/objects/number.watm"
+	import "../library/objects/boolean.watm"
+	import "../library/objects/function.watm"
+	import "host" "table" (table 1 anyfunc)
+	memory (import "host" "memory") 1
+	global $system (import "host" "system") (mut i32)
+	
+	function main
+		
+		system_bootstrap
+		test_system_with_conflict
+		test_system_without_conflict
+		test_list
+		test_map
+		
+	function test_system_with_conflict
+		
+		set object to (system object "List")		;; declared local variable object conflicts with system property object 
+		set list to (object clone)
+		
+	function test_system_without_conflict
+		
+		set object to (system "object" "List")		;; no conflict because system property object is inside quotes
+		set list to (object clone)
+		
+	function test_list
+		
+		set proto to (system object "List")
+		set list to (proto clone)
+		list push "one"
+		set list to (list clone)
+		list push "two"
+		list iterate (function "create_list_iterate_each") 0
+		print (list length)
+		
+	function create_list_iterate_each accepts list item value index context
+		
+		print ("value: '" append (value append ("', index: " append index)))
+		
+	function test_map
+		
+		set proto to (system object "Map")
+		set map to (proto clone)
+		map put "one" 1
+		map put "two" 2
+		map iterate (function "test_map_iterate_each") 0
+		print (map length)
+		
+	function test_map_iterate_each accepts map key value index context
+		
+		print ("key: '" append (key append ("', value: '" append (value append ("', index: " append index)))))
+		

@@ -1,0 +1,62 @@
+(module
+	
+	(import "../utility.watm")
+	(import "../memory.watm")
+	(import "../resource.watm")
+	(import "../string.watm")
+	(import "../list.watm")
+	(import "../function.watm")
+	(import "../object.watm")
+	(import "../map.watm")
+	(import "../number.watm")
+	(import "../vector.watm")
+	(import "./number.watm")
+	(import "./string.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	
+	(func $object_system_prototype (result i32)
+		
+		(local $map i32)
+		(set_local $map (call $resource_prototype (string "system")))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "object") (function "$object_system_object"))
+			(call $resource_prototype_set (string "system") (get_local $map))
+		))
+		(get_local $map)
+	)
+	
+	(func $object_system_new (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (call $system_new))
+		(call $object_prototype_set (get_local $object) (call $object_system_prototype))
+		(get_local $object)
+	)
+	
+	(func $object_system_object (param $system i32) (param $key i32) (result i32)
+		(call $system_object (call $object_subject (get_local $system)) (call $object_subject (get_local $key)))
+	)
+	
+	(func $system_bytes (result i32)
+		(i32.const 0)
+	)
+	
+	(func $system_new (result i32)
+		
+		(local $system i32)
+		(set_local $system (call $memory_allocate (typeof "system") (call $system_bytes)))
+		(get_local $system)
+	)
+	
+	(func $system_object (param $system i32) (param $key i32) (result i32)
+		
+		(local $result i32)
+		(local $objects i32)
+		(set_local $objects (call $resource_objects))
+		(set_local $result (call $map_get (get_local $objects) (get_local $key)))
+		(get_local $result)
+	)
+)

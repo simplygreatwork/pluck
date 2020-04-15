@@ -5,8 +5,9 @@
 	(import "./indirect.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(global $global (import "host" "global") (mut i32))
 	(global $strings (import "host" "strings") (mut i32))
+	(global $prototypes (import "host" "prototypes") (mut i32))
+	(global $objects (import "host" "objects") (mut i32))
 	
 	(func $resource_strings (result i32)
 		
@@ -19,22 +20,33 @@
 		(get_local $strings)
 	)
 	
+	(func $resource_objects (result i32)
+		
+		(local $objects i32)
+		(set_local $objects (get_global $objects))
+		(if (i32.eq (get_global $objects) (i32.const 0)) (then
+			(set_global $objects (call $map_new_))
+			(set_local $objects (get_global $objects))
+		))
+		(get_local $objects)
+	)
+	
 	(func $resource_prototype (param $key i32) (result i32)
 		
-		(local $global i32)
-		(set_local $global (get_global $global))
-		(if (i32.eq (get_global $global) (i32.const 0)) (then
-			(set_global $global (call $map_new_))
-			(set_local $global (get_global $global))
+		(local $prototypes i32)
+		(set_local $prototypes (get_global $prototypes))
+		(if (i32.eq (get_global $prototypes) (i32.const 0)) (then
+			(set_global $prototypes (call $map_new_))
+			(set_local $prototypes (get_global $prototypes))
 		))
-		(call $map_get_ (get_local $global) (get_local $key))
+		(call $map_get_ (get_local $prototypes) (get_local $key))
 	)
 	
 	(func $resource_prototype_set (param $key i32) (param $map i32)
 		
-		(local $global i32)
-		(set_local $global (get_global $global))
-		(call $map_set_ (get_local $global) (get_local $key) (get_local $map))
+		(local $prototypes i32)
+		(set_local $prototypes (get_global $prototypes))
+		(call $map_set_ (get_local $prototypes) (get_local $key) (get_local $map))
 	)
 	
 	(func $resource_string_static (param $key i32) (result i32)

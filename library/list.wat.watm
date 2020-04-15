@@ -32,6 +32,24 @@
 		(i32.const 0)
 	)
 	
+	(func $list_clone (param $list i32) (result i32)
+		
+		(local $list_ i32)
+		(local $context i32)
+		(set_local $list_ (call $list_new))
+		(set_local $context (call $map_new))
+		(call $map_set (get_local $context) (string "list") (get_local $list_))
+		(call $list_iterate (get_local $list) (function "list_clone_iterate_each") (get_local $context))
+		(call $map_get (get_local $context) (string "list"))
+	)
+	
+	(func $list_clone_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
+		
+		(local $list_ i32)
+		(set_local $list_ ($map_get (get_local $context) (string "list")))
+		(call $list_push (get_local $list_) (get_local $value))
+	)
+	
 	(func $list_length (param $list i32) (result i32)
 		
 		(local $result i32)

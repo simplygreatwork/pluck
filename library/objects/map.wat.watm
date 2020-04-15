@@ -14,7 +14,6 @@
 	(import "./string.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
-	(global $global (import "host" "global") (mut i32))
 	(type $i32_i32_i32_i32_i32_to_void (func (param i32) (param i32) (param i32) (param i32) (param i32)))
 	
 	(func $object_map_prototype (result i32)
@@ -23,6 +22,7 @@
 		(set_local $map (call $resource_prototype (string "map")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string "clone") (function "$object_map_clone"))
 			(call $map_set $map (string "put") (function "$object_map_set_"))
 			(call $map_set $map (string "get") (function "object_map_get"))
 			(call $map_set $map (string "iterate") (function "object_map_iterate"))
@@ -39,6 +39,10 @@
 		(call $object_subject_set (get_local $object) (call $map_new))
 		(call $object_prototype_set (get_local $object) (call $object_map_prototype))
 		(get_local $object)
+	)
+	
+	(func $object_map_clone (param $object i32) (result i32)
+		(call $object_map_new)
 	)
 	
 	(func $object_map_set_ (param $object i32) (param $key i32) (param $value i32)
