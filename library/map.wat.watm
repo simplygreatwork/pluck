@@ -19,7 +19,11 @@
 	)
 	
 	(func $map_clone (param $map i32) (result i32)
-		(call $tree_clone (get_local $map))
+		
+		(local $map_ i32)
+		(set_local $map_ (call $tree_clone (get_local $map)))
+		(call $memory_type_set (get_local $map_) (typeof "map"))
+		(get_local $map_)
 	)
 	
 	(func $map_length (param $map i32) (result i32)

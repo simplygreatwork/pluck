@@ -41,8 +41,16 @@
 		(get_local $object)
 	)
 	
+	(func $object_map_from_map (param $map i32) (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_map_new))
+		(call $object_subject_set (get_local $object) (get_local $map))
+		(get_local $object)
+	)
+	
 	(func $object_map_clone (param $object i32) (result i32)
-		(call $object_map_new)
+		(call $object_map_from_map (call $map_clone (call $object_subject (get_local $object))))
 	)
 	
 	(func $object_map_set_ (param $object i32) (param $key i32) (param $value i32)

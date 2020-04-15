@@ -129,6 +129,18 @@
 		(call $number_value (call $item_value (call $item_next (call $item_next (get_local $context)))))
 	)
 	
+	(func $list_index_of_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
+		
+		(local $find i32)
+		(set_local $find (call $item_value (call $item_next (get_local $context))))
+		(if (call $string_equals (get_local $find) (get_local $value)) (then
+			(call $number_value_set
+				(call $item_value (call $item_next (call $item_next (get_local $context))))
+				(call $number_value (get_local $index))
+			)
+		))
+	)
+	
 	(func $list_join (param $list i32) (param $delimiter i32) (result i32)
 		
 		(local $context i32)
@@ -200,18 +212,6 @@
 		(set_local $list_b ($map_get (get_local $context) (string "list")))
 		(set_local $result (call $function_call_i32 (get_local $function) (get_local $value)))
 		(call $list_push (get_local $list_b) (get_local $result))
-	)
-	
-	(func $list_index_of_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
-		
-		(local $find i32)
-		(set_local $find (call $item_value (call $item_next (get_local $context))))
-		(if (call $string_equals (get_local $find) (get_local $value)) (then
-			(call $number_value_set
-				(call $item_value (call $item_next (call $item_next (get_local $context))))
-				(call $number_value (get_local $index))
-			)
-		))
 	)
 	
 	(func $list_iterate (param $list i32) (param $function i32) (param $context i32)
