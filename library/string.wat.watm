@@ -31,6 +31,18 @@
 		(get_local $string)
 	)
 	
+	(func $string_clone (param $string i32) (result i32)
+		
+		(local $result i32)
+		(set_local $result (call $string_new (call $string_length (get_local $string))))
+		(call $memory_copy
+			(call $string_chars (get_local $string))
+			(call $string_chars (get_local $result))
+			(call $string_length (get_local $string))
+		)
+		(get_local $result)
+	)
+	
 	(func $string_to_string (param $string i32) (result i32)
 		(get_local $string)
 	)
@@ -66,18 +78,6 @@
 			(get_local $string)
 			(i32.add (i32.const 4) (get_local $index))
 		)
-	)
-	
-	(func $string_clone (param $string i32) (result i32)
-		
-		(local $result i32)
-		(set_local $result (call $string_new (call $string_length (get_local $string))))
-		(call $memory_copy
-			(call $string_chars (get_local $string))
-			(call $string_chars (get_local $result))
-			(call $string_length (get_local $string))
-		)
-		(get_local $result)
 	)
 	
 	(func $string_append (param $a i32) (param $b i32) (result i32)
