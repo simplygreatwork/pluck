@@ -13,6 +13,7 @@ module
 		
 		set list to (list_new)
 		list_append list "-one"
+		list_append list "-one"
 		list_append list "zero"
 		list_append list "one"
 		list_append list "two"
@@ -20,25 +21,18 @@ module
 		list_append list "four"
 		item_remove (item_next list)
 		set item to (list_pop list)
-		set list to (list_filter list (function "test_list_filter_each"))
-		set list to (list_map list (function "test_list_map_each"))
-		list_iterate list (function "test_list_iterate_each") 0
+		set list to (list_filter list (func accepts value (result i32)
+			set result to true
+			if (string_equals value (string "three"))
+				set result to false
+			return result
+		))
+		set list to (list_map list (func accepts value (result i32)
+			return (string_append value "_")
+		))
+		list_iterate list (func accepts list item value index context
+			print (string_append "index: " (number_to_string index))
+			print value
+		) 0
 		print (string_append "joined: " (list_join list ", "))
-		
-	function test_list_filter_each accepts value (result i32)
-		
-		set result to true
-		if (string_equals value (string "three"))
-			set result to false
-		return result
-		
-	function test_list_map_each accepts value (result i32)
-		
-		return (string_append value "_")
-		
-	function test_list_iterate_each accepts list item value index context
-		
-		print (string_append "index: " (number_to_string index))
-		print value
-		
 		

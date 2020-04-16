@@ -17,13 +17,11 @@ module
 		map_set map "two.key" "two.value"
 		map_set map "three.key" "three.value"
 		map_set map "four.key" "four.value"
-		map_iterate map (function "map_iterate_each") 0
-		
-	function map_iterate_each accepts map key value index context
-		
-		print (string_append "index: " (number_to_string index))
-		set string to key
-		set string to (string_append string ":")
-		set string to (string_append string value)
-		print string
+		map_iterate map (func accepts map key value index context
+			print (string_append "index: " (number_to_string index))
+			set string to key
+			set string to (string_append string ":")
+			set string to (string_append string value)
+			print string
+		) 0
 		

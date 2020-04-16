@@ -31,18 +31,14 @@ module
 		list push 3
 		list push 4
 		list pop
-		set list to (list map (function "create_list_map_each"))
-		list iterate (function "create_list_iterate_each") 0
+		set list to (list map (func accepts value (result i32)
+			set value to (value to_string)
+			return (value append "_")
+		))
+		list iterate (func accepts list item value index context
+			print ("value: '" append (value append ("', index: " append index)))
+		) 0
 		print ("joined: " append (list join ", "))
-		
-	function create_list_map_each accepts value (result i32)
-		
-		set value to (value to_string)
-		return (value append "_")
-		
-	function create_list_iterate_each accepts list item value index context
-		
-		print ("value: '" append (value append ("', index: " append index)))
 		
 	function create_map
 		
@@ -52,15 +48,13 @@ module
 		map put "0" "zero"
 		map put "1" "one"
 		map put "2" "two"
-		map iterate (function "create_map_iterate_each") 0
+		map iterate (func accepts map key value index context
+			print ("key: '" append (key append ("', value: '" append (value append ("', index: " append index)))))
+		) 0
 		print (map get "0")
 		print (map get "1")
 		print (map_get (map subject) (string "2"))
 		map get "2"
-		
-	function create_map_iterate_each accepts map key value index context
-		
-		print ("key: '" append (key append ("', value: '" append (value append ("', index: " append index)))))
 		
 	function create_string
 		
@@ -77,13 +71,11 @@ module
 		print ((20 add 20) add 2)
 		print "iterating over the number 3:"
 		set number to 3
-		number "iterate" (function "create_number_iterate_each")
+		number "iterate" (func accepts number index context
+			print index
+		)
 		set b to (number clone)
 		print (number add b)
-		
-	function create_number_iterate_each accepts number index context
-		
-		print index
 		
 	function create_boolean
 		
@@ -98,9 +90,13 @@ module
 	function create_function
 		
 		heading "create_function"
-		set function_ to (object_function_from_function (function "create_list_iterate_each"))
+		set function_ to (object_function_from_function (function "create_function_callable"))
 		print (number_new (function_id function_))
 		print (function_ result)
+		
+	function create_function_callable
+		
+		print "hello"
 		
 	function create_object
 		

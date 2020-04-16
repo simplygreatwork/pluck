@@ -7,9 +7,9 @@ module
 	function main
 		
 		system_bootstrap
-		create_functions "one"
+		create_functions
 		
-	function create_functions accepts one
+	function create_functions
 		
 		set a to (func
 			print "hello"

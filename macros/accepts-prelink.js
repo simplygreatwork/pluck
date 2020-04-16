@@ -13,7 +13,7 @@ module.exports = function(system, document) {
 		
 		enter : function(node, index, parents, state) {
 			
-			if (! parents.length === 2) return  
+			if (parents.length === 2) return
 			let parent = query.last(parents)
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(parent, 'expression')) return

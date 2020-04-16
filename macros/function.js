@@ -17,20 +17,26 @@ module.exports = function(system, document) {
 			if (! query.is_type_value(node, 'symbol', 'function')) return
 			if (! (index === 0)) return
 			let parts = parts_(parent.value[1].value, document)
-			let id = system.table.find_function_id(parts.module, parts.func)
-			let signature = system.table.find_function(parts.module, parts.func).value
-			if (id && signature) {
-				let func_name = function_embed(parents[0], index, parents, state, id, signature, system, document)
-				let tree = parse(` (call ${func_name})`)[0]
-				query.climb(parents, function(node, index, parents) {
-					let parent = query.last(parents)
-					query.replace(parent, parent.value[index], tree)
-				})
-			} else {
-				console.error('')
-				console.error(`>>>>> Unable to find function "${parts.func}" or module "${parts.module}" <<<<<`)
-				console.error('')
-				process.exit(1)
+			try {
+				let id = system.table.find_function_id(parts.module, parts.func)
+				let signature = system.table.find_function(parts.module, parts.func).value
+				if (id && signature) {
+					let func_name = function_embed(parents[0], index, parents, state, id, signature, system, document)
+					let tree = parse(` (call ${func_name})`)[0]
+					query.climb(parents, function(node, index, parents) {
+						let parent = query.last(parents)
+						query.replace(parent, parent.value[index], tree)
+					})
+				} else {
+					console.error('')
+					console.error(`>>>>> Unable to find function "${parts.func}" or module "${parts.module}" <<<<<`)
+					console.error('')
+					process.exit(1)
+				}
+			} catch (e) {
+				console.log('e: ' + e)
+				console.log('parts.module: ' + parts.module)
+				console.log('parts.func: ' + parts.func)
 			}
 		}
 	}

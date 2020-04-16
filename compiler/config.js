@@ -5,7 +5,7 @@ module.exports = {
 		require('../macros/include-prelink'),
 		require('../macros/func-prelink'),
 		require('../macros/function-prelink'),
-		require('../macros/accepts'),
+		require('../macros/accepts-prelink'),
 	],
 	postlink: [
 		require('../macros/system'),
