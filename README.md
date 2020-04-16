@@ -119,7 +119,7 @@ Open [pluck](https://gitpod.io/#https://github.com/simplygreatwork/pluck) in Git
 
 ```
 git fetch && git fetch --tags
-git checkout 2020-04-10-3
+git checkout 2020-04-16
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
@@ -134,7 +134,7 @@ npm start compaction
 ```
 git clone https://github.com/simplygreatwork/pluck.git
 cd pluck
-git checkout 2020-04-10-3
+git checkout 2020-04-16
 nvm install 13.10.1
 nvm use 13.10.1
 npm install
