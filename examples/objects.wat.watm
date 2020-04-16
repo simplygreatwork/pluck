@@ -43,8 +43,8 @@ module
 	function create_list
 		
 		heading "create_list"
-		set proto to (system object "List")
-		set list to (proto clone)
+		set list to ((system object "List") clone)
+		set list to (List clone)
 		list push "zero"
 		list_push (list subject) "one"
 		list push "two"
@@ -71,8 +71,8 @@ module
 	function create_map
 		
 		heading "create_map"
-		set proto to (system object "Map")
-		set map to (proto clone)
+		set map to ((system object "Map") clone)
+		set map to (Map clone)
 		map put "0" "zero"
 		map put "1" "one"
 		map put "2" "two"

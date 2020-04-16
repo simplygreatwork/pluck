@@ -24,5 +24,15 @@ module.exports = {
 	truncate_extensions: function(path_) {
 		
 		return path_.split('.')[0]
+	},
+	
+	is_uppercase: function(value) {
+		
+		let result = false
+		if (value.length > 0) {
+			let char = value.charAt(0)
+			result = (/^[A-Z]+$/.test(char))
+		}
+		return result
 	}
 }
