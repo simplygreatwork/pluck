@@ -2,29 +2,8 @@
 module
 	
 	directive literals as objects
-	import "../library/utility.watm"
-	import "../library/memory.watm"
-	import "../library/resource.watm"
-	import "../library/system.watm"
-	import "../library/string.watm"
-	import "../library/number.watm"
-	import "../library/boolean.watm"
-	import "../library/types.watm"
-	import "../library/function.watm"
-	import "../library/object.watm"
-	import "../library/console.watm"
-	import "../library/list.watm"
-	import "../library/map.watm"
-	import "../library/vector.watm"
-	import "../library/operator.watm"
-	import "../library/objects/string.watm"
-	import "../library/objects/list.watm"
-	import "../library/objects/map.watm"
-	import "../library/objects/number.watm"
-	import "../library/objects/boolean.watm"
-	import "../library/objects/function.watm"
-	import "host" "table" (table 1 anyfunc)
-	memory (import "host" "memory") 1
+	include essentials
+	include essential-objects
 	
 	;; map & list macros have not yet been implemented
 	;; so this source file is currently only an example

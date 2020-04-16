@@ -2,27 +2,13 @@
 (module
 	
 	(directive literals as primitives)
-	(import "../library/utility.watm")
+	(include essentials)
 	(import "../library/array.watm")
 	(import "../library/legend.watm")
-	(import "../library/memory.watm")
-	(import "../library/resource.watm")
-	(import "../library/system.watm")
-	(import "../library/string.watm")
-	(import "../library/number.watm")
-	(import "../library/boolean.watm")
-	(import "../library/function.watm")
-	(import "../library/list.watm")
-	(import "../library/map.watm")
 	(import "../library/tree.watm")
 	(import "../library/assertion.watm")
 	(import "../library/stream.watm")
 	(import "../library/table.watm")
-	(import "../library/types.watm")
-	(import "../library/console.watm")
-	(import "../library/vector.watm")
-	(import "host" "table" (table 1 anyfunc))
-	(memory (import "host" "memory") 1)
 	(global $legend (import "host" "legend") (mut i32))
 	
 	(function $main

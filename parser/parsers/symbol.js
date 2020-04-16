@@ -5,11 +5,11 @@ module.exports = function() {
 	
 	return p.seq ([
 		p.alt ([
-			p.char ('=$_.a-zA-Z0-9'),
+			p.char ('-=$_.a-zA-Z0-9'),
 		]),
 		p.rep (
 			p.alt ([
-				p.char ('=$_.a-zA-Z0-9'),
+				p.char ('-=$_.a-zA-Z0-9'),
 			]),
 			0
 		)

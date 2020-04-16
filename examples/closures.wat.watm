@@ -8,21 +8,8 @@ module
 	;; so need to maintain a list of stacks per function on entry
 	
 	directive literals as primitives
-	import "../library/utility.watm"
-	import "../library/memory.watm"
-	import "../library/resource.watm"
-	import "../library/system.watm"
-	import "../library/string.watm"
-	import "../library/number.watm"
-	import "../library/boolean.watm"
+	include essentials
 	import "../library/stack.watm"
-	import "../library/list.watm"
-	import "../library/vector.watm"
-	import "../library/map.watm"
-	import "../library/types.watm"
-	import "../library/console.watm"
-	import "host" "table" (table 1 anyfunc)
-	memory (import "host" "memory") 1
 	
 	function main
 		

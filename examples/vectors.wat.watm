@@ -1,21 +1,8 @@
 
 module
 	
-	directive literals as obj
-	import "../library/utility.watm"
-	import "../library/memory.watm"
-	import "../library/resource.watm"
-	import "../library/system.watm"
-	import "../library/string.watm"
-	import "../library/number.watm"
-	import "../library/boolean.watm"
-	import "../library/types.watm"
-	import "../library/console.watm"
-	import "../library/function.watm"
-	import "../library/list.watm"
-	import "../library/vector.watm"
-	import "host" "table" (table 1 anyfunc)
-	memory (import "host" "memory") 1
+	directive literals as primitives
+	include essentials
 	
 	function main
 		

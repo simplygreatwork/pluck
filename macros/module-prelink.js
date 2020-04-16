@@ -13,7 +13,7 @@ module.exports = function(system, document) {
 			
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_type_value(node, 'symbol', 'import')) return
+			if (! query.is_type_value(node, 'symbol', 'module')) return
 		}
 	}
 }

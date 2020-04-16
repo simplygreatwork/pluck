@@ -1,25 +1,12 @@
 
 module
 	
-	directive literals as ob
-	import "../library/utility.watm"
-	import "../library/memory.watm"
-	import "../library/resource.watm"
-	import "../library/system.watm"
-	import "../library/string.watm"
-	import "../library/number.watm"
-	import "../library/boolean.watm"
-	import "../library/types.watm"
-	import "../library/console.watm"
-	import "../library/vector.watm"
-	import "host" "table" (table 1 anyfunc)
-	memory (import "host" "memory") 1
+	directive literals as primitives
+	include essentials
 	
 	function main
 		
-		memory_bootstrap
 		system_bootstrap
-		
 		callable 42
 		
 	function callable accepts value
