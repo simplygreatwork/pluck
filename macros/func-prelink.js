@@ -40,8 +40,9 @@ function func_name_(parent, system) {
 	if (query.is_type(parent.value[1], 'symbol')) {
 		return parent.value[1].value
 	} else {
+		parent.whitespace = '\n\n\t'
 		let symbol = '$function_static_' + (++system.state.id_function)
-		let expression = parse(`( ${symbol})`)[0].value[0]
+		let expression = parse(` ( ${symbol})`)[0].value[0]
 		parent.value.splice(1, 0, expression)
 		parent.emit('inserted', 1)
 		return symbol

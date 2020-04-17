@@ -42,36 +42,36 @@ function exists() {
 function essentials_() {
 	
 	return parse(`(
-		(import "../library/system.watm")
-		(import "../library/memory.watm")
-		(import "../library/resource.watm")
-		(import "../library/utility.watm")
-		(import "../library/string.watm")
-		(import "../library/number.watm")
-		(import "../library/boolean.watm")
-		(import "../library/function.watm")
-		(import "../library/list.watm")
-		(import "../library/map.watm")
-		(import "../library/object.watm")
-		(import "../library/types.watm")
-		(import "../library/console.watm")
-		(import "../library/vector.watm")
-		(import "../library/operator.watm")
-		(import "host" "table" (table 1 anyfunc))
-		(memory (import "host" "memory") 1)
-		(global $system (import "host" "system") (mut i32))
+	(import "../library/system.watm")
+	(import "../library/memory.watm")
+	(import "../library/resource.watm")
+	(import "../library/utility.watm")
+	(import "../library/string.watm")
+	(import "../library/number.watm")
+	(import "../library/boolean.watm")
+	(import "../library/function.watm")
+	(import "../library/list.watm")
+	(import "../library/map.watm")
+	(import "../library/object.watm")
+	(import "../library/types.watm")
+	(import "../library/console.watm")
+	(import "../library/vector.watm")
+	(import "../library/operator.watm")
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	(global $system (import "host" "system") (mut i32))
 	)`)[0]
 }
 
 function objects_() {
 	
 	return parse(`(
-		(import "../library/objects/system.watm")
-		(import "../library/objects/string.watm")
-		(import "../library/objects/number.watm")
-		(import "../library/objects/boolean.watm")
-		(import "../library/objects/function.watm")
-		(import "../library/objects/list.watm")
-		(import "../library/objects/map.watm")
+	(import "../library/objects/system.watm")
+	(import "../library/objects/string.watm")
+	(import "../library/objects/number.watm")
+	(import "../library/objects/boolean.watm")
+	(import "../library/objects/function.watm")
+	(import "../library/objects/list.watm")
+	(import "../library/objects/map.watm")
 	)`)[0]
 }

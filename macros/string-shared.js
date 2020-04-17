@@ -12,14 +12,13 @@ function function_new(node, string, system, objectify) {
 	
 	let id = system.state.id_string++
 	let func_name = '$string_static_' + id
-	let tree = parse(`
-	(func ${func_name} (result i32)
+	let tree = parse(
+	`\n\n\t(func ${func_name} (result i32)
 		(local $string i32)
 		(set_local $string (call $resource_string_static (i32.const ${id})))
 		(if (i32.eq (get_local $string) (i32.const 0)) (then
 			(set_local $string (call $string_new (i32.const ${string.length})))
-			${string_char_sets(string)}
-			${objectify_(objectify, system)}
+			${string_char_sets(string)}${objectify_(objectify, system)}
 			(call $resource_string_static_set (i32.const ${id}) (get_local $string))
 		))
 		(get_local $string)
@@ -33,9 +32,9 @@ function string_char_sets(string) {
 	let result = []
 	string.split('').forEach(function(char, index) {
 		let char_code = string.charCodeAt(index)
-		result.push(`\t\t(call $string_char_set (get_local $string) (i32.const ${index}) (i32.const ${char_code}))`)
+		result.push(`(call $string_char_set (get_local $string) (i32.const ${index}) (i32.const ${char_code}))`)
 	})
-	return result.join('\n')
+	return result.join('\n\t\t\t')
 }
 
 function objectify_(objectify, system) {

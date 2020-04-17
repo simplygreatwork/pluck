@@ -61,15 +61,14 @@ function function_embed(node, index, parents, state, id, signature, system, docu
 	let func_name = '$signature_static_' + (++system.state.id_signature)
 	let tree = parse(
 		`\n\n\t(func ${func_name} (result i32)
-		\n\t\t(local $function i32)
-		\n\t\t(local $parameters i32)
-		\n\t\t(local $result i32)
-		\n\t\t(set_local $parameters (call $list_new))
-		\n\t\t${get_signature_parameters(signature)}
-		\n\t\t(set_local $result ${get_signature_result(signature)})
-		\n\t\t(call $function_new (i32.const ${id}) (get_local $parameters) (get_local $result))
-		\n)
-	`)[0]
+		(local $function i32)
+		(local $parameters i32)
+		(local $result i32)
+		(set_local $parameters (call $list_new))
+		${get_signature_parameters(signature)}
+		(set_local $result ${get_signature_result(signature)})
+		(call $function_new (i32.const ${id}) (get_local $parameters) (get_local $result))
+	)`)[0]
 	document.walk(tree, 0, parents, {})
 	query.append(node, tree)
 	return func_name
@@ -95,8 +94,8 @@ function get_signature_parameters(signature) {
 		return each.type == 'expression' && each.value[0].value == 'param'
 	})
 	.map(function(each, index) {
-		return `\t\t(call $list_append (get_local $parameters) (string "${each.value[2].value}"))\n`
+		return `(call $list_append (get_local $parameters) (string "${each.value[2].value}"))`
 	})
-	if (result.length === 0) result.push(`\t\t(call $list_append (get_local $parameters) (string "void"))\n`)
-	return result.join('')
+	if (result.length === 0) result.push(`(call $list_append (get_local $parameters) (string "void"))`)
+	return result.join('\n\t\t')
 }

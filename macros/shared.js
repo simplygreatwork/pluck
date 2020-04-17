@@ -75,7 +75,7 @@ function declare(value, state) {
 	
 	if (is_local(state, value)) return 
 	let tree = parse (`
-	(local ${value} i32)
+	\t(local ${value} i32)
 	`)[0]
 	query.insert(state.func, tree, state.locals.offset)
 	state.func.emit('inserted', state.locals.offset)
