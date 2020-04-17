@@ -17,7 +17,7 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'set')) return
 			if (system.keywords.indexOf(parent.value[1].value) > -1) {
-				warn(parent.value[1].value)
+				error(parent.value[1].value)
 			}
 			if (query.is_length_exceeding(parent, 2)) {
 				if (query.is_type_value(parent.value[2], 'symbol', 'to')) {
@@ -36,4 +36,12 @@ function warn(value) {
 	console.error('')
 	console.error(`>>>>> Warning: The variable "${value}" could conflict with an existing keyword. <<<<<`)
 	console.error('')
+}
+
+function error(value) {
+	
+	console.error('')
+	console.error(`>>>>> Error: The keyword "${value}" cannot be used as a variable name. <<<<<`)
+	console.error('')
+	process.exit(1)
 }
