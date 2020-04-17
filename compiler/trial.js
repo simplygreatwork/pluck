@@ -46,7 +46,7 @@ function test_three() {
 	let code = `
 	(module
 		(func $test_string_macro	
-			(set_local $string (string "Hello from a string macro!"))
+			(set_local $string (string: "Hello from a string macro!"))
 		)	
 	)`
 	let root = path.join(process.cwd(), '/src/wat/examples/index.wat.watm')

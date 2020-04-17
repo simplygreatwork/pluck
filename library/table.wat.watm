@@ -14,9 +14,9 @@
 	
 	(func $test_table
 		
-		(call $print_string (string "------------------------------"))
-		(call $print_string (string "Testing WASM tables"))
-		(call $print_string (string "------------------------------"))
+		(call $print_string (string: "------------------------------"))
+		(call $print_string (string: "Testing WASM tables"))
+		(call $print_string (string: "------------------------------"))
 		(call $print_integer (call_indirect (type $void_to_i32) (ref "no_param_one_result")))
 		(call $print_integer (call_indirect (type $i32_to_i32) (i32.const 20) (ref "one_param_one_result")))
 		(call_indirect (type $i32_to_void) (i32.const 30) (ref "one_param_no_result"))

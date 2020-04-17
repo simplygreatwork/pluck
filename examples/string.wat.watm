@@ -8,6 +8,6 @@ module
 		
 		system_bootstrap
 		
-		print (string "string expression")
+		print (string: "string expression")
 		print "string literal"
 		

@@ -29,12 +29,12 @@
 		
 		(local $objects i32)
 		(set_local $objects (call $resource_objects))
-		(call $map_set (get_local $objects) (string "Object") (call $object_new))
-		(call $map_set (get_local $objects) (string "String") (call $object_string_new (i32.const 0)))
-		(call $map_set (get_local $objects) (string "Number") (call $object_number_new))
-		(call $map_set (get_local $objects) (string "Boolean") (call $object_boolean_new))
-		(call $map_set (get_local $objects) (string "List") (call $object_list_new))
-		(call $map_set (get_local $objects) (string "Map") (call $object_map_new))
+		(call $map_set (get_local $objects) (string: "Object") (call $object_new))
+		(call $map_set (get_local $objects) (string: "String") (call $object_string_new (i32.const 0)))
+		(call $map_set (get_local $objects) (string: "Number") (call $object_number_new))
+		(call $map_set (get_local $objects) (string: "Boolean") (call $object_boolean_new))
+		(call $map_set (get_local $objects) (string: "List") (call $object_list_new))
+		(call $map_set (get_local $objects) (string: "Map") (call $object_map_new))
 	)
 	
 	(func $system_evaluate_i32 (param $1 i32) (result i32)

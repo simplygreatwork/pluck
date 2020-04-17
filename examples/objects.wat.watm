@@ -53,7 +53,7 @@ module
 		) 0
 		print (map get "0")
 		print (map get "1")
-		print (map_get (map subject) (string "2"))
+		print (map_get (map subject) (string: "2"))
 		map get "2"
 		
 	function create_string
@@ -62,7 +62,7 @@ module
 		set string to ("Hello" append " world!")
 		string print
 		set string to "Hello universe!"
-		set string to (string clone)
+		set string to (string: clone)
 		string print
 		
 	function create_number
@@ -90,7 +90,7 @@ module
 	function create_function
 		
 		heading "create_function"
-		set function_ to (object_function_from_function (function "create_function_callable"))
+		set function_ to (object_function_from_function (function: "create_function_callable"))
 		print (number_new (function_id function_))
 		print (function_ result)
 		
@@ -104,15 +104,15 @@ module
 		set object to (object_new)
 		object value = 42
 		print ("object value: " append (object value))
-		object function_with_zero_arguments = (function "function_with_zero_arguments")
+		object function_with_zero_arguments = (function: "function_with_zero_arguments")
 		object function_with_zero_arguments
-		object function_with_one_argument is (function "function_with_one_argument")
+		object function_with_one_argument is (function: "function_with_one_argument")
 		object function_with_one_argument "one"
-		object function_with_two_arguments = (function "function_with_two_arguments")
+		object function_with_two_arguments = (function: "function_with_two_arguments")
 		object function_with_two_arguments "one" "two"
-		object function_with_three_arguments is (function "function_with_three_arguments")
+		object function_with_three_arguments is (function: "function_with_three_arguments")
 		object function_with_three_arguments "one" "two" "three"
-		object add_one = (function "add_one")
+		object add_one = (function: "add_one")
 		print (object add_one 41)
 		print object
 		
@@ -123,22 +123,22 @@ module
 	function function_with_one_argument accepts object one
 		
 		set string to "function_with_one_argument called with value: "
-		set string to (string append one)
+		set string to (string: append one)
 		print string
 		
 	function function_with_two_arguments accepts object one two
 		
 		set string to "function_with_two_arguments called with values: "
-		set string to (string append (one append ", "))
-		set string to (string append (two append " "))
+		set string to (string: append (one append ", "))
+		set string to (string: append (two append " "))
 		print string
 		
 	function function_with_three_arguments accepts object one two three
 		
 		set string to "function_with_three_arguments called with values: "
-		set string to (string append (one append ", "))
-		set string to (string append (two append ", "))
-		set string to (string append (three append " "))
+		set string to (string: append (one append ", "))
+		set string to (string: append (two append ", "))
+		set string to (string: append (three append " "))
 		print string
 		
 	function add_one accepts object value (result i32)

@@ -9,14 +9,14 @@ module.exports = function(system, document) {
 	return {
 		
 		type: 'symbol',
-		value: 'boolean',
+		value: 'boolean:',
 		
 		enter: function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_type_value(parent.value[0], 'symbol', 'boolean')) return
+			if (! query.is_type_value(parent.value[0], 'symbol', 'boolean:')) return
 			parent.once('exit', function() {
 				let value = parent.value[1].value == 'true' ? 1 : 0
 				query.climb(parents, function(node, index, parents) {

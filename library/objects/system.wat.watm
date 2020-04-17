@@ -18,11 +18,11 @@
 	(func $object_system_prototype (result i32)
 		
 		(local $map i32)
-		(set_local $map (call $resource_prototype (string "system")))
+		(set_local $map (call $resource_prototype (string: "system")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
-			(call $map_set $map (string "object") (function "$object_system_object"))
-			(call $resource_prototype_set (string "system") (get_local $map))
+			(call $map_set $map (string: "object") (function: "$object_system_object"))
+			(call $resource_prototype_set (string: "system") (get_local $map))
 		))
 		(get_local $map)
 	)

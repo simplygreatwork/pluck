@@ -27,7 +27,7 @@ module.exports = function(system, document) {
 					let length = parents_[0].value.length
 					query.append(parents_[0], node_)
 					parents_[0].emit('inserted', length)
-					let expression = parse(` (function "${func_name}")`)[0]
+					let expression = parse(` (function: "${func_name}")`)[0]
 					parent_.value[index_] = expression
 				})
 			})

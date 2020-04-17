@@ -45,9 +45,9 @@
 		
 		(local $result i32)
 		(if (i32.eq (call $boolean_value (get_local $boolean)) (i32.const 1)) (then
-			(set_local $result (string "true"))
+			(set_local $result (string: "true"))
 		) (else
-			(set_local $result (string "false"))
+			(set_local $result (string: "false"))
 		))
 		(get_local $result)
 	)

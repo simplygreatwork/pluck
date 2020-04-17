@@ -15,7 +15,7 @@ module.exports = function(system, document) {
 			let parent = query.last(parents)
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(node, 'string')) return
-			if (query.is_type_value(parent.value[0], 'symbol', 'string')) return
+			if (query.is_type_value(parent.value[0], 'symbol', 'string:')) return
 			let string = node.value
 			let func_name = shared_string.function_new(parents[0], string, system, true)
 			let tree = parse(` (call ${func_name})`)[0]

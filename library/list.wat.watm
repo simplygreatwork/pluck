@@ -38,15 +38,15 @@
 		(local $context i32)
 		(set_local $list_ (call $list_new))
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) (string "list") (get_local $list_))
-		(call $list_iterate (get_local $list) (function "list_clone_iterate_each") (get_local $context))
-		(call $map_get (get_local $context) (string "list"))
+		(call $map_set (get_local $context) (string: "list") (get_local $list_))
+		(call $list_iterate (get_local $list) (function: "list_clone_iterate_each") (get_local $context))
+		(call $map_get (get_local $context) (string: "list"))
 	)
 	
 	(func $list_clone_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
 		(local $list_ i32)
-		(set_local $list_ ($map_get (get_local $context) (string "list")))
+		(set_local $list_ ($map_get (get_local $context) (string: "list")))
 		(call $list_push (get_local $list_) (get_local $value))
 	)
 	
@@ -87,15 +87,15 @@
 		
 		(local $context i32)
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) (string "index") (get_local $index))
-		(call $list_iterate (get_local $list) (function "list_get_iterate_each") (get_local $context))
-		(call $map_get (get_local $context) (string "item"))
+		(call $map_set (get_local $context) (string: "index") (get_local $index))
+		(call $list_iterate (get_local $list) (function: "list_get_iterate_each") (get_local $context))
+		(call $map_get (get_local $context) (string: "item"))
 	)
 	
 	(func $list_get_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
 		
-		(if (i32.eq (call $number_value (get_local $index)) (call $number_value (call $map_get (get_local $context) (string "index")))) (then
-			(call $map_set (get_local $context) (string "item") (get_local $value))
+		(if (i32.eq (call $number_value (get_local $index)) (call $number_value (call $map_get (get_local $context) (string: "index")))) (then
+			(call $map_set (get_local $context) (string: "item") (get_local $value))
 		))
 	)
 	
@@ -105,7 +105,7 @@
 		(set_local $context (call $list_new))
 		(call $list_append (get_local $context) (get_local $index))
 		(call $list_append (get_local $context) (get_local $value))
-		(call $list_iterate (get_local $list) (function "list_set_iterate_each") (get_local $context))
+		(call $list_iterate (get_local $list) (function: "list_set_iterate_each") (get_local $context))
 	)
 	
 	(func $list_set_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
@@ -125,7 +125,7 @@
 		(set_local $context (call $list_new))
 		(call $list_append (get_local $context) (get_local $item))
 		(call $list_append (get_local $context) (call $number_new (i32.const -1)))
-		(call $list_iterate (get_local $list) (function "list_index_of_iterate_each") (get_local $context))
+		(call $list_iterate (get_local $list) (function: "list_index_of_iterate_each") (get_local $context))
 		(call $number_value (call $item_value (call $item_next (call $item_next (get_local $context)))))
 	)
 	
@@ -145,11 +145,11 @@
 		
 		(local $context i32)
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) (string "string") (string ""))
-		(call $map_set (get_local $context) (string "delimiter") (get_local $delimiter))
-		(call $map_set (get_local $context) (string "length") (call $number_value (call $list_length (get_local $list))))
-		(call $list_iterate (get_local $list) (function "list_join_iterate_each") (get_local $context))
-		(call $map_get (get_local $context) (string "string"))
+		(call $map_set (get_local $context) (string: "string") (string: ""))
+		(call $map_set (get_local $context) (string: "delimiter") (get_local $delimiter))
+		(call $map_set (get_local $context) (string: "length") (call $number_value (call $list_length (get_local $list))))
+		(call $list_iterate (get_local $list) (function: "list_join_iterate_each") (get_local $context))
+		(call $map_get (get_local $context) (string: "string"))
 	)
 	
 	(func $list_join_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
@@ -157,16 +157,16 @@
 		(local $result i32)
 		(local $delimiter i32)
 		(local $length i32)
-		(set_local $result ($map_get (get_local $context) (string "string")))
-		(set_local $delimiter ($map_get (get_local $context) (string "delimiter")))
-		(set_local $length ($map_get (get_local $context) (string "length")))
+		(set_local $result ($map_get (get_local $context) (string: "string")))
+		(set_local $delimiter ($map_get (get_local $context) (string: "delimiter")))
+		(set_local $length ($map_get (get_local $context) (string: "length")))
 		(set_local $index (call $number_value (get_local $index)))
 		(if (i32.eq (call $memory_type (get_local $value)) (typeof "string")) (then
 			(set_local $result ($string_append (get_local $result) (get_local $value)))
 			(if (i32.lt_u (get_local $index) (i32.sub (get_local $length) (i32.const 1))) (then
 				(set_local $result ($string_append (get_local $result) (get_local $delimiter)))
 			))
-			(call map_set (get_local $context) (string "string") (get_local $result))
+			(call map_set (get_local $context) (string: "string") (get_local $result))
 		))
 	)
 	
@@ -174,10 +174,10 @@
 		
 		(local $context i32)
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) (string "function") (get_local $function))
-		(call $map_set (get_local $context) (string "list") (call $list_new))
-		(call $list_iterate (get_local $list) (function "list_filter_iterate_each") (get_local $context))
-		(call $map_get (get_local $context) (string "list"))
+		(call $map_set (get_local $context) (string: "function") (get_local $function))
+		(call $map_set (get_local $context) (string: "list") (call $list_new))
+		(call $list_iterate (get_local $list) (function: "list_filter_iterate_each") (get_local $context))
+		(call $map_get (get_local $context) (string: "list"))
 	)
 	
 	(func $list_filter_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
@@ -185,8 +185,8 @@
 		(local $function i32)
 		(local $list_b i32)
 		(local $result i32)
-		(set_local $function ($map_get (get_local $context) (string "function")))
-		(set_local $list_b ($map_get (get_local $context) (string "list")))
+		(set_local $function ($map_get (get_local $context) (string: "function")))
+		(set_local $list_b ($map_get (get_local $context) (string: "list")))
 		(set_local $result (call $function_call_i32 (get_local $function) (get_local $value)))
 		(if (i32.eq (call $boolean_value (get_local $result)) (i32.const 1)) (then
 			(call $list_push (get_local $list_b) (get_local $value))
@@ -197,10 +197,10 @@
 		
 		(local $context i32)
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) (string "function") (get_local $function))
-		(call $map_set (get_local $context) (string "list") (call $list_new))
-		(call $list_iterate (get_local $list) (function "$list_map_iterate_each") (get_local $context))
-		(call $map_get (get_local $context) (string "list"))
+		(call $map_set (get_local $context) (string: "function") (get_local $function))
+		(call $map_set (get_local $context) (string: "list") (call $list_new))
+		(call $list_iterate (get_local $list) (function: "$list_map_iterate_each") (get_local $context))
+		(call $map_get (get_local $context) (string: "list"))
 	)
 	
 	(func $list_map_iterate_each (param $list i32) (param $item i32) (param $value i32) (param $index i32) (param $context i32)
@@ -208,8 +208,8 @@
 		(local $function i32)
 		(local $list_b i32)
 		(local $result i32)
-		(set_local $function ($map_get (get_local $context) (string "function")))
-		(set_local $list_b ($map_get (get_local $context) (string "list")))
+		(set_local $function ($map_get (get_local $context) (string: "function")))
+		(set_local $list_b ($map_get (get_local $context) (string: "list")))
 		(set_local $result (call $function_call_i32 (get_local $function) (get_local $value)))
 		(call $list_push (get_local $list_b) (get_local $result))
 	)

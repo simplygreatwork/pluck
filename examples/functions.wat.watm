@@ -11,7 +11,7 @@ module
 		
 	function create_function
 		
-		set func_ to (function "function_with_arguments")
+		set func_ to (function: "function_with_arguments")
 		print (number_new (function_id func_))
 		print (function_result func_)
 		

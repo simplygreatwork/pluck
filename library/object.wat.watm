@@ -22,7 +22,7 @@
 		
 		(local $map i32)
 		(set_local $map (call $map_new))
-		(call $map_set $map (string "subject") (function "object_subject"))
+		(call $map_set $map (string: "subject") (function: "object_subject"))
 		(get_local $map)
 	)
 	
@@ -88,7 +88,7 @@
 		
 		(local $result i32)
 		(if (i32.ne (call $memory_type (get_local $key)) (typeof "string")) (then
-			(call $print_string (string "The object property must be a string or a symbol."))
+			(call $print_string (string: "The object property must be a string or a symbol."))
 		))
 		(set_local $result (call $map_get (call $object_map (get_local $object)) (get_local $key)))
 		(if (i32.eq (get_local $result) (i32.const 0)) (then
@@ -172,10 +172,10 @@
 		(set_local $argument (call $object_subject (get_local $argument)))
 		(set_local $result (i32.const 0))
 		(if (i32.eq (call $memory_type (get_local $argument)) (typeof "string")) (then
-			(if (i32.eq (call $string_equals (get_local $argument) (string "=")) (i32.const 1)) (then
+			(if (i32.eq (call $string_equals (get_local $argument) (string: "=")) (i32.const 1)) (then
 				(set_local $result (i32.const 1))
 			) (else
-				(if (i32.eq (call $string_equals (get_local $argument) (string "is")) (i32.const 1)) (then
+				(if (i32.eq (call $string_equals (get_local $argument) (string: "is")) (i32.const 1)) (then
 					(set_local $result (i32.const 1))
 				))
 			))
@@ -189,15 +189,15 @@
 		(local $map i32)
 		(local $length i32)
 		(local $context i32)
-		(set_local $result (string "object ("))
+		(set_local $result (string: "object ("))
 		(set_local $map (call $object_map (get_local $object)))
 		(set_local length (call $map_length (get_local $map)))
 		(set_local $context (call $map_new))
-		(call $map_set (get_local $context) (string "string") (get_local $result))
-		(call $map_set (get_local $context) (string "length") (get_local $length))
-		(call $map_iterate (get_local $map) (function "object_to_string_iterate_each") (get_local $context))
-		(set_local $result (call $map_get (get_local $context) (string "string")))
-		(set_local $result (call $string_append (get_local $result) (string ")")))
+		(call $map_set (get_local $context) (string: "string") (get_local $result))
+		(call $map_set (get_local $context) (string: "length") (get_local $length))
+		(call $map_iterate (get_local $map) (function: "object_to_string_iterate_each") (get_local $context))
+		(set_local $result (call $map_get (get_local $context) (string: "string")))
+		(set_local $result (call $string_append (get_local $result) (string: ")")))
 		(get_local $result)
 	)
 	
@@ -205,22 +205,22 @@
 		
 		(local $length i32)
 		(local $string i32)
-		(set_local $length (call $map_get (get_local $context) (string "length")))
-		(set_local $string (call $map_get (get_local $context) (string "string")))
+		(set_local $length (call $map_get (get_local $context) (string: "length")))
+		(set_local $string (call $map_get (get_local $context) (string: "string")))
 		(set_local $string (call $string_append (get_local $string) (get_local $key)))
-		(set_local $string (call $string_append (get_local $string) (string ": ")))
+		(set_local $string (call $string_append (get_local $string) (string: ": ")))
 		(set_local $string (call $string_append (get_local $string) (call $object_property_value_to_string (get_local $value))))
 		(if (i32.lt_u (call $number_value (get_local $index)) (i32.sub (call $number_value (get_local $length)) (i32.const 1))) (then
-			(set_local $string (call $string_append (get_local $string) (string ", ")))
+			(set_local $string (call $string_append (get_local $string) (string: ", ")))
 		))
-		(call $map_set (get_local $context) (string "string") (get_local $string))
+		(call $map_set (get_local $context) (string: "string") (get_local $string))
 	)
 	
 	(func $object_property_value_to_string (param $value i32) (result i32)
 		
 		(local $result i32)
 		(local $type i32)
-		(set_local $result (string "unknown"))
+		(set_local $result (string: "unknown"))
 		(set_local $type (call $memory_type (get_local $value)))
 		(if (i32.eq (get_local $type) (typeof "string")) (then
 			(set_local $result (get_local $value))

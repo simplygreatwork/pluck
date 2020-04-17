@@ -33,9 +33,7 @@ module.exports = function(system, document) {
 
 function warn(value) {
 	
-	if (false) {
-		console.error('')
-		console.error(`>>>>> Warning: The variable "${value}" could conflict with an existing keyword. <<<<<`)
-		console.error('')
-	}
+	console.error('')
+	console.error(`>>>>> Warning: The variable "${value}" could conflict with an existing keyword. <<<<<`)
+	console.error('')
 }

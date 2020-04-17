@@ -18,13 +18,13 @@
 	(func $object_function_prototype (result i32)
 		
 		(local $map i32)
-		(set_local $map (call $resource_prototype (string "function")))
+		(set_local $map (call $resource_prototype (string: "function")))
 		(if (i32.eq (get_local $map) (i32.const 0)) (then
 			(set_local $map (call $object_object_prototype))
-			(call $map_set $map (string "id") (function "object_function_id"))
-			(call $map_set $map (string "parameters") (function "object_function_parameters"))
-			(call $map_set $map (string "result") (function "object_function_result"))
-			(call $resource_prototype_set (string "function") (get_local $map))
+			(call $map_set $map (string: "id") (function: "object_function_id"))
+			(call $map_set $map (string: "parameters") (function: "object_function_parameters"))
+			(call $map_set $map (string: "result") (function: "object_function_result"))
+			(call $resource_prototype_set (string: "function") (get_local $map))
 		))
 		(get_local $map)
 	)
@@ -60,6 +60,6 @@
 	)
 	
 	(func $object_function_test (param $object i32) (result i32)
-		(string "test")
+		(string: "test")
 	)
 )

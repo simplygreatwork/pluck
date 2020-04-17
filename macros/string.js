@@ -9,13 +9,13 @@ module.exports = function(system, document) {
 	return {
 		
 		type: 'symbol',
-		value: 'string',
+		value: 'string:',
 		
 		enter: function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_type_value(parent.value[0], 'symbol', 'string')) return
+			if (! query.is_type_value(parent.value[0], 'symbol', 'string:')) return
 			parent.once('exit', function() {
 				let string = parent.value[1].value
 				let func_name = shared_string.function_new(parents[0], string, system, false)

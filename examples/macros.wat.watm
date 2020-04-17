@@ -25,7 +25,7 @@ module
 		print "------------------------------"
 		print "Test call macro!"
 		print "------------------------------"
-		(call print (string "with call keyword, with string keyword"))
+		(call print (string: "with call keyword, with string keyword"))
 		print "without call keyword, without string keyword"
 		
 	function test_string_macro_expansion

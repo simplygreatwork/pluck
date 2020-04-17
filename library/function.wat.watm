@@ -73,7 +73,7 @@
 		(local $result i32)
 		(set_local $result (i32.const 0))
 		(if (i32.eq (call $memory_type (get_local $function)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string "void")) (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string: "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $void_to_void)
 					(call $function_id (get_local $function))
@@ -93,7 +93,7 @@
 		(local $result i32)
 		(set_local $result (i32.const 0))
 		(if (i32.eq (call $memory_type (get_local $function)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string "void")) (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string: "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_to_void)
 					(get_local $1)
@@ -115,7 +115,7 @@
 		(local $result i32)
 		(set_local $result (i32.const 0))
 		(if (i32.eq (call $memory_type (get_local $function)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string "void")) (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string: "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_i32_to_void)
 					(get_local $1) (get_local $2)
@@ -137,7 +137,7 @@
 		(local $result i32)
 		(set_local $result (i32.const 0))
 		(if (i32.eq (call $memory_type (get_local $function)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string "void")) (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string: "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_i32_i32_to_void)
 					(get_local $1) (get_local $2) (get_local $3)
@@ -159,7 +159,7 @@
 		(local $result i32)
 		(set_local $result (i32.const 0))
 		(if (i32.eq (call $memory_type (get_local $function)) (typeof "function")) (then
-			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string "void")) (i32.const 0)) (then
+			(if (i32.eq (call $string_compare ($function_result (get_local $function)) (string: "void")) (i32.const 0)) (then
 				(call_indirect
 					(type $i32_i32_i32_i32_to_void)
 					(get_local $1) (get_local $2) (get_local $3) (get_local $4)

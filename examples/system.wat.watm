@@ -30,7 +30,7 @@ module
 		list push "one"
 		set list to (list clone)
 		list push "two"
-		list iterate (function "create_list_iterate_each") 0
+		list iterate (function: "create_list_iterate_each") 0
 		print (list length)
 		
 	function create_list_iterate_each accepts list item value index context
@@ -43,7 +43,7 @@ module
 		set map to (proto clone)
 		map put "one" 1
 		map put "two" 2
-		map iterate (function "test_map_iterate_each") 0
+		map iterate (function: "test_map_iterate_each") 0
 		print (map length)
 		
 	function test_map_iterate_each accepts map key value index context

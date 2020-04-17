@@ -53,13 +53,13 @@
 		(local $pointer i32)
 		(local $string i32)
 		(local $i i32)
-		;;(call $print_string (string "allocate"))
+		;;(call $print_string (string: "allocate"))
 		(set_local $i (i32.const 0))
 		(block (loop
 			(if (i32.eq (i32.const 0) (i32.const 0)) (then
 				(set_local $pointer (call $number_new (get_local $i)))
 			) (else
-				(set_local $pointer (string "hellohellohellohellohello"))
+				(set_local $pointer (string: "hellohellohellohellohello"))
 			))
 			(call $list_append (get_local $list) (get_local $pointer))
 			(set_local $i (i32.add (get_local $i) (i32.const 1)))
@@ -67,7 +67,7 @@
 			(br 0)
 		))
 		(if (i32.eq (i32.const 1) (i32.const 0)) (then
-			(call $print_string (string "frame_total"))
+			(call $print_string (string: "frame_total"))
 			(call $print_integer (call $allocator_frame_total))
 		))
 	)
@@ -75,7 +75,7 @@
 	(function $deallocate (param $list i32)
 		
 		(local $context i32)
-		;;(call $print_string (string "deallocate"))
+		;;(call $print_string (string: "deallocate"))
 		(set_local $context (i32.const 0))
 		(call $list_iterate_primitive (get_local $list) (ref "deallocate_iterate_each") (get_local $context))
 	)
@@ -95,7 +95,7 @@
 	
 	(function $compact (param $list i32)
 
-		;;(call $print_string (string "compact"))
+		;;(call $print_string (string: "compact"))
 		(if (i32.eq (i32.const 0) (i32.const 0)) (then
 			(call $allocator_compact_frame (i32.const 0))
 		))
@@ -103,7 +103,7 @@
 
 	(function $validate (param $list i32)
 		
-		;;(call $print_string (string "validate"))
+		;;(call $print_string (string: "validate"))
 		(if (i32.eq (i32.const 1) (i32.const 0)) (then
 			(call $allocator_validate_frame (i32.const 0))
 		))
@@ -112,7 +112,7 @@
 	(function $display (param $list i32)
 		
 		(local $context i32)
-		;;(call $print_string (string "display"))
+		;;(call $print_string (string: "display"))
 		(call $print_integer (call $number_value (call $list_length (get_local $list))))
 		(set_local $context (i32.const 0))
 		(set_local $display_iterate_each (ref "display_iterate_each"))
@@ -134,7 +134,7 @@
 	
 	(function $boundary
 		
-		(call $print_string (string "allocator boundaries"))
+		(call $print_string (string: "allocator boundaries"))
 		(call $allocator_info)
 	)
 	

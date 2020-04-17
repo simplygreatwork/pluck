@@ -8,13 +8,13 @@ module.exports = function(system, document) {
 	return {
 		
 		type: 'symbol',
-		value: 'function',
+		value: 'function:',
 		
 		enter : function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
-			if (! query.is_type_value(node, 'symbol', 'function')) return
+			if (! query.is_type_value(node, 'symbol', 'function:')) return
 			if (! (index === 0)) return
 			let parts = parts_(parent.value[1].value, document)
 			try {
@@ -81,9 +81,9 @@ function get_signature_result(signature) {
 		return each.type == 'expression' && each.value[0].value == 'result'
 	})
 	.map(function(each, index) {
-		return `(string "${each.value[1].value}")`
+		return `(string: "${each.value[1].value}")`
 	})
-	if (result.length === 0) result.push(`(string "void")`)
+	if (result.length === 0) result.push(`(string: "void")`)
 	return result.join('')
 }
 
@@ -94,8 +94,8 @@ function get_signature_parameters(signature) {
 		return each.type == 'expression' && each.value[0].value == 'param'
 	})
 	.map(function(each, index) {
-		return `(call $list_append (get_local $parameters) (string "${each.value[2].value}"))`
+		return `(call $list_append (get_local $parameters) (string: "${each.value[2].value}"))`
 	})
-	if (result.length === 0) result.push(`(call $list_append (get_local $parameters) (string "void"))`)
+	if (result.length === 0) result.push(`(call $list_append (get_local $parameters) (string: "void"))`)
 	return result.join('\n\t\t')
 }

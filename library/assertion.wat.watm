@@ -13,54 +13,54 @@
 	(func $assert_string_type (param $string i32)
 		
 		(if (i32.eq (call $memory_type (get_local $string)) (typeof "string")) (then
-			(call $print_string (string "PASS"))
+			(call $print_string (string: "PASS"))
 		) (else
-			(call $print_string (string "FAIL"))
+			(call $print_string (string: "FAIL"))
 		))
 	)
 	
 	(func $assert_string_equals (param $a i32) (param $b i32)
 		
 		(if (call $string_equals (get_local $a) (get_local $b)) (then
-			(call $print_string (string "PASS"))
+			(call $print_string (string: "PASS"))
 		) (else
-			(call $print_string (string "FAIL"))
+			(call $print_string (string: "FAIL"))
 		))
 	)
 	
 	(func $assert_number_type (param $number i32)
 		
 		(if (i32.eq (call $memory_type (get_local $number)) (typeof "number")) (then
-			(call $print_string (string "PASS"))
+			(call $print_string (string: "PASS"))
 		) (else
-			(call $print_string (string "FAIL"))
+			(call $print_string (string: "FAIL"))
 		))
 	)
 	
 	(func $assert_number_equals (param $a i32) (param $b i32)
 		
 		(if (call $number_equals (get_local $a) (get_local $b)) (then
-			(call $print_string (string "PASS"))
+			(call $print_string (string: "PASS"))
 		) (else
-			(call $print_string (string "FAIL"))
+			(call $print_string (string: "FAIL"))
 		))
 	)
 	
 	(func $assert_list_type (param $list i32)
 		
 		(if (i32.eq (call $memory_type (get_local $list)) (typeof "list")) (then
-			(call $print_string (string "PASS"))
+			(call $print_string (string: "PASS"))
 		) (else
-			(call $print_string (string "FAIL"))
+			(call $print_string (string: "FAIL"))
 		))
 	)
 	
 	(func $assert_list_length (param $list i32) (param $length i32)
 		
 		(if (call $number_equals (call $list_length (get_local $list)) (get_local $length)) (then
-			(call $print_string (string "PASS"))
+			(call $print_string (string: "PASS"))
 		) (else
-			(call $print_string (string "FAIL"))
+			(call $print_string (string: "FAIL"))
 		))
 	)	
 )

@@ -23,7 +23,7 @@ module
 		set item to (list_pop list)
 		set list to (list_filter list (func accepts value (result i32)
 			set result to true
-			if (string_equals value (string "three"))
+			if (string_equals value (string: "three"))
 				set result to false
 			return result
 		))
