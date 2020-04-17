@@ -17,7 +17,7 @@ module.exports = function(system, document) {
 			if (! shared.is_inside_function(state)) return
 			if (! query.is_type(parent, 'expression')) return
 			if (! query.is_type_value(parent.value[0], 'symbol', 'list:')) return
-			if (! index === 0) return
+			if (index != 0) return
 			query.climb(parents, function(node, index, parents) {
 				let parent = query.last(parents)
 				let func_name = insert_list(node, index, parents, state, system, document)
