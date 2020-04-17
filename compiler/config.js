@@ -47,6 +47,8 @@ module.exports = {
 		require('../macros/and'),
 		require('../macros/or'),
 		require('../macros/xor'),
+		require('../macros/map'),
+		require('../macros/list'),
 		require('../macros/omit')
 	]
 }

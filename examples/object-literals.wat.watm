@@ -5,19 +5,43 @@ module
 	include essentials
 	include essential-objects
 	
-	;; map & list macros have not yet been implemented
-	;; so this source file is currently only an example
-	
 	function main
 		
 		system_bootstrap
-		create_object_literal
+		create_object_literal_map
+		create_object_literal_list
+		create_object_literal_list_multiple_lines
+		create_object_literal_composite
 		
-	function create_object_literal
+	function create_object_literal_map
 		
-		set value to (map
+		set map to (map:
 			one "1"
 			two "2"
 			three "3"
 		)
+		print (map_length map)
+		
+	function create_object_literal_list
+		
+		set list to (list: "one" "two" "three")
+		print (list_length list)
+		
+	function create_object_literal_list_multiple_lines
+		
+		set list to (list:
+			"one"
+			"two" "three"
+		)
+		print (list_length list)
+		
+	function create_object_literal_composite
+		
+		set map to (map:
+			one "1"
+			two "2"
+			three "3"
+			list (list: "a" "b" "c")
+		)
+		print (map_length map)
 		

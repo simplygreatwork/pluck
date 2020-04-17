@@ -209,7 +209,7 @@
 		(call $print_string (string "Comparing booleans"))
 		(call $print_string (string "------------------------------"))
 	)
-
+	
 	(function $test_list
 		
 		(local $list i32)
