@@ -14,7 +14,7 @@ module.exports = function(system, document) {
 			let parent = query.last(parents)
 			if (! query.is_type(parent, 'expression')) return
 			if (! query.is_type_value(node, 'symbol', 'typeof')) return
-			if (! (index === 0)) return
+			if (index !== 0) return
 			let type = parent.value[1].value
 			if (system.state.index_type[type] === undefined) {
 				system.state.index_type[type] = system.state.id_type

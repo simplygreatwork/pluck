@@ -14,12 +14,15 @@ class Transform {
 	transform(macros_) {
 		
 		this.macros = {}
+		this.system.keywords = {}
 		macros_.forEach(function(macro, precedence) {
 			macro = macro(this.system, this.document, precedence)
 			let key = macro.type + ':' + (macro.value ? macro.value : '')
+			if (macro.value) this.system.keywords[macro.value] = macro.value
 			this.macros[key] = this.macros[key] || []
 			this.macros[key].push(macro)
 		}.bind(this))
+		this.system.keywords = Array.from(Object.keys(this.system.keywords))
 		let tree = this.document.tree
 		this.walk(tree[0], 0, [], {})
 	}
