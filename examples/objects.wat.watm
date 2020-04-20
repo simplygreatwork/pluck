@@ -68,14 +68,16 @@ module
 	function create_number
 		
 		heading "create_number"
+		print "20 + 20 + 2 ="
 		print ((20 add 20) add 2)
-		print "iterating over the number 3:"
 		set number to 3
+		print "3 plus 3 ="
+		set b to (number clone)
+		print (number add b)
+		print "iterating over the number 3:"
 		number "iterate" (func accepts number index context
 			print index
 		)
-		set b to (number clone)
-		print (number add b)
 		
 	function create_boolean
 		
@@ -123,22 +125,22 @@ module
 	function function_with_one_argument accepts object one
 		
 		set string to "function_with_one_argument called with value: "
-		set string to (string: append one)
+		set string to (string append one)
 		print string
 		
 	function function_with_two_arguments accepts object one two
 		
 		set string to "function_with_two_arguments called with values: "
-		set string to (string: append (one append ", "))
-		set string to (string: append (two append " "))
+		set string to (string append (one append ", "))
+		set string to (string append (two append " "))
 		print string
 		
 	function function_with_three_arguments accepts object one two three
 		
 		set string to "function_with_three_arguments called with values: "
-		set string to (string: append (one append ", "))
-		set string to (string: append (two append ", "))
-		set string to (string: append (three append " "))
+		set string to (string append (one append ", "))
+		set string to (string append (two append ", "))
+		set string to (string append (three append " "))
 		print string
 		
 	function add_one accepts object value (result i32)

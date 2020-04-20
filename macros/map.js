@@ -4,6 +4,8 @@ const parse = require('../compiler/parse')
 const shared = require('./shared')
 const shared_string = require('./string-shared')
 
+const debug = false
+
 module.exports = function(system, document) {
 	
 	return {
@@ -30,34 +32,47 @@ module.exports = function(system, document) {
 
 function insert_map(node, index, parents, state, system, document) {
 	
-	let expression = node
 	let id = system.state.id_static++
 	let func_name = '$map_static_' + id
+	if (debug) console.log('func_name: ' + func_name)
 	let tree = parse(`
 	(func ${func_name} (result i32)
 		(local $map i32)
-		(set_local $map (call $map_new))
+		(set_local $map (call $object_map_new))
 		(get_local $map)
 	)`)[0]
-	let expressions_ = map_puts(expression)
-	tree.value.splice(5, 0, ...expressions_)
+	let items = map_put(node)
+	tree.value.splice(5, 0, ...items)
 	query.append(parents[0], tree)
-	document.walk(tree, 0, parents, {})
+	document.walk(tree, 0, parents, {func: state.func})
 	return func_name
 }
 
-function map_puts(expression) {
+function map_put(expression) {
 	
 	let result = []
-	expression.value.forEach(function(each, index) {
-		if (index === 0) return
-		let expression_ = parse(`\n\t\t(call $map_set (get_local $map))`)[0]
-		let key = each.value[0]
-		let value = each.value[1]
-		key.type = 'string'
+	for (let index = 1, length = expression.value.length; index < length; index++) {
+		let each = expression.value[index]
+		if (query.is_type(each, 'expression')) {
+			map_put_each(result, each.value[0], each.value[1])
+		} else {
+			let next = expression.value[index + 1]
+			map_put_each(result, each, next)
+			index++
+		}
+	}
+	return result
+}
+
+function map_put_each(expression, key, value) {
+	
+	if (! query.is_type_value(key, 'symbol', 'call')) {
+		let expression_ = parse(`\n\t\t(call $object_map_set_ (get_local $map))`)[0]
 		expression_.value.push(key)
 		expression_.value.push(value)
-		result.push(expression_)
-	})
-	return result
+		expression.push(expression_)
+	} else {										// todo: find root cause of this else condition
+		if (debug) console.log('bogus key:' + JSON.stringify(key, ['type', 'value']))
+		if (debug) console.log('bogus value:' + JSON.stringify(value, ['type', 'value']))
+	}
 }

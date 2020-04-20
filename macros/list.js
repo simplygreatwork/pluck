@@ -35,23 +35,22 @@ function insert_list(node, index, parents, state, system, document) {
 	let tree = parse(`
 	(func ${func_name} (result i32)
 		(local $list i32)
-		(set_local $list (call $list_new))
+		(set_local $list (call $object_list_new))
 		(get_local $list)
 	)`)[0]
-	tree.value.splice(5, 0, ...list_pushs(node))
+	tree.value.splice(5, 0, ...list_push(node))
 	query.append(parents[0], tree)
 	document.walk(tree, 0, parents, {})
 	return func_name
 }
 
-function list_pushs(expression) {
+function list_push(expression) {
 	
 	let result = []
 	expression.value.forEach(function(each, index) {
 		if (index === 0) return
-		let expression_ = parse(`\n\t\t(call $list_push (get_local $list))`)[0]
-		let value = each
-		expression_.value.push(value)
+		let expression_ = parse(`\n\t\t(call $object_list_push (get_local $list))`)[0]
+		expression_.value.push(each)
 		result.push(expression_)
 	})
 	return result

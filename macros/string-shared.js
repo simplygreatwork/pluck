@@ -40,7 +40,7 @@ function string_char_sets(string) {
 function objectify_(objectify, system) {
 	
 	if (objectify && system.objectify) {
-		return `(set_local $string (call $object_string_from_string (get_local $string)))`
+		return `\n\t\t\t(set_local $string (call $object_string_from_string (get_local $string)))`
 	} else {
 		return ''
 	}
