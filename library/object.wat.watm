@@ -143,6 +143,7 @@
 	)
 	
 	(func $object_message_i32 (param $object i32) (param $key i32) (param $a i32) (result i32)
+		
 		(set_local $key (call $object_subject (get_local $key)))
 		(call $object_call_i32 (get_local $object) (get_local $key) (get_local $a))
 	)

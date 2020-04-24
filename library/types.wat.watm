@@ -17,6 +17,7 @@
 	(import "./tree.watm")
 	(import "./stream.watm")
 	(import "./stack.watm")
+	(import "./parser_state.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	(global $type_strings (import "host" "type_strings") (mut i32))
@@ -42,6 +43,8 @@
 		(call $array_value_set (get_local $array) (typeof "tree") (string: "tree"))
 		(call $array_value_set (get_local $array) (typeof "tree_node") (string: "tree_node"))
 		(call $array_value_set (get_local $array) (typeof "stream") (string: "stream"))
+		(call $array_value_set (get_local $array) (typeof "stack") (string: "stack"))
+		(call $array_value_set (get_local $array) (typeof "parser_state") (string: "parser_state"))
 		(set_global $type_strings (get_local $array))
 	)
 	
@@ -79,6 +82,7 @@
 		(if (i32.eq (get_local $type) (typeof "tree_node")) (then (set_local $result (call $node_bytes))))
 		(if (i32.eq (get_local $type) (typeof "stream")) (then (set_local $result (call $stream_bytes))))
 		(if (i32.eq (get_local $type) (typeof "stack")) (then (set_local $result (call $stack_bytes))))
+		(if (i32.eq (get_local $type) (typeof "parser_state")) (then (set_local $result (call $parser_state_bytes))))
 		(get_local $result)
 	)
 	

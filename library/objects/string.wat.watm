@@ -10,6 +10,7 @@
 	(import "../map.watm")
 	(import "../vector.watm")
 	(import "../number.watm")
+	(import "../indirect.watm")
 	(memory (import "host" "memory") 1)
 	(import "host" "table" (table 1 anyfunc))
 	
@@ -102,10 +103,33 @@
 	)
 	
 	(func $object_string_index_of (param $object i32) (param $string_b i32) (result i32)
-		(call $string_index_of (call $object_subject (get_local $object)) (get_local $string_b))
+		
+		(call $object_number_from_number_
+			(call $string_index_of
+				(call $object_subject (get_local $object))
+				(call $object_subject (get_local $object))
+			)
+		)
 	)
 	
 	(func $object_string_split (param $object i32) (param $string_b i32) (result i32)
-		(call $string_split (call $object_subject (get_local $object)) (get_local $string_b))
+		
+		(call $object_list_from_list_
+			(call $string_split
+				(call $object_subject (get_local $object))
+				(call $object_subject (get_local $string_b))
+			)
+		)
+	)
+	
+	(func $object_string_slice (param $object i32) (param $number_a i32) (param $number_b i32) (result i32)
+		
+		(call $object_string_from_string
+			(call $string_slice
+				(call $object_subject (get_local $object))
+				(call $object_subject (get_local $number_a))
+				(call $object_subject (get_local $number_b))
+			)
+		)
 	)
 )

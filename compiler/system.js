@@ -61,7 +61,7 @@ class System {
 			let document = new Document(path_, this.root)
 			document.load()
 			if (this['process ? '](document)) document.process = true
-			broadcast.emit('loaded', path.basename(path_) + ' (' + path_ + ')')
+			broadcast.emit('loaded', document.id + ' (' + path_ + ')')
 			process_.transform(this, document, this.macros.prelink)
 			process_.link(document)
 			document.module_imports.forEach(function(each) {

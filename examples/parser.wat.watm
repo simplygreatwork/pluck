@@ -1,0 +1,32 @@
+
+module
+	
+	directive literals as primitives
+	include essentials
+	import "../library/parser_state.wat.watm"
+	import "../library/objects/parser_state.wat.watm"
+	
+	function main
+		
+		system_bootstrap
+		parse "parser" "string"
+		
+	function parse accepts parser string
+		
+		set parser_state to parser_state_new
+		parser_state_string_set parser_state "abcdefghij"
+		parser_state_offset_set parser_state 0
+		print (parser_state_peek parser_state (5 subject))
+		set parser_state to (parser_state_read parser_state 8)
+		print (parser_state_is_complete parser_state)
+		set parser_state to (parser_state_read parser_state 1)
+		print (parser_state_is_complete parser_state)
+		set parser_state to (parser_state_read parser_state 1)
+		print (parser_state_is_complete parser_state)
+		set parser_state to (parser_state_read parser_state 1)
+		print (parser_state_is_complete parser_state)
+		
+	function test_string_slice
+		
+		print (string_slice "abcdefghi" 1 5)
+		

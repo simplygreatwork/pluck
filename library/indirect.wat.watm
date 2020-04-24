@@ -95,12 +95,24 @@
 	(func $number_new_ (param $value i32) (result i32)
 		(call_indirect (type $i32_to_i32) (get_local $value) (ref "library/number/number_new"))
 	)
-
+	
+	(func $number_value_ (param $number i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $number) (ref "library/number/number_value"))
+	)
+	
 	(func $console_print_ (param $string i32)
 		(call_indirect (type $i32_to_void) (get_local $string) (ref "library/console/console_print"))
 	)
 	
 	(func $function_id_ (param $function i32) (result i32)
 		(call_indirect (type $i32_to_i32) (get_local $function) (ref "library/function/function_id"))
+	)
+	
+	(func $object_number_from_number_ (param $number i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $number) (ref "library/objects/number/object_number_from_number"))
+	)
+	
+	(func $object_list_from_list_ (param $list i32) (result i32)
+		(call_indirect (type $i32_to_i32) (get_local $list) (ref "library/objects/list/object_list_from_list"))
 	)
 )

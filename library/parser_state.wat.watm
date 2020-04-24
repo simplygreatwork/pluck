@@ -1,0 +1,102 @@
+
+(module
+	
+	(import "./utility.watm")
+	(import "./memory.watm")
+	(import "./resource.watm")
+	(import "./string.watm")
+	(import "./number.watm")
+	(import "./boolean.watm")
+	(import "./map.watm")
+	(import "./list.watm")
+	(import "./function.watm")
+	(import "./vector.watm")
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	
+	(func $parser_state_bytes (result i32)
+		(i32.const 8)
+	)
+   
+	(func $parser_state_new (result i32)
+		
+		(local $state i32)
+		(set_local $state (call $memory_allocate (typeof "parser_state") (call $parser_state_bytes)))
+		(call $parser_state_string_set (get_local $state) (string: " "))
+		(call $parser_state_offset_set (get_local $state) (call $number_new (i32.const 0)))
+		(get_local $state)
+	)
+	
+	(func $parser_state_clone (param $state i32) (result i32)
+		
+		(local $state_ i32)
+		(set_local $state_ (call $parser_state_new))		
+		(call $parser_state_string_set (get_local $state_) (call $parser_state_string (get_local $state)))
+		(call $parser_state_offset_set (get_local $state_) (call $parser_state_offset (get_local $state)))
+		(get_local $state_)		
+	)
+	
+	(func $parser_state_string (param $state i32) (result i32)
+		(call $memory_load (get_local $state) (i32.const 0))
+	)
+	
+	(func $parser_state_string_set (param $state i32) (param $string i32)
+		(call $memory_store (get_local $state) (i32.const 0) (get_local $string))
+	)
+	
+	(func $parser_state_offset (param $state i32) (result i32)
+		(call $memory_load (get_local $state) (i32.const 4))
+	)
+	
+	(func $parser_state_offset_set (param $state i32) (param $offset i32)
+		(call $memory_store (get_local $state) (i32.const 4) (get_local $offset))
+	)
+	
+	(func $parser_state_peek (param $state i32) (param $number i32) (result i32)
+		
+		(local $string i32)
+		(local $a i32)
+		(local $b i32)
+		(set_local $string (call $parser_state_string (get_local $state)))
+		(set_local $a (call $parser_state_offset (get_local $state)))
+		(set_local $b (call $number_add (get_local $a) (get_local $number)))
+		(call $string_slice (get_local $string) (get_local $a) (get_local $b))
+	)
+	
+	(func $parser_state_read (param $state i32) (param $number i32) (result i32)
+		
+		(local $result i32)
+		(local $complete i32)
+		(local $string i32)
+		(local $a i32)
+		(local $b i32)
+		(set_local $complete (call $boolean_value (call $parser_state_is_complete (get_local $state))))
+		(if (i32.eq (get_local $complete) (i32.const 1)) (then
+			(set_local $result (get_local $state))
+		) (else
+			(set_local $string (call $parser_state_string (get_local $state)))
+			(set_local $a (call $parser_state_offset (get_local $state)))
+			(set_local $b (call $number_add (get_local $a) (get_local $number)))
+			(set_local $result (call $parser_state_new))
+			(call $parser_state_string_set (get_local $result) (get_local $string))
+			(call $parser_state_offset_set (get_local $result) (get_local $b))
+		))
+		(get_local $result)
+	)
+	
+	(func $parser_state_is_complete (param $state i32) (result i32)
+		
+		(local $result i32)
+		(local $string i32)
+		(local $offset i32)
+		(set_local $string (call $parser_state_string (get_local $state)))
+		(set_local $offset (call $parser_state_offset (get_local $state)))
+		(set_local $offset (call $number_value (get_local $offset)))
+		(if (i32.eq (get_local $offset) (call $string_length (get_local $string))) (then
+			(set_local $result (boolean_new (i32.const 1)))
+		) (else
+			(set_local $result (boolean_new (i32.const 0)))
+		))
+		(get_local $result)
+	)
+)

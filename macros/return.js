@@ -4,6 +4,7 @@ const parse = require('../compiler/parse')
 const shared = require('./shared')
 
 // todo: a robust return keyword will swallow execution of subsequent lines using if/else transforms
+// todo: also, insert (result i32) automatically in function header
 
 module.exports = function(system, document) {
 	
@@ -12,7 +13,7 @@ module.exports = function(system, document) {
 		type: 'symbol',
 		value: 'return',
 		
-		enter : function(node, index, parents, state) {		
+		enter : function(node, index, parents, state) {
 			
 			let parent = query.last(parents)
 			if (! shared.is_inside_function(state)) return

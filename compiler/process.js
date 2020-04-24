@@ -186,6 +186,7 @@ function render_function_exports(document) {
 
 function render_function_imports(document) {
 	
+	let index_ = 1
 	document.module_imports.forEach(function(document_) {
 		document_.functions.forEach(function(func, index) {
 			let name = func.value[1].value
@@ -196,7 +197,7 @@ function render_function_imports(document) {
 				signature.forEach(function(node) {
 					tree[0].value[3].value.push(node)
 				})
-				query.insert(document.tree[0], tree[0], 1)
+				query.insert(document.tree[0], tree[0], index_++)
 				let module_ = document_.id
 				let func_ = name
 				let function_imports = document.function_imports

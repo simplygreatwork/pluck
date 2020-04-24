@@ -30,9 +30,8 @@ class Table {
 						this.cached.index_table[key] = this.cached.id_table++
 					}
 					let id = this.index[key] = this.cached.index_table[key]
-					let code = `\n\t(elem (i32.const ${id}) ${function_})`
-					let tree = parse(code)
-					query.append(document.tree[0], tree[0])
+					let tree = parse(`\n\t(elem (i32.const ${id}) ${function_})`)[0]
+					query.append(document.tree[0], tree)
 				}
 			}
 		}

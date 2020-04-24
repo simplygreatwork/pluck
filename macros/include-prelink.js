@@ -28,9 +28,12 @@ function include(expression, node, index, parents, state) {
 	
 	query.climb(parents, function(node, index, parents) {
 		let parent = query.last(parents)
-		parent.value.splice(index + 1, 0, ...expression.value)
 		parent.value.splice(index, 1)
 		parent.emit('removed')
+		expression.value.forEach(function(each, index_) {
+			parent.value.splice(index + index_, 0, each)
+			parent.emit('inserted', index + index_)
+		})
 		parent.emit('rewind')
 	})
 }
@@ -42,6 +45,9 @@ function exists() {
 function essentials_() {
 	
 	return parse(`(
+	(import "host" "table" (table 1 anyfunc))
+	(memory (import "host" "memory") 1)
+	(global $system (import "host" "system") (mut i32))
 	(import "../library/system.watm")
 	(import "../library/memory.watm")
 	(import "../library/resource.watm")
@@ -57,9 +63,6 @@ function essentials_() {
 	(import "../library/console.watm")
 	(import "../library/vector.watm")
 	(import "../library/operator.watm")
-	(import "host" "table" (table 1 anyfunc))
-	(memory (import "host" "memory") 1)
-	(global $system (import "host" "system") (mut i32))
 	)`)[0]
 }
 

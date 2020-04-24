@@ -181,4 +181,23 @@
 	(func $string_split (param $string i32) (param $string_b i32) (result i32)
 		(i32.const 0)
 	)
+	
+	(func $string_slice (param $string i32) (param $a i32) (param $b i32) (result i32)
+		
+		(local $result i32)
+		(local $length i32)
+		(set_local $a (call $number_value_ (get_local $a)))
+		(set_local $b (call $number_value_ (get_local $b)))
+		(set_local $length (i32.sub
+			(get_local $b)
+			(get_local $a)
+		))
+		(set_local $result (call $string_new (get_local $length)))
+		(call $memory_copy
+			(i32.add (call $string_chars (get_local $string)) (get_local $a))
+			(call $string_chars (get_local $result))
+			(get_local $length)
+		)
+		(get_local $result)
+	)
 )

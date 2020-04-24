@@ -25,7 +25,6 @@
 			(call $map_set $map (string: "value") (function: "object_boolean_value"))
 			(call $map_set $map (string: "value_set") (function: "object_boolean_value_set"))
 			(call $map_set $map (string: "equals") (function: "object_boolean_equals"))
-			(call $map_set $map (string: "clone") (function: "object_boolean_clone"))
 			(call $map_set $map (string: "to_string") (function: "object_boolean_to_string"))
 			(call $resource_prototype_set (string: "boolean") (get_local $map))
 		))

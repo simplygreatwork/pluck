@@ -29,14 +29,15 @@ module.exports = function(system, document) {
 					})
 				} else {
 					console.error('')
-					console.error(`>>>>> Unable to find function "${parts.func}" or module "${parts.module}" <<<<<`)
+					console.error(`>>>>> Unable to find either function "${parts.func}" or module "${parts.module}" <<<<<`)
 					console.error('')
 					process.exit(1)
 				}
 			} catch (e) {
-				console.log('e: ' + e)
-				console.log('parts.module: ' + parts.module)
-				console.log('parts.func: ' + parts.func)
+				console.error('')
+				console.error(`>>>>> Unable to find either function "${parts.func}" or module "${parts.module}" <<<<<`)
+				console.error('')
+				process.exit(1)
 			}
 		}
 	}

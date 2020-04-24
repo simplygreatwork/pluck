@@ -1,0 +1,114 @@
+(module
+	
+	(import "../utility.watm")
+	(import "../memory.watm")
+	(import "../resource.watm")
+	(import "../string.watm")
+	(import "../list.watm")
+	(import "../function.watm")
+	(import "../object.watm")
+	(import "../map.watm")
+	(import "../number.watm")
+	(import "../boolean.watm")
+	(import "../vector.watm")
+	(import "../parser_state.watm")
+	(import "./string.watm")
+	(import "./boolean.watm")
+	(memory (import "host" "memory") 1)
+	(import "host" "table" (table 1 anyfunc))
+	
+	(func $object_parser_state_prototype (result i32)
+		
+		(local $map i32)
+		(set_local $map (call $resource_prototype (string: "parser_state")))
+		(if (i32.eq (get_local $map) (i32.const 0)) (then
+			(set_local $map (call $object_object_prototype))
+			(call $map_set $map (string: "test") (function: "object_parser_state_test"))
+			(call $map_set $map (string: "clone") (function: "object_parser_state_clone"))
+			(call $map_set $map (string: "set_string") (function: "object_parser_state_string_set"))
+			(call $map_set $map (string: "set_offset") (function: "object_parser_state_offset_set"))
+			(call $map_set $map (string: "peek") (function: "object_parser_state_peek"))
+			(call $map_set $map (string: "read") (function: "object_parser_state_read"))
+			(call $map_set $map (string: "is_complete") (function: "object_parser_state_is_complete"))
+			(call $resource_prototype_set (string: "parser_state") (get_local $map))
+		))
+		(get_local $map)
+	)
+	
+	(func $object_parser_state_test (param $object i32) (param $a i32)
+		
+		(call $print_integer (i32.const 7777))
+	)
+	
+	(func $object_parser_state_new (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (call $parser_state_new))
+		(call $object_prototype_set (get_local $object) (call $object_parser_state_prototype))
+		(get_local $object)
+	)
+	
+	(func $object_parser_state_from_parser_state (param $state i32) (result i32)
+		
+		(local $object i32)
+		(set_local $object (call $object_new))
+		(call $object_subject_set (get_local $object) (get_local $state))
+		(call $object_prototype_set (get_local $object) (call $object_parser_state_prototype))
+		(get_local $object)
+	)
+	
+	(func $object_parser_state_clone (param $object i32) (result i32)
+		
+		(call $object_parser_state_from_parser_state
+			(call $parser_state_clone
+				(call $object_subject (get_local $object))
+			)
+		)
+	)
+	
+	(func $object_parser_state_string_set (param $object i32) (param $string i32)
+		
+		(call $parser_state_string_set
+			(call $object_subject (get_local $object))
+			(call $object_subject (get_local $string))
+		)
+	)
+	
+	(func $object_parser_state_offset_set (param $object i32) (param $offset i32)
+		
+		(call $parser_state_offset_set
+			(call $object_subject (get_local $object))
+			(call $object_subject (get_local $offset))
+		)
+	)
+	
+	(func $object_parser_state_peek (param $object i32) (param $number i32) (result i32)
+		
+		(call $object_string_from_string
+			(call $parser_state_peek
+				(call $object_subject (get_local $object))
+				(call $object_subject (get_local $number))
+			)
+		)
+	)
+	
+	(func $object_parser_state_read (param $object i32) (param $number i32) (result i32)
+		
+		(call $object_parser_state_from_parser_state
+			(call $parser_state_read
+				(call $object_subject (get_local $object))
+				(call $object_subject (get_local $number))
+			)
+		)
+	)
+	
+	(func $object_parser_state_is_complete (param $state i32) (result i32)
+		
+		(call $object_boolean_from_boolean
+			(call $parser_state_is_complete
+				(call $object_subject (get_local $state))
+			)
+		)
+	)
+)

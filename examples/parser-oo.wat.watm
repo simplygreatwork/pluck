@@ -1,0 +1,28 @@
+module
+	
+	directive literals as objects
+	include essentials
+	include essential-objects
+	import "../library/parser_state.watm"
+	import "../library/objects/parser_state.watm"
+	
+	function main
+		
+		system_bootstrap
+		set state to (object_parser_state_new)
+		state set_string "abcdefghij"
+		state set_offset 0
+		print (state peek 5)
+		set state to (state read 8)
+		print (state is_complete)
+		set state to (state read 1)
+		print (state is_complete)
+		set state to (state read 1)
+		print (state is_complete)
+		set state to (state read 1)
+		print (state is_complete)
+		
+	function test_string_slice
+		
+		print ("abcdefghi" slice 1 5)
+		
